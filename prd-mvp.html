@@ -449,7 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><a href="#11-钱包信息">11. 钱包信息</a></li>
 <li><a href="#12-复制地址">12. 复制地址</a></li>
 <li><a href="#13-异常处理与边界场景">13. 异常处理与边界场景</a></li>
-<li><a href="#14-错误弹窗规范">14. 错误弹窗规范</a></li>
+<li><a href="#14-错误-toast-规范">14. 错误 Toast 规范</a></li>
 <li><a href="#15-非功能需求">15. 非功能需求</a></li>
 <li><a href="#16-状态管理规范">16. 状态管理规范</a></li>
 <li><a href="#17-追溯矩阵">17. 追溯矩阵</a></li>
@@ -973,7 +973,7 @@ flowchart TD
 </tr>
 </tbody>
 </table>
-<p>各模块特有 Toast 在对应章节补充；与本表冲突时以模块章为准。</p>
+<p>各模块特有 Toast 在对应章节补充；与本表冲突时以模块章为准。阻塞型失败（TSS、OTP 锁定、发送失败等）以 <a href="#14-错误-toast-规范">§14 · 错误 Toast 规范</a> 为准。</p>
 <h3 id="25-术语约定">2.5 术语约定 </h3>
 <table>
 <thead>
@@ -1117,7 +1117,7 @@ flowchart TD
 <td>—</td>
 </tr>
 <tr>
-<td>全局错误弹窗文案</td>
+<td>全局错误 Toast 文案</td>
 <td><a href="#143-错误信息对照">§14.3-错误信息对照</a></td>
 <td>各模块写场景名 + 链至 §14</td>
 </tr>
@@ -3743,30 +3743,52 @@ flowchart TD
 </tbody>
 </table>
 <h5 id="-主网费用预估evm">· 主网费用预估（EVM） </h5>
+<p><strong>须对接链上 RPC 实时估算</strong>（Ethereum / BSC 各自独立）；<strong>不得</strong>使用固定 mock 基准数量或独立于 Gas Price 的第二套倍率。</p>
+<p><strong>估算输入</strong>（进入 <a href="#743-发送金额层">§7.4.3-发送金额层</a> 或 <a href="#744-签名预览层">§7.4.4-签名预览层</a> 后，随地址 / 金额 / 网络变化而更新）</p>
 <table>
 <thead>
 <tr>
-<th>网络</th>
-<th>基准预估（原生币）</th>
-<th>默认档位</th>
+<th>项</th>
+<th>规则</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Ethereum</td>
-<td><strong>0.002 ETH</strong></td>
-<td><strong>平均</strong></td>
+<td>RPC</td>
+<td>当前发送网络对应节点（与 <a href="#77-数据管理">§7.7 · 链上提交</a> 同源或专用 Gas 节点）</td>
 </tr>
 <tr>
-<td>BSC</td>
-<td><strong>0.0003 BNB</strong></td>
-<td><strong>平均</strong></td>
+<td><code>gasLimit</code></td>
+<td>优先 <code>eth_estimateGas</code>（传入当前 <strong>from / to / value / data</strong>）；失败或未就绪时：原生币转账 <strong>21000</strong>；ERC-20 转账使用产品配置默认上限（实现须与签名交易一致）</td>
+</tr>
+<tr>
+<td>基准 Gas Price</td>
+<td><strong>Ethereum</strong>：读取最新块 <code>baseFeePerGas</code> + <code>eth_maxPriorityFeePerGas</code>（或 fee history 推荐值），合成 <strong>基准 effectiveGasPrice</strong>（EIP-1559）；<strong>BSC</strong>：<code>eth_gasPrice</code> 作为 <strong>基准 effectiveGasPrice</strong>（legacy）</td>
+</tr>
+<tr>
+<td>档位</td>
+<td><strong>慢 / 平均 / 快</strong>；默认 <strong>平均</strong>；档位 <strong>Gas Price 倍率</strong> 见 <a href="#二档位参数">§7.4.5 · 档位参数</a></td>
+</tr>
+<tr>
+<td>预估原生币数量</td>
+<td><strong><code>gasLimit × 基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；结果按链展示有效小数位</td>
+</tr>
+<tr>
+<td>展示 Gwei</td>
+<td><strong><code>基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong> 换算为 Gwei；保留 <strong>2</strong> 位小数；<strong>与预估原生币数量同源</strong>，不得另设独立 Gwei 倍率</td>
+</tr>
+<tr>
+<td>刷新</td>
+<td>金额页、签名预览页、<a href="#745-主网费用选择弹层">§7.4.5</a> 弹层：<strong>统一</strong>每 <strong>3 秒</strong> 重新拉取链上 Gas Price（<code>gasLimit</code> 在输入变化时立即重估）</td>
+</tr>
+<tr>
+<td>RPC 失败</td>
+<td>展示 <strong>「网络费用获取失败，请稍后重试」</strong>（或等价错误态）；<strong>下一步 / 确认</strong> 禁用；允许用户返回修改或重试；<strong>不得</strong>静默回退到写死常量</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>金额页与签名预览页：预估每 <strong>3 秒</strong>刷新（可在基准值附近小幅波动）。</li>
-<li><strong>慢 / 平均 / 快</strong> 三档：标签分别为「慢」「平均」「快」；预计时间分别为 <strong>约 3 分钟 / 约 2 分钟 / 约 1 分钟</strong>；<strong>费用倍率</strong> 分别为 <strong>0.8 / 1.0 / 1.5</strong>；<strong>Gwei 倍率</strong> 分别为 <strong>0.85 / 1.0 / 1.25</strong>（均相对当前基准，详见 <a href="#二档位参数">§7.4.5 · 档位参数</a>）。</li>
+<li><strong>慢 / 平均 / 快</strong> 三档：标签分别为「慢」「平均」「快」；预计时间分别为 <strong>约 3 分钟 / 约 2 分钟 / 约 1 分钟</strong>（体验参考文案，随链上拥堵可微调说明，不作为链上 SLA）；<strong>Gas Price 倍率</strong> 分别为 <strong>0.8 / 1.0 / 1.5</strong>（相对当次拉取的 <strong>基准 effectiveGasPrice</strong>，详见 <a href="#二档位参数">§7.4.5 · 档位参数</a>）。</li>
 </ul>
 <p><strong>余额校验</strong></p>
 <table>
@@ -3838,7 +3860,7 @@ flowchart TD
 </tr>
 <tr>
 <td>主网费用刷新</td>
-<td>停留本页时每 <strong>3 秒</strong> 刷新（基准 × 当前档位倍率，同 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a>）</td>
+<td>停留本页时每 <strong>3 秒</strong> 按链上 Gas Price 重算（<code>gasLimit × effectiveGasPrice × 档位倍率</code>，同 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a>）</td>
 </tr>
 <tr>
 <td>发送地址</td>
@@ -3904,7 +3926,7 @@ flowchart TD
 </tr>
 <tr>
 <td>预估原生币数量</td>
-<td>该网络基准预估 × 档位 <strong>费用倍率</strong>；每 <strong>3 秒</strong> 刷新</td>
+<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；每 <strong>3 秒</strong> 随链上 Gas Price 刷新</td>
 </tr>
 <tr>
 <td>原生币 Symbol</td>
@@ -3993,7 +4015,7 @@ flowchart TD
 </tr>
 <tr>
 <td>刷新</td>
-<td>弹层打开期间每 <strong>5 秒</strong> 刷新各行 <strong>Gwei</strong>、<strong>原生币数量</strong>、<strong>法币估值</strong>（基准 Gwei 可在产品层小幅波动）</td>
+<td>弹层打开期间每 <strong>3 秒</strong> 重新拉取链上 Gas Price 并重算各行 <strong>Gwei</strong>、<strong>原生币数量</strong>、<strong>法币估值</strong>（与 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a> 间隔一致）</td>
 </tr>
 <tr>
 <td>选择</td>
@@ -4024,17 +4046,17 @@ flowchart TD
 <tr>
 <td>信息 Gwei</td>
 <td>左侧副文案</td>
-<td><code>{基准 Gwei × 档位 Gwei 倍率}</code> + 单位 <strong>Gwei</strong>；保留 <strong>2</strong> 位小数；Gwei 倍率见 <a href="#二档位参数">§7.4.5 · 档位参数</a></td>
+<td><strong><code>链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong> 换算为 Gwei + 单位 <strong>Gwei</strong>；保留 <strong>2</strong> 位小数；与同行 <strong>预估原生币数量</strong> 同源</td>
 </tr>
 <tr>
 <td>预计时间</td>
 <td>右侧主文案</td>
-<td>慢 <strong>约 3 分钟</strong>；平均 <strong>约 2 分钟</strong>；快 <strong>约 1 分钟</strong></td>
+<td>慢 <strong>约 3 分钟</strong>；平均 <strong>约 2 分钟</strong>；快 <strong>约 1 分钟</strong>（体验参考，非链上承诺）</td>
 </tr>
 <tr>
 <td>预估原生币数量</td>
 <td>右侧副文案（上行）</td>
-<td><a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a> 该网络 <strong>基准预估</strong> × 档位 <strong>费用倍率</strong>；按链展示有效小数位</td>
+<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；<code>gasLimit</code> 规则见 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a></td>
 </tr>
 <tr>
 <td>原生币 Symbol</td>
@@ -4048,15 +4070,15 @@ flowchart TD
 </tr>
 </tbody>
 </table>
-<p><strong>基准 Gwei（MVP 产品层）</strong>：按当前发送网络取基准值（可在打开弹层期间每 <strong>5 秒</strong> 小幅波动）；Ethereum、BSC 各自独立，不与 §7.4.3 原生币 <strong>基准预估数量</strong> 混用。</p>
+<p><strong>链上 Gas Price 与 Gwei 展示</strong>：二者均由 <strong>同一 effectiveGasPrice（含档位倍率）</strong> 导出；Ethereum 按 EIP-1559 字段合成，BSC 按 <code>eth_gasPrice</code>；<strong>禁止</strong> 使用写死基准 Gwei 或独立于 Gas Price 的第二套倍率。</p>
 <h4 id="二档位参数">（二）档位参数 </h4>
 <table>
 <thead>
 <tr>
 <th>档位</th>
-<th>预计时间</th>
-<th>费用倍率（相对基准预估数量）</th>
-<th>Gwei 倍率（相对基准 Gwei）</th>
+<th>预计时间（参考）</th>
+<th>Gas Price 倍率（相对当次链上基准 effectiveGasPrice）</th>
+<th>签名交易</th>
 </tr>
 </thead>
 <tbody>
@@ -4064,22 +4086,23 @@ flowchart TD
 <td>慢</td>
 <td>约 3 分钟</td>
 <td><strong>0.8</strong></td>
-<td><strong>0.85</strong></td>
+<td>广播时使用对应 <strong>maxFeePerGas / gasPrice</strong>（×0.8）</td>
 </tr>
 <tr>
 <td>平均</td>
 <td>约 2 分钟</td>
 <td><strong>1.0</strong>（默认）</td>
-<td><strong>1.0</strong></td>
+<td>×1.0</td>
 </tr>
 <tr>
 <td>快</td>
 <td>约 1 分钟</td>
 <td><strong>1.5</strong></td>
-<td><strong>1.25</strong></td>
+<td>×1.5</td>
 </tr>
 </tbody>
 </table>
+<p><strong>一致性约束</strong>：UI 展示的 Gwei、预估原生币数量、余额校验、签名广播参数须基于 <strong>同一 <code>gasLimit</code> 与同一档位 effectiveGasPrice</strong>；切换档位或链上 Gas 刷新后须同步更新签名预览行与弹层各行。</p>
 <h3 id="746-通行密钥发送签名">7.4.6 通行密钥（发送签名） </h3>
 <p>与 <a href="#88-通行密钥">§8.8-通行密钥</a> 共用组件；发送场景差异：</p>
 <table>
@@ -4183,7 +4206,7 @@ flowchart TD
 <td>已提交</td>
 <td>通行密钥成功</td>
 <td>发送层关闭；Web3 首页</td>
-<td>等待链上结果 Toast/错误弹窗</td>
+<td>等待链上结果 Toast（成功或失败见 §14）</td>
 </tr>
 <tr>
 <td>从发送引导收款</td>
@@ -4357,7 +4380,7 @@ flowchart TD
 </tr>
 <tr>
 <td>主网费用预估</td>
-<td>产品层基准（见 <a href="#743-发送金额层">§7.4.3-发送金额层</a>）+ 档位倍率；金额校验见 <a href="#72-evm-链金额验证逻辑活动图">§7.2-EVM链金额验证逻辑</a></td>
+<td>链上 RPC：<code>eth_estimateGas</code> + EIP-1559（Ethereum）/ <code>eth_gasPrice</code>（BSC）× 档位 Gas Price 倍率（见 <a href="#743-发送金额层">§7.4.3</a>、<a href="#745-主网费用选择弹层">§7.4.5</a>）；金额校验见 <a href="#72-evm-链金额验证逻辑活动图">§7.2-EVM链金额验证逻辑</a></td>
 </tr>
 <tr>
 <td>行情</td>
@@ -4388,7 +4411,7 @@ flowchart TD
 </tr>
 <tr>
 <td>发送失败</td>
-<td>全局错误弹窗，标题 <strong>发送失败</strong>，正文含失败原因摘要</td>
+<td>Toast「<strong>发送失败</strong>：{失败原因摘要}」（见 <a href="#143-错误信息对照">§14.3 · 发送失败</a>）</td>
 </tr>
 <tr>
 <td>地址页复制（签名预览）</td>
@@ -4507,12 +4530,17 @@ flowchart TD
 <tr>
 <td>AC-M08-13</td>
 <td>打开主网费用弹层</td>
-<td><strong>慢/平均/快</strong> 三行；每行含 <strong>档位名、信息 Gwei、预计时间、预估原生币数量 + Symbol、法币估值</strong>（无行情为 <strong>「––」</strong>）；默认 <strong>平均</strong> 选中</td>
+<td><strong>慢/平均/快</strong> 三行；每行 <strong>Gwei 与原生币预估同源</strong>（链上 Gas Price × 档位倍率 × gasLimit）；含预计时间、法币估值（无行情为 <strong>「––」</strong>）；默认 <strong>平均</strong> 选中</td>
 </tr>
 <tr>
 <td>AC-M08-13b</td>
-<td>弹层打开 ≥5 秒</td>
-<td><strong>Gwei</strong> 与 <strong>原生币预估</strong> 至少刷新 <strong>1 次</strong></td>
+<td>弹层打开 ≥3 秒</td>
+<td>链上 Gas Price 至少刷新 <strong>1 次</strong>；各行 Gwei 与原生币预估同步更新</td>
+</tr>
+<tr>
+<td>AC-M08-13d</td>
+<td>RPC 获取 Gas 失败</td>
+<td>展示错误态；<strong>确认</strong> 禁用；不展示写死 mock 费用</td>
 </tr>
 <tr>
 <td>AC-M08-13c</td>
@@ -4587,7 +4615,7 @@ flowchart TD
 </tr>
 </tbody>
 </table>
-<p>取消或验证失败时，按 <a href="#88-通行密钥">§8.8-通行密钥</a> 与 <a href="#811-交互规则表">§8.11-交互规则表</a> 回退至对应入口页，并给出 Toast 或全局错误提示。</p>
+<p>取消或验证失败时，按 <a href="#88-通行密钥">§8.8-通行密钥</a> 与 <a href="#811-交互规则表">§8.11-交互规则表</a> 回退至对应入口页，并给出 Toast（阻塞型失败见 <a href="#14-错误-toast-规范">§14 · 错误 Toast 规范</a>）。</p>
 <h3 id="83-页面与弹层清单">8.3 页面与弹层清单 </h3>
 <table>
 <thead>
@@ -5082,7 +5110,7 @@ flowchart TD
 </tr>
 <tr>
 <td>连续错误达 <strong>5 次</strong></td>
-<td>全局错误标题「验证已锁定」；正文「验证码错误次数过多，请 30 分钟后再试」；锁定期间不可再提交验证码</td>
+<td>Toast「<strong>验证已锁定</strong>：验证码错误次数过多，请 30 分钟后再试」（见 <a href="#143-错误信息对照">§14.3 · 验证已锁定</a>）；锁定期间不可再提交验证码</td>
 </tr>
 <tr>
 <td>重新发送验证码</td>
@@ -5671,7 +5699,7 @@ flowchart TD
 <tr>
 <td>验证码锁定</td>
 <td>错误 ≥5 次</td>
-<td>验证页 + 全局错误</td>
+<td>验证页 + 全局错误 Toast</td>
 <td>30 分钟内不可提交</td>
 <td>—</td>
 </tr>
@@ -5742,7 +5770,7 @@ flowchart TD
 <td>TSS 失败</td>
 <td>分片同步失败</td>
 <td>—</td>
-<td>全局错误 + 回入口</td>
+<td>全局错误 Toast + 回入口</td>
 <td>—</td>
 <td>否</td>
 </tr>
@@ -7728,8 +7756,8 @@ flowchart TD
 <tr>
 <td>M17</td>
 <td>全局阻塞错误</td>
-<td><a href="#14-错误弹窗规范">§14-错误弹窗规范</a></td>
-<td>标题 + 描述 +「我知道了」</td>
+<td><a href="#14-错误-toast-规范">§14-错误 Toast 规范</a></td>
+<td>Toast 文案（见 <a href="#143-错误信息对照">§14.3</a>）；自动消失，无弹窗</td>
 </tr>
 </tbody>
 </table>
@@ -7746,7 +7774,7 @@ flowchart TD
 <tbody>
 <tr>
 <td>用户反馈</td>
-<td>触发 <a href="#14-错误弹窗规范">§14-错误弹窗规范</a>；文案见 <a href="#143-错误信息对照">§14.3 · 钱包准备失败</a></td>
+<td>Toast（见 <a href="#143-错误信息对照">§14.3 · 钱包准备失败</a>）；<strong>不使用</strong> 全局错误弹窗</td>
 </tr>
 <tr>
 <td>后续</td>
@@ -7839,7 +7867,7 @@ flowchart TD
 </tr>
 <tr>
 <td>页面</td>
-<td>展示全局错误弹窗后关闭发送叠加层，回到 <a href="#4-web3-首页有钱包时">§4-Web3首页（有钱包时）</a></td>
+<td>Toast 提示后关闭发送叠加层，回到 <a href="#4-web3-首页有钱包时">§4-Web3首页（有钱包时）</a></td>
 </tr>
 <tr>
 <td>账户状态</td>
@@ -7889,13 +7917,8 @@ flowchart TD
 </tr>
 <tr>
 <td>Toast</td>
-<td>通行密钥取消、复制结果、交易已提交等</td>
-<td>重试或继续</td>
-</tr>
-<tr>
-<td>全局错误弹窗</td>
-<td>TSS 失败、OTP 锁定、发送失败、设备安全存储异常</td>
-<td>点「<strong>我知道了</strong>」关闭（见 <a href="#14-错误弹窗规范">§14</a>）</td>
+<td>通行密钥取消、复制结果、交易已提交；TSS 失败、OTP 锁定、发送失败、设备安全存储异常等</td>
+<td>自动消失；重试或继续（阻塞型文案见 <a href="#14-错误-toast-规范">§14 · 错误 Toast 规范</a>）</td>
 </tr>
 <tr>
 <td>底部确认弹层</td>
@@ -7917,15 +7940,15 @@ flowchart TD
 <tbody>
 <tr>
 <td>TSS 失败</td>
-<td>全局错误弹窗</td>
+<td>全局错误 Toast</td>
 <td>是</td>
 <td>回流程入口页</td>
 </tr>
 <tr>
 <td>OTP 锁定</td>
-<td>全局错误弹窗</td>
+<td>全局错误 Toast</td>
 <td>是</td>
-<td>关闭后停留验证页；30 分钟内不可提交</td>
+<td>停留验证页；30 分钟内不可提交</td>
 </tr>
 <tr>
 <td>通行密钥取消（创建）</td>
@@ -7941,7 +7964,7 @@ flowchart TD
 </tr>
 <tr>
 <td>发送失败</td>
-<td>全局错误弹窗</td>
+<td>全局错误 Toast</td>
 <td>否</td>
 <td>账户与当前钱包不变</td>
 </tr>
@@ -7993,12 +8016,12 @@ flowchart TD
 <tr>
 <td>AC-M17-1</td>
 <td>TSS 分片同步失败</td>
-<td>全局弹窗「钱包准备失败」；不可进 Web3 首页；可回入口重试</td>
+<td>Toast「钱包准备失败：…」；不可进 Web3 首页；可回入口重试；<strong>无</strong> 错误弹窗</td>
 </tr>
 <tr>
 <td>AC-M17-2</td>
 <td>邮箱验证码连续错误 <strong>5</strong> 次</td>
-<td>全局弹窗「验证已锁定」；描述含 <strong>30 分钟</strong>；锁定期间不可提交</td>
+<td>Toast「验证已锁定：…」含 <strong>30 分钟</strong>；锁定期间不可提交；<strong>无</strong> 错误弹窗</td>
 </tr>
 <tr>
 <td>AC-M17-3</td>
@@ -8018,23 +8041,23 @@ flowchart TD
 <tr>
 <td>AC-M17-6</td>
 <td>通行密钥通过后广播失败</td>
-<td>全局弹窗「发送失败」；当前钱包与列表不变</td>
+<td>Toast「发送失败：…」；当前钱包与列表不变；<strong>无</strong> 错误弹窗</td>
 </tr>
 <tr>
 <td>AC-M17-7</td>
-<td>触发任意全局错误弹窗</td>
-<td>展示标题 + 描述 +「我知道了」</td>
+<td>触发 §14 任一场景</td>
+<td>仅 Toast；<strong>无</strong> 遮罩、<strong>无</strong>「我知道了」按钮；自动消失</td>
 </tr>
 <tr>
 <td>AC-M17-8</td>
-<td>点「我知道了」</td>
-<td>弹窗关闭；回到触发前页面上下文</td>
+<td>Toast 展示期间</td>
+<td>不阻塞全屏交互（除各场景自身禁用规则，如 OTP 锁定不可提交）</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="14-错误弹窗规范">14. 错误弹窗规范 </h2>
-<p><strong>组件</strong>：全局错误弹窗（<code>errorModal</code>）</p>
+<h2 id="14-错误-toast-规范">14. 错误 Toast 规范 </h2>
+<p><strong>呈现</strong>：全局错误 <strong>Toast</strong>（复用 <a href="#24-toast-提示">§2.4 Toast 提示</a>）；<strong>不使用</strong> 居中错误弹窗（<code>errorModal</code> 不实现）。</p>
 <h3 id="141-模块概述">14.1 模块概述 </h3>
 <table>
 <thead>
@@ -8046,61 +8069,62 @@ flowchart TD
 <tbody>
 <tr>
 <td>目标</td>
-<td>统一 <strong>阻塞型</strong> 错误的标题、描述与关闭方式</td>
+<td>统一 <strong>阻塞型 / 强提示型</strong> 失败的用户可见文案与消失规则；<strong>不</strong> 使用需点击「我知道了」的全屏/居中弹窗</td>
 </tr>
 <tr>
 <td>触发</td>
-<td><a href="#132-模块异常映射索引">§13.2-模块异常映射索引</a> 中标注为全局错误弹窗的场景</td>
+<td><a href="#132-模块异常映射索引">§13.2-模块异常映射索引</a> 中原全局错误场景及下表各场景</td>
 </tr>
 <tr>
 <td>详章</td>
-<td>字段红字、行内 OTP 错误、通行密钥 Toast 见各功能章</td>
+<td>字段红字、行内 OTP 单次错误、通行密钥 Toast 见各功能章；与本章冲突时 <strong>以本章 Toast 为准</strong></td>
 </tr>
 </tbody>
 </table>
-<h3 id="142-布局与交互">14.2 布局与交互 </h3>
+<h3 id="142-展示与交互">14.2 展示与交互 </h3>
 <table>
 <thead>
 <tr>
-<th>元素</th>
+<th>项</th>
 <th>规则</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>遮罩</td>
-<td>半透明；点击遮罩 <strong>不关闭</strong></td>
+<td>形态</td>
+<td>底部 Toast；<strong>无</strong> 半透明遮罩；<strong>无</strong> 主按钮「我知道了」</td>
 </tr>
 <tr>
-<td>图标</td>
-<td>警告符号</td>
+<td>文案结构</td>
+<td><strong><code>{标题}：{说明}</code></strong> 合并为一行或两行展示（标题取自下表；说明为描述列）</td>
 </tr>
 <tr>
-<td>标题</td>
-<td>主标题一行（<code>errorTitle</code>）</td>
+<td>位置</td>
+<td>同 <a href="#24-toast-提示">§2.4</a></td>
 </tr>
 <tr>
-<td>描述</td>
-<td>辅助说明，可多行（<code>errorMessage</code>）</td>
-</tr>
-<tr>
-<td>主按钮</td>
-<td>文案「<strong>我知道了</strong>」→ 关闭弹窗</td>
+<td>时长</td>
+<td>默认 <strong>2.2 秒</strong> 自动消失；文案较长（验证已锁定、钱包准备失败、发送失败含原因）可用 <strong>2.5～3 秒</strong></td>
 </tr>
 <tr>
 <td>叠加</td>
-<td>同时仅展示 <strong>一个</strong> 全局错误弹窗</td>
+<td>新 Toast <strong>覆盖</strong> 旧 Toast，不队列堆叠</td>
+</tr>
+<tr>
+<td>交互</td>
+<td>Toast 展示期间 <strong>不</strong> 要求用户点击关闭；各场景按 <a href="#133-边界场景详规">§13.3</a> 执行页面回退或停留</td>
 </tr>
 </tbody>
 </table>
 <h3 id="143-错误信息对照">14.3 错误信息对照 </h3>
-<p><strong>本小节为全局错误弹窗文案权威定义。</strong></p>
+<p><strong>本小节为全局错误 Toast 文案权威定义。</strong></p>
 <table>
 <thead>
 <tr>
 <th>场景 ID</th>
-<th>标题</th>
-<th>描述</th>
+<th>标题（Toast 前缀）</th>
+<th>说明（接在标题后，合并展示）</th>
+<th>建议时长</th>
 <th>触发章节</th>
 </tr>
 </thead>
@@ -8109,34 +8133,40 @@ flowchart TD
 <td>钱包准备失败</td>
 <td><strong>钱包准备失败</strong></td>
 <td>密钥分片同步失败，无法进入钱包。请稍后重试或更换账号。</td>
+<td>2.5 秒</td>
 <td><a href="#89-privy-tss-分片准备">§8.9</a>、<a href="#一privy-tss-分片准备失败">§13.3 · Privy TSS 分片准备失败</a></td>
 </tr>
 <tr>
 <td>验证已锁定</td>
 <td><strong>验证已锁定</strong></td>
 <td>验证码错误次数过多，请 <strong>30 分钟</strong> 后再试。</td>
+<td>2.5 秒</td>
 <td><a href="#邮箱验证页">§8.7.2</a>、<a href="#二邮箱-otp-验证失败">§13.3 · 邮箱 OTP 验证失败</a></td>
 </tr>
 <tr>
 <td>发送失败</td>
 <td><strong>发送失败</strong></td>
 <td>{失败原因摘要}（由链上 / RPC / Privy 错误转写，须对用户可读）</td>
+<td>2.5 秒</td>
 <td><a href="#746-通行密钥发送签名">§7.4.6</a>、<a href="#四发送交易失败">§13.3 · 发送交易失败</a></td>
 </tr>
 <tr>
 <td>操作失败</td>
 <td><strong>操作失败</strong></td>
 <td>请稍后重试。</td>
+<td>2.2 秒</td>
 <td>Privy / 网络不可用等未单独列出的阻塞场景</td>
 </tr>
 <tr>
 <td>设备安全存储异常</td>
 <td><strong>设备安全存储异常</strong></td>
 <td>无法完成钱包准备，请检查系统权限或更换设备后重试。</td>
+<td>2.5 秒</td>
 <td>TSS 前设备安全区不可用</td>
 </tr>
 </tbody>
 </table>
+<p><strong>展示示例</strong>：<code>发送失败：网络超时，请稍后重试</code>（<code>发送失败</code> 为标题，<code>网络超时…</code> 为说明）。</p>
 <h3 id="144-验收标准">14.4 验收标准 </h3>
 <table>
 <thead>
@@ -8149,18 +8179,23 @@ flowchart TD
 <tbody>
 <tr>
 <td>AC-M17-9</td>
-<td>OTP 锁定弹窗</td>
-<td>标题「验证已锁定」；描述含「30 分钟」</td>
+<td>OTP 锁定</td>
+<td>Toast「验证已锁定：…」含 <strong>30 分钟</strong>；<strong>无</strong> 错误弹窗</td>
 </tr>
 <tr>
 <td>AC-M17-10</td>
-<td>TSS 失败弹窗</td>
-<td>标题「钱包准备失败」；描述含「密钥分片同步失败」</td>
+<td>TSS 失败</td>
+<td>Toast「钱包准备失败：…」含「密钥分片同步失败」类说明；<strong>无</strong> 错误弹窗</td>
 </tr>
 <tr>
 <td>AC-M17-11</td>
-<td>发送失败弹窗</td>
-<td>标题「发送失败」；描述非空</td>
+<td>发送失败</td>
+<td>Toast「发送失败：…」；说明非空；<strong>无</strong> 错误弹窗</td>
+</tr>
+<tr>
+<td>AC-M17-12</td>
+<td>任意 §14 场景触发</td>
+<td><strong>不展示</strong> <code>errorModal</code> 或等价居中错误弹层</td>
 </tr>
 </tbody>
 </table>
@@ -8186,7 +8221,7 @@ flowchart TD
 </tr>
 <tr>
 <td>引用</td>
-<td>异常与弹窗见 <a href="#13-异常处理与边界场景">§13-异常处理与边界场景</a>–<a href="#14-错误弹窗规范">§14-错误弹窗规范</a></td>
+<td>异常与 Toast 见 <a href="#13-异常处理与边界场景">§13-异常处理与边界场景</a>–<a href="#14-错误-toast-规范">§14-错误 Toast 规范</a></td>
 </tr>
 </tbody>
 </table>
@@ -8350,7 +8385,7 @@ flowchart TD
 </tr>
 <tr>
 <td>离线 / 弱网</td>
-<td>链上查询与发送失败时给出 Toast 或 <a href="#14-错误弹窗规范">§14</a>；<strong>不损坏</strong> 本地钱包列表</td>
+<td>链上查询与发送失败时给出 Toast（见 <a href="#14-错误-toast-规范">§14 · 错误 Toast</a>）；<strong>不损坏</strong> 本地钱包列表</td>
 </tr>
 </tbody>
 </table>
@@ -8708,8 +8743,8 @@ flowchart TD
 </tr>
 <tr>
 <td>M17</td>
-<td><a href="#13-异常处理与边界场景">§13-异常处理与边界场景</a>、<a href="#14-错误弹窗规范">§14-错误弹窗规范</a></td>
-<td><code>errorModal</code>、OTP 锁定</td>
+<td><a href="#13-异常处理与边界场景">§13-异常处理与边界场景</a>、<a href="#14-错误-toast-规范">§14-错误 Toast 规范</a></td>
+<td>全局错误 Toast、OTP 锁定</td>
 <td>全局错误对照</td>
 </tr>
 <tr>
@@ -8874,12 +8909,6 @@ flowchart TD
 <td>退出钱包确认</td>
 <td><a href="#115-子流程退出钱包">§11.5 · 退出钱包</a></td>
 </tr>
-<tr>
-<td><code>errorModal</code></td>
-<td>居中弹层</td>
-<td>全局错误提示</td>
-<td><a href="#14-错误弹窗规范">§14-错误弹窗规范</a></td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -8921,7 +8950,7 @@ flowchart TD
 </tr>
 <tr>
 <td>横切</td>
-<td>异常、全局错误弹窗、NFR、状态机</td>
+<td>异常、全局错误 Toast、NFR、状态机</td>
 <td><a href="#13-异常处理与边界场景">§13</a>–<a href="#16-状态管理规范">§16</a></td>
 </tr>
 </tbody>
@@ -9173,7 +9202,7 @@ flowchart TD
 <tr>
 <td>M17</td>
 <td><a href="#137-验收标准">§13.7-验收标准</a>、<a href="#144-验收标准">§14.4-验收标准</a></td>
-<td>11</td>
+<td>12</td>
 </tr>
 <tr>
 <td>M18</td>
@@ -9188,7 +9217,7 @@ flowchart TD
 <tr>
 <td><strong>合计</strong></td>
 <td>—</td>
-<td><strong>152</strong></td>
+<td><strong>153</strong></td>
 </tr>
 </tbody>
 </table>
@@ -9284,12 +9313,12 @@ flowchart TD
 <tr>
 <td>AC-M00-4</td>
 <td>按 <a href="#190-模块-ac-索引">§19.0</a> 统计</td>
-<td>各模块 AC 条数与章末表一致；合计 <strong>152</strong> 条</td>
+<td>各模块 AC 条数与章末表一致；合计 <strong>153</strong> 条</td>
 </tr>
 <tr>
 <td>AC-M00-5</td>
 <td>执行 <a href="#191-p0-冒烟路径">§19.1</a> 全部 8 条</td>
-<td>无阻塞缺陷；关键 Toast / 弹窗文案与 PRD 一致</td>
+<td>无阻塞缺陷；关键 Toast 文案与 PRD 一致（含 §14 全局错误 Toast）</td>
 </tr>
 </tbody>
 </table>
@@ -9323,8 +9352,8 @@ flowchart TD
 <td>通过</td>
 </tr>
 <tr>
-<td>F. §14 为错误弹窗（非全量钱包设置 §14）</td>
-<td>通过</td>
+<td>F. §14 为错误 Toast（非全量钱包设置 §14）</td>
+<td>通过；<strong>无</strong> 全局 <code>errorModal</code></td>
 </tr>
 <tr>
 <td>G. 交叉引用</td>
