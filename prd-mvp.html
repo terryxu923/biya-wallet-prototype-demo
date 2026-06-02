@@ -1083,7 +1083,7 @@ flowchart TD
 </tr>
 <tr>
 <td>币种列表筛选 / 排序 / 空态</td>
-<td><a href="#-币种列表规则">§4.3 · 币种列表规则</a> / <a href="#-空态文案">空态文案</a></td>
+<td><a href="#-币种列表规则">§4.3 · 币种列表规则</a> / <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a> / <a href="#-空态文案">空态文案</a></td>
 <td>收发模块写「与 §4.3 一致」</td>
 </tr>
 <tr>
@@ -1604,7 +1604,7 @@ flowchart TD
 </tr>
 <tr>
 <td>排序</td>
-<td>首行固定；单链项按网络名称 A→Z</td>
+<td>首行 <strong>全部网络</strong> 固定置顶；单链项见 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a> · <strong>网络行</strong></td>
 </tr>
 <tr>
 <td>选中反馈</td>
@@ -1780,7 +1780,77 @@ flowchart TD
 <li><strong>同一 Symbol 在不同链上分行展示</strong>（不做跨链合并行）。</li>
 <li>受当前 <strong>网络筛选</strong> 约束：选 <strong>全部网络</strong> 展示两条链上符合条件的资产；选单链仅展示该链资产。</li>
 </ol>
-<p><strong>排序</strong>（币种 Tab 内，MVP）：按 <strong>持有数量</strong> 降序；相同则按 Symbol 英文字母 A→Z。</p>
+<p><strong>排序</strong>：见 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a>（币种 Tab 列表）。</p>
+<h5 id="-资产列表排序规则">· 资产列表排序规则 </h5>
+<p><strong>本小节为持仓 / 资产法币估值类多行列表的排序权威定义</strong>（与原型「币种列表、网络列表、收发选币层」等同源场景对齐）。</p>
+<p><strong>适用范围</strong></p>
+<table>
+<thead>
+<tr>
+<th>列表</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web3 首页 · <strong>币种</strong> Tab 资产列表</td>
+<td><a href="#-币种列表规则">§4.3 · 币种列表规则</a></td>
+</tr>
+<tr>
+<td>网络选择弹层 · <strong>单链</strong> 行（首行「全部网络」除外）</td>
+<td><a href="#421-网络选择弹层">§4.2.1-网络选择弹层</a></td>
+</tr>
+<tr>
+<td>接收 · 选择币种 / 搜索过滤结果</td>
+<td><a href="#531-选择币种层">§5.3.1</a>、<a href="#532-搜索子层">§5.3.2</a></td>
+</tr>
+<tr>
+<td>发送 · 选择币种</td>
+<td><a href="#741-选择币种层">§7.4.1</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>不适用</strong>（保持各章既有规则）：<a href="#9-钱包列表">§9 / §10 钱包列表</a>（默认 <strong>创建时间</strong> 或用户拖拽顺序）、<a href="#12-复制地址">§12 复制地址</a> 网络列表（固定顺序）、<a href="#742-接收地址层">§7.4.2 · 我的钱包</a>（仅地址，无估值排序）。</p>
+<p><strong>排序步骤</strong>（在 <strong>筛选 / 过滤后的结果集</strong> 内逐条比较；MVP 无行情时多数行 <strong>无法币估值</strong>，等价于按 <strong>持有数量</strong> 降序）</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>条件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>分组</td>
+<td>同时存在「有法币估值」与「无法币估值」行时，<strong>有法币估值</strong> 行整体排在 <strong>无法币估值</strong> 行 <strong>之前</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>行 <strong>有法币估值</strong>（可计算且用于展示，含 <code>&gt; 0</code> 的有效估值）</td>
+<td>按法币估值 <strong>降序</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>行 <strong>无法币估值</strong></td>
+<td>按 <strong>持有数量</strong>（链上余额）<strong>降序</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>估值相同，或同为无估值且 <strong>持有数量相同</strong></td>
+<td>按 <strong>Symbol</strong> <strong>升序</strong>：<strong>英文字母 a→z</strong> 优先（不区分大小写）；首字符为 <strong>数字 0→9</strong> 的 Symbol 排在字母 Symbol <strong>之后</strong>；逐字符比较直至分出先后</td>
+</tr>
+<tr>
+<td>4</td>
+<td>仍无法区分</td>
+<td>保持本次数据拉取/索引返回顺序（<strong>无序</strong>，不保证跨刷新一致）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Symbol 不在上述比较范围内</strong>（如仅含特殊字符、且优先级 1–3 仍无法区分）：视为 <strong>无序</strong>，不强行指定顺序。</p>
+<p><strong>搜索 / 过滤</strong>：<a href="#532-搜索子层">§5.3.2-搜索子层</a> 等过滤后，在 <strong>结果子集</strong> 内 <strong>重新</strong> 执行本规则。</p>
+<p><strong>网络行</strong>（<a href="#-网络列表项字段">§4.2.1 · 网络列表项字段</a> · 单链项）：首行「全部网络」<strong>始终置顶</strong>；其余单链行将「持有数量 / 法币估值」替换为该网络下、当前钱包 <strong>各 Token 持有数量合计 / 法币估值合计</strong>；优先级 3 的 Symbol 比较替换为 <strong>网络展示名</strong> 字母 <strong>a→z</strong> 升序（MVP：<strong>Ethereum</strong> 在 <strong>BNB Smart Chain</strong> 之前）。</p>
 <h5 id="-空态文案">· 空态文案 </h5>
 <table>
 <thead>
@@ -2088,6 +2158,11 @@ flowchart TD
 <td>列表行展示默认图标，内容为 Symbol <strong>首字符</strong>（如 USDT → <strong>U</strong>）</td>
 </tr>
 <tr>
+<td>AC-M04-6d</td>
+<td>币种 Tab 列表排序（MVP 无行情）</td>
+<td>各行按 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a>：<strong>持有数量</strong> 降序；数量相同则 Symbol <strong>a→z</strong> 优先、数字 Symbol 在后</td>
+</tr>
+<tr>
 <td>AC-M04-7</td>
 <td>点击 <strong>发送</strong></td>
 <td>打开发送选币叠加层（见 <a href="#7-发送功能">§7-发送功能</a>）</td>
@@ -2250,7 +2325,7 @@ flowchart TD
 <li><strong>链上余额大于 0</strong>；</li>
 <li><strong>按链分行</strong>（同一 Symbol 在 ETH、BSC 各一行，<strong>不合并</strong>为多链行）。</li>
 </ol>
-<p><strong>列表排序</strong>：按 <strong>持有数量</strong> 降序；相同则 Symbol 英文字母 A→Z。</p>
+<p><strong>列表排序</strong>：见 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a>。</p>
 <h3 id="531-选择币种层">5.3.1 选择币种层 </h3>
 <p><strong>资产列表行字段为本章权威定义</strong>；<a href="#741-选择币种层">§7.4.1-选择币种层</a> 引用本表；<a href="#-资产列表行字段web3-首页">§4.3 · 资产列表行字段（Web3 首页）</a> 为首页精简版（无副标题/行内法币）。</p>
 <table>
@@ -2353,7 +2428,7 @@ flowchart TD
 </tr>
 <tr>
 <td>有结果</td>
-<td>实时过滤；行字段同 <a href="#-资产列表行字段">§5.3.1 · 资产列表行字段</a>；点击进入 <a href="#533-收款二维码层">§5.3.3-收款二维码层</a></td>
+<td>实时过滤；过滤结果按 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a> 排序；行字段同 <a href="#-资产列表行字段">§5.3.1 · 资产列表行字段</a>；点击进入 <a href="#533-收款二维码层">§5.3.3-收款二维码层</a></td>
 </tr>
 <tr>
 <td>无结果</td>
@@ -3231,7 +3306,7 @@ flowchart TD
 <li><strong>链上余额大于 0</strong>；</li>
 <li><strong>按链分行</strong>（同一 Symbol 在 ETH、BSC 各一行）。</li>
 </ol>
-<p><strong>列表排序</strong>：按 <strong>持有数量</strong> 降序；相同则 Symbol 英文字母 A→Z。</p>
+<p><strong>列表排序</strong>：见 <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a>。</p>
 <h3 id="741-选择币种层">7.4.1 选择币种层 </h3>
 <table>
 <thead>
@@ -4901,7 +4976,7 @@ flowchart TD
 <tr>
 <td>返回</td>
 <td>回到入口页</td>
-<td>来自 Web3 无钱包首页：返回后 <strong>120ms</strong> 重新打开创建或导入钱包弹窗；来自添加钱包页：重新打开选择登录方式弹窗</td>
+<td>来自 Web3 无钱包首页：返回后 <strong>120ms</strong> 重新打开创建或导入钱包弹窗；</td>
 </tr>
 <tr>
 <td>点击获取验证码</td>
@@ -4939,7 +5014,7 @@ flowchart TD
 </tr>
 <tr>
 <td>发送提示</td>
-<td>展示「验证码已发送至」及脱敏后的收件邮箱；脱敏规则同 <a href="#账号已在此设备登录">§8.7.4-账号已在此设备登录</a>「普通邮箱 / Google」</td>
+<td>展示「验证码已发送至」及脱敏后的收件邮箱；脱敏规则见 <a href="#-脱敏展示规则">§8.7.4 · 脱敏展示规则</a></td>
 </tr>
 <tr>
 <td>验证码输入</td>
@@ -4985,7 +5060,7 @@ flowchart TD
 </tr>
 <tr>
 <td>返回</td>
-<td>回到邮箱输入页；停止倒计时</td>
+<td>回到邮箱输入页；</td>
 </tr>
 </tbody>
 </table>
@@ -4999,7 +5074,7 @@ flowchart TD
 <tbody>
 <tr>
 <td>验证码正确</td>
-<td>清零错误计数；停止倒计时；进入 <a href="#88-通行密钥">§8.8-通行密钥</a></td>
+<td>清零错误计数；进入 <a href="#88-通行密钥">§8.8-通行密钥</a></td>
 </tr>
 <tr>
 <td>验证码错误</td>
@@ -5156,42 +5231,134 @@ flowchart TD
 </table>
 <p><strong>触发条件</strong>：提交的邮箱 / Google 账号 / Apple 账号，与本机已存在社交钱包的登录标识相同（邮箱不区分大小写）。</p>
 <h5 id="-脱敏展示规则">· 脱敏展示规则 </h5>
+<p><strong>适用场景</strong>：账号已在此设备登录弹层正文、邮箱验证页发送提示、钱包信息「登录账号」行等所有展示 <code>loginEmail</code> 的位置。</p>
+<p><strong>输入与预处理</strong></p>
 <table>
 <thead>
 <tr>
-<th>账号类型</th>
-<th>@ 前本地段长度</th>
-<th>脱敏规则</th>
-<th>示例</th>
+<th>项</th>
+<th>规则</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>普通邮箱 / Google</td>
-<td>≤ 4 个字符</td>
-<td>首字符 + *** + @ + 域名</td>
-<td>a***@gmail.com</td>
+<td>输入字段</td>
+<td>取钱包或流程中的 <code>loginEmail</code>（绑定邮箱）</td>
 </tr>
 <tr>
-<td>普通邮箱 / Google</td>
-<td>&gt; 4 个字符</td>
-<td>前 3 字符 + *** + 后 3 字符 + @ + 域名</td>
-<td>ter***<a href="mailto:923@gmail.com">923@gmail.com</a></td>
+<td>大小写</td>
+<td>脱敏前将完整邮箱 <strong>转为小写</strong>（与 <a href="#账号已在此设备登录">§8.7.4 触发条件</a> 判重一致）</td>
 </tr>
 <tr>
-<td>Apple 私密转寄邮箱</td>
-<td>≤ 5 个字符</td>
-<td>前 2 字符 + *** + @ + 域名</td>
-<td>bx***@privaterelay.appleid.com</td>
-</tr>
-<tr>
-<td>Apple 私密转寄邮箱</td>
-<td>&gt; 5 个字符</td>
-<td>前 3 字符 + *** + 后 3 字符 + @ + 域名</td>
-<td>bx4***<a href="mailto:qkp@privaterelay.appleid.com">qkp@privaterelay.appleid.com</a></td>
+<td>分段</td>
+<td><strong>本地段</strong> = <code>@</code> 之前；<strong>域名</strong> = <code>@</code> 及之后（含 <code>@</code>）</td>
 </tr>
 </tbody>
 </table>
+<p><strong>账号类型判定</strong>（仅依邮箱域名，与 Google / Apple / 邮箱登录方式无关）</p>
+<table>
+<thead>
+<tr>
+<th>判定</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple 私密转寄邮箱</td>
+<td>域名后缀为 <code>@privaterelay.appleid.com</code></td>
+</tr>
+<tr>
+<td>普通邮箱</td>
+<td>其余所有域名（含 Gmail、企业邮箱、Apple 登录时用户选择共享的真实邮箱等）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>脱敏公式</strong>（<code>***</code> 为固定 3 个星号，不参与长度计算）</p>
+<table>
+<thead>
+<tr>
+<th>账号类型</th>
+<th>本地段长度</th>
+<th>脱敏结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通邮箱</td>
+<td>1–4</td>
+<td>首 1 字符 + <code>***</code> + 域名</td>
+</tr>
+<tr>
+<td>普通邮箱</td>
+<td>5–7</td>
+<td>前 2 字符 + <code>***</code> + 域名</td>
+</tr>
+<tr>
+<td>普通邮箱</td>
+<td>≥ 8</td>
+<td>前 3 字符 + <code>***</code> + 后 3 字符 + 域名</td>
+</tr>
+<tr>
+<td>Apple 私密转寄邮箱</td>
+<td>1</td>
+<td>首 1 字符 + <code>***</code> + 域名</td>
+</tr>
+<tr>
+<td>Apple 私密转寄邮箱</td>
+<td>2–7</td>
+<td>前 2 字符 + <code>***</code> + 域名</td>
+</tr>
+<tr>
+<td>Apple 私密转寄邮箱</td>
+<td>≥ 8</td>
+<td>前 3 字符 + <code>***</code> + 后 3 字符 + 域名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例</strong></p>
+<table>
+<thead>
+<tr>
+<th>原始 <code>loginEmail</code></th>
+<th>账号类型</th>
+<th>脱敏展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a@gmail.com</code></td>
+<td>普通邮箱</td>
+<td><code>a***@gmail.com</code></td>
+</tr>
+<tr>
+<td><code>abcde@gmail.com</code></td>
+<td>普通邮箱</td>
+<td><code>ab***@gmail.com</code></td>
+</tr>
+<tr>
+<td><code>terry923@gmail.com</code></td>
+<td>普通邮箱</td>
+<td><code>ter***923@gmail.com</code></td>
+</tr>
+<tr>
+<td><code>b@privaterelay.appleid.com</code></td>
+<td>Apple 私密转寄</td>
+<td><code>b***@privaterelay.appleid.com</code></td>
+</tr>
+<tr>
+<td><code>bx4@privaterelay.appleid.com</code></td>
+<td>Apple 私密转寄</td>
+<td><code>bx***@privaterelay.appleid.com</code></td>
+</tr>
+<tr>
+<td><code>bx4abcqkp@privaterelay.appleid.com</code></td>
+<td>Apple 私密转寄</td>
+<td><code>bx4***qkp@privaterelay.appleid.com</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>实现约束</strong>：须对原始 <code>loginEmail</code> <strong>实时脱敏</strong>后展示，<strong>不得</strong>将脱敏字符串写入本地持久化；持久化字段仍为明文 <code>loginEmail</code>（见 <a href="#119-数据管理">§11.9 · 数据管理</a>）。</p>
 <h3 id="88-通行密钥">8.8 通行密钥 </h3>
 <p>创建社交钱包、发送签名等敏感操作共用（发送见 <a href="#7-发送功能">§7-发送功能</a>）。</p>
 <h4 id="权限说明弹窗首次">权限说明弹窗（首次） </h4>
@@ -5756,9 +5923,15 @@ flowchart TD
 </tr>
 <tr>
 <td>2</td>
-<td>点某钱包卡片</td>
+<td>点 <strong>非当前</strong> 钱包卡片</td>
 <td>设为 <strong>当前钱包</strong> 并更新 <strong>最近使用钱包</strong></td>
 <td>进入 Web3 首页；网络重置为 <strong>全部网络</strong>（见 <a href="#42-流程步骤">§4.2</a>）</td>
+</tr>
+<tr>
+<td>2a</td>
+<td>点 <strong>当前</strong> 钱包卡片（已选中）</td>
+<td><strong>不响应</strong>；不切换、不关闭列表</td>
+<td>停留钱包列表页</td>
 </tr>
 <tr>
 <td>3</td>
@@ -5851,11 +6024,12 @@ flowchart TD
 </tr>
 <tr>
 <td>行点击</td>
-<td>切换为当前钱包 → 更新最近使用钱包 → 进入 Web3 首页</td>
+<td><strong>非当前</strong> 行：可点击 → 切换为当前钱包 → 更新最近使用钱包 → 进入 Web3 首页；<strong>当前</strong> 行：<strong>不可点击</strong>（无跳转、无切换）</td>
 </tr>
 </tbody>
 </table>
 <h5 id="-列表排序">· 列表排序 </h5>
+<p><strong>不适用</strong> <a href="#-资产列表排序规则">§4.3 · 资产列表排序规则</a>（钱包行按创建/用户顺序，不按 Token 持有量或法币估值排序）。</p>
 <table>
 <thead>
 <tr>
@@ -5893,18 +6067,18 @@ flowchart TD
 <td>默认</td>
 <td>进入列表</td>
 <td>资产总额 + 全部社交钱包卡片</td>
-<td>选钱包、编辑、添加、返回</td>
+<td>选非当前钱包、编辑、添加、返回</td>
 </tr>
 <tr>
 <td>有当前钱包</td>
 <td>存在当前钱包</td>
-<td>对应行 <strong>是否当前钱包</strong> 为 <strong>是</strong></td>
-<td>可改选其它钱包</td>
+<td>对应行 <strong>是否当前钱包</strong> 为 <strong>是</strong>；该行 <strong>不可点击</strong></td>
+<td>可点选其它 <strong>非当前</strong> 钱包</td>
 </tr>
 <tr>
 <td>仅一个钱包</td>
 <td>列表仅 1 条</td>
-<td>仍展示 <strong>添加钱包</strong></td>
+<td>当前行即为唯一钱包，<strong>不可点击</strong>；仍展示 <strong>添加钱包</strong></td>
 <td>可添加第二个钱包</td>
 </tr>
 <tr>
@@ -5940,12 +6114,21 @@ flowchart TD
 </tr>
 <tr>
 <td>切换钱包</td>
-<td>点卡片主体</td>
-<td>—</td>
+<td>点 <strong>非当前</strong> 卡片主体</td>
+<td>该行 <strong>是否当前钱包</strong> 为 <strong>否</strong></td>
 <td>更新当前钱包与首页；进入 Web3 首页</td>
 <td>—</td>
 <td>否</td>
 <td>网络重置全部网络</td>
+</tr>
+<tr>
+<td>点击当前钱包</td>
+<td>点 <strong>当前</strong> 卡片主体</td>
+<td>该行 <strong>是否当前钱包</strong> 为 <strong>是</strong></td>
+<td><strong>无响应</strong>；停留列表页；不切换、不关闭列表</td>
+<td>当前行禁用点击</td>
+<td>否</td>
+<td>—</td>
 </tr>
 <tr>
 <td>进入管理</td>
@@ -6008,7 +6191,7 @@ flowchart TD
 </tr>
 <tr>
 <td>切换写入</td>
-<td>用户在本页点选某行后：更新 <strong>当前钱包</strong> 与 <strong>最近使用钱包</strong></td>
+<td>用户在本页点选 <strong>非当前</strong> 行后：更新 <strong>当前钱包</strong> 与 <strong>最近使用钱包</strong>；点 <strong>当前</strong> 行 <strong>不写入</strong></td>
 </tr>
 <tr>
 <td>资产总额</td>
@@ -6039,6 +6222,11 @@ flowchart TD
 <td>AC-M11-2</td>
 <td>点 <strong>非当前</strong> 钱包卡片</td>
 <td>切换为 <strong>当前钱包</strong>；进入 Web3 首页；名称与资产刷新；网络为 <strong>全部网络</strong></td>
+</tr>
+<tr>
+<td>AC-M11-2a</td>
+<td>点 <strong>当前</strong> 钱包卡片（已选中）</td>
+<td><strong>无响应</strong>；停留钱包列表；当前钱包 <strong>不变</strong></td>
 </tr>
 <tr>
 <td>AC-M11-3</td>
@@ -6976,7 +7164,7 @@ flowchart TD
 </tr>
 <tr>
 <td>钱包名称</td>
-<td>去首尾空格；<strong>1～20</strong> 个字符（按 Unicode 计）；非空则更新 <strong>钱包名称</strong>，为空则 <strong>不修改</strong> 名称</td>
+<td>去首尾空格；<strong>1～20</strong> 个字符（按 Unicode 计）；</td>
 </tr>
 <tr>
 <td>保存后刷新</td>
