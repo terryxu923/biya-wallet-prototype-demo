@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SUC-01 Biya钱包 V1.1.0 交互原型</title>
-<!-- V1.1.0 范围：HD 助记词创建/导入/备份/敏感信息/删除 + 十链收发/复制/校验（仍为单链资产模型）
-     不做：币种管理、交易历史、PIN 发送、发送页扫一扫（占位 Toast）
-     决策：D-01 待备份不拦收发/复制 · D-04 Banner ✕ 会话内隐藏 · D-05 助记词导入=已备份 -->
+<!-- 基线 v4-mvp_Final + V1.1 增量（验收 prd-v11.html）
+     Phase1：HD F-002b～F-025/F-064b · Phase2：F-067 十链 · 单链资产不聚合 Symbol
+     不做 V1.2+：F-031b/F-055/F-034～F-061/F-049/F-053/F-057～F-059/F-075/F-060 -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
 /* stylelint-disable */
@@ -48,7 +48,7 @@
     pointer-events: none !important;
   }
 
-  /* MVP V1.0–V1.3：非 MVP 页面/入口（V1.1 原型不应用） */
+  /* MVP V1.0 专有：HD / 备份 / 三卡片等（V1.1 不挂 prototype-mvp，故默认可见） */
   body.prototype-mvp .mvp-hidden,
   body.prototype-mvp #screen-wallet-create-guide,
   body.prototype-mvp #screen-wallet-backup-mnemonic,
@@ -67,30 +67,42 @@
   body.prototype-mvp #exportMnemonicConfirmOverlay,
   body.prototype-mvp #exportMnemonicBackupConfirmOverlay,
   body.prototype-mvp #settingsBackupMnemonicItem,
-  body.prototype-mvp #screen-wallet-settings .settings-section-title,
-  body.prototype-mvp #scDetail .mc-nav-info-btn {
+  body.prototype-mvp #screen-wallet-settings .settings-section-title {
     display: none !important;
     visibility: hidden !important;
     pointer-events: none !important;
   }
 
-  /* V1.1 原型：非本期入口隐藏（与 MVP 共用选择器） */
+  /* V1.2+ 非本期（MVP 与 V1.1 共用） */
   body.prototype-mvp #tokenManageScreen,
   body.prototype-mvp #tmNetScreen,
   body.prototype-mvp #txHistoryScreen,
   body.prototype-mvp #manageAssetsBtn,
   body.prototype-mvp #caNetSelectScreen,
+  body.prototype-mvp #customAssetForm,
   body.prototype-mvp .tm-custom-entry,
   body.prototype-mvp .mc-tx-more,
   body.prototype-mvp #pinModalOverlay,
+  body.prototype-mvp #scDetail .mc-nav-info-btn,
   body.prototype-v11 #tokenManageScreen,
   body.prototype-v11 #tmNetScreen,
   body.prototype-v11 #txHistoryScreen,
   body.prototype-v11 #manageAssetsBtn,
   body.prototype-v11 #caNetSelectScreen,
+  body.prototype-v11 #customAssetForm,
   body.prototype-v11 .tm-custom-entry,
   body.prototype-v11 .mc-tx-more,
-  body.prototype-v11 #pinModalOverlay {
+  body.prototype-v11 #pinModalOverlay,
+  body.prototype-v11 #multiChainDetail,
+  body.prototype-v11 #sendNetSelect,
+  body.prototype-v11 #receiveNetSelect,
+  body.prototype-v11 #scDetail .mc-nav-info-btn,
+  body.prototype-v11 #scInfoScreen,
+  body.prototype-v11 #mcInfoScreen,
+  body.prototype-v11 #txDetail,
+  body.prototype-v11 .mc-tx-section,
+  body.prototype-v11 .mc-single-action:nth-child(3),
+  body.prototype-v11 .mc-single-action:nth-child(4) {
     display: none !important;
     visibility: hidden !important;
     pointer-events: none !important;
@@ -4305,7 +4317,7 @@
           <div class="tip-title">请尽快备份助记词</div>
           <div class="tip-desc">助记词是恢复钱包的唯一凭证，请用纸笔抄写并妥善保管，切勿截屏或告知他人</div>
         </div>
-        <button type="button" class="close-btn" onclick="event.stopPropagation(); dismissWeb3MnemonicBackupBanner()">✕</button>
+        <button type="button" class="close-btn" onclick="dismissWeb3MnemonicBackupBannerFromHome(event)">✕</button>
       </div>
       <div class="web3-token-header">
         <button class="web3-token-tab active" data-tab="CRYPTO" onclick="selectAssetTab(this)">币种</button>
@@ -4394,7 +4406,8 @@
         <div class="entry-title">开启 Web3钱包之旅</div>
         <div class="entry-desc">交易 · 理财 · 支付</div>
       </div>
-      <div class="wallet-entry-list">
+      <div class="wallet-entry-list" id="walletLoginEntryList">
+        <div id="walletLoginMnemonicCards">
         <button type="button" class="wallet-entry-card" onclick="onWalletLoginCreateCard()">
           <div class="wallet-entry-icon">+</div>
           <div class="wallet-entry-text">
@@ -4413,7 +4426,8 @@
           </div>
           <span class="wallet-entry-chevron">›</span>
         </button>
-        <button type="button" class="wallet-entry-card" onclick="onWalletLoginSocialCard()">
+        </div>
+        <button type="button" class="wallet-entry-card" id="walletLoginSocialCard" onclick="onWalletLoginSocialCard()">
           <div class="wallet-entry-icon">
             <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
           </div>
@@ -6047,10 +6061,9 @@
 </div>
 
 <script>
-// ====== Prototype Scope ======
-/** V1.1.0：HD 助记词创建/导入/备份/敏感信息/删除 + EVM L2 / SOL / TRON 十链 */
-const PROTOTYPE_V11 = true;
+// ====== Prototype Scope（基线 mvp_Final + V1.1.0 增量）======
 const PROTOTYPE_MVP = false;
+const PROTOTYPE_V11 = true;
 const MVP_SOCIAL_WALLET_TYPES = new Set(['google', 'apple', 'email']);
 const MVP_NON_EVM_NETWORK_IDS = new Set(['solana', 'tron']);
 const MVP_ALLOWED_NETWORK_IDS = new Set(['ethereum', 'bsc']);
@@ -6108,7 +6121,7 @@ function guardMvpExcludedScreen(targetId) {
 }
 
 function applyMvpPrototypeMode() {
-  if (!PROTOTYPE_MVP) return;
+  if (!PROTOTYPE_MVP || PROTOTYPE_V11) return;
   // 仅保留社交钱包 mock
   WALLET_LIST_DATA = WALLET_LIST_DATA.filter((w) => isMvpSocialWallet(w));
   if (!WALLET_LIST_DATA.find((w) => w.id === selectedWalletId)) {
@@ -6130,6 +6143,20 @@ function applyMvpPrototypeMode() {
 function applyV11PrototypeMode() {
   if (!PROTOTYPE_V11) return;
   document.body.classList.add('prototype-v11');
+}
+
+const V11_DEFER_FEATURE_MSG = '该功能将在后续版本开放';
+
+/** V1.2+ defer：币种管理 / 交易历史 / 自定义资产 / PIN 等 */
+function guardV11DeferFeature() {
+  if (!PROTOTYPE_V11) return false;
+  showToast(V11_DEFER_FEATURE_MSG, 2200);
+  return true;
+}
+
+/** V1.1 单链资产：每行 symbol+network，不聚合（F-031b 属 V1.2） */
+function asSingleChainTokenRows(tokens) {
+  return tokens.map((t) => ({ ...t, _isMultiChain: false }));
 }
 
 // ====== Global State ======
@@ -6164,9 +6191,10 @@ let WALLET_LIST_DATA = [
   { id: 'w-google', type: 'google', name: 'ter***923@gmail.com', balance: 428.12, avatar: '🐕', avatarBg: '#3d3528', isSocialLogin: true, loginEmail: 'terryxu923@gmail.com', walletDisplayId: 'a8be…7596' },
   { id: 'w-apple', type: 'apple', name: 'bx4***qkp@privaterelay....', balance: 312.45, avatar: '🐋', avatarBg: '#2a3548', isSocialLogin: true, loginEmail: 'bx4qkp@privaterelay.appleid.com', walletDisplayId: 'c2f1…8a3b' },
   { id: 'w-email', type: 'email', name: '0xt***yxu@gmail.com', balance: 545.96, avatar: '👽', avatarBg: '#352a48', isSocialLogin: true, loginEmail: '0xtterryyxu@gmail.com', walletDisplayId: 'f3d9…2c71' },
-  { id: 'w-mnemonic-2', type: 'mnemonic', name: '我的钱包2', balance: 3.97, avatar: '🏆', avatarBg: '#3a3a3a', backedUp: true, walletDisplayId: 'b1c4…9e02' },
-  { id: 'w-mnemonic-3', type: 'mnemonic', name: '我的钱包3', balance: 0.18, avatar: '🏆', avatarBg: '#3a3a3a', needBackup: true, walletDisplayId: 'd7a2…5f88' },
-  { id: 'w-private-4', type: 'privateKey', name: '3M4J…3mK9', balance: 0, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'sol', walletDisplayId: 'e9b3…1d44' },
+  // V1.1 演示：自托管 HD / 私钥（对齐 v4-all mock）
+  { id: 'w-mnemonic-2', type: 'mnemonic', name: '我的钱包2', balance: 128.0, avatar: '🏆', avatarBg: '#3a3a3a', backedUp: true, walletDisplayId: 'b1c4…9e02' },
+  { id: 'w-mnemonic-3', type: 'mnemonic', name: '我的钱包3', balance: 56.2, avatar: '🏆', avatarBg: '#3a3a3a', needBackup: true, walletDisplayId: 'd7a2…5f88' },
+  { id: 'w-private-4', type: 'privateKey', name: '3M4J…3mK9', balance: 12.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'sol', walletDisplayId: 'e9b3…1d44' },
   { id: 'w-private-evm', type: 'privateKey', name: '0xAb3…9f01', balance: 128.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'evm', walletDisplayId: 'b2e7…4c90' },
   { id: 'w-import-6', type: 'mnemonicImport', name: '我的钱包6', balance: 3504.33, avatar: '🦇', avatarBg: '#3d3528', backedUp: true, walletDisplayId: 'a4c8…7b19' },
 ];
@@ -6825,87 +6853,44 @@ function animateWalletMnemonicCreating() {
   }, 2800);
 }
 
-/** D-04：本会话内用户点 ✕ 关闭 Banner 的钱包 id（进程内 Set，刷新页面即冷启动再现） */
+/** 仅 finishWalletMnemonicCreateFlow 置 true，用于进入首页时强制刷新 Banner */
+let web3EnterWithMnemonicBackupBanner = false;
+/** D-04：当前 App 会话内用户点 ✕ 关闭过 Banner 的钱包 id */
 const web3BannerDismissedWalletIds = new Set();
-let prototypeWalletSeq = 0;
-
-function isWalletPendingBackup(wallet) {
-  return !!(wallet && wallet.type === 'mnemonic' && wallet.needBackup);
-}
-
-function isWeb3BannerDismissedForWallet(walletId) {
-  return walletId && web3BannerDismissedWalletIds.has(walletId);
-}
-
-function dismissWeb3BannerForSession(walletId) {
-  if (walletId) web3BannerDismissedWalletIds.add(walletId);
-}
-
-function clearWeb3BannerDismissForWallet(walletId) {
-  if (walletId) web3BannerDismissedWalletIds.delete(walletId);
-}
-
-function shouldShowWeb3MnemonicBackupBanner(walletId) {
-  if (PROTOTYPE_MVP) return false;
-  const id = walletId || selectedWalletId;
-  const wallet = getWalletById(id);
-  if (!isWalletPendingBackup(wallet)) return false;
-  if (isWeb3BannerDismissedForWallet(id)) return false;
-  return true;
-}
-
-function refreshWeb3MnemonicBackupBanner(walletId) {
-  const el = document.getElementById('web3MnemonicBackupBanner');
-  if (!el || currentScreen !== 'screen-web3home') return;
-  el.classList.toggle('visible', shouldShowWeb3MnemonicBackupBanner(walletId));
-}
 
 function showWeb3MnemonicBackupBanner() {
-  refreshWeb3MnemonicBackupBanner();
+  const el = document.getElementById('web3MnemonicBackupBanner');
+  if (el) el.classList.add('visible');
 }
 
 function dismissWeb3MnemonicBackupBanner() {
-  dismissWeb3BannerForSession(selectedWalletId);
-  refreshWeb3MnemonicBackupBanner();
+  const el = document.getElementById('web3MnemonicBackupBanner');
+  if (el) el.classList.remove('visible');
+}
+
+function shouldShowWeb3MnemonicBackupBanner() {
+  if (!PROTOTYPE_V11) return false;
+  const wallet = getWalletById(selectedWalletId);
+  if (!wallet || wallet.type !== 'mnemonic' || !wallet.needBackup) return false;
+  return !web3BannerDismissedWalletIds.has(wallet.id);
+}
+
+function refreshWeb3MnemonicBackupBanner() {
+  if (shouldShowWeb3MnemonicBackupBanner()) showWeb3MnemonicBackupBanner();
+  else dismissWeb3MnemonicBackupBanner();
+}
+
+function dismissWeb3MnemonicBackupBannerFromHome(ev) {
+  if (ev) ev.stopPropagation();
+  const wallet = getWalletById(selectedWalletId);
+  if (wallet && wallet.id) web3BannerDismissedWalletIds.add(wallet.id);
+  dismissWeb3MnemonicBackupBanner();
 }
 
 function openBackupMnemonicGuideFromHome() {
-  pendingBackupWalletId = selectedWalletId;
+  const wallet = getWalletById(selectedWalletId);
+  if (wallet && wallet.id) pendingBackupWalletId = wallet.id;
   openBackupMnemonicGuideScreen('screen-web3home');
-}
-
-function nextPrototypeWalletId(prefix) {
-  prototypeWalletSeq += 1;
-  return prefix + '-' + prototypeWalletSeq + '-' + Date.now().toString(36).slice(-4);
-}
-
-/** 原型：创建/导入成功后追加 mock 自托管钱包（D-05：助记词创建=待备份，助记词导入=已备份，私钥=无备份态） */
-function addPrototypeSelfCustodyWallet(spec) {
-  const type = spec.type || 'mnemonic';
-  const wallet = {
-    id: spec.id || nextPrototypeWalletId(type === 'privateKey' ? 'w-pk' : 'w-hd'),
-    type,
-    name: spec.name || generateDefaultMnemonicWalletName(),
-    balance: spec.balance != null ? spec.balance : 0,
-    avatar: spec.avatar || '🏆',
-    avatarBg: spec.avatarBg || '#3a3a3a',
-    walletDisplayId: spec.walletDisplayId || 'demo…0001',
-  };
-  if (type === 'mnemonic') {
-    if (spec.needBackup) wallet.needBackup = true;
-    else wallet.backedUp = true;
-  }
-  if (type === 'mnemonicImport') wallet.backedUp = true;
-  if (type === 'privateKey') {
-    wallet.copyAddressScope = spec.copyAddressScope || 'evm';
-    wallet.avatar = '🔐';
-    wallet.avatarBg = '#2e2e2e';
-    wallet.name = spec.name || generateDefaultPrivateKeyWalletName(
-      spec.copyAddressScope === 'sol' ? '3M4JxK9mN2pQ8rT5vW7yZ1aB3cD4eF6gH8jK9mN2pQ' : '0x0000000000000000000000000000000000000000'
-    );
-  }
-  WALLET_LIST_DATA.push(wallet);
-  return wallet;
 }
 
 
@@ -7014,6 +6999,47 @@ function onWalletLoginCreateCard() {
 function onWalletLoginImportCard() {
   if (PROTOTYPE_MVP) { showToast('MVP 仅支持社交登录创建钱包', 2200); return; }
   onWalletMnemonicImportEntry();
+}
+
+/** V1.1：助记词创建 / 助记词导入 / 私钥导入后写入 mock 钱包列表 */
+function addPrototypeSelfCustodyWallet(kind, opts) {
+  opts = opts || {};
+  const id = 'w-' + kind + '-' + Date.now();
+  const base = {
+    id,
+    balance: opts.balance != null ? opts.balance : 0,
+    avatar: opts.avatar || (kind === 'privateKey' ? '🔐' : '🏆'),
+    avatarBg: opts.avatarBg || (kind === 'privateKey' ? '#2e2e2e' : '#3a3a3a'),
+    walletDisplayId: opts.walletDisplayId || (id.slice(2, 6) + '…' + id.slice(-4)),
+  };
+  if (kind === 'mnemonic') {
+    WALLET_LIST_DATA.push({
+      ...base,
+      type: 'mnemonic',
+      name: opts.name || generateDefaultMnemonicWalletName(),
+      needBackup: true,
+      backedUp: false,
+    });
+  } else if (kind === 'mnemonicImport') {
+    WALLET_LIST_DATA.push({
+      ...base,
+      type: 'mnemonicImport',
+      name: opts.name || generateDefaultMnemonicWalletName(),
+      backedUp: true,
+      needBackup: false,
+    });
+  } else if (kind === 'privateKey') {
+    WALLET_LIST_DATA.push({
+      ...base,
+      type: 'privateKey',
+      name: opts.name || generateDefaultPrivateKeyWalletName(opts.address),
+      copyAddressScope: opts.copyAddressScope || 'evm',
+    });
+  }
+  saveLastSelectedWallet(id);
+  renderWalletList();
+  renderManageWalletList();
+  return id;
 }
 
 function onWalletLoginSocialCard() {
@@ -7139,8 +7165,11 @@ function startPrivyAppleLoginForImport() {
 }
 
 
-function enterWeb3Home() {
+function enterWeb3Home(options) {
   if (hasActiveWallet()) restoreLastSelectedWallet();
+  if (options && options.showMnemonicBackupBanner) {
+    web3EnterWithMnemonicBackupBanner = true;
+  }
   applyWeb3HomeNetworkForCurrentWallet(true);
   switchScreen('screen-web3home');
 }
@@ -7148,29 +7177,31 @@ function enterWeb3Home() {
 function finishWalletMnemonicCreateFlow() {
   currentFlow = '';
   walletCreateMethod = 'mnemonic';
-  const wallet = addPrototypeSelfCustodyWallet({ type: 'mnemonic', needBackup: true });
-  saveLastSelectedWallet(wallet.id);
-  renderWalletList();
-  enterWeb3Home();
+  addPrototypeSelfCustodyWallet('mnemonic');
+  enterWeb3Home({ showMnemonicBackupBanner: true });
   showToast('助记词钱包创建成功', 2000);
 }
 
 function finishWalletImportFlow() {
-  currentFlow = '';
-  const inputType = walletImportInputType;
+  const importKind = walletImportInputType;
   const netType = walletImportSelectedNetworkType;
+  currentFlow = '';
   walletImportInputType = '';
   importPrivateKeyTypes = [];
   walletImportSelectedNetworkType = '';
-  let wallet;
-  if (inputType === 'privateKey') {
-    const scope = netType === 'sol' ? 'sol' : (netType === 'tron' ? 'tron' : 'evm');
-    wallet = addPrototypeSelfCustodyWallet({ type: 'privateKey', copyAddressScope: scope });
-  } else {
-    wallet = addPrototypeSelfCustodyWallet({ type: 'mnemonicImport' });
+  if (importKind === 'mnemonic') {
+    addPrototypeSelfCustodyWallet('mnemonicImport');
+  } else if (importKind === 'privateKey') {
+    const scope = netType === 'sol' ? 'sol' : netType === 'tron' ? 'tron' : 'evm';
+    const mockAddr = scope === 'sol'
+      ? '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU'
+      : scope === 'tron'
+        ? 'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf'
+        : '0x742d35Cc6634C0532925a3b8D4C9b5F1234567a1';
+    addPrototypeSelfCustodyWallet('privateKey', { copyAddressScope: scope, address: mockAddr });
+  } else if (WALLET_LIST_DATA.length) {
+    saveLastSelectedWallet(WALLET_LIST_DATA[WALLET_LIST_DATA.length - 1].id);
   }
-  saveLastSelectedWallet(wallet.id);
-  renderWalletList();
   enterWeb3Home();
   showToast('钱包导入成功', 2000);
 }
@@ -7485,14 +7516,14 @@ function filterTokensByWalletScope(tokens, wallet) {
   return tokens;
 }
 
-/** 收发/接收列表：按当前钱包可见链白名单过滤（§9.1.4） */
+/** F-067：收发/接收列表按钱包可见链白名单过滤（§9.1.4） */
 function applyWalletScopeToTokenList(tokens) {
   const wallet = getWalletById(selectedWalletId);
   if (!wallet) return tokens;
   let list = filterTokensByWalletScope(tokens, wallet);
   const allowedNetIds = new Set(getSupportedWalletNetworks(wallet).map((n) => n.id));
   return list.filter((t) => {
-    if (t._isMultiChain) return true;
+    if (t._isMultiChain && !PROTOTYPE_V11) return true;
     if (t.assetType === 'SECURITY') return true;
     return allowedNetIds.has(t.network);
   });
@@ -7553,7 +7584,9 @@ function getFilteredAndSortedTokens() {
     tokens = tokens.filter(t => t.network === selectedNetwork);
   }
 
-  if (!PROTOTYPE_MVP && selectedAssetTab === 'CRYPTO' && selectedNetwork === 'all') {
+  if (PROTOTYPE_V11 && selectedAssetTab === 'CRYPTO') {
+    tokens = asSingleChainTokenRows(tokens);
+  } else if (!PROTOTYPE_MVP && selectedAssetTab === 'CRYPTO' && selectedNetwork === 'all') {
     tokens = _groupMultiChain(tokens);
   }
 
@@ -7592,30 +7625,26 @@ function renderTokenList() {
     // Coin logo inner
     const logoInner = tokenLogoInner(t.symbol, t.logoUrl, 16);
 
-    // Network badge: multi-chain → globe, single-chain → specific network
+    // Network badge：V1.1 单链一行 — 角标为所属 network
     const showBadge = (t.assetType === 'SECURITY' || t.assetType === 'CRYPTO');
     let badgeHtml = '';
     if (showBadge) {
-      if (t._isMultiChain) {
-        // Globe badge — same color as "全部网络" entry
-        badgeHtml = `<div class="net-badge" style="background:#444;font-size:9px;" title="多链资产">🌐</div>`;
-      } else {
-        const net = NETWORKS.find(n => n.id === t.network);
-        const badgeBg = net ? net.color : '#444';
-        badgeHtml = `<div class="net-badge" style="background:${badgeBg};overflow:hidden;" title="${net ? net.name : t.network}">${netLogoInner(net, 9)}</div>`;
-      }
+      const net = NETWORKS.find(n => n.id === t.network);
+      const badgeBg = net ? net.color : '#444';
+      badgeHtml = `<div class="net-badge" style="background:${badgeBg};overflow:hidden;" title="${net ? net.name : t.network}">${netLogoInner(net, 9)}</div>`;
     }
 
-    // RWA tag for SECURITY tokens — subtle grey style same as multi-chain tag
+    const netLabel = (selectedNetwork === 'all' && t.network && t.assetType === 'CRYPTO')
+      ? (() => {
+          const net = NETWORKS.find(n => n.id === t.network);
+          const label = net ? net.name.replace(' Smart Chain', '').replace(' One', '') : t.network;
+          return `<span style="font-size:10px;color:#888;margin-left:4px;">${label}</span>`;
+        })()
+      : '';
+
     const rwaTag = t.rwa ? `<span style="font-size:10px;color:#888;margin-left:4px;">${t.rwa}</span>` : '';
 
-    // Multi-chain tag
-    const multiChainTag = '';
-
-    // Click handler: multi-chain → multichain detail, single-chain → single detail
-    const clickAttr = t._isMultiChain
-      ? `onclick="openMultiChainDetail('${t.symbol}')"`
-      : `onclick="openSingleChainDetail('${t.symbol}','${t.network || ''}')"` ;
+    const clickAttr = `onclick="openSingleChainDetail('${t.symbol}','${t.network || ''}')"` ;
 
     html += `
       <div class="web3-token-item" ${clickAttr} style="cursor:pointer;">
@@ -7624,7 +7653,7 @@ function renderTokenList() {
           ${badgeHtml}
         </div>
         <div class="web3-token-info">
-          <div class="name">${t.symbol}${multiChainTag}${rwaTag}</div>
+          <div class="name">${t.symbol}${netLabel}${rwaTag}</div>
           <div class="price-row">
             <span class="price">${priceStr}</span>
             <span class="change ${ch.cls}">${ch.text}</span>
@@ -7695,7 +7724,7 @@ function getWalletCopyAddressScope(wallet) {
   if (wallet.copyAddressScope) return wallet.copyAddressScope;
   if (wallet.type === 'google' || wallet.type === 'apple' || wallet.type === 'email') return 'all';
   if (wallet.type === 'mnemonic' || wallet.type === 'mnemonicImport') return 'all';
-  if (wallet.type === 'privateKey') return 'evm';
+  if (wallet.type === 'privateKey') return wallet.copyAddressScope || 'evm';
   return 'all';
 }
 
@@ -7749,14 +7778,14 @@ function formatAddressShort(addr) {
   return addr.slice(0, 8) + '...' + addr.slice(-8);
 }
 
-/** 私钥钱包所属链 → 复制地址用的主网络 id（§9.2.4） */
+/** 私钥钱包所属链 → 复制地址用的主网络 id */
 function getPrimaryNetworkIdForCopyScope(scope) {
   if (scope === 'sol') return 'solana';
   if (scope === 'tron') return 'tron';
   return 'ethereum';
 }
 
-/** 首页：私钥钱包直接复制所属网络地址；其它钱包进入复制地址页 */
+/** F-067：首页复制 — 私钥钱包直复制所属链地址，其余进网络列表 */
 function onHomeCopyAddressClick() {
   const wallet = getWalletById(selectedWalletId);
   if (wallet && wallet.type === 'privateKey') {
@@ -9304,6 +9333,7 @@ function finishBackupMnemonicFlowSuccess() {
   backupMnemonicRevealed = false;
   backupVerifyQuiz = [];
   verifyMnemonicShowError = false;
+  dismissWeb3MnemonicBackupBanner();
   if (pendingBackupWalletId) {
     markWalletBackedUp(pendingBackupWalletId);
     pendingBackupWalletId = null;
@@ -9323,8 +9353,6 @@ function finishBackupMnemonicFlowSuccess() {
     showToast('助记词备份验证完成', 2000);
     return;
   }
-  renderWalletList();
-  renderManageWalletList();
   enterWeb3Home();
   showToast('助记词备份验证完成', 2000);
 }
@@ -9389,6 +9417,11 @@ function switchScreen(targetId) {
   }
   if (targetId === 'screen-web3home') {
     applyWeb3HomeNetworkForCurrentWallet(false);
+    if (web3EnterWithMnemonicBackupBanner) {
+      web3EnterWithMnemonicBackupBanner = false;
+      const w = getWalletById(selectedWalletId);
+      if (w && w.id) web3BannerDismissedWalletIds.delete(w.id);
+    }
     refreshWeb3MnemonicBackupBanner();
   }
 }
@@ -9802,8 +9835,8 @@ function markWalletBackedUp(walletId) {
   if (!w) return;
   w.needBackup = false;
   w.backedUp = true;
-  clearWeb3BannerDismissForWallet(walletId);
-  refreshWeb3MnemonicBackupBanner();
+  web3BannerDismissedWalletIds.delete(walletId);
+  if (currentScreen === 'screen-web3home') refreshWeb3MnemonicBackupBanner();
 }
 
 function syncWeb3HomeWalletDisplay() {
@@ -9996,7 +10029,7 @@ function renderWalletInfoScreen() {
   if (!wallet) return;
   const category = getWalletInfoCategory(wallet);
   const social = isWalletSocialLogin(wallet);
-  const editable = !social;
+  const editable = PROTOTYPE_MVP ? true : !social;
 
   const wrap = document.getElementById('wiAvatarWrap');
   const circle = document.getElementById('wiAvatarCircle');
@@ -10012,7 +10045,7 @@ function renderWalletInfoScreen() {
     circle.textContent = wallet.avatar || 'W';
   }
   if (nameEl) {
-    nameEl.textContent = getWalletInfoDisplayName(wallet);
+    nameEl.textContent = PROTOTYPE_MVP ? (wallet.name || '我的钱包') : getWalletInfoDisplayName(wallet);
     nameEl.classList.toggle('wi-name-editable', editable);
     nameEl.title = editable ? '点击编辑钱包名称' : '';
   }
@@ -10186,7 +10219,6 @@ function confirmExportMnemonicExit() {
 function finishExportMnemonicFlow() {
   const id = exportMnemonicPendingWalletId || walletInfoActiveId;
   if (id) {
-    clearWeb3BannerDismissForWallet(id);
     WALLET_LIST_DATA = WALLET_LIST_DATA.filter((w) => w.id !== id);
     if (selectedWalletId === id) {
       selectedWalletId = WALLET_LIST_DATA[0] ? WALLET_LIST_DATA[0].id : '';
@@ -10344,8 +10376,7 @@ function finishViewPrivateKeyFlow() {
 
 function onWalletInfoViewPrivateKey() {
   if (!walletInfoActiveId) return;
-  const wallet = getWalletById(walletInfoActiveId);
-  if (wallet && isWalletSocialLogin(wallet)) {
+  if (PROTOTYPE_MVP) {
     currentFlow = 'viewPrivateKeyPrivy';
     flowReturnScreen = 'screen-wallet-info';
     startWalletPasskeyFlow();
@@ -10413,7 +10444,6 @@ function closeWalletInfoDeleteSheet() {
 function executeWalletInfoLogout() {
   const id = walletInfoActiveId;
   if (!id) return;
-  clearWeb3BannerDismissForWallet(id);
   WALLET_LIST_DATA = WALLET_LIST_DATA.filter((w) => w.id !== id);
   if (selectedWalletId === id) {
     selectedWalletId = WALLET_LIST_DATA[0] ? WALLET_LIST_DATA[0].id : '';
@@ -10429,7 +10459,6 @@ function executeWalletInfoLogout() {
 function executeWalletInfoDelete() {
   const id = walletInfoActiveId;
   if (!id) return;
-  clearWeb3BannerDismissForWallet(id);
   WALLET_LIST_DATA = WALLET_LIST_DATA.filter((w) => w.id !== id);
   if (selectedWalletId === id) {
     selectedWalletId = WALLET_LIST_DATA[0] ? WALLET_LIST_DATA[0].id : '';
@@ -10803,15 +10832,17 @@ function resolveTokenTag(symbol, networkId) {
   if (STABLECOINS.has(symbol)) return 'Stable';
   const homeChain = TOKEN_NATIVE_HOME[symbol];
   if (homeChain) return homeChain; // native coin — show its home chain name
-  if (MULTI_CHAIN_SYMBOLS.has(symbol)) return '多链';
+  if (MULTI_CHAIN_SYMBOLS.has(symbol) && !PROTOTYPE_V11) return '多链';
   // Single-chain asset: show the current chain name
   const net = NETWORKS.find(n => n.id === networkId);
   return net ? net.name.replace(' Smart Chain','').replace(' One','') : networkId;
 }
 
 function openMultiChainDetail(symbol) {
-  if (PROTOTYPE_MVP) {
-    const chains = TOKEN_DATA.filter((t) => t.symbol === symbol && isMvpDisplayCryptoToken(t));
+  if (PROTOTYPE_MVP || PROTOTYPE_V11) {
+    let chains = TOKEN_DATA.filter((t) => t.symbol === symbol && t.assetType === 'CRYPTO');
+    if (PROTOTYPE_MVP) chains = chains.filter(isMvpDisplayCryptoToken);
+    chains = applyWalletScopeToTokenList(asSingleChainTokenRows(chains));
     if (chains.length) openSingleChainDetail(symbol, chains[0].network);
     return;
   }
@@ -11027,6 +11058,30 @@ function buildSingleChainBodyHTML(t, symbol, receiveSource) {
   const walletAddr = CHAIN_ADDRESSES[t.network] || '';
   const net = NETWORKS.find(n => n.id === t.network);
   const networkName = net ? net.name : t.network;
+
+  if (PROTOTYPE_V11) {
+    return `
+    <div class="mc-single-actions">
+      <button class="mc-single-action" onclick="openSendAddress('${symbol}','${t.network}','${receiveSource}')">
+        <div class="sa-circle"><svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></div>
+        <span>发送</span>
+      </button>
+      <button class="mc-single-action" onclick="openReceiveQrScreen('${symbol}','${t.network}','${receiveSource}')">
+        <div class="sa-circle"><svg viewBox="0 0 24 24"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg></div>
+        <span>接收</span>
+      </button>
+    </div>
+    <div class="mc-addr-section">
+      <div class="mc-addr-section-title">接收地址</div>
+      <div class="mc-addr-display">
+        <div class="mc-addr-text">${walletAddr}</div>
+        <button class="mc-addr-copy" onclick="showToast('地址已复制',1500)">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+    </div>`;
+  }
+
   const gasSym = EVM_NATIVE[t.network] || (t.network === 'solana' ? 'SOL' : 'ETH');
   // Build rich mock tx data shared with detail page
   const _fiatVal = (qty) => {
@@ -11215,6 +11270,7 @@ function switchMcTabById(networkId) {
 // TRANSACTION DETAIL
 // ============================================================
 function openTxDetail(tx) {
+  if (guardV11DeferFeature()) return;
   if (!tx) return;
   const receivePath = 'M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z';
   const sendPath    = 'M2.01 21L23 12 2.01 3 2 10l15 2-15 2z';
@@ -11420,7 +11476,8 @@ function closeTxDetail() {
 // TRANSACTION HISTORY SCREEN
 // ============================================================
 function openTxHistoryScreen() {
-  if (PROTOTYPE_V11) return;
+  if (PROTOTYPE_MVP) { showToast('MVP 暂不支持交易历史', 2200); return; }
+  if (guardV11DeferFeature()) return;
   _thNetwork = 'all';
   _renderThList();
   updateThNetworkIcon();
@@ -11651,7 +11708,7 @@ function closeSingleChainDetail() {
 }
 
 function openScTokenInfo() {
-  if (PROTOTYPE_MVP) return;
+  if (PROTOTYPE_MVP || PROTOTYPE_V11) return;
   _scInfoExpanded = false;
   const t = TOKEN_DATA.find(d => d.symbol === _scCurrentSymbol && d.network === _scCurrentNetwork);
   if (!t) return;
@@ -11748,6 +11805,7 @@ function selectMcNetwork(networkId) {
 let _mcInfoExpanded = false;
 
 function openMcTokenInfo() {
+  if (guardV11DeferFeature()) return;
   _mcInfoExpanded = false;
   const chains = TOKEN_DATA.filter(t => t.symbol === _mcCurrentSymbol && t.assetType === 'CRYPTO');
   if (!chains.length) return;
@@ -11880,6 +11938,9 @@ function getReceiveAssets() {
   let all;
   if (PROTOTYPE_MVP) {
     all = TOKEN_DATA.filter((t) => isMvpDisplayCryptoToken(t)).map((t) => ({ ...t, _isMultiChain: false }));
+  } else if (PROTOTYPE_V11) {
+    all = TOKEN_DATA.filter((t) => t.assetType === 'SECURITY' || t.assetType === 'CRYPTO');
+    all = applyWalletScopeToTokenList(asSingleChainTokenRows(all));
   } else {
     all = TOKEN_DATA.filter(t => {
       if (t.assetType !== 'SECURITY' && t.assetType !== 'CRYPTO') return false;
@@ -11892,7 +11953,6 @@ function getReceiveAssets() {
       (t.assetType === 'CRYPTO' && !MULTI_CHAIN_SYMBOLS.has(t.symbol)) ? { ...t, _isMultiChain: false } : t
     ));
   }
-  all = applyWalletScopeToTokenList(all);
   all.sort(_sortByValue);
   return all;
 }
@@ -11904,7 +11964,7 @@ function getReceiveAssets() {
  * - Non-native single-chain → chain name (shortened)
  */
 function resolveReceiveTypeTag(t) {
-  if (t._isMultiChain) return '多链';
+  if (t._isMultiChain && !PROTOTYPE_V11) return '多链';
   // Check if native (null contract address)
   const contractAddr = getContractAddress(t.symbol, t.network);
   const isNative = contractAddr === null; // null = native on this chain
@@ -11932,6 +11992,7 @@ function resolveReceiveFullName(t) {
  * Render a single receive-asset row as HTML string.
  */
 function buildReceiveItemHTML(t) {
+  if (PROTOTYPE_V11) t = { ...t, _isMultiChain: false };
   // Logo
   const logoInner = tokenLogoInner(t.symbol, t.logoUrl, 16);
 
@@ -12058,7 +12119,13 @@ function renderReceiveSearch(query) {
 
   const container = document.getElementById('receiveSearchList');
   if (filtered.length === 0 && q) {
-    // If query is a contract address, pass it to openCustomAssetForm for auto-fill
+    if (PROTOTYPE_V11) {
+      container.innerHTML = `
+        <div class="rs-empty">
+          <div class="rs-empty-text">未找到 <strong>"${raw}"</strong><br>请重新输入</div>
+        </div>`;
+      return;
+    }
     const onclickArg = isAddr
       ? `openCustomAssetForm('receive', '${raw.replace(/'/g, "\\'")}')`
       : `openCustomAssetForm('receive')`;
@@ -12084,12 +12151,19 @@ function renderReceiveSearch(query) {
 let _rnCurrentSymbol = null;
 
 function openReceiveNetSelect(symbol) {
+  if (PROTOTYPE_V11) {
+    const rows = applyWalletScopeToTokenList(
+      asSingleChainTokenRows(TOKEN_DATA.filter((t) => t.symbol === symbol && t.assetType === 'CRYPTO'))
+    );
+    if (rows.length) openReceiveQrScreen(symbol, rows[0].network, 'receive');
+    return;
+  }
   _rnCurrentSymbol = symbol;
   let chains = TOKEN_DATA.filter(t =>
     t.symbol === symbol && t.assetType === 'CRYPTO'
     && (!PROTOTYPE_MVP || isMvpWhitelistedToken(t))
   );
-  chains = applyWalletScopeToTokenList(chains);
+  chains = applyWalletScopeToTokenList(asSingleChainTokenRows(chains));
 
   // Sort by fiat value desc (same logic as 首页-选择网络)
   const sorted = [...chains].sort((a, b) => {
@@ -12325,7 +12399,8 @@ function caFetchToken() {
 }
 
 function openCustomAssetForm(source, prefillAddr) {
-  if (PROTOTYPE_V11) return;
+  if (PROTOTYPE_MVP) { showToast('MVP 暂不支持自定义资产', 2200); return; }
+  if (guardV11DeferFeature()) return;
   _caSource = source || 'receive';
   _caFetched = false;
   _caFetchedSymbol = '';
@@ -12355,6 +12430,7 @@ function closeCustomAssetForm() {
 
 // ── CA Network Selector ──
 function openCaNetSelector() {
+  if (guardV11DeferFeature()) return;
   document.getElementById('caNetSearchInput').value = '';
   renderCaNetList('');
   document.getElementById('caNetSelectScreen').classList.add('visible');
@@ -12639,7 +12715,8 @@ function tmOnSearch(val) {
 
 // ── Open / Close ──
 function openTokenManageScreen() {
-  if (PROTOTYPE_V11) return;
+  if (PROTOTYPE_MVP) { showToast('MVP 暂不支持币种管理', 2200); return; }
+  if (guardV11DeferFeature()) return;
   _tmNetwork = 'all';
   _tmShowAllAdded = false;
   _tmSearchQuery = '';
@@ -12675,6 +12752,7 @@ function updateTmNetworkIcon() {
 
 // ── TM Network selector ──
 function openTmNetSelector() {
+  if (guardV11DeferFeature()) return;
   document.getElementById('tmNetSearchInput').value = '';
   renderTmNetList('');
   document.getElementById('tmNetScreen').classList.add('visible');
@@ -12766,6 +12844,12 @@ function getSendAssets() {
   let tokens;
   if (PROTOTYPE_MVP) {
     tokens = TOKEN_DATA.filter((t) => isMvpDisplayCryptoToken(t)).map((t) => ({ ...t, _isMultiChain: false }));
+  } else if (PROTOTYPE_V11) {
+    tokens = TOKEN_DATA.filter((t) => {
+      if (t.balance <= 0) return false;
+      return t.assetType === 'CRYPTO' || t.assetType === 'SECURITY';
+    });
+    tokens = applyWalletScopeToTokenList(asSingleChainTokenRows(tokens));
   } else {
     tokens = TOKEN_DATA.filter(t => {
       if (t.balance <= 0) return false;
@@ -12777,7 +12861,6 @@ function getSendAssets() {
         : t
     ));
   }
-  tokens = applyWalletScopeToTokenList(tokens);
   tokens.sort(_sortByValue);
   return tokens;
 }
@@ -12803,6 +12886,7 @@ function closeSendSelect() {
 }
 
 function buildSendItemHTML(t) {
+  if (PROTOTYPE_V11) t = { ...t, _isMultiChain: false };
   const logoInner = tokenLogoInner(t.symbol, t.logoUrl, 16);
   let badgeHtml = '';
   if (t._isMultiChain) {
@@ -12842,12 +12926,21 @@ function buildSendItemHTML(t) {
 let _snCurrentSymbol = null;
 
 function openSendNetSelect(symbol) {
+  if (PROTOTYPE_V11) {
+    const rows = applyWalletScopeToTokenList(
+      asSingleChainTokenRows(TOKEN_DATA.filter((t) => t.symbol === symbol && t.balance > 0 && t.assetType === 'CRYPTO'))
+    );
+    if (rows.length) {
+      const demoKey = rows[0]._tron?.demoKey || '';
+      openSendAddress(symbol, rows[0].network, 'sendSelect', demoKey);
+    }
+    return;
+  }
   _snCurrentSymbol = symbol;
-  let chains = TOKEN_DATA.filter(t =>
+  const chains = TOKEN_DATA.filter(t =>
     t.symbol === symbol && t.balance > 0 && t.assetType === 'CRYPTO'
     && (!PROTOTYPE_MVP || isMvpWhitelistedToken(t))
   );
-  chains = applyWalletScopeToTokenList(chains);
   const sorted = [...chains].sort((a, b) => {
     const aVal = (a.price !== null && a.balance > 0) ? a.price * a.balance : 0;
     const bVal = (b.price !== null && b.balance > 0) ? b.price * b.balance : 0;
@@ -12999,7 +13092,13 @@ function onAddressInput(val) {
     next.disabled = false;
   } else {
     wrap.classList.add('error');
-    hint.textContent = _sendNetworkId === 'tron' ? '请输入正确的 Tron 地址' : '请输入正确的地址';
+    if (_sendNetworkId === 'solana') {
+      hint.textContent = '请输入正确的 Solana 地址（Base58，32–44 位）';
+    } else if (_sendNetworkId === 'tron') {
+      hint.textContent = '请输入正确的 Tron 地址（以 T 开头）';
+    } else {
+      hint.textContent = '请输入正确的 EVM 地址（0x + 40 位十六进制）';
+    }
     next.disabled = true;
   }
 }
@@ -13977,6 +14076,7 @@ applyV11PrototypeMode();
 if (hasActiveWallet()) {
   restoreLastSelectedWallet();
   syncWeb3HomeWalletDisplay();
+  if (currentScreen === 'screen-web3home') refreshWeb3MnemonicBackupBanner();
 }
 </script>
 </body>

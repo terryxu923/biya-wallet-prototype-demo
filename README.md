@@ -9,6 +9,8 @@
 
 静态 HTML，由 GitHub Pages 托管。完整源码仓库为私有。
 
-**V1.1 原型**：`prototype-v11.html`（HD 助记词 + 十链；`PROTOTYPE_V11=true`）。MVP 基线仍为根路径 `index.html`。
+**V1.1 原型**：`prototype-v11.html`（HD 助记词 + 十链单链资产；`PROTOTYPE_V11=true`）。MVP 基线仍为根路径 `index.html`。
+
+**V1.1 原型校验**：`node scripts/verify_v11_prototype.mjs`（静态回归 51 项）。
 
 **V1.1 PRD 同步**：在 `01-PRD-V1.1/` 目录执行 `python3 scripts/sync_v11_prd_html.py`，输出 `BiyaWallet_PRD_V1.1.0.html` 与本目录 `prd-v11.html`。
