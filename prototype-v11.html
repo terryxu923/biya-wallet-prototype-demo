@@ -7634,14 +7634,6 @@ function renderTokenList() {
       badgeHtml = `<div class="net-badge" style="background:${badgeBg};overflow:hidden;" title="${net ? net.name : t.network}">${netLogoInner(net, 9)}</div>`;
     }
 
-    const netLabel = (selectedNetwork === 'all' && t.network && t.assetType === 'CRYPTO')
-      ? (() => {
-          const net = NETWORKS.find(n => n.id === t.network);
-          const label = net ? net.name.replace(' Smart Chain', '').replace(' One', '') : t.network;
-          return `<span style="font-size:10px;color:#888;margin-left:4px;">${label}</span>`;
-        })()
-      : '';
-
     const rwaTag = t.rwa ? `<span style="font-size:10px;color:#888;margin-left:4px;">${t.rwa}</span>` : '';
 
     const clickAttr = `onclick="openSingleChainDetail('${t.symbol}','${t.network || ''}')"` ;
@@ -7653,7 +7645,7 @@ function renderTokenList() {
           ${badgeHtml}
         </div>
         <div class="web3-token-info">
-          <div class="name">${t.symbol}${netLabel}${rwaTag}</div>
+          <div class="name">${t.symbol}${rwaTag}</div>
           <div class="price-row">
             <span class="price">${priceStr}</span>
             <span class="change ${ch.cls}">${ch.text}</span>
