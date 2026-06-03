@@ -4214,6 +4214,215 @@
     background: rgba(255,255,255,0.08); border-radius: 8px; padding: 2px 8px;
   }
   .sa-wi-addr { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+  /* ── 页面演示指南（原型右侧悬浮窗，不影响手机内交互） ── */
+  .demo-guide-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9998;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #00D4AA, #00B894);
+    color: #0D0D0D;
+    border: none;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 212, 170, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .demo-guide-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 212, 170, 0.45);
+  }
+  .demo-guide-toggle:active { transform: translateY(0); }
+  .demo-guide-toggle svg { display: block; }
+
+  .demo-guide-panel {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    max-height: calc(100vh - 96px);
+    width: 360px;
+    max-width: 92vw;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22), 0 4px 12px rgba(15, 23, 42, 0.08);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    resize: both;
+  }
+  .demo-guide-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .demo-guide-head {
+    flex-shrink: 0;
+    padding: 14px 18px 12px;
+    background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+    color: #0D0D0D;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: move;
+    user-select: none;
+  }
+  .demo-guide-head-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+  }
+  .demo-guide-head-sub {
+    font-size: 12px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+  .demo-guide-close {
+    background: rgba(0, 0, 0, 0.12);
+    border: none;
+    color: #0D0D0D;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .demo-guide-close:hover { background: rgba(0, 0, 0, 0.2); }
+
+  .demo-guide-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px 28px;
+  }
+
+  .demo-cat { margin-top: 18px; }
+  .demo-cat:first-child { margin-top: 4px; }
+  .demo-cat-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .demo-cat-head.cat-entry  { background: #ecfdf5; color: #047857; }
+  .demo-cat-head.cat-hd     { background: #eff6ff; color: #1d4ed8; }
+  .demo-cat-head.cat-chain  { background: #f5f3ff; color: #6d28d9; }
+  .demo-cat-head.cat-wallet { background: #fff7ed; color: #c2410c; }
+  .demo-cat-head.cat-sys    { background: #f1f5f9; color: #475569; }
+  .demo-cat-head.cat-error  { background: #fef2f2; color: #b91c1c; }
+  .demo-cat-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .demo-scene {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 13px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .demo-scene:hover {
+    border-color: #99f6e4;
+    box-shadow: 0 2px 8px rgba(0, 212, 170, 0.12);
+  }
+  .demo-scene-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+  .demo-scene-id {
+    font-size: 10px;
+    font-weight: 700;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .demo-scene-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .demo-kw-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .demo-kw {
+    display: inline-block;
+    padding: 4px 9px;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .demo-kw:hover {
+    background: #00D4AA;
+    color: #0D0D0D;
+    border-color: #00D4AA;
+    transform: translateY(-1px);
+  }
+  .demo-kw.active {
+    background: #00B894;
+    color: #fff;
+    border-color: #00B894;
+    font-weight: 600;
+  }
+
+  .demo-guide-tip {
+    margin-top: 6px;
+    padding: 10px 12px;
+    background: #ecfdf5;
+    border: 1px solid #99f6e4;
+    border-radius: 8px;
+    font-size: 11.5px;
+    color: #047857;
+    line-height: 1.6;
+  }
+  .demo-guide-tip strong { color: #065f46; }
 </style>
 </head>
 <body>
@@ -6059,6 +6268,154 @@
   <!-- Toast -->
   <div class="toast" id="toastMsg"></div>
 </div>
+
+<!-- ═══════════════════ 页面演示指南 ═══════════════════ -->
+<button class="demo-guide-toggle" id="demoGuideToggle" type="button" aria-label="打开页面演示">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/></svg>
+  页面演示
+</button>
+
+<aside class="demo-guide-panel" id="demoGuidePanel" aria-hidden="true">
+  <div class="demo-guide-head">
+    <div>
+      <div class="demo-guide-head-title">页面演示 · V1.1.0</div>
+      <div class="demo-guide-head-sub">悬浮窗 · 可拖动 / 可缩放 · 不影响原型操作<br>点击场景 → 自动跳转对应页面</div>
+    </div>
+    <button class="demo-guide-close" id="demoGuideClose" type="button" aria-label="关闭">✕</button>
+  </div>
+
+  <div class="demo-guide-body">
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-entry"><span class="demo-cat-icon">🏠</span>① 入口与首页</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">A</span>模块入口</div>
+        <div class="demo-scene-desc">交易所 / Web3 有钱包 / 无钱包首页</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="exchange-home">交易所首页</span>
+          <span class="demo-kw" data-demo="web3-home">Web3 首页</span>
+          <span class="demo-kw" data-demo="web3-empty">无钱包首页</span>
+          <span class="demo-kw" data-demo="wallet-list">选择钱包</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-hd"><span class="demo-cat-icon">🔐</span>② HD 钱包（F-002b～F-025）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">B</span>创建 / 导入</div>
+        <div class="demo-scene-desc">三卡片、助记词导入、备份引导、扫码导入</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="add-wallet">添加钱包 · 三卡片</span>
+          <span class="demo-kw" data-demo="import-seed">导入助记词/私钥</span>
+          <span class="demo-kw" data-demo="backup-guide">备份安全引导</span>
+          <span class="demo-kw" data-demo="scan-import">扫码导入弹窗</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">C</span>钱包状态</div>
+        <div class="demo-scene-desc">待备份 Banner、钱包信息、邮箱导出助记词</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="home-pending-backup">待备份 Banner</span>
+          <span class="demo-kw" data-demo="wallet-info-unbacked">钱包信息 · 待备份</span>
+          <span class="demo-kw" data-demo="wallet-info-email">钱包信息 · 邮箱社交</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-chain"><span class="demo-cat-icon">🌐</span>③ 十链扩展（F-067）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">D</span>网络与资产</div>
+        <div class="demo-scene-desc">十链选择、单链列表、复制地址、证券 Tab</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="network-selector">十链网络选择</span>
+          <span class="demo-kw" data-demo="copy-address">复制地址列表</span>
+          <span class="demo-kw" data-demo="home-sol-pk">Solana 私钥钱包</span>
+          <span class="demo-kw" data-demo="home-evm-pk">EVM 私钥钱包</span>
+          <span class="demo-kw" data-demo="tab-security">证券 Tab</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">E</span>收发演示</div>
+        <div class="demo-scene-desc">单链资产模型 · 接收 QR / 发送地址页</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="receive-select">接收 · 选币</span>
+          <span class="demo-kw" data-demo="receive-usdt-tron">接收 USDT · TRON</span>
+          <span class="demo-kw" data-demo="send-select">发送 · 选币</span>
+          <span class="demo-kw" data-demo="send-usdt-tron">发送 USDT · TRON</span>
+          <span class="demo-kw" data-demo="token-detail-eth">ETH 代币详情</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-wallet"><span class="demo-cat-icon">⚙️</span>④ 钱包管理</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">F</span>设置与敏感信息</div>
+        <div class="demo-scene-desc">管理钱包、查看私钥选网、Passkey 演示</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="manage-wallet">管理钱包</span>
+          <span class="demo-kw" data-demo="view-pk-net">查看私钥 · 选网</span>
+          <span class="demo-kw" data-demo="passkey-permission">Passkey 权限弹窗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-sys"><span class="demo-cat-icon">🚫</span>⑤ V1.2 defer 验证</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">G</span>应被拦截的能力</div>
+        <div class="demo-scene-desc">点击后应 Toast「该功能将在后续版本开放」</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="defer-token-manage">币种管理</span>
+          <span class="demo-kw" data-demo="defer-tx-history">交易历史</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-error"><span class="demo-cat-icon">⚠️</span>⑥ 异常场景</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">H</span>账号与验证</div>
+        <div class="demo-scene-desc">Passkey 取消、邮箱冲突、OTP 错误、TSS 分片失败</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-passkey-cancel">Passkey 取消验证</span>
+          <span class="demo-kw" data-demo="err-email-exists">邮箱已在此设备登录</span>
+          <span class="demo-kw" data-demo="err-otp-wrong">OTP 验证码错误</span>
+          <span class="demo-kw" data-demo="err-tss-fail">TSS 分片同步失败</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">I</span>导入与备份</div>
+        <div class="demo-scene-desc">助记词/私钥校验、验证错误、截屏风险提示</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-import-empty">导入内容为空</span>
+          <span class="demo-kw" data-demo="err-import-word">助记词单词错误</span>
+          <span class="demo-kw" data-demo="err-import-pk">私钥格式错误</span>
+          <span class="demo-kw" data-demo="err-verify-mnemonic">助记词验证错误</span>
+          <span class="demo-kw" data-demo="err-screenshot">截屏风险提示</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">J</span>发送异常</div>
+        <div class="demo-scene-desc">地址格式、TRON 资源、Solana 限制、链上失败</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-send-addr-evm">EVM 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-send-addr-sol">Solana 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-tron-unactivated">TRON 未激活接收地址</span>
+          <span class="demo-kw" data-demo="err-tron-low-energy">TRON Energy 不足</span>
+          <span class="demo-kw" data-demo="err-sol-frozen">Solana ATA 已冻结</span>
+          <span class="demo-kw" data-demo="err-sol-non-transfer">Solana 禁止转账</span>
+          <span class="demo-kw" data-demo="err-send-fail">发送失败 OUT_OF_ENERGY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-guide-tip">
+      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。原型手机框内仍可正常点击操作。
+    </div>
+  </div>
+</aside>
 
 <script>
 // ====== Prototype Scope（基线 mvp_Final + V1.1.0 增量）======
@@ -13285,11 +13642,11 @@ function _samLoadTronContext(recipient) {
   const standard = meta.standard || 'TRX';
   const rec = (recipient || _samRecipient || '').trim();
   const scen = TRON_ADDR_SCENARIOS[rec] || {};
+  const lowEnergy = scen.lowEnergy === true;
+  const receiverActivated = scen.activated !== false;
   const trxBal = _samToken.symbol === 'TRX' && (!_samToken._tron || _samToken._tron.standard === 'TRX')
     ? _samToken.balance
     : _samGetTronTrxBalance(lowEnergy);
-  const lowEnergy = scen.lowEnergy === true;
-  const receiverActivated = scen.activated !== false;
 
   let bandwidthNeed = standard === 'TRC20' ? 345 : 268;
   let energyNeed = standard === 'TRC20' ? 64895 : 0;
@@ -14045,13 +14402,14 @@ function _completeSendTransaction() {
   document.getElementById('sendConfirm').classList.remove('visible');
   const sym = _samToken ? _samToken.symbol : '';
   const qty = _samInputStr || '0';
-  const isTron = (_sendNetworkId === 'tron');
+  const isTron = (_samToken && _samToken.network === 'tron') || _sendNetworkId === 'tron';
   closeSendAmount();
   showToast('交易已提交', 1800);
   const mockTxId = isTron
     ? 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12'
     : '';
-  const success = Math.random() > 0.3;
+  const success = _demoForceSendFail ? false : Math.random() > 0.3;
+  if (_demoForceSendFail) _demoForceSendFail = false;
   setTimeout(() => {
     if (success) {
       const extra = isTron && mockTxId ? ` txID …${mockTxId.slice(-8)}` : '';
@@ -14062,6 +14420,434 @@ function _completeSendTransaction() {
     }
   }, 2600);
 }
+
+// ============================================================
+// 页面演示指南 · 场景跳转
+// ============================================================
+let _demoForceSendFail = false;
+
+function demoCloseAllOverlays() {
+  const closers = [
+    closeSendSelect, closeSendAmount, closeSendAddress, closeSendSignAuth,
+    closeReceiveSelect, closeReceiveSearch, closeReceiveQrScreen,
+    closeNetworkSelector, closeSingleChainDetail, closeMultiChainDetail,
+    closeWalletOnboardingSheet, closeSocialLoginSheet,
+    closePasskeyPermissionModal, closePasskeyDeviceModal,
+    closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
+    closeMnemonicScreenshotModal,
+  ];
+  closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
+  ['sendConfirm', 'scDetail', 'scInfoScreen', 'mcInfoScreen', 'txDetail', 'txHistoryScreen',
+    'tokenManageScreen', 'customAssetForm', 'pinModalOverlay',
+  ].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+}
+
+function demoOpenImportSeedScreen() {
+  flowReturnScreen = 'screen-wallet-login';
+  walletOnboardingEntryScreen = 'screen-wallet-login';
+  openWalletImportSeedScreen();
+}
+
+function demoOpenSendAddressError(symbol, networkId, invalidAddr) {
+  selectWalletById('w-google');
+  switchScreen('screen-web3home');
+  openSendAddress(symbol, networkId, 'web3home', '');
+  const inp = document.getElementById('saInput');
+  if (inp) inp.value = invalidAddr;
+  onAddressInput(invalidAddr);
+}
+
+function demoOpenSendAmountScene(symbol, networkId, toAddress, amountStr) {
+  selectWalletById('w-google');
+  switchScreen('screen-web3home');
+  _sendDemoKey = '';
+  _sendSymbol = symbol;
+  _sendNetworkId = networkId;
+  openSendAmount(symbol, networkId, toAddress);
+  if (amountStr) {
+    _samInputStr = amountStr;
+    _samUpdateDisplay();
+  }
+}
+
+function demoOpenBackupMnemonicForError() {
+  pendingBackupWalletId = 'w-mnemonic-3';
+  mnemonicDisplayMode = 'backup';
+  mnemonicBackupGuideReturnScreen = 'screen-web3home';
+  resetBackupMnemonicScreen();
+  syncBackupMnemonicScreenChrome();
+  switchScreen('screen-wallet-backup-mnemonic');
+  revealBackupMnemonic();
+}
+
+function demoSelectAssetTab(tab) {
+  const btn = document.querySelector('.web3-token-tab[data-tab="' + tab + '"]');
+  if (btn) selectAssetTab(btn);
+}
+
+const DEMO_SCENE_RUNNERS = {
+  'exchange-home'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    switchScreen('screen-exchange');
+  },
+  'web3-home'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    demoSelectAssetTab('CRYPTO');
+  },
+  'web3-empty'() {
+    demoCloseAllOverlays();
+    enterWeb3EmptyHome();
+  },
+  'wallet-list'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    renderWalletList();
+    switchScreen('screen-wallet-list');
+  },
+  'add-wallet'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+  },
+  'import-seed'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    flowReturnScreen = 'screen-wallet-login';
+    walletOnboardingEntryScreen = 'screen-wallet-login';
+    openWalletImportSeedScreen();
+  },
+  'backup-guide'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    pendingBackupWalletId = 'w-mnemonic-3';
+    openBackupMnemonicGuideScreen('screen-wallet-list');
+  },
+  'scan-import'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    flowReturnScreen = 'screen-wallet-import-seed';
+    openWalletImportSeedScreen();
+    openImportSeedScanModal();
+  },
+  'home-pending-backup'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    web3BannerDismissedWalletIds.delete('w-mnemonic-3');
+    selectWalletById('w-mnemonic-3');
+  },
+  'wallet-info-unbacked'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-mnemonic-3');
+  },
+  'wallet-info-email'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-email');
+  },
+  'network-selector'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openNetworkSelector();
+  },
+  'copy-address'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openCopyAddressScreen();
+  },
+  'home-sol-pk'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-private-4');
+  },
+  'home-evm-pk'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-private-evm');
+  },
+  'tab-security'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    demoSelectAssetTab('SECURITY');
+  },
+  'receive-select'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openReceiveSelect();
+  },
+  'receive-usdt-tron'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openReceiveQrScreen('USDT', 'tron', 'receive');
+  },
+  'send-select'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSendSelect('web3home');
+  },
+  'send-usdt-tron'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSendAddress('USDT', 'tron', 'web3home', '');
+  },
+  'token-detail-eth'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSingleChainDetail('ETH', 'ethereum');
+  },
+  'manage-wallet'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletListEdit();
+  },
+  'view-pk-net'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletInfoActiveId = 'w-google';
+    const searchInput = document.getElementById('viewPkNetSearchInput');
+    if (searchInput) searchInput.value = '';
+    renderViewPrivateKeyNetList('');
+    switchScreen('screen-wallet-viewpk-net');
+  },
+  'passkey-permission'() {
+    demoCloseAllOverlays();
+    document.getElementById('passkeyPermissionModal').classList.add('visible');
+  },
+  'defer-token-manage'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openTokenManageScreen();
+  },
+  'defer-tx-history'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openTxHistoryScreen();
+  },
+  'err-passkey-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    currentFlow = 'create';
+    walletCreateMethod = 'email';
+    walletPendingEmail = 'demo@test.com';
+    switchScreen('screen-wallet-email-verify');
+    document.getElementById('passkeyPermissionModal').classList.add('visible');
+    cancelPasskeyPermissionFlow();
+  },
+  'err-email-exists'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    switchScreen('screen-wallet-email-input');
+    openWalletEmailExistsModal('existing@test.com');
+  },
+  'err-otp-wrong'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletPendingEmail = 'demo@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    openWalletEmailVerifyScreen('demo@test.com');
+    fillWalletOtpCode('000000');
+    submitWalletEmailVerify('000000');
+  },
+  'err-tss-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletPendingEmail = 'tssfail@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    flowReturnScreen = 'screen-wallet-email-input';
+    resetCompletingShardAnimation();
+    switchScreen('screen-completing');
+    animateCompleting();
+  },
+  'err-import-empty'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedScreen();
+    setImportSeedError('请输入助记词或私钥');
+  },
+  'err-import-word'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedScreen();
+    const ta = getImportSeedTextarea();
+    if (ta) {
+      ta.value = 'invalidword123 abandon ability able about above absent absorb abstract absurd abuse access accident';
+      refreshImportSeedSpacedWordErrors(ta.value);
+      updateImportSeedActionBtn();
+    }
+  },
+  'err-import-pk'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedScreen();
+    const ta = getImportSeedTextarea();
+    if (ta) {
+      ta.value = '0x1234';
+      setImportSeedError(getImportPrivateKeyErrorMessage('0x1234'));
+      updateImportSeedActionBtn();
+    }
+  },
+  'err-verify-mnemonic'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenBackupMnemonicForError();
+    openVerifyMnemonicScreen();
+    backupVerifyQuiz.forEach((row) => {
+      const wrong = row.options.find((w) => w !== row.correct);
+      if (wrong) row.selected = wrong;
+    });
+    submitVerifyMnemonic();
+  },
+  'err-screenshot'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenBackupMnemonicForError();
+    openMnemonicScreenshotModal();
+  },
+  'err-send-addr-evm'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAddressError('ETH', 'ethereum', '0xINVALID');
+  },
+  'err-send-addr-sol'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAddressError('SOL', 'solana', 'not-a-valid-solana-address');
+  },
+  'err-tron-unactivated'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.unactivated, '');
+  },
+  'err-tron-low-energy'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.lowEnergy, '10');
+  },
+  'err-sol-frozen'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('JITO', 'solana', '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU', '');
+  },
+  'err-sol-non-transfer'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('BERN', 'solana', '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU', '');
+  },
+  'err-send-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.default, '10');
+    _demoForceSendFail = true;
+    _completeSendTransaction();
+  },
+};
+
+function runDemoScene(sceneId) {
+  const runner = DEMO_SCENE_RUNNERS[sceneId];
+  if (!runner) {
+    showToast('未知演示场景：' + sceneId, 2000);
+    return;
+  }
+  try {
+    runner();
+  } catch (err) {
+    console.warn('[demo-guide]', sceneId, err);
+    showToast('演示跳转失败', 2000);
+  }
+}
+
+(function initDemoGuidePanel() {
+  const toggle = document.getElementById('demoGuideToggle');
+  const panel = document.getElementById('demoGuidePanel');
+  const closeBtn = document.getElementById('demoGuideClose');
+  if (!toggle || !panel || !closeBtn) return;
+  const head = panel.querySelector('.demo-guide-head');
+
+  function openPanel() {
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
+  toggle.addEventListener('click', () => {
+    panel.classList.contains('open') ? closePanel() : openPanel();
+  });
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let originLeft = 0;
+  let originTop = 0;
+
+  head.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.demo-guide-close')) return;
+    dragging = true;
+    const rect = panel.getBoundingClientRect();
+    startX = e.clientX;
+    startY = e.clientY;
+    originLeft = rect.left;
+    originTop = rect.top;
+    panel.style.right = 'auto';
+    panel.style.left = originLeft + 'px';
+    panel.style.top = originTop + 'px';
+    panel.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    let nx = originLeft + dx;
+    let ny = originTop + dy;
+    nx = Math.max(8, Math.min(window.innerWidth - panel.offsetWidth - 8, nx));
+    ny = Math.max(8, Math.min(window.innerHeight - 60, ny));
+    panel.style.left = nx + 'px';
+    panel.style.top = ny + 'px';
+  });
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    panel.style.transition = '';
+    document.body.style.userSelect = '';
+  });
+
+  panel.addEventListener('click', (e) => {
+    const chip = e.target.closest('.demo-kw');
+    if (!chip) return;
+    const sceneId = chip.getAttribute('data-demo');
+    if (!sceneId) return;
+    panel.querySelectorAll('.demo-kw').forEach((el) => el.classList.remove('active'));
+    chip.classList.add('active');
+    runDemoScene(sceneId);
+  });
+})();
 
 applyMvpPrototypeMode();
 applyV11PrototypeMode();
