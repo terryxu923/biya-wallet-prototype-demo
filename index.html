@@ -4180,6 +4180,215 @@
     background: rgba(255,255,255,0.08); border-radius: 8px; padding: 2px 8px;
   }
   .sa-wi-addr { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+  /* ── 页面演示指南（原型右侧悬浮窗，不影响手机内交互） ── */
+  .demo-guide-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9998;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #00D4AA, #00B894);
+    color: #0D0D0D;
+    border: none;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 212, 170, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .demo-guide-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 212, 170, 0.45);
+  }
+  .demo-guide-toggle:active { transform: translateY(0); }
+  .demo-guide-toggle svg { display: block; }
+
+  .demo-guide-panel {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    max-height: calc(100vh - 96px);
+    width: 360px;
+    max-width: 92vw;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22), 0 4px 12px rgba(15, 23, 42, 0.08);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    resize: both;
+  }
+  .demo-guide-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .demo-guide-head {
+    flex-shrink: 0;
+    padding: 14px 18px 12px;
+    background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%);
+    color: #0D0D0D;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: move;
+    user-select: none;
+  }
+  .demo-guide-head-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+  }
+  .demo-guide-head-sub {
+    font-size: 12px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+  .demo-guide-close {
+    background: rgba(0, 0, 0, 0.12);
+    border: none;
+    color: #0D0D0D;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .demo-guide-close:hover { background: rgba(0, 0, 0, 0.2); }
+
+  .demo-guide-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px 28px;
+  }
+
+  .demo-cat { margin-top: 18px; }
+  .demo-cat:first-child { margin-top: 4px; }
+  .demo-cat-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .demo-cat-head.cat-entry  { background: #ecfdf5; color: #047857; }
+  .demo-cat-head.cat-flow   { background: #eff6ff; color: #1d4ed8; }
+  .demo-cat-head.cat-send   { background: #f5f3ff; color: #6d28d9; }
+  .demo-cat-head.cat-wallet { background: #fff7ed; color: #c2410c; }
+  .demo-cat-head.cat-sys    { background: #f1f5f9; color: #475569; }
+  .demo-cat-head.cat-error  { background: #fef2f2; color: #b91c1c; }
+  .demo-cat-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .demo-scene {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 13px;
+    margin-bottom: 8px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .demo-scene:hover {
+    border-color: #99f6e4;
+    box-shadow: 0 2px 8px rgba(0, 212, 170, 0.12);
+  }
+  .demo-scene-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+  .demo-scene-id {
+    font-size: 10px;
+    font-weight: 700;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .demo-scene-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .demo-kw-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .demo-kw {
+    display: inline-block;
+    padding: 4px 9px;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .demo-kw:hover {
+    background: #00D4AA;
+    color: #0D0D0D;
+    border-color: #00D4AA;
+    transform: translateY(-1px);
+  }
+  .demo-kw.active {
+    background: #00B894;
+    color: #fff;
+    border-color: #00B894;
+    font-weight: 600;
+  }
+
+  .demo-guide-tip {
+    margin-top: 6px;
+    padding: 10px 12px;
+    background: #ecfdf5;
+    border: 1px solid #99f6e4;
+    border-radius: 8px;
+    font-size: 11.5px;
+    color: #047857;
+    line-height: 1.6;
+  }
+  .demo-guide-tip strong { color: #065f46; }
 </style>
 </head>
 <body>
@@ -6025,6 +6234,145 @@
   <!-- Toast -->
   <div class="toast" id="toastMsg"></div>
 </div>
+
+<!-- ═══════════════════ 页面演示指南 ═══════════════════ -->
+<button class="demo-guide-toggle" id="demoGuideToggle" type="button" aria-label="打开页面演示">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/></svg>
+  页面演示
+</button>
+
+<aside class="demo-guide-panel" id="demoGuidePanel" aria-hidden="true">
+  <div class="demo-guide-head">
+    <div>
+      <div class="demo-guide-head-title">页面演示 · MVP</div>
+      <div class="demo-guide-head-sub">悬浮窗 · 可拖动 / 可缩放 · 不影响原型操作<br>点击场景 → 自动跳转 · 异常场景对齐 PRD §13</div>
+    </div>
+    <button class="demo-guide-close" id="demoGuideClose" type="button" aria-label="关闭">✕</button>
+  </div>
+
+  <div class="demo-guide-body">
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-entry"><span class="demo-cat-icon">🏠</span>① 入口与首页</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">A</span>模块入口</div>
+        <div class="demo-scene-desc">交易所 / Web3 有钱包 / 无钱包 / 选择钱包</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="exchange-home">交易所首页</span>
+          <span class="demo-kw" data-demo="web3-home">Web3 首页</span>
+          <span class="demo-kw" data-demo="web3-empty">无钱包首页</span>
+          <span class="demo-kw" data-demo="wallet-list">选择钱包</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-flow"><span class="demo-cat-icon">🔑</span>② 社交创建（§8）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">B</span>登录与创建</div>
+        <div class="demo-scene-desc">添加钱包、邮箱输入、Passkey 权限弹窗</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="add-wallet">添加钱包</span>
+          <span class="demo-kw" data-demo="email-input">邮箱输入页</span>
+          <span class="demo-kw" data-demo="passkey-permission">Passkey 权限弹窗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-send"><span class="demo-cat-icon">↔️</span>③ 收发演示（§5–§7）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">C</span>EVM 双链</div>
+        <div class="demo-scene-desc">ETH / BSC · 接收 QR / 发送流程 / 代币详情</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="receive-select">接收 · 选币</span>
+          <span class="demo-kw" data-demo="receive-usdt-bsc">接收 USDT · BSC</span>
+          <span class="demo-kw" data-demo="send-select">发送 · 选币</span>
+          <span class="demo-kw" data-demo="send-usdt-eth">发送 USDT · ETH</span>
+          <span class="demo-kw" data-demo="send-confirm-ok">签名预览 · 正常</span>
+          <span class="demo-kw" data-demo="token-detail-eth">ETH 代币详情</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-wallet"><span class="demo-cat-icon">⚙️</span>④ 钱包管理（§11–§12）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">D</span>设置与信息</div>
+        <div class="demo-scene-desc">管理钱包、钱包信息、复制地址</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="manage-wallet">管理钱包</span>
+          <span class="demo-kw" data-demo="wallet-info">钱包信息</span>
+          <span class="demo-kw" data-demo="copy-address">复制地址</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-sys"><span class="demo-cat-icon">🚫</span>⑤ MVP 范围外</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">E</span>应被拦截的能力</div>
+        <div class="demo-scene-desc">点击后应 Toast「MVP 暂不支持…」或等价提示</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="defer-import">导入钱包</span>
+          <span class="demo-kw" data-demo="defer-mnemonic">助记词备份</span>
+          <span class="demo-kw" data-demo="defer-tx-history">交易历史</span>
+          <span class="demo-kw" data-demo="defer-token-manage">币种管理</span>
+          <span class="demo-kw" data-demo="defer-custom-asset">自定义资产</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-error"><span class="demo-cat-icon">⚠️</span>⑥ 异常场景（§13 全覆盖）</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">F</span>账号与验证</div>
+        <div class="demo-scene-desc">TSS 失败 · OTP 错误/锁定 · 邮箱冲突 · 格式错误</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-tss-fail">TSS 分片同步失败</span>
+          <span class="demo-kw" data-demo="err-otp-wrong">OTP 验证码错误</span>
+          <span class="demo-kw" data-demo="err-otp-locked">OTP 验证已锁定</span>
+          <span class="demo-kw" data-demo="err-email-exists">邮箱已在此设备登录</span>
+          <span class="demo-kw" data-demo="err-email-format">邮箱格式错误</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">G</span>通行密钥（§13.3 三）</div>
+        <div class="demo-scene-desc">创建 / 发送签名 / 查看私钥 / 退出钱包</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-passkey-cancel-create">取消验证（创建）</span>
+          <span class="demo-kw" data-demo="err-passkey-fail-create">验证失败（创建）</span>
+          <span class="demo-kw" data-demo="err-passkey-cancel-send">取消签名验证</span>
+          <span class="demo-kw" data-demo="err-passkey-fail-send">验证失败（发送）</span>
+          <span class="demo-kw" data-demo="err-passkey-cancel-viewpk">取消查看私钥</span>
+          <span class="demo-kw" data-demo="err-passkey-cancel-logout">取消退出钱包</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">H</span>发送校验（§7.4）</div>
+        <div class="demo-scene-desc">地址格式 · 余额不足 · Gas 不足 · 签名预览 Gas</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-send-addr-evm">EVM 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-send-balance-erc20">ERC-20 余额不足</span>
+          <span class="demo-kw" data-demo="err-send-gas">Gas 不足以支付</span>
+          <span class="demo-kw" data-demo="err-send-balance-gas">扣除 Gas 后余额不足</span>
+          <span class="demo-kw" data-demo="err-send-confirm-gas">签名预览 · Gas 不足</span>
+          <span class="demo-kw" data-demo="err-send-confirm-gas-tier">签名预览 · 快档 Gas 不足</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">I</span>发送结果（§13.3 四）</div>
+        <div class="demo-scene-desc">链上广播失败 · 全局错误 Toast</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-send-fail">发送失败</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-guide-tip">
+      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。OTP 锁定演示会重置计数；TSS 失败演示邮箱 <strong>tssfail@test.com</strong>。
+    </div>
+  </div>
+</aside>
 
 <script>
 // ====== MVP Scope (V1.0.0 – V1.3.0) ======
@@ -13420,30 +13768,90 @@ function _scfGasNativeSymbol() {
   return EVM_NATIVE[net] || '';
 }
 
-// Does the user have enough native balance to cover gas?
+// Does the user have enough native balance to cover gas (tier-adjusted)?
+function _scfGetTierGasCost() {
+  if (!_samToken) return 0;
+  const net = _samToken.network;
+  if (net === 'solana') {
+    const cfg = SOL_TIER_CONFIG[_gasTier] || SOL_TIER_CONFIG.normal;
+    return cfg.feeSol;
+  }
+  if (net === 'tron') {
+    if (!_samTronCtx) _samTronCtx = _samLoadTronContext(_samRecipient);
+    return _samTronCtx ? _samTronCtx.burnTrx : 0.5;
+  }
+  const base = _samGasEstimate > 0 ? _samGasEstimate : (EVM_GAS_BASE[net] || 0.001);
+  const tierMult = (EVM_TIER_CONFIG[_gasTier] || EVM_TIER_CONFIG.avg).mult;
+  return base * tierMult;
+}
+
+function _scfGetSendTokenQty() {
+  if (!_samToken) return 0;
+  const inputNum = parseFloat(_samInputStr) || 0;
+  const price = _samToken.price || 0;
+  return _samMode === 'token' ? inputNum : (price > 0 ? inputNum / price : 0);
+}
+
 function _scfCanAffordGas() {
   if (!_samToken) return true;
   const net = _samToken.network;
   const gasSym = _scfGasNativeSymbol();
   if (!gasSym) return true; // unknown chain – allow
 
-  // For Solana, native coin is SOL itself; check SOL rent exemption was already validated in amount page
   if (net === 'solana') {
     const solToken = TOKEN_DATA.find(t => t.symbol === 'SOL' && t.network === 'solana' && !t._sol);
     const solBal = solToken ? solToken.balance : 0;
-    // need at least 5000 lamports (~0.000005 SOL) for tx fee
-    return solBal >= 0.000005;
+    return solBal >= _scfGetTierGasCost();
   }
   if (net === 'tron') {
-    if (!_samTronCtx) _samTronCtx = _samLoadTronContext(_samRecipient);
     const trxBal = _samGetTronTrxBalance(_samTronCtx && _samTronCtx.lowEnergy);
-    return trxBal >= (_samTronCtx ? _samTronCtx.burnTrx : 0.5);
+    return trxBal >= _scfGetTierGasCost();
   }
-  // EVM: tier-adjusted gas estimate vs native balance
   const nativeToken = TOKEN_DATA.find(t => t.symbol === gasSym && t.network === net);
   const nativeBal = nativeToken ? nativeToken.balance : 0;
-  const tierMult = (EVM_TIER_CONFIG[_gasTier] || EVM_TIER_CONFIG.avg).mult;
-  return nativeBal >= _samGasEstimate * tierMult;
+  const gasCost = _scfGetTierGasCost();
+  const isNativeSend = EVM_NATIVE[net] === _samToken.symbol;
+  if (isNativeSend) {
+    return nativeBal >= _scfGetSendTokenQty() + gasCost;
+  }
+  return nativeBal >= gasCost;
+}
+
+function _scfRefreshAffordance() {
+  const confirm = document.getElementById('sendConfirm');
+  if (!confirm || !confirm.classList.contains('visible') || !_samToken) return;
+
+  const net = _samToken.network;
+  const isTron = net === 'tron';
+  const canAfford = _scfCanAffordGas();
+  const gasSym = _scfGasNativeSymbol();
+  const banner = document.getElementById('scfGasBanner');
+  if (banner) {
+    if (!canAfford && gasSym) {
+      const bannerText = document.getElementById('scfGasBannerText');
+      if (bannerText) {
+        bannerText.textContent = isTron
+          ? `${gasSym} 余额不足以覆盖网络资源费用（预估燃烧 TRX），请补充后重试`
+          : `${gasSym}余额不足以覆盖主网费用，请补充后重试`;
+      }
+      banner.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+    }
+  }
+
+  const btnArea = document.getElementById('scfBtnArea');
+  if (!btnArea || !gasSym) return;
+  if (canAfford) {
+    btnArea.innerHTML = `
+      <div class="scf-btn-row">
+        <button class="scf-btn-cancel" onclick="goBackFromSendConfirm()">取消</button>
+        <button class="scf-btn-confirm" onclick="openSendSignAuth()">确认</button>
+      </div>`;
+  } else {
+    btnArea.innerHTML = `
+      <button class="scf-btn-topup" onclick="openReceiveQrScreen('${gasSym}','${net}','sendAmount')">${isTron ? '补充 TRX 网络资源' : `补充主网费用(${gasSym})`}</button>`;
+  }
 }
 
 function _scfFmtTronResource() {
@@ -13508,6 +13916,7 @@ function _scfStartGasTimer() {
     }
     const el = document.getElementById('scfGasText');
     if (el) el.textContent = _scfFmtGas();
+    _scfRefreshAffordance();
   }, 3000);
 }
 function _scfStopGasTimer() {
@@ -13544,11 +13953,11 @@ function closeGasSheet() {
 
 function selectGasTier(tier) {
   _gasTier = tier;
-  // Close sheet and sync value back to confirm page immediately
   _stopGasSheetTimer();
   document.getElementById('gasSheetOverlay').classList.remove('visible');
   const el = document.getElementById('scfGasText');
   if (el) el.textContent = _scfFmtGas();
+  _scfRefreshAffordance();
 }
 
 function selectTronFeeLimit(limitTrx) {
@@ -13559,6 +13968,7 @@ function selectTronFeeLimit(limitTrx) {
   const el = document.getElementById('scfGasText');
   if (el) el.textContent = _scfFmtGas();
   _samUpdateDisplay();
+  _scfRefreshAffordance();
 }
 
 function _renderGasSheet() {
@@ -13692,54 +14102,25 @@ function openSendConfirm() {
   const net      = t.network;
   const price    = t.price || 0;
   const isTron   = net === 'tron';
-  // Reset gas tier to network default
   _gasTier     = (net === 'solana') ? 'normal' : 'avg';
   _gasBaseGwei = EVM_GWEI_BASE[net] || 3.1;
   if (isTron) {
     _samTronCtx = _samLoadTronContext(_samRecipient);
   }
-  const canAfford = _scfCanAffordGas();
 
-  // Amount: token qty
   const inputNum = parseFloat(_samInputStr) || 0;
   let tokenQty = _samMode === 'token' ? inputNum : (price > 0 ? inputNum / price : 0);
-
-  // Display qty: up to token's decimals, strip trailing zeros
   const decimals = t.decimals || 8;
   const qtyStr   = tokenQty.toFixed(Math.min(decimals, 13)).replace(/\.?0+$/, '') || '0';
-
-  // Symbol display (truncate to 8 chars)
   const symDisplay = sym.length > 8 ? sym.slice(0, 8) + '···' : sym;
-
-  // Fiat sub
   const fiatStr = price > 0 ? _samFmtFiatSub(tokenQty * price) : '';
-
-  // Addresses
   const fromAddr = CHAIN_ADDRESSES[net] || '';
   const toAddr   = _samRecipient;
-
-  // Wallet labels (always "我的钱包 - 账户01")
   const fromLabel = '我的钱包 - 账户01';
-  // Detect if recipient is also a local address
   const knownAddrs = Object.values(CHAIN_ADDRESSES);
   const toLabel = knownAddrs.includes(toAddr) ? '我的钱包 - 账户01' : '';
-
-  // Gas banner
-  const gasSym = _scfGasNativeSymbol();
-  const banner = document.getElementById('scfGasBanner');
-  if (!canAfford && gasSym) {
-    document.getElementById('scfGasBannerText').textContent = isTron
-      ? `${gasSym} 余额不足以覆盖网络资源费用（预估燃烧 TRX），请补充后重试`
-      : `${gasSym}余额不足以覆盖主网费用，请补充后重试`;
-    banner.classList.add('visible');
-  } else {
-    banner.classList.remove('visible');
-  }
-
-  // Token logo
   const logoInner = tokenLogoInner(sym, t.logoUrl, 24);
 
-  // Content
   document.getElementById('scfContent').innerHTML = `
     <div class="scf-amount-area">
       <div class="scf-token-logo" style="background:${t.color};">${logoInner}</div>
@@ -13776,19 +14157,8 @@ function openSendConfirm() {
     </div>
   `;
 
-  // Buttons
-  if (canAfford) {
-    document.getElementById('scfBtnArea').innerHTML = `
-      <div class="scf-btn-row">
-        <button class="scf-btn-cancel" onclick="goBackFromSendConfirm()">取消</button>
-        <button class="scf-btn-confirm" onclick="openSendSignAuth()">确认</button>
-      </div>`;
-  } else {
-    document.getElementById('scfBtnArea').innerHTML = `
-      <button class="scf-btn-topup" onclick="openReceiveQrScreen('${gasSym}','${net}','sendAmount')">${isTron ? '补充 TRX 网络资源' : `补充主网费用(${gasSym})`}</button>`;
-  }
-
   document.getElementById('sendConfirm').classList.add('visible');
+  _scfRefreshAffordance();
   _scfStartGasTimer();
 }
 
@@ -13819,13 +14189,14 @@ function _completeSendTransaction() {
   document.getElementById('sendConfirm').classList.remove('visible');
   const sym = _samToken ? _samToken.symbol : '';
   const qty = _samInputStr || '0';
-  const isTron = (_sendNetworkId === 'tron');
+  const isTron = (_samToken && _samToken.network === 'tron') || _sendNetworkId === 'tron';
   closeSendAmount();
   showToast('交易已提交', 1800);
   const mockTxId = isTron
     ? 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef12'
     : '';
-  const success = Math.random() > 0.3;
+  const success = _demoForceSendFail ? false : Math.random() > 0.3;
+  if (_demoForceSendFail) _demoForceSendFail = false;
   setTimeout(() => {
     if (success) {
       const extra = isTron && mockTxId ? ` txID …${mockTxId.slice(-8)}` : '';
@@ -13836,6 +14207,429 @@ function _completeSendTransaction() {
     }
   }, 2600);
 }
+
+// ============================================================
+// 页面演示指南 · 场景跳转（MVP · PRD §13 异常全覆盖）
+// ============================================================
+let _demoForceSendFail = false;
+const DEMO_MVP_SEND_ADDR = '0x742d35Cc6634C0532925a3b8D4C9b5F1234567a1';
+
+function demoCloseAllOverlays() {
+  const closers = [
+    closeSendSelect, closeSendAmount, closeSendAddress, closeSendSignAuth,
+    closeReceiveSelect, closeReceiveSearch, closeReceiveQrScreen,
+    closeNetworkSelector, closeSingleChainDetail, closeMultiChainDetail,
+    closeWalletOnboardingSheet, closeSocialLoginSheet,
+    closePasskeyPermissionModal, closePasskeyDeviceModal,
+    closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
+    closeWalletInfoLogoutSheet, closeWalletInfoDeleteSheet,
+  ];
+  closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
+  ['sendConfirm', 'scDetail', 'scInfoScreen', 'mcInfoScreen', 'txDetail', 'txHistoryScreen',
+    'tokenManageScreen', 'customAssetForm', 'pinModalOverlay',
+  ].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+}
+
+function demoSelectAssetTab(tab) {
+  const btn = document.querySelector('.web3-token-tab[data-tab="' + tab + '"]');
+  if (btn) selectAssetTab(btn);
+}
+
+function demoOpenSendAmountScene(symbol, networkId, toAddress, amountStr) {
+  selectWalletById('w-google');
+  switchScreen('screen-web3home');
+  _sendDemoKey = '';
+  _sendSymbol = symbol;
+  _sendNetworkId = networkId;
+  openSendAmount(symbol, networkId, toAddress);
+  if (amountStr) {
+    _samInputStr = amountStr;
+    _samUpdateDisplay();
+  }
+}
+
+function demoOpenSendAddressError(symbol, networkId, invalidAddr) {
+  selectWalletById('w-google');
+  switchScreen('screen-web3home');
+  openSendAddress(symbol, networkId, 'web3home', '');
+  const inp = document.getElementById('saInput');
+  if (inp) inp.value = invalidAddr;
+  onAddressInput(invalidAddr);
+}
+
+function demoOpenSendConfirmForPasskey() {
+  demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '10');
+  openSendConfirm();
+  currentFlow = 'sendSign';
+}
+
+function demoOpenSendConfirmGasInsufficient(mode) {
+  if (mode === 'tier') {
+    demoOpenSendAmountScene('USDT', 'bsc', DEMO_MVP_SEND_ADDR, '10');
+    openSendConfirm();
+    _gasTier = 'fast';
+    _samGasEstimate = 0.34;
+    const el = document.getElementById('scfGasText');
+    if (el) el.textContent = _scfFmtGas();
+    _scfRefreshAffordance();
+    return;
+  }
+  demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '10');
+  openSendConfirm();
+}
+
+function demoResetOtpLockState() {
+  walletOtpFailCount = 0;
+  walletOtpLocked = false;
+}
+
+const DEMO_SCENE_RUNNERS = {
+  'exchange-home'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    switchScreen('screen-exchange');
+  },
+  'web3-home'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    demoSelectAssetTab('CRYPTO');
+  },
+  'web3-empty'() {
+    demoCloseAllOverlays();
+    enterWeb3EmptyHome();
+  },
+  'wallet-list'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    renderWalletList();
+    switchScreen('screen-wallet-list');
+  },
+  'add-wallet'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+  },
+  'email-input'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    switchScreen('screen-wallet-email-input');
+  },
+  'passkey-permission'() {
+    demoCloseAllOverlays();
+    document.getElementById('passkeyPermissionModal').classList.add('visible');
+  },
+  'receive-select'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openReceiveSelect();
+  },
+  'receive-usdt-bsc'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openReceiveQrScreen('USDT', 'bsc', 'receive');
+  },
+  'send-select'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSendSelect('web3home');
+  },
+  'send-usdt-eth'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSendAddress('USDT', 'ethereum', 'web3home', '');
+  },
+  'send-confirm-ok'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'bsc', DEMO_MVP_SEND_ADDR, '10');
+    openSendConfirm();
+  },
+  'token-detail-eth'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openSingleChainDetail('ETH', 'ethereum');
+  },
+  'manage-wallet'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletListEdit();
+  },
+  'wallet-info'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-google');
+  },
+  'copy-address'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openCopyAddressScreen();
+  },
+  'defer-import'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    openWalletImportSeedScreen();
+  },
+  'defer-mnemonic'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-google');
+    onWalletInfoBackupMnemonic();
+  },
+  'defer-tx-history'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openTxHistoryScreen();
+  },
+  'defer-token-manage'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openTokenManageScreen();
+  },
+  'defer-custom-asset'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    openCustomAssetForm();
+  },
+  'err-tss-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletPendingEmail = 'tssfail@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    flowReturnScreen = 'screen-wallet-email-input';
+    resetCompletingShardAnimation();
+    switchScreen('screen-completing');
+    animateCompleting();
+  },
+  'err-otp-wrong'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoResetOtpLockState();
+    walletPendingEmail = 'demo@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    openWalletEmailVerifyScreen('demo@test.com');
+    fillWalletOtpCode('000000');
+    submitWalletEmailVerify('000000');
+  },
+  'err-otp-locked'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoResetOtpLockState();
+    walletOtpFailCount = MVP_OTP_LOCK_THRESHOLD;
+    walletOtpLocked = true;
+    walletPendingEmail = 'demo@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    openWalletEmailVerifyScreen('demo@test.com');
+    fillWalletOtpCode('000000');
+    submitWalletEmailVerify('000000');
+  },
+  'err-email-exists'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    switchScreen('screen-wallet-email-input');
+    openWalletEmailExistsModal('existing@test.com');
+  },
+  'err-email-format'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    switchScreen('screen-wallet-email-input');
+    const input = document.getElementById('walletEmailInput');
+    if (input) input.value = 'not-an-email';
+    submitWalletEmail();
+  },
+  'err-passkey-cancel-create'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    currentFlow = 'create';
+    walletCreateMethod = 'email';
+    walletPendingEmail = 'demo@test.com';
+    switchScreen('screen-wallet-email-verify');
+    document.getElementById('passkeyPermissionModal').classList.add('visible');
+    cancelPasskeyPermissionFlow();
+  },
+  'err-passkey-fail-create'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    currentFlow = 'create';
+    walletCreateMethod = 'email';
+    walletPendingEmail = 'demo@test.com';
+    switchScreen('screen-wallet-email-verify');
+    showPasskeyDeviceConfirmation(false);
+    completePasskeyVerification(false);
+  },
+  'err-passkey-cancel-send'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendConfirmForPasskey();
+    document.getElementById('passkeyPermissionModal').classList.add('visible');
+    cancelPasskeyPermissionFlow();
+  },
+  'err-passkey-fail-send'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendConfirmForPasskey();
+    showPasskeyDeviceConfirmation(false);
+    completePasskeyVerification(false);
+  },
+  'err-passkey-cancel-viewpk'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-google');
+    onWalletInfoViewPrivateKey();
+    cancelPasskeyPermissionFlow();
+  },
+  'err-passkey-cancel-logout'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-google');
+    confirmWalletInfoLogout();
+    cancelPasskeyPermissionFlow();
+  },
+  'err-send-addr-evm'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAddressError('USDT', 'ethereum', '0xINVALID');
+  },
+  'err-send-balance-erc20'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '999');
+  },
+  'err-send-gas'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('ETH', 'ethereum', DEMO_MVP_SEND_ADDR, '');
+  },
+  'err-send-balance-gas'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('ETH', 'arbitrum', DEMO_MVP_SEND_ADDR, '0.06');
+  },
+  'err-send-confirm-gas'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendConfirmGasInsufficient();
+  },
+  'err-send-confirm-gas-tier'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendConfirmGasInsufficient('tier');
+  },
+  'err-send-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '10');
+    _demoForceSendFail = true;
+    _completeSendTransaction();
+  },
+};
+
+function runDemoScene(sceneId) {
+  const runner = DEMO_SCENE_RUNNERS[sceneId];
+  if (!runner) {
+    showToast('未知演示场景：' + sceneId, 2000);
+    return;
+  }
+  try {
+    runner();
+  } catch (err) {
+    console.warn('[demo-guide]', sceneId, err);
+    showToast('演示跳转失败', 2000);
+  }
+}
+
+(function initDemoGuidePanel() {
+  const toggle = document.getElementById('demoGuideToggle');
+  const panel = document.getElementById('demoGuidePanel');
+  const closeBtn = document.getElementById('demoGuideClose');
+  if (!toggle || !panel || !closeBtn) return;
+  const head = panel.querySelector('.demo-guide-head');
+
+  function openPanel() {
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
+  toggle.addEventListener('click', () => {
+    panel.classList.contains('open') ? closePanel() : openPanel();
+  });
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+  });
+
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let originLeft = 0;
+  let originTop = 0;
+
+  head.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.demo-guide-close')) return;
+    dragging = true;
+    const rect = panel.getBoundingClientRect();
+    startX = e.clientX;
+    startY = e.clientY;
+    originLeft = rect.left;
+    originTop = rect.top;
+    panel.style.right = 'auto';
+    panel.style.left = originLeft + 'px';
+    panel.style.top = originTop + 'px';
+    panel.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    let nx = originLeft + dx;
+    let ny = originTop + dy;
+    nx = Math.max(8, Math.min(window.innerWidth - panel.offsetWidth - 8, nx));
+    ny = Math.max(8, Math.min(window.innerHeight - 60, ny));
+    panel.style.left = nx + 'px';
+    panel.style.top = ny + 'px';
+  });
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    panel.style.transition = '';
+    document.body.style.userSelect = '';
+  });
+
+  panel.addEventListener('click', (e) => {
+    const chip = e.target.closest('.demo-kw');
+    if (!chip) return;
+    const sceneId = chip.getAttribute('data-demo');
+    if (!sceneId) return;
+    panel.querySelectorAll('.demo-kw').forEach((el) => el.classList.remove('active'));
+    chip.classList.add('active');
+    runDemoScene(sceneId);
+  });
+})();
 
 applyMvpPrototypeMode();
 if (hasActiveWallet()) {
