@@ -1064,6 +1064,11 @@
     flex: 1; font-size: 13px; color: var(--text-secondary);
     line-height: 1.6; word-break: break-all;
   }
+  .mc-addr-text-link {
+    background: none; border: none; padding: 0; text-align: left;
+    cursor: pointer; color: var(--accent);
+  }
+  .mc-addr-text-link:active { opacity: 0.75; }
   .mc-addr-copy {
     width: 32px; height: 32px; background: none; border: none; cursor: pointer;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
@@ -3644,6 +3649,21 @@
   }
   .privy-wv-copy-btn:active { opacity: 0.85; }
 
+  /* ======== 区块浏览器 WebView（App 内嵌） ======== */
+  .explorer-webview {
+    position: absolute; inset: 0; z-index: 300;
+    display: none; flex-direction: column; background: var(--bg-primary);
+    overflow: hidden;
+  }
+  .explorer-webview.visible { display: flex; }
+  .explorer-wv-body {
+    flex: 1; display: flex; flex-direction: column; min-height: 0;
+    background: #f5f5f7;
+  }
+  .explorer-wv-iframe {
+    flex: 1; width: 100%; border: none; background: #fff;
+  }
+
   /* ======== 钱包信息域 — Dark Bottom Sheet ======== */
   .wallet-info-sheet-overlay {
     position: absolute; inset: 0; z-index: 440;
@@ -5384,6 +5404,23 @@
     </div>
     <!-- Body: action-buttons + receive-addr + tx-history rendered dynamically -->
     <div class="sc-body"></div>
+  </div>
+
+  <!-- 区块浏览器 WebView（App 内嵌，点击接收地址跳转） -->
+  <div class="explorer-webview" id="explorerWebView">
+    <div class="status-bar status-bar-dark"><span class="time">20:38</span><div class="icons"><svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div></div>
+    <div class="nav-bar nav-bar-dark">
+      <button type="button" class="nav-back nav-back-dark" onclick="closeExplorerWebView()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
+      <div class="nav-title" id="explorerWebViewTitle" style="color:#fff;">区块浏览器</div>
+      <div style="width:32px;"></div>
+    </div>
+    <div class="explorer-wv-body">
+      <div class="privy-wv-toolbar">
+        <svg class="privy-wv-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+        <div class="privy-wv-url" id="explorerWebViewUrl"></div>
+      </div>
+      <iframe class="explorer-wv-iframe" id="explorerWebViewFrame" title="区块浏览器" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+    </div>
   </div>
 
   <!-- ============================================================
@@ -10827,6 +10864,41 @@ const CHAIN_ADDRESSES = {
   tron:     'TXYZopYRdjKrhtvHYn8vJ8k7KqJmYvZ3mK',
 };
 
+const BLOCK_EXPLORER_ADDRESS_URL = {
+  ethereum: 'https://etherscan.io/address/',
+  bsc:      'https://bscscan.com/address/',
+};
+
+function getBlockExplorerAddressUrl(networkId, address) {
+  const base = BLOCK_EXPLORER_ADDRESS_URL[networkId];
+  if (!base || !address) return null;
+  return base + address;
+}
+
+function openBlockExplorerAddress(networkId) {
+  const addr = CHAIN_ADDRESSES[networkId];
+  const url = getBlockExplorerAddressUrl(networkId, addr);
+  if (!url) {
+    showToast('暂不支持该网络的区块浏览器', 2000);
+    return;
+  }
+  const net = NETWORKS.find((n) => n.id === networkId);
+  const titleEl = document.getElementById('explorerWebViewTitle');
+  const urlEl = document.getElementById('explorerWebViewUrl');
+  const frameEl = document.getElementById('explorerWebViewFrame');
+  if (titleEl) titleEl.textContent = net ? net.name + ' Explorer' : '区块浏览器';
+  if (urlEl) urlEl.textContent = url.replace(/^https?:\/\//, '');
+  if (frameEl) frameEl.src = url;
+  document.getElementById('explorerWebView').classList.add('visible');
+}
+
+function closeExplorerWebView() {
+  const el = document.getElementById('explorerWebView');
+  if (el) el.classList.remove('visible');
+  const frameEl = document.getElementById('explorerWebViewFrame');
+  if (frameEl) frameEl.src = 'about:blank';
+}
+
 /** Tron 发送演示：接收地址场景（原型 Mock） */
 const TRON_SEND_DEMO_ADDR = {
   default: 'TXYZopYRdjKrhtvHYn8vJ8k7KqJmYvZ3mK',
@@ -11242,6 +11314,7 @@ const _allTxHistory = [
 function buildSingleChainBodyHTML(t, symbol, receiveSource) {
   receiveSource = receiveSource || 'sc';
   const walletAddr = CHAIN_ADDRESSES[t.network] || '';
+  const hasExplorerLink = !!getBlockExplorerAddressUrl(t.network, walletAddr);
   const net = NETWORKS.find(n => n.id === t.network);
   const networkName = net ? net.name : t.network;
   const gasSym = EVM_NATIVE[t.network] || (t.network === 'solana' ? 'SOL' : 'ETH');
@@ -11408,8 +11481,10 @@ function buildSingleChainBodyHTML(t, symbol, receiveSource) {
     <div class="mc-addr-section">
       <div class="mc-addr-section-title">接收地址</div>
       <div class="mc-addr-display">
-        <div class="mc-addr-text">${walletAddr}</div>
-        <button class="mc-addr-copy" onclick="showToast('地址已复制',1500)">
+        ${hasExplorerLink
+          ? `<button type="button" class="mc-addr-text mc-addr-text-link" onclick="openBlockExplorerAddress('${t.network}')">${walletAddr}</button>`
+          : `<div class="mc-addr-text">${walletAddr}</div>`}
+        <button class="mc-addr-copy" onclick="event.stopPropagation(); showToast('地址已复制',1500)">
           <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
         </button>
       </div>
@@ -14219,6 +14294,7 @@ function demoCloseAllOverlays() {
     closeSendSelect, closeSendAmount, closeSendAddress, closeSendSignAuth,
     closeReceiveSelect, closeReceiveSearch, closeReceiveQrScreen,
     closeNetworkSelector, closeSingleChainDetail, closeMultiChainDetail,
+    closeExplorerWebView,
     closeWalletOnboardingSheet, closeSocialLoginSheet,
     closePasskeyPermissionModal, closePasskeyDeviceModal,
     closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
