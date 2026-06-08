@@ -2854,7 +2854,7 @@
   .ios-oauth-overlay {
     position: absolute; inset: 0;
     display: none; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.35); z-index: 200;
+    background: rgba(0,0,0,0.35); z-index: 460;
     padding: 32px;
   }
   .ios-oauth-overlay.visible { display: flex; }
@@ -2896,7 +2896,7 @@
   .apple-signin-overlay {
     position: absolute; inset: 0;
     display: none; align-items: flex-end; justify-content: center;
-    background: rgba(0,0,0,0.56); z-index: 200;
+    background: rgba(0,0,0,0.56); z-index: 460;
   }
   .apple-signin-overlay.visible { display: flex; }
   .apple-signin-sheet {
@@ -6161,6 +6161,17 @@
     </div>
   </div>
 
+  <!-- 当前签名钱包未登录提示 -->
+  <div class="wallet-info-sheet-overlay" id="walletCurrentAccountMismatchSheet" onclick="dismissCurrentAccountMismatchOverlay(event)">
+    <div class="wallet-info-confirm-sheet" onclick="event.stopPropagation()">
+      <div class="wallet-info-sheet-handle"></div>
+      <div class="wallet-info-sheet-title">未登录当前账户</div>
+      <p class="wallet-info-sheet-desc" id="walletCurrentAccountMismatchDesc">当前登录账号与签名钱包不一致，请重新登录当前钱包账号后继续。</p>
+      <button type="button" class="wallet-info-sheet-primary" onclick="continueLoginTargetWallet()">继续</button>
+      <button type="button" class="wallet-info-sheet-cancel" onclick="cancelCurrentAccountMismatch()">取消</button>
+    </div>
+  </div>
+
 
   <!-- iOS System: Google OAuth (Privy loginWithOAuth) -->
   <div class="ios-oauth-overlay" id="googleOAuthModal">
@@ -6378,6 +6389,8 @@
         <div class="demo-kw-list">
           <span class="demo-kw" data-demo="err-passkey-cancel-create">取消验证（创建）</span>
           <span class="demo-kw" data-demo="err-passkey-fail-create">验证失败（创建）</span>
+          <span class="demo-kw" data-demo="err-sign-account-mismatch">签名账户不一致·Google</span>
+          <span class="demo-kw" data-demo="err-sign-email-mismatch">签名账户不一致·邮箱</span>
           <span class="demo-kw" data-demo="err-passkey-cancel-send">取消签名验证</span>
           <span class="demo-kw" data-demo="err-passkey-fail-send">验证失败（发送）</span>
           <span class="demo-kw" data-demo="err-passkey-cancel-viewpk">取消查看私钥</span>
@@ -6508,6 +6521,10 @@ let selectedWalletName = '0xt***yxu@gmail.com';
 let selectedWalletId = 'w-email';
 let pendingBackupWalletId = null;
 let walletSettingsEditId = null;
+// 当前 Privy SDK 会话中已登录并可操作的社交钱包。切换 Privy User 时需重新登录。
+let activePrivyWalletId = 'w-email';
+let pendingPrivyAuthWalletId = '';
+let walletPrivyAuthContext = ''; // switch | send
 
 const WALLET_TYPE_LOGO = {
   google: '<span class="w-type-logo w-type-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>',
@@ -6548,6 +6565,10 @@ let selectedAssetTab = 'CRYPTO'; // current asset type tab (first tab: 币种)
 let walletPasskeyPermissionGranted = false;
 let walletPasskeyPendingGrant = false;
 let walletPasskeyVerifying = false;
+// 原型演示：true = 模拟 Email 验证成功后返回的邮箱与签名钱包不一致
+let privyEmailAuthForceMismatch = false;
+// 签名流程中唤起 Privy 邮箱登录前，暂存需恢复的发送浮层
+let sendAuthOverlayRestore = null;
 let privyGoogleLoginInFlight = false;
 // 原型演示：false = 模拟 Privy loginWithOAuth({ provider: 'google' }) 失败
 const PRIVY_GOOGLE_LOGIN_SUCCESS = true;
@@ -8213,6 +8234,21 @@ function startPrivyGoogleLogin() {
 
 function cancelPrivyGoogleLogin() {
   resetGoogleOAuthClickState();
+  if (walletPrivyAuthContext) {
+    closeGoogleOAuthModal();
+    setGoogleOAuthContinueLoading(false);
+    privyGoogleLoginInFlight = false;
+    if (walletPrivyAuthContext === 'send') {
+      exitSendSignPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else if (isWalletSwitchPrivyAuthFlow()) {
+      exitWalletSwitchPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else {
+      clearPrivyAuthContext();
+      currentFlow = '';
+      showToast('已取消登录', 1500);
+    }
+    return;
+  }
   endPrivyGoogleLoginFlow();
 }
 
@@ -8267,7 +8303,12 @@ function confirmPrivyGoogleLogin(options) {
   privyLoginWithGoogle()
     .then((auth) => {
       privyGoogleLoginInFlight = false;
-      const googleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
+      let googleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
+      if (walletPrivyAuthContext && simulateExists) googleEmail = 'other.google@example.com';
+      if (walletPrivyAuthContext) {
+        handlePrivyWalletAuthSuccess('google', googleEmail);
+        return;
+      }
       if (simulateExists) {
         openWalletAccountExistsModal('google', googleEmail);
         return;
@@ -8275,6 +8316,13 @@ function confirmPrivyGoogleLogin(options) {
       startWalletPasskeyFlow();
     })
     .catch(() => {
+      if (walletPrivyAuthContext) {
+        privyGoogleLoginInFlight = false;
+        clearPrivyAuthContext();
+        currentFlow = '';
+        showToast('Google 登录失败', 2200);
+        return;
+      }
       endPrivyGoogleLoginFlow('Google 登录失败');
     });
 }
@@ -8329,6 +8377,22 @@ function startPrivyAppleLogin() {
 
 function cancelPrivyAppleLogin() {
   resetAppleOAuthClickState();
+  if (walletPrivyAuthContext) {
+    closeAppleOAuthModal();
+    privyAppleLoginInFlight = false;
+    const btn = document.getElementById('appleSignInSubmitBtn');
+    if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+    if (walletPrivyAuthContext === 'send') {
+      exitSendSignPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else if (isWalletSwitchPrivyAuthFlow()) {
+      exitWalletSwitchPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else {
+      clearPrivyAuthContext();
+      currentFlow = '';
+      showToast('已取消登录', 1500);
+    }
+    return;
+  }
   endPrivyAppleLoginFlow();
 }
 
@@ -8359,7 +8423,12 @@ function confirmPrivyAppleLogin(options) {
     .then((auth) => {
       privyAppleLoginInFlight = false;
       if (btn) { btn.disabled = false; btn.textContent = '登录'; }
-      const appleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
+      let appleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
+      if (walletPrivyAuthContext && simulateExists) appleEmail = 'other.apple@example.com';
+      if (walletPrivyAuthContext) {
+        handlePrivyWalletAuthSuccess('apple', appleEmail);
+        return;
+      }
       if (simulateExists) {
         openWalletAccountExistsModal('apple', appleEmail);
         return;
@@ -8367,6 +8436,14 @@ function confirmPrivyAppleLogin(options) {
       startWalletPasskeyFlow();
     })
     .catch(() => {
+      if (walletPrivyAuthContext) {
+        privyAppleLoginInFlight = false;
+        if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+        clearPrivyAuthContext();
+        currentFlow = '';
+        showToast('Apple 登录失败', 2200);
+        return;
+      }
       endPrivyAppleLoginFlow('Apple 登录失败');
     });
 }
@@ -8480,7 +8557,213 @@ function closeWalletEmailExistsModal() {
   document.getElementById('walletEmailExistsModal').classList.remove('visible');
 }
 
+function normalizeWalletAccount(value) {
+  return (value || '').trim().toLowerCase();
+}
+
+function getPendingPrivyAuthWallet() {
+  return getWalletById(pendingPrivyAuthWalletId);
+}
+
+function clearPrivyAuthContext() {
+  pendingPrivyAuthWalletId = '';
+  walletPrivyAuthContext = '';
+}
+
+function isCurrentWalletPrivyLoggedIn() {
+  const wallet = getWalletById(selectedWalletId);
+  if (!wallet || !isWalletSocialLogin(wallet)) return true;
+  return activePrivyWalletId === wallet.id;
+}
+
+function isAuthAccountMatchedWallet(wallet, provider, account) {
+  if (!wallet) return false;
+  if (wallet.type !== provider) return false;
+  return normalizeWalletAccount(wallet.loginEmail) === normalizeWalletAccount(account);
+}
+
+function startPrivyAuthForWallet(walletId, context) {
+  const wallet = getWalletById(walletId);
+  if (!wallet) return;
+  pendingPrivyAuthWalletId = walletId;
+  walletPrivyAuthContext = context || 'switch';
+  walletCreateMethod = wallet.type;
+  currentFlow = walletPrivyAuthContext === 'send' ? 'sendLogin' : 'walletSwitch';
+  flowReturnScreen = currentScreen || 'screen-web3home';
+  closeSocialLoginSheet();
+
+  if (wallet.type === 'email') {
+    walletPendingEmail = normalizeWalletAccount(wallet.loginEmail);
+    showToast('验证码已发送', 1500);
+    openWalletEmailVerifyScreen(walletPendingEmail);
+    return;
+  }
+  if (wallet.type === 'google') {
+    resetGoogleOAuthClickState();
+    setGoogleOAuthContinueLoading(false);
+    document.getElementById('googleOAuthModal').classList.add('visible');
+    return;
+  }
+  if (wallet.type === 'apple') {
+    resetAppleOAuthClickState();
+    const nameEl = document.getElementById('appleSignInAccountName');
+    if (nameEl) nameEl.textContent = PRIVY_APPLE_MOCK_ACCOUNT.name || 'Apple 用户';
+    const btn = document.getElementById('appleSignInSubmitBtn');
+    if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+    document.getElementById('appleOAuthModal').classList.add('visible');
+  }
+}
+
+function handlePrivyWalletAuthSuccess(provider, account) {
+  const wallet = getPendingPrivyAuthWallet();
+  const context = walletPrivyAuthContext;
+  const wasSendAuth = context === 'send' || currentFlow === 'sendLogin' || currentFlow === 'sendSign';
+  if (!context || !wallet) {
+    if (wasSendAuth) {
+      currentFlow = 'sendSign';
+      exitSendLoginEmailVerifyToSignPreview();
+      startWalletPasskeyFlow();
+      return;
+    }
+    startWalletPasskeyFlow();
+    return;
+  }
+  if (!isAuthAccountMatchedWallet(wallet, provider, account)) {
+    openCurrentAccountMismatchSheet(wallet, provider, account);
+    return;
+  }
+
+  activePrivyWalletId = wallet.id;
+  if (context === 'switch') {
+    clearPrivyAuthContext();
+    currentFlow = '';
+    selectedWalletId = wallet.id;
+    saveLastSelectedWallet(wallet.id);
+    syncWeb3HomeWalletDisplay();
+    renderWalletList();
+    enterWeb3Home();
+    showToast('已切换至当前钱包', 1600);
+    return;
+  }
+
+  clearPrivyAuthContext();
+  currentFlow = 'sendSign';
+  exitSendLoginEmailVerifyToSignPreview();
+  startWalletPasskeyFlow();
+}
+
+/** 离开邮箱 OTP 页，并恢复签名预览浮层（供 Passkey / 账户不一致弹层使用） */
+function exitSendLoginEmailVerifyToSignPreview() {
+  if (currentScreen === 'screen-wallet-email-verify') {
+    switchScreen('screen-web3home');
+  }
+  resetWalletOtp();
+  const errEl = document.getElementById('walletVerifyErrorMsg');
+  if (errEl) errEl.textContent = '';
+  restoreSendFlowOverlaysFromPrivyAuth();
+}
+
+function openCurrentAccountMismatchSheet(wallet, provider, account) {
+  const desc = document.getElementById('walletCurrentAccountMismatchDesc');
+  const providerLabel = provider === 'google' ? 'Google' : provider === 'apple' ? 'Apple' : '邮箱';
+  if (desc) {
+    desc.innerHTML = `当前登录的 ${providerLabel} 账号与签名钱包不一致。<br>请重新登录 <strong>${escapeImportHtml(wallet.name)}</strong> 对应账号后继续。`;
+  }
+  if (isSendLoginPrivyAuthFlow()) {
+    exitSendLoginEmailVerifyToSignPreview();
+  }
+  const sheet = document.getElementById('walletCurrentAccountMismatchSheet');
+  if (sheet) sheet.classList.add('visible');
+}
+
+function closeCurrentAccountMismatchSheet() {
+  const sheet = document.getElementById('walletCurrentAccountMismatchSheet');
+  if (sheet) sheet.classList.remove('visible');
+}
+
+function dismissCurrentAccountMismatchOverlay(event) {
+  if (event && event.target !== event.currentTarget) return;
+  cancelCurrentAccountMismatch();
+}
+
+function cancelCurrentAccountMismatch() {
+  closeCurrentAccountMismatchSheet();
+  if (isSendLoginPrivyAuthFlow()) {
+    exitSendSignPrivyAuthFlow({ message: '已取消签名验证' });
+    return;
+  }
+  if (isWalletSwitchPrivyAuthFlow()) {
+    exitWalletSwitchPrivyAuthFlow({ message: '已取消切换' });
+    return;
+  }
+  clearPrivyAuthContext();
+  currentFlow = '';
+  showToast('已取消签名验证', 1600);
+}
+
+function continueLoginTargetWallet() {
+  const walletId = pendingPrivyAuthWalletId;
+  const context = walletPrivyAuthContext || 'send';
+  closeCurrentAccountMismatchSheet();
+  if (walletId) startPrivyAuthForWallet(walletId, context);
+}
+
+function isSendLoginPrivyAuthFlow() {
+  return walletPrivyAuthContext === 'send' || currentFlow === 'sendLogin';
+}
+
+function isWalletSwitchPrivyAuthFlow() {
+  return walletPrivyAuthContext === 'switch' || currentFlow === 'walletSwitch';
+}
+
+function exitWalletSwitchPrivyAuthFlow(opts = {}) {
+  const returnScreen = flowReturnScreen || 'screen-wallet-list';
+  privyEmailAuthForceMismatch = false;
+  clearPrivyAuthContext();
+  currentFlow = '';
+  resetWalletOtp();
+  if (returnScreen === 'screen-wallet-list') renderWalletList();
+  switchScreen(returnScreen);
+  if (opts.message) showToast(opts.message, opts.toastDuration || 1600);
+}
+
+function exitSendSignPrivyAuthFlow(opts = {}) {
+  const restorePreview = opts.restorePreview !== false;
+  const clearAuth = opts.clearAuth !== false;
+  if (clearAuth) {
+    privyEmailAuthForceMismatch = false;
+    clearPrivyAuthContext();
+  }
+  currentFlow = '';
+  if (restorePreview) restoreSendFlowOverlaysFromPrivyAuth();
+  if (opts.message) showToast(opts.message, opts.toastDuration || 1600);
+}
+
+function hideSendFlowOverlaysForPrivyAuth() {
+  const ids = ['sendConfirm', 'sendAmount', 'sendAddress', 'sendSelect', 'sendNetSelect', 'gasSheetOverlay'];
+  if (!sendAuthOverlayRestore) sendAuthOverlayRestore = {};
+  ids.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && el.classList.contains('visible')) {
+      sendAuthOverlayRestore[id] = true;
+      el.classList.remove('visible');
+    }
+  });
+}
+
+function restoreSendFlowOverlaysFromPrivyAuth() {
+  if (!sendAuthOverlayRestore) return;
+  Object.keys(sendAuthOverlayRestore).forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('visible');
+  });
+  sendAuthOverlayRestore = null;
+}
+
 function openWalletEmailVerifyScreen(email) {
+  if (isSendLoginPrivyAuthFlow()) {
+    hideSendFlowOverlaysForPrivyAuth();
+  }
   const target = document.getElementById('walletVerifyEmailTarget');
   if (target) target.textContent = email;
   resetWalletOtp();
@@ -8496,6 +8779,21 @@ function openWalletEmailVerifyScreen(email) {
 
 function backFromWalletEmailVerify() {
   if (walletVerifyCountdownTimer) clearInterval(walletVerifyCountdownTimer);
+  if (walletPrivyAuthContext) {
+    if (isSendLoginPrivyAuthFlow()) {
+      exitSendSignPrivyAuthFlow();
+      return;
+    }
+    if (isWalletSwitchPrivyAuthFlow()) {
+      exitWalletSwitchPrivyAuthFlow();
+      return;
+    }
+    privyEmailAuthForceMismatch = false;
+    clearPrivyAuthContext();
+    currentFlow = '';
+    switchScreen(flowReturnScreen || 'screen-web3home');
+    return;
+  }
   switchScreen('screen-wallet-email-input');
 }
 
@@ -8717,6 +9015,15 @@ function startWalletPasskeyFlow() {
 }
 
 function onWalletEmailOtpVerified() {
+  const isSendEmailAuth = walletPrivyAuthContext === 'send' || currentFlow === 'sendLogin';
+  if (walletPrivyAuthContext || isSendEmailAuth) {
+    const verifiedEmail = privyEmailAuthForceMismatch
+      ? 'other.email@example.com'
+      : walletPendingEmail;
+    privyEmailAuthForceMismatch = false;
+    handlePrivyWalletAuthSuccess('email', verifiedEmail);
+    return;
+  }
   startWalletPasskeyFlow();
 }
 
@@ -8728,8 +9035,7 @@ function onPasskeyPermissionUse() {
 function cancelPasskeyPermissionFlow() {
   if (currentFlow === 'sendSign') {
     closePasskeyPermissionModal();
-    currentFlow = '';
-    showToast('已取消签名验证', 1600);
+    exitSendSignPrivyAuthFlow({ clearAuth: false, message: '已取消签名验证' });
     return;
   }
   endWalletPrivyAuthFlow('已取消验证');
@@ -8792,8 +9098,7 @@ function completePasskeyVerification(success) {
       return;
     }
     if (currentFlow === 'sendSign') {
-      currentFlow = '';
-      showToast('已取消签名验证', 1600);
+      exitSendSignPrivyAuthFlow({ clearAuth: false, message: '已取消签名验证' });
       return;
     }
     endWalletPrivyAuthFlow('通行密钥验证失败');
@@ -10087,7 +10392,7 @@ function renderWalletList() {
       ? '<button type="button" class="w-backup-pill" onclick="event.stopPropagation(); onBackupMnemonicFromList(\'' + w.id + '\')">'
         + '<svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>去备份</button>'
       : '';
-    return '<div class="wallet-card' + selected + '" data-wallet-id="' + w.id + '" onclick="selectWalletById(\'' + w.id + '\')">'
+    return '<div class="wallet-card' + selected + '" data-wallet-id="' + w.id + '" onclick="requestSwitchWalletById(\'' + w.id + '\')">'
       + '<div class="w-avatar" style="background:' + w.avatarBg + '">' + w.avatar + '</div>'
       + '<div class="w-info">'
       + '<div class="w-name-row"><span class="w-name">' + escapeImportHtml(w.name) + '</span>' + getWalletTypeLogoHtml(w.type) + '</div>'
@@ -10128,6 +10433,16 @@ function selectWalletById(walletId) {
   syncWeb3HomeWalletDisplay();
   renderWalletList();
   enterWeb3Home();
+}
+
+function requestSwitchWalletById(walletId) {
+  const wallet = getWalletById(walletId);
+  if (!wallet) return;
+  if (isWalletSocialLogin(wallet)) {
+    startPrivyAuthForWallet(walletId, 'switch');
+    return;
+  }
+  selectWalletById(walletId);
 }
 
 function selectWallet(name) {
@@ -14249,6 +14564,11 @@ function goBackFromSendConfirm() {
 // SEND SIGN AUTH（MVP：仅通行密钥）
 // ============================================================
 function openSendSignAuth() {
+  const wallet = getWalletById(selectedWalletId);
+  if (wallet && isWalletSocialLogin(wallet) && !isCurrentWalletPrivyLoggedIn()) {
+    startPrivyAuthForWallet(wallet.id, 'send');
+    return;
+  }
   currentFlow = 'sendSign';
   startWalletPasskeyFlow();
 }
@@ -14296,11 +14616,13 @@ function demoCloseAllOverlays() {
     closeNetworkSelector, closeSingleChainDetail, closeMultiChainDetail,
     closeExplorerWebView,
     closeWalletOnboardingSheet, closeSocialLoginSheet,
+    closeCurrentAccountMismatchSheet,
     closePasskeyPermissionModal, closePasskeyDeviceModal,
     closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
     closeWalletInfoLogoutSheet, closeWalletInfoDeleteSheet,
   ];
   closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
+  privyEmailAuthForceMismatch = false;
   ['sendConfirm', 'scDetail', 'scInfoScreen', 'mcInfoScreen', 'txDetail', 'txHistoryScreen',
     'tokenManageScreen', 'customAssetForm', 'pinModalOverlay',
   ].forEach((id) => {
@@ -14340,6 +14662,32 @@ function demoOpenSendConfirmForPasskey() {
   demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '10');
   openSendConfirm();
   currentFlow = 'sendSign';
+}
+
+function demoOpenSignAccountMismatch() {
+  demoOpenSendAmountScene('USDT', 'bsc', DEMO_MVP_SEND_ADDR, '10');
+  openSendConfirm();
+  selectedWalletId = 'w-google';
+  activePrivyWalletId = 'w-apple';
+  pendingPrivyAuthWalletId = 'w-google';
+  walletPrivyAuthContext = 'send';
+  currentFlow = 'sendLogin';
+  openCurrentAccountMismatchSheet(getWalletById('w-google'), 'google', 'other.google@example.com');
+}
+
+function demoOpenSignEmailMismatch() {
+  demoOpenSendAmountScene('USDT', 'bsc', DEMO_MVP_SEND_ADDR, '10');
+  openSendConfirm();
+  selectedWalletId = 'w-email';
+  activePrivyWalletId = 'w-google';
+  pendingPrivyAuthWalletId = 'w-email';
+  walletPrivyAuthContext = 'send';
+  walletCreateMethod = 'email';
+  currentFlow = 'sendLogin';
+  walletPendingEmail = normalizeWalletAccount(getWalletById('w-email').loginEmail);
+  privyEmailAuthForceMismatch = true;
+  showToast('验证码已发送（演示：输入 111111）', 2000);
+  openWalletEmailVerifyScreen(walletPendingEmail);
 }
 
 function demoOpenSendConfirmGasInsufficient(mode) {
@@ -14551,6 +14899,17 @@ const DEMO_SCENE_RUNNERS = {
     switchScreen('screen-wallet-email-verify');
     showPasskeyDeviceConfirmation(false);
     completePasskeyVerification(false);
+  },
+  'err-sign-account-mismatch'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSignAccountMismatch();
+  },
+  'err-sign-email-mismatch'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    privyEmailAuthForceMismatch = false;
+    demoOpenSignEmailMismatch();
   },
   'err-passkey-cancel-send'() {
     demoCloseAllOverlays();
