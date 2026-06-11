@@ -3649,6 +3649,37 @@
   }
   .privy-wv-copy-btn:active { opacity: 0.85; }
 
+  /* ======== Powered by Privy（页脚品牌标注） ======== */
+  .privy-powered-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 16px 14px;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .privy-powered-footer--compact { padding: 6px 0 2px; }
+  .privy-powered-footer--mt-auto { margin-top: auto; }
+  .privy-powered-text {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.36);
+    letter-spacing: 0.02em;
+  }
+  .privy-powered-brand {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.04em;
+  }
+  .privy-powered-footer--light .privy-powered-text { color: rgba(0,0,0,0.38); }
+  .privy-powered-footer--light .privy-powered-brand { color: rgba(103,111,255,0.85); }
+  .privy-powered-footer--sheet .privy-powered-text { color: rgba(255,255,255,0.3); }
+  .privy-powered-footer--sheet .privy-powered-brand { color: rgba(255,255,255,0.46); }
+  .privy-powered-footer--modal .privy-powered-text { color: rgba(0,0,0,0.35); }
+  .privy-powered-footer--modal .privy-powered-brand { color: rgba(103,111,255,0.9); }
+
   /* ======== 区块浏览器 WebView（App 内嵌） ======== */
   .explorer-webview {
     position: absolute; inset: 0; z-index: 300;
@@ -4321,6 +4352,20 @@
   .demo-cat-head.cat-wallet { background: #fff7ed; color: #c2410c; }
   .demo-cat-head.cat-sys    { background: #f1f5f9; color: #475569; }
   .demo-cat-head.cat-error  { background: #fef2f2; color: #b91c1c; }
+  .demo-cat-head.cat-privy  { background: #eef0ff; color: #4f46e5; }
+  .demo-kw.privy-kw {
+    border-color: rgba(103, 111, 255, 0.35);
+    background: rgba(103, 111, 255, 0.06);
+  }
+  .demo-kw.privy-kw:hover {
+    border-color: rgba(103, 111, 255, 0.55);
+    background: rgba(103, 111, 255, 0.12);
+  }
+  .demo-kw.privy-kw.active {
+    border-color: #676fff;
+    background: rgba(103, 111, 255, 0.18);
+    color: #4338ca;
+  }
   .demo-cat-icon {
     width: 22px;
     height: 22px;
@@ -4814,6 +4859,10 @@
           </div>
         </div>
       </div>
+      <div class="privy-powered-footer" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
+      </div>
       <div class="btn-group wallet-email-footer">
         <button class="btn-primary-accent" id="walletEmailSubmitBtn" disabled onclick="submitWalletEmail()"><span class="btn-text">获取验证码</span></button>
       </div>
@@ -4856,6 +4905,10 @@
         <div class="wallet-verify-error" id="walletVerifyErrorMsg"></div>
         <div class="wallet-verify-countdown" id="walletVerifyCountdown">59s 后可重新发送</div>
         <div class="wallet-verify-help" onclick="showWalletVerifyHelp()">收不到验证码？</div>
+      <div class="privy-powered-footer privy-powered-footer--compact" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
+      </div>
       </div>
       <div class="wallet-num-keypad" id="walletNumKeypad">
         <button type="button" class="wallet-key" data-key="1">1</button>
@@ -4934,6 +4987,10 @@
       <div class="progress-bar-container">
         <div class="progress-bar-label"><span id="completingStageLabel">正在准备...</span><span class="percent" id="completingPercent">99%</span></div>
         <div class="progress-bar-track"><div class="progress-bar-fill" id="completingFill" style="width:99%"></div></div>
+      </div>
+      <div class="privy-powered-footer" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
       </div>
     </div>
   </div>
@@ -5045,6 +5102,10 @@
             <span class="wi-row-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></span>
           </div>
         </div>
+      </div>
+      <div class="privy-powered-footer privy-powered-footer--mt-auto" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
       </div>
       <div class="wi-actions">
         <button type="button" class="wi-btn-outline" id="wiBtnLogout" style="display:none;" onclick="onWalletInfoLogout()">退出钱包</button>
@@ -5178,6 +5239,10 @@
         <div class="privy-wv-pk-box" id="privyWebViewPkValue"></div>
         <p class="privy-wv-warn">拥有私钥即可完全控制钱包资产。离开本页后私钥将不再显示。</p>
         <button type="button" class="privy-wv-copy-btn" onclick="copyPrivyWebViewPrivateKey()">复制私钥</button>
+        <div class="privy-powered-footer privy-powered-footer--light privy-powered-footer--compact" aria-label="Powered by Privy">
+          <span class="privy-powered-text">Powered by</span>
+          <span class="privy-powered-brand">Privy</span>
+        </div>
       </div>
     </div>
   </div>
@@ -5499,6 +5564,10 @@
       <div class="wallet-onboarding-cta-wrap">
         <button type="button" class="wallet-onboarding-cta" id="walletOnboardingCta">创建助记词钱包</button>
       </div>
+      <div class="privy-powered-footer privy-powered-footer--sheet privy-powered-footer--compact" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
+      </div>
     </div>
   </div>
 
@@ -5531,6 +5600,10 @@
           </div>
           <span class="net-value">›</span>
         </button>
+      </div>
+      <div class="privy-powered-footer privy-powered-footer--sheet privy-powered-footer--compact" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
       </div>
     </div>
   </div>
@@ -6418,8 +6491,25 @@
       </div>
     </div>
 
+    <div class="demo-cat">
+      <div class="demo-cat-head cat-privy"><span class="demo-cat-icon">🔐</span>⑦ Powered by Privy</div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">P</span>品牌标注页（7 处）</div>
+        <div class="demo-scene-desc">仅以下页面展示 Powered by Privy；入口/OAuth/Passkey/签名预览等不标注</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw privy-kw" data-demo="privy-onboarding-sheet">创建钱包弹窗</span>
+          <span class="demo-kw privy-kw" data-demo="privy-social-login">选择登录方式</span>
+          <span class="demo-kw privy-kw" data-demo="privy-email-input">邮箱输入</span>
+          <span class="demo-kw privy-kw" data-demo="privy-email-verify">邮箱验证 OTP</span>
+          <span class="demo-kw privy-kw" data-demo="privy-completing">钱包准备中 TSS</span>
+          <span class="demo-kw privy-kw" data-demo="privy-wallet-info">钱包信息</span>
+          <span class="demo-kw privy-kw" data-demo="privy-webview">Privy 查看私钥</span>
+        </div>
+      </div>
+    </div>
+
     <div class="demo-guide-tip">
-      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。OTP 锁定演示会重置计数；TSS 失败演示邮箱 <strong>tssfail@test.com</strong>。
+      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。<strong>§⑦ Powered by Privy</strong> 可一键跳转 7 处品牌标注页。OTP 锁定演示会重置计数；TSS 失败演示邮箱 <strong>tssfail@test.com</strong>。
     </div>
   </div>
 </aside>
@@ -14622,6 +14712,8 @@ function demoCloseAllOverlays() {
     closeWalletInfoLogoutSheet, closeWalletInfoDeleteSheet,
   ];
   closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
+  try { closeGoogleOAuthModal(); } catch (e) { /* ignore */ }
+  try { document.getElementById('appleOAuthModal')?.classList.remove('visible'); } catch (e) { /* ignore */ }
   privyEmailAuthForceMismatch = false;
   ['sendConfirm', 'scDetail', 'scInfoScreen', 'mcInfoScreen', 'txDetail', 'txHistoryScreen',
     'tokenManageScreen', 'customAssetForm', 'pinModalOverlay',
@@ -14975,6 +15067,57 @@ const DEMO_SCENE_RUNNERS = {
     demoOpenSendAmountScene('USDT', 'ethereum', DEMO_MVP_SEND_ADDR, '10');
     _demoForceSendFail = true;
     _completeSendTransaction();
+  },
+
+  // ── Powered by Privy 页脚标注页（§⑦ 演示快捷键，共 7 处）──
+  'privy-onboarding-sheet'() {
+    demoCloseAllOverlays();
+    enterWeb3EmptyHome();
+    openWalletCreateSheet();
+  },
+  'privy-social-login'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    document.getElementById('socialLoginModal').classList.add('visible');
+  },
+  'privy-completing'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    configureCompletingShardUI();
+    resetCompletingShardAnimation();
+    document.getElementById('completingTitle').textContent = '正在准备你的安全钱包';
+    document.getElementById('completingSubtitle').innerHTML = '密钥将在安全环境中分片保护<br>完整私钥不会保存到你的设备或服务器';
+    document.getElementById('completingStageLabel').textContent = '正在验证邮箱身份...';
+    switchScreen('screen-completing');
+  },
+  'privy-email-input'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    switchScreen('screen-wallet-email-input');
+  },
+  'privy-email-verify'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoResetOtpLockState();
+    walletPendingEmail = 'demo@test.com';
+    walletCreateMethod = 'email';
+    currentFlow = 'create';
+    openWalletEmailVerifyScreen('demo@test.com');
+  },
+  'privy-wallet-info'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-google');
+  },
+  'privy-webview'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    switchScreen('screen-wallet-info');
+    openPrivyViewPrivateKeyWebView();
   },
 };
 
