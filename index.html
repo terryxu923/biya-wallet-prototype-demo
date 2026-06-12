@@ -3649,6 +3649,216 @@
   }
   .privy-wv-copy-btn:active { opacity: 0.85; }
 
+  /* ======== Privy 导出私钥 — 链接过渡 / 落地页 / Export 弹窗 ======== */
+  #screen-privy-export-connecting.active,
+  #screen-privy-export-landing.active { flex-direction: column; }
+  #screen-privy-export-connecting {
+    background: var(--bg-primary); color: var(--text-primary);
+  }
+  #screen-privy-export-landing {
+    background: #fff; color: #111;
+  }
+  .privy-export-connect-body {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 28px 32px; text-align: center;
+  }
+  .privy-export-link-visual {
+    position: relative; width: 240px; height: 120px;
+    margin-bottom: 36px; display: flex;
+    align-items: center; justify-content: space-between;
+  }
+  .privy-export-brand-node {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; flex-shrink: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .privy-export-brand-node.biya {
+    background: linear-gradient(135deg, #00D4AA, #00B894);
+    color: #000;
+  }
+  .privy-export-brand-node.privy {
+    background: #676fff; color: #fff;
+  }
+  .privy-export-link-line {
+    position: absolute; left: 56px; right: 56px; top: 50%;
+    height: 2px; margin-top: -1px;
+    background: linear-gradient(90deg, var(--accent), #676fff, var(--accent));
+    background-size: 200% 100%;
+    animation: privyExportLinkPulse 1.6s ease-in-out infinite;
+    opacity: 0.85;
+  }
+  .privy-export-link-dot {
+    position: absolute; top: 50%; left: 56px;
+    width: 10px; height: 10px; margin-top: -5px;
+    border-radius: 50%; background: #fff;
+    box-shadow: 0 0 12px var(--accent);
+    animation: privyExportLinkTravel 1.6s ease-in-out infinite;
+  }
+  @keyframes privyExportLinkPulse {
+    0%, 100% { background-position: 0% 50%; opacity: 0.55; }
+    50% { background-position: 100% 50%; opacity: 1; }
+  }
+  @keyframes privyExportLinkTravel {
+    0% { left: 56px; opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { left: calc(100% - 66px); opacity: 0.3; }
+  }
+  .privy-export-connect-title {
+    font-size: 20px; font-weight: 700; color: #fff;
+    margin: 0 0 10px; line-height: 1.35;
+  }
+  .privy-export-connect-desc {
+    font-size: 14px; line-height: 1.55; color: var(--text-secondary);
+    margin: 0 0 28px; max-width: 300px;
+  }
+  .privy-export-connect-cancel {
+    margin-top: auto; width: 100%; max-width: 320px;
+    padding: 14px; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: transparent; color: var(--text-secondary);
+    font-size: 15px; font-weight: 500; cursor: pointer;
+  }
+  #screen-privy-export-landing .status-bar { background: #fff; color: #111; }
+  #screen-privy-export-landing .status-bar svg { fill: #111; }
+  #screen-privy-export-landing .nav-back-dark svg { fill: #111; }
+  #screen-privy-export-landing .screen-content {
+    flex: 1; display: flex; flex-direction: column;
+    min-height: 0; padding: 8px 24px 32px;
+  }
+  .privy-export-landing-brand {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .privy-export-landing-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #00D4AA, #00B894);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .privy-export-landing-brand-name {
+    font-size: 15px; font-weight: 600; color: #111;
+  }
+  .privy-export-landing-title {
+    font-size: 28px; font-weight: 700; color: #111;
+    margin: 0 0 12px; line-height: 1.25;
+  }
+  .privy-export-landing-desc {
+    font-size: 14px; line-height: 1.6; color: #636366;
+    margin: 0 0 28px;
+  }
+  .privy-export-info-rows { margin-bottom: auto; }
+  .privy-export-info-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0; border-bottom: 1px solid #e5e5ea;
+    font-size: 15px;
+  }
+  .privy-export-info-row:last-child { border-bottom: none; }
+  .privy-export-info-label { color: #636366; }
+  .privy-export-info-value {
+    color: #111; font-weight: 500;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 14px;
+  }
+  .privy-export-landing-actions {
+    display: flex; flex-direction: column; gap: 12px;
+    padding-top: 24px;
+  }
+  .privy-export-landing-primary {
+    width: 100%; padding: 16px; border: none; border-radius: 14px;
+    background: var(--accent); color: #000;
+    font-size: 16px; font-weight: 600; cursor: pointer;
+  }
+  .privy-export-landing-cancel {
+    width: 100%; padding: 16px; border: none; border-radius: 14px;
+    background: #f2f2f7; color: #111;
+    font-size: 16px; font-weight: 500; cursor: pointer;
+  }
+  .privy-export-wallet-overlay {
+    position: absolute; inset: 0; z-index: 460;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.72); padding: 20px;
+  }
+  .privy-export-wallet-overlay.visible { display: flex; }
+  .privy-export-wallet-modal {
+    width: 100%; max-width: 340px;
+    background: #1a1f1c; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 22px 20px 18px; color: #fff;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+  }
+  .privy-export-wallet-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .privy-export-wallet-title {
+    font-size: 18px; font-weight: 700; flex: 1; padding-right: 8px;
+  }
+  .privy-export-wallet-close {
+    border: none; background: none; color: rgba(255,255,255,0.55);
+    font-size: 20px; line-height: 1; cursor: pointer; padding: 0 2px;
+  }
+  .privy-export-wallet-sub {
+    font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.55);
+    margin-bottom: 16px;
+  }
+  .privy-export-wallet-sub a { color: #5ce1e6; text-decoration: none; }
+  .privy-export-wallet-warn {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px 14px; border-radius: 12px;
+    background: rgba(255, 193, 7, 0.12);
+    border: 1px solid rgba(255, 193, 7, 0.22);
+    margin-bottom: 18px; text-align: left;
+  }
+  .privy-export-wallet-warn svg {
+    width: 18px; height: 18px; flex-shrink: 0; fill: #ffc107; margin-top: 1px;
+  }
+  .privy-export-wallet-warn p {
+    margin: 0; font-size: 12px; line-height: 1.45; color: rgba(255,255,255,0.72);
+  }
+  .privy-export-wallet-field-label {
+    font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 8px;
+    text-align: left;
+  }
+  .privy-export-wallet-addr-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 14px; border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 16px;
+  }
+  .privy-export-wallet-addr {
+    flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 14px; color: #fff; text-align: left;
+  }
+  .privy-export-wallet-copy-chip {
+    padding: 6px 10px; border-radius: 8px;
+    border: 1px solid rgba(92,225,230,0.45);
+    background: transparent; color: #5ce1e6;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .privy-export-wallet-copy-chip svg { width: 14px; height: 14px; fill: currentColor; }
+  .privy-export-wallet-actions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .privy-export-wallet-action-btn {
+    padding: 12px 10px; border: none; border-radius: 12px;
+    background: #5ce1e6; color: #0a0f0d;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .privy-export-wallet-action-btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .privy-export-wallet-protected {
+    text-align: center; font-size: 11px; color: rgba(255,255,255,0.38);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .privy-export-wallet-protected-dot {
+    width: 14px; height: 14px; border-radius: 50%; background: #676fff;
+  }
+
   /* ======== Powered by Privy（页脚品牌标注） ======== */
   .privy-powered-footer {
     display: flex;
@@ -5216,33 +5426,95 @@
     </div>
   </div>
 
-  <!-- SCREEN: Privy WebView — 社交钱包查看私钥（嵌入式组件页） -->
-  <div class="screen dark-screen" id="screen-privy-webview">
-    <div class="status-bar status-bar-dark"><span class="time">11:46</span><div class="icons"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div></div>
+  <!-- SCREEN: Privy 导出 — Biya ↔ Privy 链接过渡 -->
+  <div class="screen dark-screen" id="screen-privy-export-connecting">
+    <div class="status-bar status-bar-dark"><span class="time">9:41</span><div class="icons"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div></div>
     <div class="nav-bar nav-bar-dark">
-      <button type="button" class="nav-back nav-back-dark" onclick="backFromPrivyWebView()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
-      <div class="nav-title" style="color:#fff;">查看私钥</div>
+      <div style="width:32px;"></div>
+      <div class="nav-title" style="color:#fff;">Biya Wallet</div>
+      <div style="width:32px;"></div>
+    </div>
+    <div class="screen-content privy-export-connect-body">
+      <div class="privy-export-link-visual" aria-hidden="true">
+        <div class="privy-export-brand-node biya">Biya</div>
+        <div class="privy-export-link-line"></div>
+        <div class="privy-export-link-dot"></div>
+        <div class="privy-export-brand-node privy">P</div>
+      </div>
+      <h1 class="privy-export-connect-title" id="privyExportConnectTitle">正在连接 Privy 安全组件</h1>
+      <p class="privy-export-connect-desc" id="privyExportConnectDesc">Biya Wallet 正在与 Privy 建立安全导出通道，请稍候…</p>
+      <div class="privy-powered-footer" aria-label="Powered by Privy">
+        <span class="privy-powered-text">Powered by</span>
+        <span class="privy-powered-brand">Privy</span>
+      </div>
+      <button type="button" class="privy-export-connect-cancel" onclick="cancelPrivyExportConnecting()">取消</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: 导出私钥落地页（附件1） -->
+  <div class="screen" id="screen-privy-export-landing">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div></div>
+    <div class="nav-bar">
+      <button type="button" class="nav-back nav-back-dark" onclick="backFromPrivyExportLanding()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
       <div style="width:32px;"></div>
     </div>
     <div class="screen-content">
-      <div class="privy-wv-toolbar">
-        <svg class="privy-wv-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
-        <div class="privy-wv-url" id="privyWebViewUrl">auth.privy.io/wallets/export</div>
+      <div class="privy-export-landing-brand">
+        <div class="privy-export-landing-logo" aria-hidden="true">🍃</div>
+        <span class="privy-export-landing-brand-name">Biya Wallet</span>
       </div>
-      <div class="privy-wv-frame">
-        <div class="privy-wv-brand">
-          <div class="privy-wv-brand-logo">P</div>
-          <span class="privy-wv-brand-name">Privy</span>
+      <h1 class="privy-export-landing-title">导出钱包私钥</h1>
+      <p class="privy-export-landing-desc">请在安全环境中完成导出，页面只调用 Privy 导出流程，结果不会回传敏感内容。</p>
+      <div class="privy-export-info-rows">
+        <div class="privy-export-info-row">
+          <span class="privy-export-info-label">钱包地址</span>
+          <span class="privy-export-info-value" id="privyExportLandingAddress">0x5b1f…49C6</span>
         </div>
-        <div class="privy-wv-title">导出钱包私钥</div>
-        <p class="privy-wv-desc">私钥由 Privy 安全组件托管展示。请勿截图或分享给任何人。</p>
-        <div class="privy-wv-pk-box" id="privyWebViewPkValue"></div>
-        <p class="privy-wv-warn">拥有私钥即可完全控制钱包资产。离开本页后私钥将不再显示。</p>
-        <button type="button" class="privy-wv-copy-btn" onclick="copyPrivyWebViewPrivateKey()">复制私钥</button>
-        <div class="privy-powered-footer privy-powered-footer--light privy-powered-footer--compact" aria-label="Powered by Privy">
-          <span class="privy-powered-text">Powered by</span>
-          <span class="privy-powered-brand">Privy</span>
+        <div class="privy-export-info-row">
+          <span class="privy-export-info-label">网络</span>
+          <span class="privy-export-info-value">EVM</span>
         </div>
+      </div>
+      <div class="privy-export-landing-actions">
+        <button type="button" class="privy-export-landing-primary" onclick="onPrivyExportLandingExportClick()">导出私钥</button>
+        <button type="button" class="privy-export-landing-cancel" onclick="backFromPrivyExportLanding()">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privy Export Wallet 弹窗（附件2 · 组件） -->
+  <div class="privy-export-wallet-overlay" id="privyExportWalletOverlay" onclick="closePrivyExportWalletModal()">
+    <div class="privy-export-wallet-modal" onclick="event.stopPropagation()">
+      <div class="privy-export-wallet-head">
+        <div class="privy-export-wallet-title">Export wallet</div>
+        <button type="button" class="privy-export-wallet-close" aria-label="关闭" onclick="closePrivyExportWalletModal()">×</button>
+      </div>
+      <p class="privy-export-wallet-sub">Copy either your private key or seed phrase to export your wallet. <a href="javascript:void(0)" onclick="showToast('Learn more（演示）',1500)">Learn more</a></p>
+      <div class="privy-export-wallet-warn">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <p>Never share your private key or seed phrase with anyone.</p>
+      </div>
+      <div class="privy-export-wallet-field-label">Your wallet</div>
+      <div class="privy-export-wallet-addr-row">
+        <span class="privy-export-wallet-addr" id="privyExportWalletAddress">0x147…85f5</span>
+        <button type="button" class="privy-export-wallet-copy-chip" onclick="copyPrivyExportWalletAddress()">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="privy-export-wallet-actions">
+        <button type="button" class="privy-export-wallet-action-btn" onclick="copyPrivyExportWalletKey()">
+          <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+          Copy key
+        </button>
+        <button type="button" class="privy-export-wallet-action-btn" onclick="copyPrivyExportWalletPhrase()">
+          <svg viewBox="0 0 24 24"><path d="M5 4v3h5.5v12h3V7H19V4H5z"/></svg>
+          Copy Phrase
+        </button>
+      </div>
+      <div class="privy-export-wallet-protected">
+        <span class="privy-export-wallet-protected-dot" aria-hidden="true"></span>
+        Protected by privy
       </div>
     </div>
   </div>
@@ -6503,13 +6775,15 @@
           <span class="demo-kw privy-kw" data-demo="privy-email-verify">邮箱验证 OTP</span>
           <span class="demo-kw privy-kw" data-demo="privy-completing">钱包准备中 TSS</span>
           <span class="demo-kw privy-kw" data-demo="privy-wallet-info">钱包信息</span>
-          <span class="demo-kw privy-kw" data-demo="privy-webview">Privy 查看私钥</span>
+          <span class="demo-kw privy-kw" data-demo="privy-export-connecting">Privy 链接过渡</span>
+          <span class="demo-kw privy-kw" data-demo="privy-export-landing">导出私钥落地</span>
+          <span class="demo-kw privy-kw" data-demo="privy-export-wallet">Export wallet</span>
         </div>
       </div>
     </div>
 
     <div class="demo-guide-tip">
-      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。<strong>§⑦ Powered by Privy</strong> 可一键跳转 7 处品牌标注页。OTP 锁定演示会重置计数；TSS 失败演示邮箱 <strong>tssfail@test.com</strong>。
+      <strong>提示：</strong>悬浮窗可拖头部移动；按 <strong>Esc</strong> 关闭。<strong>§⑦ Powered by Privy</strong> 可一键跳转品牌标注页。查看私钥完整路径：通行密钥 → Privy 链接 → 导出落地 →（未登录）选择登录方式 → Export wallet。
     </div>
   </div>
 </aside>
@@ -6614,7 +6888,7 @@ let walletSettingsEditId = null;
 // 当前 Privy SDK 会话中已登录并可操作的社交钱包。切换 Privy User 时需重新登录。
 let activePrivyWalletId = 'w-email';
 let pendingPrivyAuthWalletId = '';
-let walletPrivyAuthContext = ''; // switch | send
+let walletPrivyAuthContext = ''; // switch | send | exportPk
 
 const WALLET_TYPE_LOGO = {
   google: '<span class="w-type-logo w-type-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>',
@@ -6643,6 +6917,16 @@ let safetyGuidePurpose = 'backupMnemonic';
 let viewPrivateKeyReturnScreen = 'screen-wallet-info';
 let viewPrivateKeySelectedNetworkId = '';
 let viewPrivateKeyRevealed = false;
+let exportPkLoginWalletId = '';
+let exportPkLoginProvider = '';
+let exportPkLoginAccount = '';
+let privyExportConnectingTimer = null;
+const EXPORT_PK_MOCK_ADDR = {
+  'w-google': '0x5b1f…49C6',
+  'w-apple': '0x147…85f5',
+  'w-email': '0xa3c2…91d4',
+};
+const MOCK_EXPORT_WALLET_PHRASE = 'abandon ability able about above absent absorb';
 const MOCK_PRIVATE_KEY_HEX = '0xb5a4cea271ff424d7c31dc12a3e43e401df7a40d7412a15750f3f0b6b5449a28';
 let deleteTargetWallet = '';
 let createEntryReturnScreen = 'screen-exchange';
@@ -7539,6 +7823,59 @@ function startPrivyAppleLoginForImport() {
   document.getElementById('appleOAuthModal').classList.add('visible');
 }
 
+function startPrivyGoogleLoginForExport() {
+  walletCreateMethod = 'google';
+  currentFlow = 'exportPkLogin';
+  flowReturnScreen = 'screen-privy-export-landing';
+  closeSocialLoginSheet();
+  switchScreen('screen-privy-export-landing');
+  document.getElementById('googleOAuthModal').classList.add('visible');
+}
+
+function startPrivyAppleLoginForExport() {
+  walletCreateMethod = 'apple';
+  currentFlow = 'exportPkLogin';
+  flowReturnScreen = 'screen-privy-export-landing';
+  closeSocialLoginSheet();
+  switchScreen('screen-privy-export-landing');
+  const nameEl = document.getElementById('appleSignInAccountName');
+  if (nameEl) nameEl.textContent = PRIVY_APPLE_MOCK_ACCOUNT.name || 'Apple 用户';
+  const btn = document.getElementById('appleSignInSubmitBtn');
+  if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+  document.getElementById('appleOAuthModal').classList.add('visible');
+}
+
+function selectExportPrivyLoginMethod(method) {
+  closeSocialLoginSheet();
+  exportPkLoginWalletId = walletInfoActiveId || exportPkLoginWalletId || '';
+  flowReturnScreen = 'screen-privy-export-landing';
+  currentFlow = 'exportPkLogin';
+  walletOnboardingMode = 'import';
+  walletSocialIntent = 'import';
+  if (method === 'email') {
+    const input = document.getElementById('walletEmailInput');
+    if (input) input.value = '';
+    walletOtpFailCount = 0;
+    walletOtpLocked = false;
+    updateWalletEmailInputUI();
+    switchScreen('screen-wallet-email-input');
+    return;
+  }
+  if (method === 'google') {
+    startPrivyGoogleLoginForExport();
+    return;
+  }
+  if (method === 'apple') startPrivyAppleLoginForExport();
+}
+
+function openPrivyExportLoginSheet() {
+  exportPkLoginWalletId = walletInfoActiveId || exportPkLoginWalletId || '';
+  currentFlow = 'exportPkLogin';
+  flowReturnScreen = 'screen-privy-export-landing';
+  switchScreen('screen-privy-export-landing');
+  document.getElementById('socialLoginModal').classList.add('visible');
+}
+
 
 function enterWeb3Home(options) {
   if (hasActiveWallet()) restoreLastSelectedWallet();
@@ -8277,6 +8614,10 @@ function closeSocialLoginSheet() {
 }
 
 function selectSocialLoginMethod(method) {
+  if (currentFlow === 'exportPkLogin' || currentScreen === 'screen-privy-export-landing') {
+    selectExportPrivyLoginMethod(method);
+    return;
+  }
   walletOnboardingMode = 'create';
   walletSocialIntent = 'create';
   selectWalletOnboardingSocial(method);
@@ -8324,6 +8665,13 @@ function startPrivyGoogleLogin() {
 
 function cancelPrivyGoogleLogin() {
   resetGoogleOAuthClickState();
+  if (currentFlow === 'exportPkLogin') {
+    closeGoogleOAuthModal();
+    setGoogleOAuthContinueLoading(false);
+    privyGoogleLoginInFlight = false;
+    switchScreen('screen-privy-export-landing');
+    return;
+  }
   if (walletPrivyAuthContext) {
     closeGoogleOAuthModal();
     setGoogleOAuthContinueLoading(false);
@@ -8332,6 +8680,11 @@ function cancelPrivyGoogleLogin() {
       exitSendSignPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
     } else if (isWalletSwitchPrivyAuthFlow()) {
       exitWalletSwitchPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else if (walletPrivyAuthContext === 'exportPk') {
+      clearPrivyAuthContext();
+      currentFlow = 'exportPkLogin';
+      switchScreen('screen-privy-export-landing');
+      showToast('已取消登录', 1500);
     } else {
       clearPrivyAuthContext();
       currentFlow = '';
@@ -8399,6 +8752,12 @@ function confirmPrivyGoogleLogin(options) {
         handlePrivyWalletAuthSuccess('google', googleEmail);
         return;
       }
+      if (currentFlow === 'exportPkLogin') {
+        exportPkLoginProvider = 'google';
+        exportPkLoginAccount = googleEmail;
+        startWalletPasskeyFlow();
+        return;
+      }
       if (simulateExists) {
         openWalletAccountExistsModal('google', googleEmail);
         return;
@@ -8410,6 +8769,12 @@ function confirmPrivyGoogleLogin(options) {
         privyGoogleLoginInFlight = false;
         clearPrivyAuthContext();
         currentFlow = '';
+        showToast('Google 登录失败', 2200);
+        return;
+      }
+      if (currentFlow === 'exportPkLogin') {
+        privyGoogleLoginInFlight = false;
+        switchScreen('screen-privy-export-landing');
         showToast('Google 登录失败', 2200);
         return;
       }
@@ -8467,6 +8832,14 @@ function startPrivyAppleLogin() {
 
 function cancelPrivyAppleLogin() {
   resetAppleOAuthClickState();
+  if (currentFlow === 'exportPkLogin') {
+    closeAppleOAuthModal();
+    privyAppleLoginInFlight = false;
+    const btn = document.getElementById('appleSignInSubmitBtn');
+    if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+    switchScreen('screen-privy-export-landing');
+    return;
+  }
   if (walletPrivyAuthContext) {
     closeAppleOAuthModal();
     privyAppleLoginInFlight = false;
@@ -8476,6 +8849,11 @@ function cancelPrivyAppleLogin() {
       exitSendSignPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
     } else if (isWalletSwitchPrivyAuthFlow()) {
       exitWalletSwitchPrivyAuthFlow({ message: '已取消登录', toastDuration: 1500 });
+    } else if (walletPrivyAuthContext === 'exportPk') {
+      clearPrivyAuthContext();
+      currentFlow = 'exportPkLogin';
+      switchScreen('screen-privy-export-landing');
+      showToast('已取消登录', 1500);
     } else {
       clearPrivyAuthContext();
       currentFlow = '';
@@ -8519,6 +8897,12 @@ function confirmPrivyAppleLogin(options) {
         handlePrivyWalletAuthSuccess('apple', appleEmail);
         return;
       }
+      if (currentFlow === 'exportPkLogin') {
+        exportPkLoginProvider = 'apple';
+        exportPkLoginAccount = appleEmail;
+        startWalletPasskeyFlow();
+        return;
+      }
       if (simulateExists) {
         openWalletAccountExistsModal('apple', appleEmail);
         return;
@@ -8531,6 +8915,13 @@ function confirmPrivyAppleLogin(options) {
         if (btn) { btn.disabled = false; btn.textContent = '登录'; }
         clearPrivyAuthContext();
         currentFlow = '';
+        showToast('Apple 登录失败', 2200);
+        return;
+      }
+      if (currentFlow === 'exportPkLogin') {
+        privyAppleLoginInFlight = false;
+        if (btn) { btn.disabled = false; btn.textContent = '登录'; }
+        switchScreen('screen-privy-export-landing');
         showToast('Apple 登录失败', 2200);
         return;
       }
@@ -8552,6 +8943,10 @@ function openWalletEmailInput() {
 
 function backFromWalletEmailInput() {
   closeSocialLoginSheet();
+  if (currentFlow === 'exportPkLogin') {
+    switchScreen('screen-privy-export-landing');
+    return;
+  }
   currentFlow = '';
   switchScreen(getWalletFlowReturnScreen());
 }
@@ -8708,6 +9103,20 @@ function handlePrivyWalletAuthSuccess(provider, account) {
   const wallet = getPendingPrivyAuthWallet();
   const context = walletPrivyAuthContext;
   const wasSendAuth = context === 'send' || currentFlow === 'sendLogin' || currentFlow === 'sendSign';
+  if (context === 'exportPk') {
+    if (!wallet || !isAuthAccountMatchedWallet(wallet, provider, account)) {
+      openCurrentAccountMismatchSheet(wallet, provider, account);
+      switchScreen('screen-privy-export-landing');
+      return;
+    }
+    activePrivyWalletId = wallet.id;
+    clearPrivyAuthContext();
+    currentFlow = '';
+    switchScreen('screen-privy-export-landing');
+    showToast('Privy 登录成功', 1600);
+    openPrivyExportWalletModal();
+    return;
+  }
   if (!context || !wallet) {
     if (wasSendAuth) {
       currentFlow = 'sendSign';
@@ -8778,6 +9187,13 @@ function dismissCurrentAccountMismatchOverlay(event) {
 
 function cancelCurrentAccountMismatch() {
   closeCurrentAccountMismatchSheet();
+  if (walletPrivyAuthContext === 'exportPk' || currentFlow === 'exportPkLogin') {
+    clearPrivyAuthContext();
+    currentFlow = 'exportPkLogin';
+    switchScreen('screen-privy-export-landing');
+    showToast('已取消登录', 1500);
+    return;
+  }
   if (isSendLoginPrivyAuthFlow()) {
     exitSendSignPrivyAuthFlow({ message: '已取消签名验证' });
     return;
@@ -8795,6 +9211,10 @@ function continueLoginTargetWallet() {
   const walletId = pendingPrivyAuthWalletId;
   const context = walletPrivyAuthContext || 'send';
   closeCurrentAccountMismatchSheet();
+  if (context === 'exportPk') {
+    openPrivyExportLoginSheet();
+    return;
+  }
   if (walletId) startPrivyAuthForWallet(walletId, context);
 }
 
@@ -8870,6 +9290,13 @@ function openWalletEmailVerifyScreen(email) {
 function backFromWalletEmailVerify() {
   if (walletVerifyCountdownTimer) clearInterval(walletVerifyCountdownTimer);
   if (walletPrivyAuthContext) {
+    if (walletPrivyAuthContext === 'exportPk') {
+      privyEmailAuthForceMismatch = false;
+      clearPrivyAuthContext();
+      currentFlow = 'exportPkLogin';
+      switchScreen('screen-privy-export-landing');
+      return;
+    }
     if (isSendLoginPrivyAuthFlow()) {
       exitSendSignPrivyAuthFlow();
       return;
@@ -8884,7 +9311,15 @@ function backFromWalletEmailVerify() {
     switchScreen(flowReturnScreen || 'screen-web3home');
     return;
   }
+  if (currentFlow === 'exportPkLogin') {
+    switchScreen('screen-privy-export-landing');
+    return;
+  }
   switchScreen('screen-wallet-email-input');
+}
+
+function isExportPkLoginFlow() {
+  return currentFlow === 'exportPkLogin' || walletPrivyAuthContext === 'exportPk';
 }
 
 function resetWalletOtp() {
@@ -8982,6 +9417,18 @@ function endWalletPrivyAuthFlow(message) {
     walletImportSelectedNetworkType = '';
     if (message) showToast(message, 2200);
     switchScreen('screen-wallet-import-seed');
+    return;
+  }
+  if (currentFlow === 'viewPrivateKeyPrivy') {
+    currentFlow = '';
+    switchScreen('screen-wallet-info');
+    if (message) showToast(message, 2200);
+    return;
+  }
+  if (currentFlow === 'exportPkLogin') {
+    currentFlow = 'exportPkLogin';
+    if (message) showToast(message, 2200);
+    switchScreen('screen-privy-export-landing');
     return;
   }
   if (currentFlow === 'exportMnemonic') {
@@ -9106,6 +9553,15 @@ function startWalletPasskeyFlow() {
 
 function onWalletEmailOtpVerified() {
   const isSendEmailAuth = walletPrivyAuthContext === 'send' || currentFlow === 'sendLogin';
+  if (currentFlow === 'exportPkLogin') {
+    exportPkLoginProvider = 'email';
+    exportPkLoginAccount = privyEmailAuthForceMismatch
+      ? 'other.email@example.com'
+      : walletPendingEmail;
+    privyEmailAuthForceMismatch = false;
+    startWalletPasskeyFlow();
+    return;
+  }
   if (walletPrivyAuthContext || isSendEmailAuth) {
     const verifiedEmail = privyEmailAuthForceMismatch
       ? 'other.email@example.com'
@@ -9126,6 +9582,20 @@ function cancelPasskeyPermissionFlow() {
   if (currentFlow === 'sendSign') {
     closePasskeyPermissionModal();
     exitSendSignPrivyAuthFlow({ clearAuth: false, message: '已取消签名验证' });
+    return;
+  }
+  if (currentFlow === 'viewPrivateKeyPrivy') {
+    closePasskeyPermissionModal();
+    currentFlow = '';
+    switchScreen('screen-wallet-info');
+    showToast('已取消查看私钥', 1600);
+    return;
+  }
+  if (currentFlow === 'exportPkLogin') {
+    closePasskeyPermissionModal();
+    currentFlow = 'exportPkLogin';
+    switchScreen('screen-privy-export-landing');
+    showToast('已取消登录', 1500);
     return;
   }
   endWalletPrivyAuthFlow('已取消验证');
@@ -9173,7 +9643,14 @@ function completePasskeyVerification(success) {
     }
     if (currentFlow === 'viewPrivateKeyPrivy') {
       currentFlow = '';
+      switchScreen('screen-wallet-info');
       showToast('已取消查看私钥', 1600);
+      return;
+    }
+    if (currentFlow === 'exportPkLogin') {
+      currentFlow = 'exportPkLogin';
+      switchScreen('screen-privy-export-landing');
+      showToast('通行密钥验证失败', 2200);
       return;
     }
     if (currentFlow === 'viewMnemonic') {
@@ -9201,7 +9678,11 @@ function completePasskeyVerification(success) {
   }
   if (currentFlow === 'viewPrivateKeyPrivy') {
     currentFlow = '';
-    openPrivyViewPrivateKeyWebView();
+    startPrivyExportConnecting();
+    return;
+  }
+  if (currentFlow === 'exportPkLogin') {
+    proceedExportPkLoginAfterPasskey();
     return;
   }
   if (currentFlow === 'import') {
@@ -9366,11 +9847,16 @@ function submitWalletEmail() {
     openWalletEmailExistsModal(email);
     return;
   }
+  const isExportLogin = currentFlow === 'exportPkLogin';
   walletPendingEmail = email;
   walletCreateMethod = 'email';
-  currentFlow = 'create';
-  flowReturnScreen = 'screen-wallet-email-input';
-  configureCreateFlow();
+  if (isExportLogin) {
+    flowReturnScreen = 'screen-privy-export-landing';
+  } else {
+    currentFlow = 'create';
+    flowReturnScreen = 'screen-wallet-email-input';
+    configureCreateFlow();
+  }
   showToast('验证码已发送', 1500);
   openWalletEmailVerifyScreen(email);
 }
@@ -11007,6 +11493,7 @@ function finishViewPrivateKeyFlow() {
 function onWalletInfoViewPrivateKey() {
   if (!walletInfoActiveId) return;
   if (PROTOTYPE_MVP) {
+    exportPkLoginWalletId = walletInfoActiveId;
     currentFlow = 'viewPrivateKeyPrivy';
     flowReturnScreen = 'screen-wallet-info';
     startWalletPasskeyFlow();
@@ -11016,23 +11503,174 @@ function onWalletInfoViewPrivateKey() {
   openViewPrivateKeyGuideScreen('screen-wallet-info');
 }
 
-function openPrivyViewPrivateKeyWebView() {
-  const pkEl = document.getElementById('privyWebViewPkValue');
-  if (pkEl) pkEl.textContent = MOCK_PRIVATE_KEY_HEX;
-  switchScreen('screen-privy-webview');
+function getExportPkMockAddress(walletId) {
+  return EXPORT_PK_MOCK_ADDR[walletId] || '0x5b1f…49C6';
 }
 
-function backFromPrivyWebView() {
+function syncPrivyExportLandingScreen() {
+  const walletId = exportPkLoginWalletId || walletInfoActiveId;
+  const addrEl = document.getElementById('privyExportLandingAddress');
+  if (addrEl) addrEl.textContent = getExportPkMockAddress(walletId);
+}
+
+function startPrivyExportConnecting() {
+  exportPkLoginWalletId = walletInfoActiveId || exportPkLoginWalletId || '';
+  switchScreen('screen-privy-export-connecting');
+  animatePrivyExportConnecting();
+}
+
+function cancelPrivyExportConnecting() {
+  if (privyExportConnectingTimer) {
+    clearTimeout(privyExportConnectingTimer);
+    privyExportConnectingTimer = null;
+  }
+  currentFlow = '';
+  switchScreen('screen-wallet-info');
+  showToast('已取消查看私钥', 1600);
+}
+
+function animatePrivyExportConnecting() {
+  if (privyExportConnectingTimer) clearTimeout(privyExportConnectingTimer);
+  const titleEl = document.getElementById('privyExportConnectTitle');
+  const descEl = document.getElementById('privyExportConnectDesc');
+  if (titleEl) titleEl.textContent = '正在连接 Privy 安全组件';
+  if (descEl) descEl.textContent = 'Biya Wallet 正在与 Privy 建立安全导出通道，请稍候…';
+  privyExportConnectingTimer = setTimeout(() => {
+    privyExportConnectingTimer = null;
+    if (titleEl) titleEl.textContent = '连接成功';
+    if (descEl) descEl.textContent = '安全导出通道已就绪，即将进入导出页面…';
+    setTimeout(() => openPrivyExportLanding(), 500);
+  }, 2400);
+}
+
+function openPrivyExportLanding() {
+  syncPrivyExportLandingScreen();
+  closePrivyExportWalletModal();
+  switchScreen('screen-privy-export-landing');
+}
+
+function backFromPrivyExportLanding() {
+  closePrivyExportWalletModal();
+  closeSocialLoginSheet();
+  closeGoogleOAuthModal();
+  closeAppleOAuthModal();
+  currentFlow = '';
+  exportPkLoginProvider = '';
+  exportPkLoginAccount = '';
   switchScreen('screen-wallet-info');
 }
 
-function copyPrivyWebViewPrivateKey() {
-  const text = MOCK_PRIVATE_KEY_HEX;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => showToast('私钥已复制', 1600)).catch(() => showToast('复制失败', 1600, 'error'));
-  } else {
-    showToast('私钥: ' + text.slice(0, 10) + '…', 2200);
+function isPrivyLoggedInForExport() {
+  const walletId = exportPkLoginWalletId || walletInfoActiveId;
+  return !!walletId && activePrivyWalletId === walletId;
+}
+
+function onPrivyExportLandingExportClick() {
+  if (isPrivyLoggedInForExport()) {
+    openPrivyExportWalletModal();
+    return;
   }
+  openPrivyExportLoginSheet();
+}
+
+function updateExportPkLoginLoadingCopy() {
+  const titleEl = document.getElementById('walletImportingTitle');
+  const descEl = document.getElementById('walletImportingDesc');
+  if (titleEl) titleEl.textContent = 'Privy 登录中...';
+  if (descEl) descEl.textContent = '正在验证 Privy 会话并绑定当前钱包账号，请稍候…';
+}
+
+function proceedExportPkLoginAfterPasskey() {
+  closePasskeyDeviceModal();
+  closePasskeyPermissionModal();
+  updateExportPkLoginLoadingCopy();
+  switchScreen('screen-wallet-importing');
+  animateExportPkLoginCompleting();
+}
+
+function animateExportPkLoginCompleting() {
+  if (walletImportTimer) clearTimeout(walletImportTimer);
+  walletImportTimer = setTimeout(() => {
+    walletImportTimer = null;
+    finishExportPkLoginFlow();
+  }, 2200);
+}
+
+function finishExportPkLoginFlow() {
+  const wallet = getWalletById(exportPkLoginWalletId);
+  if (!wallet) {
+    currentFlow = '';
+    switchScreen('screen-wallet-info');
+    return;
+  }
+  if (!isAuthAccountMatchedWallet(wallet, exportPkLoginProvider, exportPkLoginAccount)) {
+    pendingPrivyAuthWalletId = exportPkLoginWalletId;
+    walletPrivyAuthContext = 'exportPk';
+    currentFlow = 'exportPkLogin';
+    openCurrentAccountMismatchSheet(wallet, exportPkLoginProvider, exportPkLoginAccount);
+    switchScreen('screen-privy-export-landing');
+    return;
+  }
+  activePrivyWalletId = wallet.id;
+  exportPkLoginProvider = '';
+  exportPkLoginAccount = '';
+  currentFlow = '';
+  switchScreen('screen-privy-export-landing');
+  showToast('Privy 登录成功', 1600);
+  openPrivyExportWalletModal();
+}
+
+function openPrivyExportWalletModal() {
+  const walletId = exportPkLoginWalletId || walletInfoActiveId;
+  const addrEl = document.getElementById('privyExportWalletAddress');
+  if (addrEl) addrEl.textContent = getExportPkMockAddress(walletId);
+  const overlay = document.getElementById('privyExportWalletOverlay');
+  if (overlay) overlay.classList.add('visible');
+}
+
+function closePrivyExportWalletModal() {
+  const overlay = document.getElementById('privyExportWalletOverlay');
+  if (overlay) overlay.classList.remove('visible');
+}
+
+function copyPrivyExportWalletAddress() {
+  const text = document.getElementById('privyExportWalletAddress')?.textContent || '';
+  if (!text) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast('地址已复制', 1600)).catch(() => showToast('复制失败', 1600, 'error'));
+  } else {
+    showToast('地址: ' + text, 2200);
+  }
+}
+
+function copyPrivyExportWalletKey() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(MOCK_PRIVATE_KEY_HEX).then(() => showToast('私钥已复制', 1600)).catch(() => showToast('复制失败', 1600, 'error'));
+  } else {
+    showToast('私钥: ' + MOCK_PRIVATE_KEY_HEX.slice(0, 10) + '…', 2200);
+  }
+}
+
+function copyPrivyExportWalletPhrase() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(MOCK_EXPORT_WALLET_PHRASE).then(() => showToast('助记词已复制', 1600)).catch(() => showToast('复制失败', 1600, 'error'));
+  } else {
+    showToast('助记词已复制（演示）', 2200);
+  }
+}
+
+/** @deprecated 旧 WebView 页；演示入口请走 startPrivyExportConnecting / openPrivyExportLanding */
+function openPrivyViewPrivateKeyWebView() {
+  exportPkLoginWalletId = walletInfoActiveId || 'w-google';
+  openPrivyExportLanding();
+}
+
+function backFromPrivyWebView() {
+  backFromPrivyExportLanding();
+}
+
+function copyPrivyWebViewPrivateKey() {
+  copyPrivyExportWalletKey();
 }
 
 function onWalletInfoBackupMnemonic() {
@@ -14710,8 +15348,13 @@ function demoCloseAllOverlays() {
     closePasskeyPermissionModal, closePasskeyDeviceModal,
     closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
     closeWalletInfoLogoutSheet, closeWalletInfoDeleteSheet,
+    closePrivyExportWalletModal,
   ];
   closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
+  if (privyExportConnectingTimer) {
+    clearTimeout(privyExportConnectingTimer);
+    privyExportConnectingTimer = null;
+  }
   try { closeGoogleOAuthModal(); } catch (e) { /* ignore */ }
   try { document.getElementById('appleOAuthModal')?.classList.remove('visible'); } catch (e) { /* ignore */ }
   privyEmailAuthForceMismatch = false;
@@ -15113,11 +15756,32 @@ const DEMO_SCENE_RUNNERS = {
     clearWeb3EmptyDemoMode();
     openWalletInfo('w-google');
   },
+  'privy-export-connecting'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    exportPkLoginWalletId = 'w-google';
+    switchScreen('screen-wallet-info');
+    startPrivyExportConnecting();
+  },
+  'privy-export-landing'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    exportPkLoginWalletId = 'w-google';
+    openPrivyExportLanding();
+  },
+  'privy-export-wallet'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    exportPkLoginWalletId = 'w-google';
+    activePrivyWalletId = 'w-google';
+    openPrivyExportLanding();
+    openPrivyExportWalletModal();
+  },
   'privy-webview'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
-    switchScreen('screen-wallet-info');
-    openPrivyViewPrivateKeyWebView();
+    exportPkLoginWalletId = 'w-google';
+    openPrivyExportLanding();
   },
 };
 
