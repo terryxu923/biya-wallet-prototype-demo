@@ -455,6 +455,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><a href="#17-追溯矩阵">17. 追溯矩阵</a></li>
 <li><a href="#18-范围说明">18. 范围说明</a></li>
 <li><a href="#19-测试与验收执行">19. 测试与验收执行</a></li>
+<li><a href="#附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范</a></li>
 </ul>
 <hr />
 <h2 id="1-产品概述">1. 产品概述 </h2>
@@ -1322,7 +1323,51 @@ flowchart TD
 </tr>
 </tbody>
 </table>
-<h3 id="27-验收标准">2.7 验收标准 </h3>
+<h3 id="27-通用数据分层显示规范适用页面清单">2.7 通用数据分层显示规范适用页面清单 </h3>
+<p>以下页面出现金额、余额、数量、法币估值、单价或涨跌幅等数值型字段时，统一引用 <a href="#附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范</a>；MVP 暂不接入行情的字段，按附录 A 的异常 / NULL 口径展示 <strong>「––」</strong> 或按对应页面规则不展示。</p>
+<table>
+<thead>
+<tr>
+<th>适用页面 / 层级</th>
+<th>适用字段</th>
+<th>执行口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#4-web3-首页有钱包时">§4 Web3 首页（有钱包时）</a>、<a href="#421-网络选择弹层">§4.2.1-网络选择弹层</a></td>
+<td>总余额、网络法币估值、资产行持有数量、单价、24h 涨跌、行内法币估值</td>
+<td>金额、余额、单价、估值按附录 A.1；涨跌幅按附录 A.2；MVP 无行情时展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><a href="#5-接收功能">§5 接收功能</a>：<a href="#531-选择币种层">§5.3.1-选择币种层</a>、<a href="#532-搜索子层">§5.3.2-搜索子层</a></td>
+<td>资产行持有数量、法币估值</td>
+<td>持有数量与估值按附录 A.1；MVP 无行情时估值展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><a href="#6-代币详情页">§6 代币详情页</a>：<a href="#63-展示字段说明">§6.3-展示字段说明</a> · 余额区</td>
+<td>代币数量、法币估值</td>
+<td>代币数量与估值按附录 A.1；MVP 无行情时估值展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><a href="#7-发送功能">§7 发送功能</a>：<a href="#741-选择币种层">§7.4.1</a>、<a href="#743-发送金额层">§7.4.3</a>、<a href="#744-签名预览层">§7.4.4</a>、<a href="#745-主网费用选择弹层">§7.4.5</a></td>
+<td>资产行持有数量与估值、可用余额、发送数量、主网费用预估原生币数量、费用法币折合</td>
+<td>余额、数量、费用金额、法币折合按附录 A.1；Gwei 保持 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a> 与 <a href="#一档位列表行">§7.4.5 · 档位列表行</a> 指定的 2 位小数规则</td>
+</tr>
+<tr>
+<td><a href="#9-钱包列表">§9 钱包列表</a></td>
+<td>资产总额、单钱包资产估值</td>
+<td>资产总额与单钱包估值按附录 A.1；MVP 无行情时展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><a href="#10-钱包管理">§10 钱包管理</a></td>
+<td>管理项资产估值</td>
+<td>与 <a href="#-钱包列表行字段">§9 · 钱包列表行字段</a> 同源，按附录 A.1 展示；MVP 无行情时展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+</tbody>
+</table>
+<p><strong>执行原则</strong>：当页面字段已在业务章给出更具体的输入限制或链上精度（如发送金额最多 8 位、Gwei 保留 2 位）时，先按业务章完成输入 / 计算，再按附录 A 做最终展示；不得在各页面另起第二套金额、估值或涨跌幅格式。</p>
+<h3 id="28-验收标准">2.8 验收标准 </h3>
 <table>
 <thead>
 <tr>
@@ -1763,7 +1808,7 @@ flowchart TD
 </tr>
 <tr>
 <td>法币估值</td>
-<td>MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示（与 <a href="#43-展示字段说明">§4.3-总余额</a> 一致）</td>
+<td>MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示（与 <a href="#43-展示字段说明">§4.3-总余额</a> 一致）；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>选中态</td>
@@ -1799,7 +1844,7 @@ flowchart TD
 <tr>
 <td>总余额</td>
 <td>当前网络筛选下资产法币合计</td>
-<td>MVP <strong>不接入行情</strong>，展示占位 <strong>「––」</strong> 或不展示数值</td>
+<td>MVP <strong>不接入行情</strong>，展示占位 <strong>「––」</strong> 或不展示数值；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>操作-发送</td>
@@ -1856,11 +1901,11 @@ flowchart TD
 </tr>
 <tr>
 <td>持有数量</td>
-<td>当前钱包在该链 <strong>链上余额</strong>；有效小数位按 Token 精度展示</td>
+<td>当前钱包在该链 <strong>链上余额</strong>；有效小数位按 Token 精度展示，最终显示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>单价 / 24h 涨跌 / 行内法币估值</td>
-<td>MVP <strong>不展示</strong> 或占位 <strong>「––」</strong>（见 <a href="#-价格与法币估值">§4.6 · 价格与法币估值</a>）</td>
+<td>MVP <strong>不展示</strong> 或占位 <strong>「––」</strong>（见 <a href="#-价格与法币估值">§4.6 · 价格与法币估值</a>）；单价 / 估值见 <a href="#a1-数值分层显示规范">附录 A.1</a>，涨跌幅见 <a href="#a2-涨跌幅分层显示规范">附录 A.2</a></td>
 </tr>
 <tr>
 <td>行点击</td>
@@ -2226,7 +2271,7 @@ flowchart TD
 </tr>
 <tr>
 <td>法币估值</td>
-<td>不计算；总余额、网络弹层、资产行法币位均为 <strong>「––」</strong> 或不展示</td>
+<td>不计算；总余额、网络弹层、资产行法币位均为 <strong>「––」</strong> 或不展示；有有效数值时展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -2517,7 +2562,7 @@ flowchart TD
 </tr>
 <tr>
 <td>法币估值</td>
-<td>MVP <strong>不接入行情</strong>，<strong>「––」</strong> 或不展示</td>
+<td>MVP <strong>不接入行情</strong>，<strong>「––」</strong> 或不展示；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>行点击</td>
@@ -2980,11 +3025,11 @@ flowchart TD
 <tbody>
 <tr>
 <td>代币数量</td>
-<td>当前钱包在该链 <strong>链上余额</strong>；格式同首页持有数量</td>
+<td>当前钱包在该链 <strong>链上余额</strong>；格式同首页持有数量，并遵循 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>法币估值</td>
-<td>MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示（与 <a href="#-价格与法币估值">§4.6 · 价格与法币估值</a> 一致）</td>
+<td>MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示（与 <a href="#-价格与法币估值">§4.6 · 价格与法币估值</a> 一致）；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -3747,7 +3792,7 @@ flowchart TD
 </tr>
 <tr>
 <td>可用余额</td>
-<td>「可用」+ 当前资产 <strong>链上余额</strong>（数量 + Symbol）</td>
+<td>「可用」+ 当前资产 <strong>链上余额</strong>（数量 + Symbol）；数量展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>全部</td>
@@ -4105,7 +4150,7 @@ flowchart TD
 </tr>
 <tr>
 <td>数量</td>
-<td><a href="#743-发送金额层">§7.4.3-发送金额层</a> 用户确认的发送数量（代币单位）</td>
+<td><a href="#743-发送金额层">§7.4.3-发送金额层</a> 用户确认的发送数量（代币单位）；展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>Symbol</td>
@@ -4132,7 +4177,7 @@ flowchart TD
 </tr>
 <tr>
 <td>预估原生币数量</td>
-<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；每 <strong>3 秒</strong> 随链上 Gas Price 刷新</td>
+<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；每 <strong>3 秒</strong> 随链上 Gas Price 刷新；展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>原生币 Symbol</td>
@@ -4262,7 +4307,7 @@ flowchart TD
 <tr>
 <td>预估原生币数量</td>
 <td>右侧副文案（上行）</td>
-<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；<code>gasLimit</code> 规则见 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a></td>
+<td><strong><code>gasLimit × 链上基准 effectiveGasPrice × 档位 Gas Price 倍率</code></strong>；<code>gasLimit</code> 规则见 <a href="#-主网费用预估evm">§7.4.3 · 主网费用预估</a>；展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>原生币 Symbol</td>
@@ -4272,7 +4317,7 @@ flowchart TD
 <tr>
 <td>法币估值</td>
 <td>右侧副文案（括号内）</td>
-<td><code>预估原生币数量 × 法币单价</code>；格式示例 <code>($0.0123)</code>；MVP <strong>不接入行情</strong> 时为 <strong>「––」</strong> 或不展示括号段（与 <a href="#43-展示字段说明">§4.3-展示字段说明</a> 一致）</td>
+<td><code>预估原生币数量 × 法币单价</code>；格式示例 <code>($0.0123)</code>；MVP <strong>不接入行情</strong> 时为 <strong>「––」</strong> 或不展示括号段（与 <a href="#43-展示字段说明">§4.3-展示字段说明</a> 一致）；展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 </tbody>
 </table>
@@ -6272,7 +6317,7 @@ flowchart TD
 </tr>
 <tr>
 <td>资产总额</td>
-<td>标签「<strong>资产总额</strong>」；MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示合计数值</td>
+<td>标签「<strong>资产总额</strong>」；MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示合计数值；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>钱包列表</td>
@@ -6312,7 +6357,7 @@ flowchart TD
 </tr>
 <tr>
 <td>资产估值</td>
-<td>该钱包下 ETH/BSC 资产法币合计；MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示</td>
+<td>该钱包下 ETH/BSC 资产法币合计；MVP <strong>不接入行情</strong>，展示 <strong>「––」</strong> 或不展示；数值格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>收款地址</td>
@@ -6514,7 +6559,7 @@ flowchart TD
 </tr>
 <tr>
 <td>资产总额</td>
-<td>对列表各行 <strong>资产估值</strong> 求和；MVP 无行情时为 <strong>「––」</strong> 或不展示</td>
+<td>对列表各行 <strong>资产估值</strong> 求和；MVP 无行情时为 <strong>「––」</strong> 或不展示；展示格式见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>排序</td>
@@ -8720,7 +8765,7 @@ flowchart TD
 </tr>
 <tr>
 <td>行情</td>
-<td>MVP <strong>不接入</strong> 实时行情；法币估值可为占位（见 <a href="#46-数据管理">§4.6-数据管理</a>）</td>
+<td>MVP <strong>不接入</strong> 实时行情；法币估值可为占位（见 <a href="#46-数据管理">§4.6-数据管理</a>），有有效数值时展示格式见 <a href="#附录-a通用数据分层显示规范">附录 A</a></td>
 </tr>
 </tbody>
 </table>
@@ -9584,7 +9629,7 @@ flowchart TD
 </tr>
 <tr>
 <td>M02</td>
-<td><a href="#27-验收标准">§2.7-验收标准</a></td>
+<td><a href="#28-验收标准">§2.8-验收标准</a></td>
 <td>5</td>
 </tr>
 <tr>
@@ -9828,6 +9873,125 @@ flowchart TD
 <tr>
 <td>J. 「见下方」「同上」代替链接</td>
 <td>通过（§2.5.1 规则表除外）；已修正 AC-M04-2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范 </h2>
+<blockquote>
+<p>本附录定义可复用的数值与涨跌幅显示规范，供 <a href="#27-通用数据分层显示规范适用页面清单">§2.7 通用数据分层显示规范适用页面清单</a> 中页面统一引用。</p>
+</blockquote>
+<h3 id="a1-数值分层显示规范">A.1 数值分层显示规范 </h3>
+<p>适用于：代币价格、代币余额、代币估值、资产总额、主网费用等数值型字段。</p>
+<table>
+<thead>
+<tr>
+<th>分层范围（X）</th>
+<th>显示格式</th>
+<th>精度规则</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X ≥ 1×10¹⁶</td>
+<td>科学计数法</td>
+<td>2 位有效数字</td>
+<td>1.23 × 10¹⁶</td>
+</tr>
+<tr>
+<td>10 ≤ X &lt; 1×10¹⁵</td>
+<td>原值（千分位分隔）</td>
+<td>最多 2 位小数</td>
+<td>9,999.99</td>
+</tr>
+<tr>
+<td>1 ≤ X &lt; 10</td>
+<td>动态 2–4 位小数</td>
+<td>去尾 0</td>
+<td>1.234 / 2.3</td>
+</tr>
+<tr>
+<td>1×10⁻³ ≤ X &lt; 1</td>
+<td>动态有效小数</td>
+<td>2–8 位有效数字</td>
+<td>0.01234567</td>
+</tr>
+<tr>
+<td>0 &lt; X &lt; 1×10⁻³</td>
+<td>极小数压缩表示</td>
+<td>见下方规则</td>
+<td>0.0₄12345 / 0.0₁₃12345</td>
+</tr>
+<tr>
+<td>X = 0</td>
+<td>固定显示</td>
+<td>—</td>
+<td>0</td>
+</tr>
+<tr>
+<td>异常 / NULL</td>
+<td>占位符</td>
+<td>—</td>
+<td>––</td>
+</tr>
+</tbody>
+</table>
+<p><strong>极小数压缩表示规则</strong>（0 &lt; X &lt; 1×10⁻³）：</p>
+<ul>
+<li>当小数点后连续 0 的个数 &gt; 3 时（即第一个非零数字前的 0 个数 &gt; 3），采用紧凑式：<code>0.0ₙE</code>
+<ul>
+<li><strong>n</strong> = 小数点后连续 0 的个数（第一个非零数字前的 0 个数）</li>
+<li><strong>E</strong> = 从第一个非零数字起，取最多 5 位有效数字</li>
+<li>组合显示：<code>0.</code> + 下标 n + E</li>
+</ul>
+</li>
+<li>当连续 0 的个数 ≤ 3 时，正常显示小数（保留 2–8 位有效数字）</li>
+</ul>
+<h3 id="a2-涨跌幅分层显示规范">A.2 涨跌幅分层显示规范 </h3>
+<p>适用于：24h 涨跌幅等百分比字段。颜色按系统设置的涨跌色显示（默认：涨 = 绿色，跌 = 红色）。</p>
+<table>
+<thead>
+<tr>
+<th>分层范围</th>
+<th>显示格式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X &gt; +999,999.99%</td>
+<td>&gt; +999,999.99%</td>
+<td>&gt; +999,999.99%</td>
+</tr>
+<tr>
+<td>+0.01% ≤ X ≤ +999,999.99%</td>
+<td>最多 2 位小数</td>
+<td>+23.45%</td>
+</tr>
+<tr>
+<td>0 &lt; X &lt; +0.01%</td>
+<td>&lt; +0.01%</td>
+<td>&lt; +0.01%</td>
+</tr>
+<tr>
+<td>X = 0</td>
+<td>0.00%</td>
+<td>0.00%</td>
+</tr>
+<tr>
+<td>-99.99% ≤ X &lt; 0</td>
+<td>最多 2 位小数（不足 2 位补 0）</td>
+<td>-23.45%</td>
+</tr>
+<tr>
+<td>X &lt; -99.99%</td>
+<td>&lt; -99.99%</td>
+<td>&lt; -99.99%</td>
+</tr>
+<tr>
+<td>异常 / NULL</td>
+<td>––</td>
+<td>––</td>
 </tr>
 </tbody>
 </table>
