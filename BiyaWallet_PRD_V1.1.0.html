@@ -456,35 +456,38 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>概述</strong>：在 MVP V1.0（社交钱包 + ETH/BSC）基线上，交付 <strong>自托管 HD 钱包</strong>（创建 / 导入 / 备份 / 敏感信息自助）及 <strong>EVM-L2 + Solana + TRON</strong> 多链收发与复制地址能力。MVP 已实现能力见 <a href="#12-基线能力索引已实现-本文不展开">§1.2-基线能力索引</a>；V1.1 增量正文从 <a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a> 起逐章撰写。</p>
+<p><strong>概述</strong>：在 MVP V1.0（社交钱包 + ETH/BSC）基线上，交付 <strong>自托管 HD 钱包</strong>（创建 / 导入 / 备份 / 敏感信息自助）及 <strong>EVM-L2 + Solana + TRON</strong> 多链收发与复制地址能力。MVP 已实现能力见 <a href="#12-基线能力索引已实现-本文不展开">§1.2-基线能力索引</a>；V1.1 增量正文从 <a href="#2-全局交互规范-v11-增补">§2-全局交互规范</a> 起逐章撰写。</p>
 <hr />
 <h2 id="目录">目录 </h2>
 <ul>
 <li><a href="#1-产品概述">1. 产品概述</a></li>
 <li><a href="#11-相对-mvp-的增量摘要">1.1 相对 MVP 的增量摘要</a></li>
-<li><a href="#12-基线能力索引已实现-本文不展开">1.2 基线能力索引（已实现 · 本文不展开）</a></li>
+<li><a href="#12-基线能力索引已实现-本文不展开">1.2 基线能力索引</a></li>
 <li><a href="#13-v110-范围边界">1.3 V1.1.0 范围边界</a></li>
 <li><a href="#14-产品路线图">1.4 产品路线图</a></li>
 <li><a href="#15-已确认产品决策">1.5 已确认产品决策</a></li>
-<li><a href="#151-v110-网络白名单对齐-v4-all">1.5.1 V1.1.0 网络白名单（对齐 v4-all）</a></li>
+<li><a href="#151-v110-网络白名单对齐-v4-all">1.5.1 网络白名单</a></li>
 <li><a href="#16-feature-追溯矩阵">1.6 Feature 追溯矩阵</a></li>
 <li><a href="#17-v11-模块总览">1.7 V1.1 模块总览</a></li>
-<li><a href="#2-全局交互规范-v11-增补">2. 全局交互规范 · V1.1 增补</a></li>
-<li><a href="#3-添加钱包与创建入口m20">3. 添加钱包与创建入口（M20）</a></li>
-<li><a href="#4-助记词创建m21">4. 助记词创建（M21）</a></li>
-<li><a href="#5-钱包导入m22">5. 钱包导入（M22）</a></li>
-<li><a href="#6-助记词备份m23">6. 助记词备份（M23）</a></li>
-<li><a href="#7-待备份提示与状态机m24">7. 待备份提示与状态机（M24）</a></li>
-<li><a href="#8-钱包信息扩展m25">8. 钱包信息扩展（M25）</a></li>
-<li><a href="#9-多链扩展m26">9. 多链扩展（M26）</a></li>
+<li><a href="#2-全局交互规范-v11-增补">2. 全局交互规范</a></li>
+<li><a href="#211-通用数据分层显示规范适用页面清单">2.11 通用数据分层显示规范适用页面清单</a></li>
+<li><a href="#3-添加钱包与创建入口m20">3. 添加钱包与创建入口</a></li>
+<li><a href="#4-助记词创建m21">4. 助记词创建</a></li>
+<li><a href="#5-钱包导入m22">5. 钱包导入</a></li>
+<li><a href="#6-助记词备份m23">6. 助记词备份</a></li>
+<li><a href="#7-待备份提示与状态机m24">7. 待备份提示与状态机</a></li>
+<li><a href="#8-钱包信息扩展m25">8. 钱包信息</a></li>
+<li><a href="#9-多链扩展m26">9. 多链</a></li>
 <li><a href="#10-mvp-触点补丁表">10. MVP 触点补丁表</a></li>
-<li><a href="#11-异常处理与边界场景-v11-增补">11. 异常处理与边界场景 · V1.1 增补</a></li>
-<li><a href="#12-错误-toast-规范-v11-增补">12. 错误 Toast 规范 · V1.1 增补</a></li>
-<li><a href="#13-非功能需求-v11-增补">13. 非功能需求 · V1.1 增补</a></li>
-<li><a href="#14-状态管理规范-v11-增补">14. 状态管理规范 · V1.1 增补</a></li>
-<li><a href="#15-追溯矩阵">15. 追溯矩阵</a></li>
-<li><a href="#16-范围说明">16. 范围说明</a></li>
-<li><a href="#17-测试与验收执行">17. 测试与验收执行</a></li>
+<li><a href="#11-异常处理与边界场景-v11-增补">11. 异常与边界</a></li>
+<li><a href="#12-错误-toast-规范-v11-增补">12. Toast 规范</a></li>
+<li><a href="#13-非功能需求-v11-增补">13. 非功能需求</a></li>
+<li><a href="#14-状态管理规范-v11-增补">14. 状态管理</a></li>
+<li><a href="./90_V1.1_PRD治理验收外移包.md">15. 追溯矩阵（外移包 §3）</a></li>
+<li><a href="./90_V1.1_PRD治理验收外移包.md">16. 范围说明（外移包 §4）</a></li>
+<li><a href="./90_V1.1_PRD治理验收外移包.md">17. 测试与验收执行（外移包 §5）</a></li>
+<li><a href="#附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范</a></li>
+<li><a href="#附录-b-参考文件索引">附录 B：参考文件索引</a></li>
 </ul>
 <hr />
 <h2 id="1-产品概述">1. 产品概述 </h2>
@@ -511,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>密钥自助</td>
 <td>Privy 查看私钥</td>
-<td><strong>+ 备份/查看助记词、查看私钥、导出助记词、删除自托管钱包</strong></td>
+<td><strong>+ 备份/查看助记词、查看私钥、删除自托管钱包</strong>；社交 / 邮箱钱包不支持导出助记词</td>
 </tr>
 <tr>
 <td>备份</td>
@@ -562,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>钱包信息</td>
-<td>F-021、F-022、F-023、F-025</td>
+<td>F-021、F-022、F-025</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -573,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="12-基线能力索引已实现-本文不展开">1.2 基线能力索引（已实现 · 本文不展开） </h3>
+<h3 id="12-基线能力索引已实现-本文不展开">1.2 基线能力索引 </h3>
 <p>以下能力已在 <strong>MVP V1.0</strong> 交付；研发 / 测试需细节时请查阅 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md">MVP PRD</a> 或 <a href="https://terryxu923.github.io/biya-wallet-prototype-demo/prd-mvp.html">在线 HTML</a>。V1.1 PRD <strong>正文不重复</strong>下列流程，仅在 <a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a> 标注改动点。</p>
 <table>
 <thead>
@@ -590,7 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>产品概述 / 页面域</td>
 <td>MVP §1–§2</td>
 <td>—</td>
-<td>术语扩展见 <a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a></td>
+<td>术语扩展见 <a href="#2-全局交互规范-v11-增补">§2-全局交互规范</a></td>
 <td>抽测</td>
 </tr>
 <tr>
@@ -653,7 +656,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>钱包信息（社交）</td>
 <td>MVP §11</td>
 <td>钱包信息页</td>
-<td><strong>补丁</strong>：HD 行可见性（<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>）</td>
+<td><strong>补丁</strong>：HD 行可见性（<a href="#8-钱包信息扩展m25">§8-钱包信息</a>）</td>
 <td><strong>要测</strong> + 增量</td>
 </tr>
 <tr>
@@ -667,15 +670,22 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>异常 / Toast</td>
 <td>MVP §13–§14</td>
 <td>—</td>
-<td><strong>增补</strong>见 <a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a>–<a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a></td>
+<td><strong>增补</strong>见 <a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a>–<a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a></td>
 <td>增补</td>
 </tr>
 <tr>
 <td>非功能 / 状态</td>
 <td>MVP §15–§16</td>
 <td>—</td>
-<td><strong>增补</strong>见 <a href="#13-非功能需求-v11-增补">§13-非功能需求 · V1.1 增补</a>–<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td><strong>增补</strong>见 <a href="#13-非功能需求-v11-增补">§13-非功能需求</a>–<a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 <td>增补</td>
+</tr>
+<tr>
+<td><strong>数值 / 涨跌幅展示</strong></td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#27-通用数据分层显示规范适用页面清单">MVP §2.7</a> + <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#附录-a通用数据分层显示规范">附录 A</a></td>
+<td>—</td>
+<td><a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；增量字段见 <a href="#9-多链扩展m26">§9.3</a></td>
+<td><strong>要测</strong></td>
 </tr>
 </tbody>
 </table>
@@ -718,17 +728,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>社交登录钱包</td>
 <td>邮箱 / Google / Apple（Privy）</td>
 <td>嵌入式钱包，2-of-2 TSS</td>
-<td>基线见 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#11-钱包信息">MVP §11-钱包信息</a>；V1.1 <strong>增量</strong>：<a href="#8-钱包信息扩展m25">§8-导出助记词</a>（F-023）</td>
+<td>基线见 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#11-钱包信息">MVP §11-钱包信息</a>；V1.1 明确：社交 / 邮箱钱包 <strong>不支持导出助记词</strong></td>
 </tr>
 <tr>
 <td>自托管 HD 钱包</td>
 <td>助记词创建 / 助记词或私钥导入</td>
 <td>BIP-39 助记词或单链私钥</td>
-<td><a href="#4-助记词创建m21">§4-助记词创建</a>–<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>：备份、查看、删除</td>
+<td><a href="#4-助记词创建m21">§4-助记词创建</a>–<a href="#8-钱包信息扩展m25">§8-钱包信息</a>：备份、查看、删除</td>
 </tr>
 </tbody>
 </table>
-<h4 id="132-功能范围p0">1.3.2 功能范围（P0） </h4>
+<h4 id="132-功能范围p0">1.3.2 功能范围 </h4>
 <table>
 <thead>
 <tr>
@@ -750,18 +760,18 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>钱包</td>
-<td>查看/导出助记词；查看私钥；删除自托管钱包；列表混排</td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>、<a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a></td>
+<td>查看助记词；查看私钥；删除自托管钱包；列表混排；社交 / 邮箱钱包不支持导出助记词</td>
+<td><a href="#8-钱包信息扩展m25">§8-钱包信息</a>、<a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a></td>
 </tr>
 <tr>
 <td>多链</td>
 <td>EVM-L2 + SOL + TRON 收发、复制地址、链校验</td>
-<td><a href="#9-多链扩展m26">§9-多链扩展</a></td>
+<td><a href="#9-多链扩展m26">§9-多链</a></td>
 </tr>
 <tr>
 <td>横切</td>
 <td>全局增补规范；异常 / 非功能 / 状态增补</td>
-<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a>、<a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a>–<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范</a>、<a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a>–<a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 </tr>
 </tbody>
 </table>
@@ -840,13 +850,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>D-02</td>
 <td>F-013 扫码导入</td>
-<td><strong>本期交付，优先级 P1</strong>；<strong>钱包导入</strong>路径交付扫码弹窗；<strong>不替换</strong> MVP 发送地址「扫一扫」占位（见 §10.2.4）</td>
-<td><a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a></td>
+<td><strong>本期交付，优先级 P1</strong>；<strong>钱包导入</strong>路径交付扫码导入；<strong>发送地址</strong>页「扫一扫」同步接入地址识别；扫码前统一检查相机权限，未授权展示「开启相机访问权限」弹窗</td>
+<td><a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#9352-接收地址层">§9.3.5.2-接收地址层</a>、<a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a></td>
 </tr>
 <tr>
 <td>D-03</td>
 <td>EVM-L2 / 多链网络清单</td>
-<td><strong>与 v4-all 原型网络白名单一致</strong>（见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a>）</td>
+<td><strong>与 v4-all 原型网络白名单一致</strong>（见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a>）</td>
 <td><a href="#91-网络白名单与链校验">§9.1-网络白名单与链校验</a></td>
 </tr>
 <tr>
@@ -859,11 +869,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>D-05</td>
 <td>导入钱包备份态</td>
 <td><strong>助记词导入</strong> → 视为 <strong>已备份</strong>（无 Banner）；<strong>私钥导入</strong> → <strong>无备份概念</strong>（无待备份态、无 Banner）</td>
-<td><a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td><a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 </tr>
 </tbody>
 </table>
-<h4 id="151-v110-网络白名单对齐-v4-all">1.5.1 V1.1.0 网络白名单（对齐 v4-all） </h4>
+<h4 id="151-v110-网络白名单对齐-v4-all">1.5.1 网络白名单 </h4>
 <p>相对 MVP（Ethereum、BSC），V1.1.0 <strong>新增</strong>下列网络；完整白名单与 <a href="../03-交互原型/Biya钱包-交互原型-v4-all.html">Biya钱包-交互原型-v4-all.html</a> 中 <strong>网络选择 / 复制地址</strong> 等模块展示的网络列表保持一致（研发对照见该 HTML 内网络常量定义，约 L7030）。</p>
 <table>
 <thead>
@@ -945,274 +955,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </ul>
 <hr />
 <h3 id="16-feature-追溯矩阵">1.6 Feature 追溯矩阵 </h3>
-<blockquote>
-<p><strong>完整 AC 映射</strong>见 <a href="#151-feature--章节--ac-映射">§15.1-Feature → 章节 → AC 映射</a>。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>Feature ID</th>
-<th>名称</th>
-<th>优先级</th>
-<th>V1.1 章</th>
-<th>全量 PRD 参照</th>
-<th>原型屏（v4-all · 中文名）</th>
-<th>Step</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>F-002b</td>
-<td>添加钱包页（完整三卡片）</td>
-<td>P0</td>
-<td>§3</td>
-<td>§9.0、§9.2</td>
-<td>添加钱包页、创建或导入钱包弹窗、选择登录方式弹窗</td>
-<td>3</td>
-</tr>
-<tr>
-<td>F-006</td>
-<td>助记词创建（BIP-39）</td>
-<td>P0</td>
-<td>§4</td>
-<td>§9.3</td>
-<td>钱包创建或导入中页（创建态）、通行密钥权限说明弹窗、通行密钥系统确认弹窗</td>
-<td>4</td>
-</tr>
-<tr>
-<td>F-007</td>
-<td>助记词导入</td>
-<td>P0</td>
-<td>§5</td>
-<td>§9.4</td>
-<td>导入助记词或私钥页</td>
-<td>5</td>
-</tr>
-<tr>
-<td>F-008</td>
-<td>私钥导入</td>
-<td>P0</td>
-<td>§5</td>
-<td>§9.4</td>
-<td>导入助记词或私钥页、私钥导入选择网络页</td>
-<td>5</td>
-</tr>
-<tr>
-<td>F-013</td>
-<td>扫码导入</td>
-<td><strong>P1</strong></td>
-<td>§5</td>
-<td>§9.0.3</td>
-<td>扫码导入弹窗</td>
-<td>5</td>
-</tr>
-<tr>
-<td>F-014</td>
-<td>首页待备份 Banner</td>
-<td>P0</td>
-<td>§7</td>
-<td>§4 首页提示</td>
-<td>Web3 首页待备份 Banner</td>
-<td>7</td>
-</tr>
-<tr>
-<td>F-015</td>
-<td>三步备份流程</td>
-<td>P0</td>
-<td>§6</td>
-<td>§10</td>
-<td>助记词安全引导页 → 助记词展示页 → 助记词验证页</td>
-<td>6</td>
-</tr>
-<tr>
-<td>F-016</td>
-<td>截屏风险提示</td>
-<td>P0</td>
-<td>§6</td>
-<td>§10.3.1</td>
-<td>截屏风险提示弹窗</td>
-<td>6</td>
-</tr>
-<tr>
-<td>F-020</td>
-<td>备份助记词子流程</td>
-<td>P0</td>
-<td>§6</td>
-<td>§10</td>
-<td>备份助记词展示页</td>
-<td>6</td>
-</tr>
-<tr>
-<td>F-021</td>
-<td>查看助记词</td>
-<td>P0</td>
-<td>§8</td>
-<td>§13.4–13.6</td>
-<td>钱包信息 → 查看助记词子流程</td>
-<td>8</td>
-</tr>
-<tr>
-<td>F-022</td>
-<td>查看私钥</td>
-<td>P0</td>
-<td>§8</td>
-<td>§13.4–13.5</td>
-<td>选择网络查看私钥页、查看私钥页</td>
-<td>8</td>
-</tr>
-<tr>
-<td>F-023</td>
-<td>社交钱包导出助记词</td>
-<td>P0</td>
-<td>§8</td>
-<td>§13.7</td>
-<td>导出助记词确认弹层、导出助记词二次确认弹层</td>
-<td>8</td>
-</tr>
-<tr>
-<td>F-025</td>
-<td>自托管钱包删除</td>
-<td>P0</td>
-<td>§8</td>
-<td>§13.9</td>
-<td>删除钱包确认弹层、删除确认弹窗</td>
-<td>8</td>
-</tr>
-<tr>
-<td>F-064b</td>
-<td>HD 钱包「待备份」子状态</td>
-<td>P0</td>
-<td>§7、§14</td>
-<td>§20.3</td>
-<td>状态字段；Web3 首页待备份 Banner 展示逻辑</td>
-<td>2、7</td>
-</tr>
-<tr>
-<td>F-067</td>
-<td>EVM-L2 + SOL + TRON</td>
-<td>P0</td>
-<td>§9</td>
-<td>§5、§8、§16</td>
-<td>复制地址 / 收发 / 网络选择相关屏</td>
-<td>9–11</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>原型屏命名</strong>：PRD 正文与下表均使用<strong>中文产品名称</strong>（页面 / 弹层 / Banner 等）。HTML 元素 <code>id</code>、原型 <code>screen</code> 标识仅作研发追溯，对照见 <a href="#附录-a--参考文件索引">附录 A · 屏清单</a> 与 <a href="../04-设计导出/prototype-screen-manifest.json">prototype-screen-manifest.json</a>；MVP 基线屏对照见 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#17-追溯矩阵">MVP §17-追溯矩阵</a>。</p>
-</blockquote>
+<p>V1.1.0 共 <strong>14 项 Feature</strong>：F-002b、F-006、F-007、F-008、F-013、F-014、F-015、F-016、F-020、F-021、F-022、F-025、F-064b、F-067。完整映射（章节 / AC / 原型屏）见 <a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a> §3.1。</p>
+<p>原型屏使用<strong>中文产品名称</strong>；HTML <code>id</code> 对照见 <a href="#附录-b-参考文件索引">附录 B</a> 与 <code>prototype-screen-manifest.json</code>。</p>
 <hr />
 <h3 id="17-v11-模块总览">1.7 V1.1 模块总览 </h3>
-<table>
-<thead>
-<tr>
-<th>模块编号</th>
-<th>模块名称</th>
-<th>V1.1 章</th>
-<th>Feature</th>
-<th>全量母本</th>
-<th>复杂度</th>
-<th>Step</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>M20</td>
-<td>添加钱包与创建入口</td>
-<td>§3</td>
-<td>F-002b</td>
-<td>§9</td>
-<td>L3</td>
-<td>3</td>
-</tr>
-<tr>
-<td>M21</td>
-<td>助记词创建</td>
-<td>§4</td>
-<td>F-006</td>
-<td>§9.3</td>
-<td>L3</td>
-<td>4</td>
-</tr>
-<tr>
-<td>M22</td>
-<td>钱包导入</td>
-<td>§5</td>
-<td>F-007/F-008/F-013</td>
-<td>§9.4</td>
-<td>L3</td>
-<td>5</td>
-</tr>
-<tr>
-<td>M23</td>
-<td>助记词备份</td>
-<td>§6</td>
-<td>F-015/F-016/F-020</td>
-<td>§10</td>
-<td>L3</td>
-<td>6</td>
-</tr>
-<tr>
-<td>M24</td>
-<td>待备份提示与状态机</td>
-<td>§7（业务规则 + Banner）· §14（状态字段）</td>
-<td>F-014/F-064b</td>
-<td>§20.3</td>
-<td>L2</td>
-<td>2、7</td>
-</tr>
-<tr>
-<td>M25</td>
-<td>钱包信息扩展</td>
-<td>§8</td>
-<td>F-021～F-025</td>
-<td>§13</td>
-<td>L3</td>
-<td>8</td>
-</tr>
-<tr>
-<td>M26</td>
-<td>多链扩展</td>
-<td>§9</td>
-<td>F-067</td>
-<td>§5/§8/§16</td>
-<td>L3</td>
-<td>9–11</td>
-</tr>
-<tr>
-<td>M00</td>
-<td>治理与横切</td>
-<td>§10–§17</td>
-<td>—</td>
-<td>§17–§23</td>
-<td>L1</td>
-<td>12–17</td>
-</tr>
-</tbody>
-</table>
-<p><strong>依赖顺序（撰写与排期）</strong>：M20 → M21/M22 → M24/M23 → M25；M26 可与 M20–M25 并行撰写，Step 12 统一 MVP 补丁。</p>
-<p><strong>§7 / §14 职责划分</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>章节</th>
-<th>职责</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>§7</strong></td>
-<td>待备份 <strong>业务规则</strong>：Banner 展示/关闭/点击（含 D-04）；谁有备份态；与发送不拦截（D-01）</td>
-</tr>
-<tr>
-<td><strong>§14</strong></td>
-<td>待备份 <strong>状态模型</strong>：字段、持久化、迁移（创建→待备份→已备份；导入分支见 D-05）</td>
-</tr>
-</tbody>
-</table>
+<p>模块 M20–M26（功能）、M02′（全局增补）、M00（治理横切）与 Step 排期见 <a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a> §3.2。</p>
+<p><strong>§7 / §14 职责</strong>：§7 待备份<strong>业务规则</strong>（Banner、D-01/D-04）；§14 待备份<strong>状态模型</strong>（字段、持久化、迁移）。</p>
 <hr />
-<h2 id="2-全局交互规范-v11-增补">2. 全局交互规范 · V1.1 增补 </h2>
-<p>本章仅规定 <strong>V1.1.0 相对 MVP V1.0 新增或变更</strong> 的跨模块交互语义与反馈规则。导航、Toast 时长、按钮分层、交叉引用格式等 <strong>未在本章写明的</strong>，一律沿用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#2-全局交互规范跨模块">MVP §2-全局交互规范</a>。</p>
+<h2 id="2-全局交互规范-v11-增补">2. 全局交互规范 </h2>
+<p>本章仅规定 <strong>V1.1.0 相对 MVP V1.0 新增或变更</strong> 的跨模块交互语义与反馈<strong>行为</strong>。<strong>不在 PRD 中规定</strong> Toast / 按钮 / 标签的屏幕位置、颜色、描边、圆角等视觉样式（见设计稿与交互原型）。导航、Toast 时长、主次按钮职责、交叉引用格式等 <strong>未在本章写明的</strong>，一律沿用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#2-全局交互规范跨模块">MVP §2-全局交互规范</a>。</p>
 <h3 id="20-模块说明">2.0 模块说明 </h3>
 <table>
 <thead>
@@ -1228,15 +979,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>本期范围</td>
-<td>钱包类型术语；助记词/私钥/截屏全局规则；多链网络名词；V1.1 新增 Toast；导航与不可中断页扩展；权威定义引用扩展</td>
+<td>钱包类型术语；助记词/私钥/截屏全局规则；多链网络名词；V1.1 新增 Toast；导航与不可中断页扩展；权威定义引用扩展；<strong>数值 / 涨跌幅展示规范</strong>（§2.11 + 附录 A）</td>
 </tr>
 <tr>
 <td>基线</td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#2-全局交互规范跨模块">MVP §2</a> 全文有效，本章不重复</td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#2-全局交互规范跨模块">MVP §2</a> 全文有效，本章不重复；其中 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#27-通用数据分层显示规范适用页面清单">MVP §2.7 数据分层适用页面清单</a> + <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#附录-a通用数据分层显示规范">MVP 附录 A</a> 在 V1.1 中对应 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a></td>
 </tr>
 <tr>
 <td>关联章节</td>
-<td><a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>、<a href="#9-多链扩展m26">§9-多链扩展</a></td>
+<td><a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息</a>、<a href="#9-多链扩展m26">§9-多链</a></td>
 </tr>
 </tbody>
 </table>
@@ -1265,12 +1016,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>Web3 钱包</td>
 <td>助记词安全引导 / 展示 / 验证</td>
-<td><a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#8-钱包信息扩展m25">§8-查看助记词</a></td>
+<td><a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#8-钱包信息扩展m25">§8.4-查看助记词</a></td>
 </tr>
 <tr>
 <td>Web3 钱包</td>
-<td>查看私钥 / 导出助记词 / 删除钱包子流程</td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td>查看私钥 / 删除钱包子流程；社交 / 邮箱钱包不支持导出助记词</td>
+<td><a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 </tr>
 </tbody>
 </table>
@@ -1295,16 +1046,20 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><strong>每步可返回</strong>上一级；第一步返回入口来源页（见 <a href="#6-助记词备份m23">§6-助记词备份</a>）</td>
 </tr>
 <tr>
-<td>助记词展示页（词表已揭示）</td>
-<td>点返回须 <strong>先隐藏词表</strong> 再回上一页；未揭示时可直接返回安全引导最后一步</td>
+<td>备份助记词展示页</td>
+<td>顶栏返回 → <strong>钱包信息</strong>（与是否揭示无关；见 <a href="#65-备份助记词展示页f-020">§6.5</a>、<a href="#61-流程总览">§6.1</a>）</td>
 </tr>
 <tr>
-<td>助记词验证页</td>
-<td>返回助记词展示页；已填选项 <strong>保留</strong></td>
+<td>查看助记词展示页</td>
+<td>返回行为见 <a href="#84-查看助记词f-021">§8.4-查看助记词</a>（顶栏返回可直接回钱包信息，<strong>不在本章重复</strong>）</td>
+</tr>
+<tr>
+<td>助记词验证页（备份流程 · §6）</td>
+<td>返回助记词展示页；再次进入验证页时重新生成验证题与选项状态（查看助记词 §8.4 <strong>无</strong> 验证页）</td>
 </tr>
 </tbody>
 </table>
-<h4 id="222-通行密钥取消扩展">2.2.2 通行密钥取消（扩展） </h4>
+<h4 id="222-通行密钥取消扩展">2.2.2 通行密钥取消 </h4>
 <table>
 <thead>
 <tr>
@@ -1320,10 +1075,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>备份 / 查看助记词 / 查看私钥前通行密钥取消</td>
 <td>Toast「已取消」类文案按场景区分（见 <a href="#24-toast-提示">§2.4-Toast-提示</a>）；回触发入口页</td>
-</tr>
-<tr>
-<td>导出助记词前通行密钥取消</td>
-<td>Toast「已取消导出助记词」；回钱包信息页</td>
 </tr>
 </tbody>
 </table>
@@ -1377,9 +1128,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>危险确认（倒计时）</td>
-<td>不可逆导出第二步</td>
-<td>确认弹层展示 <strong>满 3 秒</strong> 后「确认导出」才可点</td>
-<td>社交钱包 <a href="#8-钱包信息扩展m25">§8-导出助记词</a></td>
+<td>不可逆操作确认</td>
+<td>按具体危险操作定义；社交 / 邮箱钱包不提供导出助记词确认</td>
+<td>删除钱包等危险操作</td>
 </tr>
 <tr>
 <td>步骤主按钮</td>
@@ -1390,8 +1141,33 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
+<h3 id="231-扫码相机权限前置弹窗">2.3.1 扫码相机权限前置弹窗 </h3>
+<p>V1.1.0 所有 <strong>扫一扫</strong> 入口在调用相机前必须先检查相机权限。适用入口包括但不限于：<a href="#57-扫码导入弹窗f-013">§5.7-扫码导入</a>、<a href="#9352-接收地址层">§9.3.5.2-发送地址页扫一扫</a>。</p>
+<table>
+<thead>
+<tr>
+<th>权限状态</th>
+<th>交互反馈</th>
+<th>后续行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已授权</td>
+<td>无额外提示</td>
+<td>继续当前扫码动作</td>
+</tr>
+<tr>
+<td>未授权 / 已拒绝 / 不可用</td>
+<td>展示 <strong>开启相机访问权限</strong> 弹窗（非 Toast）</td>
+<td>点「去开启」跳转系统设置 / App 权限设置；点「取消」关闭弹窗并停留当前页</td>
+</tr>
+</tbody>
+</table>
+<p>弹窗标题、说明、按钮文案见 <a href="#571-相机权限前置拦截">§5.7.1-相机权限前置拦截</a>；研发不得将该场景降级为 Toast。</p>
+<hr />
 <h3 id="24-toast-提示">2.4 Toast 提示 </h3>
-<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#24-toast-提示">MVP §2.4-Toast-提示</a> 的时长、位置、叠加规则仍成立。V1.1.0 <strong>新增或替换</strong> 如下文案：</p>
+<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#24-toast-提示">MVP §2.4-Toast-提示</a> 的时长、叠加规则仍成立。V1.1.0 <strong>新增或替换</strong> 如下文案：</p>
 <table>
 <thead>
 <tr>
@@ -1437,19 +1213,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>通行密钥取消</td>
 </tr>
 <tr>
-<td>取消导出助记词</td>
-<td>已取消导出助记词</td>
-<td>通行密钥取消</td>
-</tr>
-<tr>
 <td>删除自托管钱包成功</td>
 <td>钱包已删除</td>
-<td>见 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td>见 <a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 </tr>
 <tr>
 <td>扫码导入（F-013）</td>
 <td>—</td>
-<td><strong>替换</strong> MVP「扫码功能即将上线」；成功/失败文案见 <a href="#5-钱包导入m22">§5-钱包导入</a></td>
+<td>扫码前相机权限未授权时展示 <strong>开启相机访问权限</strong> 弹窗；识别成功/失败见 <a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#9352-接收地址层">§9.3.5.2-发送地址层</a></td>
 </tr>
 </tbody>
 </table>
@@ -1489,7 +1260,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>待备份</td>
 <td>未备份</td>
-<td>助记词 <strong>新创建</strong> 且尚未完成备份验证的子状态（见 <a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a>）</td>
+<td>助记词 <strong>新创建</strong> 且尚未完成备份验证的子状态（见 <a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a>）</td>
 </tr>
 <tr>
 <td>已备份</td>
@@ -1504,12 +1275,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>查看助记词</td>
 <td>—</td>
-<td>已备份钱包再次查看词表（<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>）</td>
+<td>已备份钱包再次查看词表（<a href="#8-钱包信息扩展m25">§8-钱包信息</a>）</td>
 </tr>
 <tr>
 <td>导出助记词</td>
 <td>—</td>
-<td><strong>仅社交登录钱包</strong>；导出后注销当前社交钱包（<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>）</td>
+<td>本期不支持；社交 / 邮箱 / Google / Apple 钱包均不展示导出助记词入口</td>
 </tr>
 <tr>
 <td>创建或导入钱包弹窗</td>
@@ -1529,12 +1300,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>网络</td>
 <td>链、主网</td>
-<td>用户可见网络名；V1.1.0 白名单见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a></td>
+<td>用户可见网络名；V1.1.0 白名单见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a></td>
 </tr>
 <tr>
 <td>EVM 兼容网络</td>
 <td>—</td>
-<td>共享 0x 地址格式的网络集合；含 Ethereum、BSC 及 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 所列 EVM 扩展/L2</td>
+<td>共享 0x 地址格式的网络集合；含 Ethereum、BSC 及 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 所列 EVM 扩展/L2</td>
 </tr>
 <tr>
 <td>Solana 网络</td>
@@ -1548,7 +1319,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>「网络」字段更新</strong>：MVP 术语表中「本期为 Ethereum、BSC」在 V1.1.0 扩展为 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 全表；模块章写具体可用网络时以该表为准。</p>
+<p><strong>「网络」字段更新</strong>：MVP 术语表中「本期为 Ethereum、BSC」在 V1.1.0 扩展为 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 全表；模块章写具体可用网络时以该表为准。</p>
 <h4 id="251-章节交叉引用格式">2.5.1 章节交叉引用格式 </h4>
 <p>与 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#251-章节交叉引用格式">MVP §2.5.1-章节交叉引用格式</a> <strong>相同</strong>（见下表）。跨文档引用 MVP 能力时写「MVP §章节序号-小节或页面名称」并链至 MVP PRD；引用本文 V1.1 增量时须写 <strong>§章节序号-章标题或小节名称</strong> + Markdown 锚点，<strong>禁止</strong>正文只写「见 §4」「<a href="#…">§4</a>」等无标题链接。</p>
 <table>
@@ -1568,7 +1339,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>章内小节 / 页面</td>
 <td>§章节序号-小节或页面名称</td>
-<td><a href="#32-添加钱包页f-002b--三卡片">§3.2-添加钱包页</a>、<a href="#723-关闭与再现d-04">§7.2.3-关闭与再现（D-04）</a></td>
+<td><a href="#32-添加钱包页f-002b--三卡片">§3.2-添加钱包页</a>、<a href="#723-关闭与再现d-04">§7.2.3-关闭与再现</a></td>
 </tr>
 <tr>
 <td>跨章引用</td>
@@ -1582,7 +1353,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="252-权威定义引用v11-扩展">2.5.2 权威定义引用（V1.1 扩展） </h4>
+<h4 id="252-权威定义引用v11-扩展">2.5.2 权威定义引用 </h4>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#251-章节交叉引用格式">MVP §2.5.1 字段权威定义表</a> 仍成立。V1.1.0 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -1595,13 +1366,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>助记词三步安全引导</td>
-<td><a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导页（F-015）</a></td>
-<td>查看/导出复用时写「引导步骤同 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导页（F-015）</a>」+ 模式差异</td>
+<td><a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导</a></td>
+<td>查看/导出复用时写「引导步骤同 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导</a>」+ 模式差异</td>
 </tr>
 <tr>
 <td>助记词展示 / 遮罩 / 揭示</td>
-<td><a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示页（F-020）</a></td>
-<td>查看模式见 <a href="#84-查看助记词f-021">§8.4-查看助记词（F-021）</a></td>
+<td><a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a></td>
+<td>查看模式见 <a href="#84-查看助记词f-021">§8.4-查看助记词</a></td>
 </tr>
 <tr>
 <td>截屏风险提示</td>
@@ -1615,12 +1386,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>钱包类型行可见性</td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td><a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 <td>列表/首页不写重复规则</td>
 </tr>
 <tr>
 <td>网络白名单</td>
-<td><a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> / <a href="#91-网络白名单与链校验">§9.1-网络白名单与链校验</a></td>
+<td><a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> / <a href="#91-网络白名单与链校验">§9.1-网络白名单与链校验</a></td>
 <td>收发/复制写「网络范围同 <a href="#91-网络白名单与链校验">§9.1-网络白名单与链校验</a>」</td>
 </tr>
 <tr>
@@ -1643,7 +1414,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>适用范围</td>
-<td>备份助记词、查看助记词、导出助记词展示页；查看私钥页</td>
+<td>备份助记词、查看助记词展示页；查看私钥页</td>
 </tr>
 <tr>
 <td>触发条件</td>
@@ -1655,7 +1426,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>标题</td>
-<td>请不要截屏保存助记词（私钥场景改为「<strong>请不要截屏保存私钥</strong>」，见 <a href="#85-查看私钥f-022">§8.5-查看私钥（F-022）</a>）</td>
+<td>请不要截屏保存助记词（私钥场景改为「<strong>请不要截屏保存私钥</strong>」，见 <a href="#85-查看私钥f-022">§8.5-查看私钥</a>）</td>
 </tr>
 <tr>
 <td>说明</td>
@@ -1671,7 +1442,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>隐藏明文后再离开</strong>：用户从已揭示的助记词/私钥页点返回时，须 <strong>先收起明文</strong> 再导航，避免明文残留于返回过渡帧（与 MVP 敏感页返回原则一致）。</p>
+<p><strong>敏感明文离开页规则</strong>：助记词 / 私钥明文<strong>仅临时展示</strong>，<strong>禁止</strong>写入本地持久化、日志、埋点。用户点顶栏返回时<strong>可直接离开</strong>，<strong>不要求</strong>先点「隐藏助记词 / 隐藏私钥」；客户端须在导航瞬间<strong>立即清除</strong> UI 与内存中的明文。「隐藏」按钮为<strong>可选</strong>主动收起，非返回前置条件。适用：§6.5 备份展示、§8.4 查看助记词、§8.5 查看私钥等所有敏感展示页。</p>
 <hr />
 <h3 id="27-钱包类型与全局行为">2.7 钱包类型与全局行为 </h3>
 <table>
@@ -1693,7 +1464,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>❌</td>
 <td>❌ / ❌</td>
 <td>Privy 流程（MVP §11）</td>
-<td>✅</td>
+<td>❌</td>
 <td>退出登录（MVP §11）</td>
 </tr>
 <tr>
@@ -1725,10 +1496,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p>行可见性与字段细则以 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a> 为准；本表供跨模块快速对齐。</p>
+<p>行可见性与字段细则以 <a href="#8-钱包信息扩展m25">§8-钱包信息</a> 为准；本表供跨模块快速对齐。</p>
 <p><strong>发送与待备份（D-01）</strong>：处于 <strong>待备份</strong> 态的助记词钱包 <strong>不拦截</strong> 发送；仅 Banner 与钱包信息入口提示备份。</p>
 <hr />
-<h3 id="28-通行密钥适用场景扩展">2.8 通行密钥适用场景（扩展） </h3>
+<h3 id="28-通行密钥适用场景扩展">2.8 通行密钥适用场景 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#8-钱包登录与创建">MVP</a> 已规定社交登录与发送场景。V1.1.0 <strong>新增</strong> 须通行密钥通过后方可继续：</p>
 <table>
 <thead>
@@ -1753,10 +1524,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>查看助记词 / 查看私钥</td>
 <td>进入展示页</td>
-</tr>
-<tr>
-<td>导出助记词（社交钱包）</td>
-<td>进入导出展示页</td>
 </tr>
 <tr>
 <td>删除自托管钱包</td>
@@ -1834,15 +1601,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><strong>强制</strong></td>
 <td>—</td>
 </tr>
-<tr>
-<td>导出助记词</td>
-<td>点「导出助记词」</td>
-<td>通行密钥通过 + 倒计时结束</td>
-<td>多步确认 → 展示</td>
-<td>倒计时内禁用</td>
-<td><strong>强制</strong></td>
-<td>—</td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -1894,7 +1652,64 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="3-添加钱包与创建入口m20">3. 添加钱包与创建入口（M20） </h2>
+<h3 id="211-通用数据分层显示规范适用页面清单">2.11 通用数据分层显示规范适用页面清单 </h3>
+<p>对应 MVP <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#27-通用数据分层显示规范适用页面清单">§2.7 通用数据分层显示规范适用页面清单</a>（V1.1 因 §2.7 已用于「钱包类型与全局行为」，故本节编号为 <strong>§2.11</strong>）。</p>
+<p>以下页面出现金额、余额、数量、法币估值、单价或涨跌幅等数值型字段时，统一引用 <a href="#附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范</a>。V1.1.0 <strong>仍不接入实时行情</strong>的字段，按附录 A 的异常 / NULL 口径展示 <strong>「––」</strong> 或按对应页面规则不展示（与 MVP 一致，见 <a href="#133-多链约束-v11-增补">§13.3-多链约束</a>）。</p>
+<table>
+<thead>
+<tr>
+<th>适用页面 / 层级</th>
+<th>适用字段</th>
+<th>执行口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MVP 基线</strong> · <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#4-web3-首页有钱包时">§4 Web3 首页（有钱包时）</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#421-网络选择弹层">§4.2.1-网络选择弹层</a>（触点见 <a href="#1022-mvp-4--web3-首页有钱包">§10.2.2</a>）</td>
+<td>总余额、网络法币估值、资产行持有数量、单价、24h 涨跌、行内法币估值</td>
+<td>金额、余额、单价、估值按 <a href="#a1-数值分层显示规范">附录 A.1</a>；涨跌幅按 <a href="#a2-涨跌幅分层显示规范">附录 A.2</a>；无行情时展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><strong>MVP 基线</strong> · <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#5-接收功能">§5 接收功能</a>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#531-选择币种层">§5.3.1-选择币种层</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#532-搜索子层">§5.3.2-搜索子层</a></td>
+<td>资产行持有数量、法币估值</td>
+<td>持有数量与估值按 <a href="#a1-数值分层显示规范">附录 A.1</a>；无行情时估值展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><strong>MVP 基线</strong> · <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#6-代币详情页">§6 代币详情页</a> · 余额区</td>
+<td>代币数量、法币估值</td>
+<td>代币数量与估值按 <a href="#a1-数值分层显示规范">附录 A.1</a>；无行情时估值展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><strong>MVP 基线</strong> · <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#7-发送功能">§7 发送功能</a>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#741-选择币种层">§7.4.1</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#743-发送金额层">§7.4.3</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#744-签名预览层">§7.4.4</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#745-主网费用选择弹层">§7.4.5</a></td>
+<td>资产行持有数量与估值、可用余额、发送数量、主网费用预估原生币数量、费用法币折合</td>
+<td>余额、数量、费用金额、法币折合按 <a href="#a1-数值分层显示规范">附录 A.1</a>；Gwei 保持 MVP <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#743-发送金额层">§7.4.3 · 主网费用预估</a> 与 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#745-主网费用选择弹层">§7.4.5 · 档位列表行</a> 指定的 2 位小数规则</td>
+</tr>
+<tr>
+<td><strong>MVP 基线</strong> · <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#9-钱包列表">§9 钱包列表</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#10-钱包管理">§10 钱包管理</a>（触点见 <a href="#1027-mvp-9-钱包列表">§10.2.7</a>、<a href="#1028-mvp-10-钱包管理">§10.2.8</a>）</td>
+<td>资产总额、单钱包 / 管理项资产估值</td>
+<td>资产总额与单钱包估值按 <a href="#a1-数值分层显示规范">附录 A.1</a>；无行情时展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><strong>V1.1 增量</strong> · <a href="#934-接收-v11-增补">§9.3.4-接收</a></td>
+<td>Solana / TRON 资产行持有数量、法币估值</td>
+<td>数量与估值按 <a href="#a1-数值分层显示规范">附录 A.1</a>；无行情时估值展示 <strong>「––」</strong> 或不展示</td>
+</tr>
+<tr>
+<td><strong>V1.1 增量</strong> · <a href="#935-发送-v11-增补">§9.3.5-发送</a>：<a href="#9351-选择币种-选择网络">§9.3.5.1</a>、<a href="#9353-发送金额层-三链校验">§9.3.5.3</a>、<a href="#9354-tron-网络资源f-067-重点">§9.3.5.4</a>、<a href="#9355-签名预览与费用弹窗">§9.3.5.5</a></td>
+<td>可用余额、发送数量、SOL 租金 / 关联代币账户费用、TRON 带宽资源 / 能量资源燃烧预估、签名预览费用原生币数量、费用法币折合</td>
+<td>余额、数量、费用金额按 <a href="#a1-数值分层显示规范">附录 A.1</a>；EVM Gwei 仍遵循 MVP 2 位小数；Tron 资源数值按 §9.3.5.4 业务精度计算后再按附录 A.1 展示</td>
+</tr>
+</tbody>
+</table>
+<p><strong>执行原则</strong>：当页面字段已在业务章给出更具体的输入限制或链上精度（如发送金额最多 8 位、Gwei 保留 2 位、Solana 租金豁免下限）时，先按业务章完成输入 / 计算，再按附录 A 做最终展示；不得在各页面另起第二套金额、估值或涨跌幅格式。</p>
+<p><strong>验收抽测建议</strong>（纳入 MVP 基线回归与 §9.3 增量测试时执行）：</p>
+<ul>
+<li>MVP 基线触点（<a href="#1022-mvp-4--web3-首页有钱包">§10.2.2</a>～<a href="#1028-mvp-10-钱包管理">§10.2.8</a>）数值字段符合 <a href="#a1-数值分层显示规范">附录 A.1</a> / <a href="#a2-涨跌幅分层显示规范">附录 A.2</a></li>
+<li>§9.3 多链收发余额、Gas、Tron 资源、签名预览费用符合 <a href="#a1-数值分层显示规范">附录 A.1</a></li>
+<li>无行情时法币估值为 <strong>「––」</strong> 或不展示，不出现裸 <code>null</code> / <code>NaN</code></li>
+</ul>
+<hr />
+<h2 id="3-添加钱包与创建入口m20">3. 添加钱包与创建入口 </h2>
 <p><strong>Feature</strong>：F-002b（添加钱包三卡片 + 双入口分流）<br />
 <strong>关联</strong>：<a href="#4-助记词创建m21">§4-助记词创建</a>、<a href="#5-钱包导入m22">§5-钱包导入</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a><br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#8-钱包登录与创建">MVP §8-钱包登录与创建</a>（社交单轨）；<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#84-web3-无钱包首页">MVP §8.4-Web3无钱包首页</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#85-创建或导入钱包弹窗">MVP §8.5-创建或导入钱包弹窗</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#86-添加钱包页">MVP §8.6-添加钱包页</a><br />
@@ -1922,7 +1737,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>出口</td>
-<td>各子流程成功 → <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a>；助记词新创建另见 <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a></td>
+<td>各子流程成功 → <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a>；助记词新创建另见 <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a></td>
 </tr>
 </tbody>
 </table>
@@ -1998,7 +1813,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<a id="32-添加钱包页f-002b--三卡片" aria-hidden="true"></a><h3 id="32-添加钱包页f-002b-三卡片">3.2 添加钱包页（F-002b · 三卡片） </h3>
+<a id="32-添加钱包页f-002b--三卡片" aria-hidden="true"></a><h3 id="32-添加钱包页f-002b-三卡片">3.2 添加钱包页 </h3>
 <p><strong>页面</strong>：添加钱包页</p>
 <h4 id="321-页面信息">3.2.1 页面信息 </h4>
 <table>
@@ -2019,7 +1834,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>非</strong> 进入路径</td>
-<td>交易所 Web3 Tab 无钱包态（走 <a href="#35-web3-无钱包首页--v11-增补">§3.5-Web3无钱包首页 · V1.1 增补</a>）</td>
+<td>交易所 Web3 Tab 无钱包态（走 <a href="#35-web3-无钱包首页--v11-增补">§3.5-Web3 无钱包首页</a>）</td>
 </tr>
 <tr>
 <td>顶栏</td>
@@ -2073,7 +1888,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <blockquote>
 <p><strong>相对 MVP</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#86-添加钱包页">MVP §8.6-添加钱包页</a> 仅 <strong>社交登录</strong> 单卡片；V1.1.0 增补卡片 1、2，并将社交收敛为卡片 3。</p>
 </blockquote>
-<h4 id="323-交互规则添加钱包页">3.2.3 交互规则（添加钱包页） </h4>
+<h4 id="323-交互规则添加钱包页">3.2.3 交互规则 </h4>
 <table>
 <thead>
 <tr>
@@ -2180,7 +1995,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <p>选中任一行 → 关闭弹层 → <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#87-社交登录">MVP §8.7-社交登录</a> 对应子流程；记录 <code>当前流程</code> = 创建 / 导入（与模式一致）。</p>
-<h4 id="333-hd-区分隔与底部主按钮v11-增补">3.3.3 HD 区分隔与底部主按钮（V1.1 增补） </h4>
+<h4 id="333-hd-区分隔与底部主按钮v11-增补">3.3.3 HD 区分隔与底部主按钮 </h4>
 <table>
 <thead>
 <tr>
@@ -2246,7 +2061,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <p>取消或 OAuth / Passkey 失败 → 回 <strong>添加钱包页</strong>（非无钱包首页）。</p>
 <hr />
-<a id="35-web3-无钱包首页--v11-增补" aria-hidden="true"></a><h3 id="35-web3-无钱包首页-v11-增补">3.5 Web3 无钱包首页 · V1.1 增补 </h3>
+<a id="35-web3-无钱包首页--v11-增补" aria-hidden="true"></a><h3 id="35-web3-无钱包首页-v11-增补">3.5 Web3 无钱包首页 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#84-web3-无钱包首页">MVP §8.4-Web3无钱包首页</a> 页面结构、宇航员动效、底 Tab 占位 <strong>不变</strong>。</p>
 <p>V1.1.0 <strong>唯一变更</strong>：「创建钱包 / 我已有钱包」打开的 <a href="#33-创建或导入钱包弹窗">§3.3-创建或导入钱包弹窗</a> 由 MVP「仅社交行」扩展为 <strong>社交登录 + HD 底部主按钮</strong>（见 <a href="#333-hd-区分隔与底部主按钮v11-增补">§3.3.3-HD 区分隔与底部主按钮</a>）。</p>
 <table>
@@ -2276,7 +2091,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="36-流程总览入口层-子模块">3.6 流程总览（入口层 → 子模块） </h3>
+<h3 id="36-流程总览入口层-子模块">3.6 流程总览 </h3>
 <table>
 <thead>
 <tr>
@@ -2493,7 +2308,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>持久化</strong></td>
-<td>流程入口页标识为 <strong>会话态</strong>；钱包对象持久化见 <a href="#144-本地持久化增补">§14.4-本地持久化（增补）</a></td>
+<td>流程入口页标识为 <strong>会话态</strong>；钱包对象持久化见 <a href="#144-本地持久化增补">§14.4-本地持久化</a></td>
 </tr>
 </tbody>
 </table>
@@ -2568,12 +2383,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>Android / iOS 社交行</td>
 <td>Android 无 Apple 行；iOS 含 Apple 行（两入口 UI 均适用）</td>
 </tr>
+<tr>
+<td>AC-V11-34a</td>
+<td>重复登录同一社交邮箱钱包</td>
+<td>同一 <strong>登录方式 + 登录邮箱</strong> 已存在时，<strong>不</strong> 新增钱包；提示该账号已登录或引导切换已有钱包</td>
+</tr>
 </tbody>
 </table>
 <hr />
-<h2 id="4-助记词创建m21">4. 助记词创建（M21） </h2>
+<h2 id="4-助记词创建m21">4. 助记词创建 </h2>
 <p><strong>Feature</strong>：F-006（BIP-39 助记词新创建）<br />
-<strong>关联</strong>：<a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a>、<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a><br />
+<strong>关联</strong>：<a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a>、<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a><br />
 <strong>基线</strong>：MVP 无 HD 创建路径；通行密钥交互沿用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#88-通行密钥">MVP §8.8-通行密钥</a><br />
 <strong>原型屏</strong>：通行密钥权限说明弹窗、通行密钥系统确认弹窗、钱包创建或导入中页（创建态）</p>
 <h3 id="40-模块说明">4.0 模块说明 </h3>
@@ -2599,7 +2419,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>出口</td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a> + <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a>；Toast「助记词钱包创建成功」</td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a> + <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a>；Toast「助记词钱包创建成功」</td>
 </tr>
 </tbody>
 </table>
@@ -2709,7 +2529,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>用户 <strong>取消</strong></td>
-<td>Toast「已取消验证」；回到 <strong>流程入口页标识</strong> 对应页（<a href="#222-通行密钥取消扩展">§2.2.2-通行密钥取消（扩展）</a>）</td>
+<td>Toast「已取消验证」；回到 <strong>流程入口页标识</strong> 对应页（<a href="#222-通行密钥取消扩展">§2.2.2-通行密钥取消</a>）</td>
 </tr>
 <tr>
 <td>验证 <strong>失败</strong></td>
@@ -2718,10 +2538,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <blockquote>
-<p>创建路径 <strong>不</strong> 进入 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#89-privy-tss-分片准备">MVP §8.9-钱包准备中页（TSS）</a>（TSS 仅社交钱包）。</p>
+<p>创建路径 <strong>不</strong> 进入 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#89-privy-tss-分片准备">MVP §8.9-钱包准备中页</a>（TSS 仅社交钱包）。</p>
 </blockquote>
 <hr />
-<h3 id="44-钱包创建或导入中页创建态">4.4 钱包创建或导入中页（创建态） </h3>
+<h3 id="44-钱包创建或导入中页创建态">4.4 创建中 </h3>
 <p><strong>页面</strong>：钱包创建或导入中页（与导入 <strong>共用 UI</strong>，文案切换为创建态）</p>
 <h4 id="441-页面信息">4.4.1 页面信息 </h4>
 <table>
@@ -2754,7 +2574,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="442-展示字段创建态">4.4.2 展示字段（创建态） </h4>
+<h4 id="442-展示字段创建态">4.4.2 展示字段 </h4>
 <table>
 <thead>
 <tr>
@@ -2776,7 +2596,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <blockquote>
 <p>导入态文案见 <a href="#5-钱包导入m22">§5-钱包导入</a>；同一页面由 <code>当前流程</code> 切换标题 / 说明。</p>
 </blockquote>
-<h4 id="443-系统行为创建态">4.4.3 系统行为（创建态） </h4>
+<h4 id="443-系统行为创建态">4.4.3 系统行为 </h4>
 <table>
 <thead>
 <tr>
@@ -2811,7 +2631,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>目标页</td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a></td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a></td>
 </tr>
 <tr>
 <td>当前钱包</td>
@@ -2847,7 +2667,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>不展示助记词</strong></td>
-<td>创建主路径 <strong>任何页面 / 弹层均不展示</strong> 助记词明文；用户须通过 <a href="#6-助记词备份m23">§6-助记词备份</a> 或 <a href="#8-钱包信息扩展m25">§8-查看助记词</a>（已备份后）查看</td>
+<td>创建主路径 <strong>任何页面 / 弹层均不展示</strong> 助记词明文；用户须通过 <a href="#6-助记词备份m23">§6-助记词备份</a> 或 <a href="#8-钱包信息扩展m25">§8.4-查看助记词</a>（已备份后）查看</td>
 </tr>
 <tr>
 <td><strong>词数</strong></td>
@@ -2859,13 +2679,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>多链</strong></td>
-<td>创建时派生地址覆盖 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 所列链；资产仍 <strong>单链展示</strong></td>
+<td>创建时派生地址覆盖 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 所列链；资产仍 <strong>单链展示</strong></td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3 id="47-默认钱包命名">4.7 默认钱包命名 </h3>
-<p>创建成功时写入 <strong>钱包名称</strong>，规则与助记词导入 <strong>共用序号池</strong>（避免重名）：</p>
+<p>创建成功时写入 <strong>钱包名称</strong>，规则与助记词导入 <strong>共用持久化递增序号</strong>（避免删除/改名后复用编号）：</p>
 <table>
 <thead>
 <tr>
@@ -2880,15 +2700,23 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>序号计算</td>
-<td>在当前用户已有钱包中，筛选 <strong>助记词新创建</strong> 与 <strong>助记词导入</strong> 类且名称匹配「我的钱包+数字」者，取最大序号 <strong>+1</strong></td>
+<td>读取本地持久化的 <strong>助记词钱包默认名递增序号</strong>（实现字段可映射为 <code>mnemonicWalletNameSeq</code>），助记词 <strong>新创建</strong> 或 <strong>助记词导入</strong> 成功写入列表前先执行 <code>+1</code>，再生成「我的钱包{n}」</td>
 </tr>
 <tr>
 <td>首个</td>
-<td>无匹配时 n=<strong>1</strong> → 「<strong>我的钱包1</strong>」</td>
+<td>该递增序号不存在或为 0 时，首次写入前递增为 <strong>1</strong> → 「<strong>我的钱包1</strong>」</td>
 </tr>
 <tr>
 <td>后续修改</td>
-<td>支持 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#118-自定义钱包">MVP §11.8-自定义钱包</a></td>
+<td>支持 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#118-自定义钱包">MVP §11.8-自定义钱包</a>；用户手动改名 <strong>不</strong> 回写、不重算助记词钱包默认名递增序号</td>
+</tr>
+<tr>
+<td>删除后新增</td>
+<td>删除钱包 <strong>不回收</strong> 序号；例如已生成至「我的钱包3」，删除任意助记词钱包后再次新增仍生成「我的钱包4」</td>
+</tr>
+<tr>
+<td>适用范围</td>
+<td>仅适用于 <code>mnemonic</code> / <code>mnemonicImport</code>；私钥钱包按 <a href="#511-默认钱包命名">§5.11-默认钱包命名</a> 使用地址缩略名；社交钱包沿用 MVP 账号展示规则</td>
 </tr>
 </tbody>
 </table>
@@ -3087,7 +2915,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>AC-V11-40</td>
 <td>创建成功命名</td>
-<td>默认名「我的钱包{n}」；与已有助记词类「我的钱包*」序号不冲突</td>
+<td>默认名「我的钱包{n}」；n 取助记词钱包默认名递增序号 + 1，写入前递增并持久化</td>
+</tr>
+<tr>
+<td>AC-V11-40a</td>
+<td>删除助记词钱包后再次创建 / 导入助记词</td>
+<td>生成下一个序号；<strong>不</strong> 复用已删除钱包序号</td>
+</tr>
+<tr>
+<td>AC-V11-40b</td>
+<td>用户改名后再次创建 / 导入助记词</td>
+<td>按持久化序号继续递增；<strong>不</strong> 因改名重算或回收编号</td>
 </tr>
 <tr>
 <td>AC-V11-41</td>
@@ -3107,11 +2945,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="5-钱包导入m22">5. 钱包导入（M22） </h2>
+<h2 id="5-钱包导入m22">5. 钱包导入 </h2>
 <p><strong>Feature</strong>：F-007（助记词导入）、F-008（私钥导入）、F-013（扫码导入 · <strong>P1</strong>）<br />
-<strong>关联</strong>：<a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a>、<a href="#4-助记词创建m21">§4-助记词创建</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a><br />
-<strong>基线</strong>：MVP 无助记词 / 私钥导入；发送地址「扫一扫」仍为 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#742-接收地址层">MVP §7.4.2</a> 占位（与 <strong>本模块扫码</strong> 无关，补丁见 <a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a>）<br />
-<strong>原型屏</strong>：导入助记词或私钥页、扫码导入弹窗、私钥导入选择网络页、通行密钥权限说明弹窗、通行密钥系统确认弹窗、钱包创建或导入中页（导入态）</p>
+<strong>关联</strong>：<a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a>、<a href="#4-助记词创建m21">§4-助记词创建</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a><br />
+<strong>基线</strong>：MVP 无助记词 / 私钥导入；V1.1 新增扫码能力，钱包导入扫码与发送地址扫码共用相机权限前置拦截（补丁见 <a href="#10-mvp-触点补丁表">§10-MVP触点补丁表</a>）<br />
+<strong>原型屏</strong>：导入助记词或私钥页、开启相机访问权限弹窗、扫码导入弹窗、私钥导入选择网络页、通行密钥权限说明弹窗、通行密钥系统确认弹窗、钱包创建或导入中页（导入态）</p>
 <h3 id="50-模块说明">5.0 模块说明 </h3>
 <table>
 <thead>
@@ -3135,7 +2973,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>出口</td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a>；Toast「钱包导入成功」</td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a>；Toast「钱包导入成功」</td>
 </tr>
 </tbody>
 </table>
@@ -3342,8 +3180,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <p>Passkey 取消后回到本页时，<strong>保留</strong> 已填内容与错误态（见 <a href="#58-通行密钥">§5.8-通行密钥</a>）。</p>
 <hr />
-<h3 id="54-助记词导入f-007">5.4 助记词导入（F-007） </h3>
-<h4 id="541-实时校验助记词模式">5.4.1 实时校验（助记词模式） </h4>
+<h3 id="54-助记词导入f-007">5.4 助记词导入 </h3>
+<h4 id="541-实时校验助记词模式">5.4.1 实时校验 </h4>
 <table>
 <thead>
 <tr>
@@ -3366,7 +3204,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="542-点击-确认-助记词">5.4.2 点击「确认」（助记词） </h4>
+<h4 id="542-点击-确认-助记词">5.4.2 点击「确认」 </h4>
 <table>
 <thead>
 <tr>
@@ -3395,7 +3233,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <p>校验算法：BIP39 标准（11 位索引 → ENT + checksum，SHA-256）。</p>
 <hr />
-<a id="55-私钥导入--格式校验f-008" aria-hidden="true"></a><h3 id="55-私钥导入-格式校验f-008">5.5 私钥导入 · 格式校验（F-008） </h3>
+<a id="55-私钥导入--格式校验f-008" aria-hidden="true"></a><h3 id="55-私钥导入-格式校验f-008">5.5 私钥格式校验 </h3>
 <p>点击「确认」且判定为 <strong>私钥模式</strong> 时：</p>
 <table>
 <thead>
@@ -3491,8 +3329,67 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>助记词导入 <strong>跳过</strong> 本页，Passkey 通过后直接进入导入中页。</p>
 </blockquote>
 <hr />
-<h3 id="57-扫码导入弹窗f-013">5.7 扫码导入弹窗（F-013） </h3>
-<p><strong>弹层</strong>：扫码导入弹窗 · 导航栏 <strong>扫码</strong> 按钮进入</p>
+<h3 id="57-扫码导入弹窗f-013">5.7 扫码导入 </h3>
+<p><strong>入口</strong>：导入助记词或私钥页导航栏 <strong>扫码</strong> 图标按钮。点击后须先检查相机权限；未授权时展示 <strong>开启相机访问权限</strong> 弹窗，已授权时进入 <strong>扫码导入弹窗</strong>。</p>
+<h4 id="571-相机权限前置拦截">5.7.1 相机权限前置拦截 </h4>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>反馈</th>
+<th>后续</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相机权限已授权</td>
+<td>无额外提示</td>
+<td>打开扫码导入弹窗</td>
+</tr>
+<tr>
+<td>相机权限未授权 / 已拒绝 / 不可用</td>
+<td>展示 <strong>开启相机访问权限</strong> 弹窗（非 Toast）</td>
+<td>用户选择「去开启」或「取消」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>开启相机访问权限弹窗文案</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>文案 / 规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td><strong>开启相机访问权限</strong></td>
+</tr>
+<tr>
+<td>说明</td>
+<td><strong>需要使用相机识别二维码。开启后可快速扫描转账地址、DApp 或 WalletConnect 等二维码。</strong></td>
+</tr>
+<tr>
+<td>能力说明 1</td>
+<td><strong>快速识别转账地址</strong></td>
+</tr>
+<tr>
+<td>能力说明 2</td>
+<td><strong>识别 DApp、WalletConnect 等二维码</strong></td>
+</tr>
+<tr>
+<td>主按钮</td>
+<td><strong>去开启</strong>：跳转系统设置 / App 权限设置；原型中模拟开启权限并继续原扫码动作</td>
+</tr>
+<tr>
+<td>次按钮</td>
+<td><strong>取消</strong>：关闭弹窗，停留当前页面，不继续扫码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="572-扫码导入弹窗">5.7.2 扫码导入弹窗 </h4>
+<p><strong>弹层</strong>：扫码导入弹窗 · 仅在相机权限已授权后进入</p>
 <table>
 <thead>
 <tr>
@@ -3507,7 +3404,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>生产</td>
-<td>须接 <strong>相机 / 相册</strong> 识别 QR；识别结果填入输入页</td>
+<td>须接 <strong>相机</strong> 识别 QR；识别结果填入输入页</td>
 </tr>
 <tr>
 <td>原型</td>
@@ -3545,7 +3442,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p>填入后：关闭弹窗 → 触发与 <strong>手动输入相同</strong> 的校验链（<a href="#54-助记词导入f-007">§5.4-助记词导入（F-007）</a>、<a href="#55-私钥导入--格式校验f-008">§5.5-私钥导入 · 格式校验（F-008）</a>）。</p>
+<p>填入后：关闭弹窗 → 触发与 <strong>手动输入相同</strong> 的校验链（<a href="#54-助记词导入f-007">§5.4-助记词导入</a>、<a href="#55-私钥导入--格式校验f-008">§5.5-私钥格式校验</a>）。</p>
 <table>
 <thead>
 <tr>
@@ -3563,13 +3460,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>同手动输入行内错误</td>
 </tr>
 <tr>
-<td>生产：相机权限拒绝 / 无法识别</td>
-<td>文案见 <a href="#124-全局错误-toast-增补">§12.4-全局错误 Toast 增补</a></td>
+<td>生产：无法识别</td>
+<td>Toast 文案见 <a href="#124-全局错误-toast-增补">§12.4-全局错误 Toast 增补</a>；相机权限未授权按 §5.7.1 弹窗处理</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>D-02</strong>：替换 MVP 发送流程「扫码功能即将上线」的是 <strong>地址填扫码</strong>（§10 补丁）；<strong>本弹窗</strong> 为钱包导入专用，二者不混用。</p>
+<p><strong>D-02</strong>：钱包导入扫码与发送地址扫码共用 <strong>相机权限前置拦截</strong>；授权后的扫码结果处理分别归属 §5.7.2 与 <a href="#9352-接收地址层">§9.3.5.2</a>。</p>
 </blockquote>
 <hr />
 <h3 id="58-通行密钥">5.8 通行密钥 </h3>
@@ -3584,7 +3481,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>验证 <strong>通过</strong> · 助记词</td>
-<td>→ <a href="#59-钱包创建或导入中页导入态">§5.9-钱包创建或导入中页（导入态）</a>（助记词副文案）</td>
+<td>→ <a href="#59-钱包创建或导入中页导入态">§5.9-钱包创建或导入中页</a>（助记词副文案）</td>
 </tr>
 <tr>
 <td>验证 <strong>通过</strong> · 私钥</td>
@@ -3601,7 +3498,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="59-钱包创建或导入中页导入态">5.9 钱包创建或导入中页（导入态） </h3>
+<h3 id="59-钱包创建或导入中页导入态">5.9 导入中 </h3>
 <p>与 <a href="#44-钱包创建或导入中页创建态">§4.4-钱包创建或导入中页</a> <strong>共用 UI</strong>；<code>当前流程=导入</code> 时切换文案。</p>
 <table>
 <thead>
@@ -3676,15 +3573,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>助记词导入</td>
-<td><code>钱包品类=mnemonicImport</code>；<code>待备份标记=false</code>；<strong>无</strong> <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a>（<a href="#15-已确认产品决策">§1.5-已确认产品决策 · D-05</a>）</td>
+<td>前置去重通过后写入：<code>钱包品类=mnemonicImport</code>；<code>待备份标记=false</code>；<strong>无</strong> <a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a>（<a href="#15-已确认产品决策">§1.5-已确认产品决策 · D-05</a>）</td>
 </tr>
 <tr>
 <td>私钥导入</td>
-<td><code>钱包品类=privateKey</code>；<strong>无</strong> 待备份字段 / Banner / 备份入口</td>
+<td>前置去重通过后写入：<code>钱包品类=privateKey</code>；<strong>无</strong> 待备份字段 / Banner / 备份入口</td>
 </tr>
 <tr>
 <td>列表</td>
-<td>新钱包出现在列表；助记词导入类可「查看助记词」（<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>）</td>
+<td>新钱包出现在列表；助记词导入类可「查看助记词」（<a href="#8-钱包信息扩展m25">§8-钱包信息</a>）</td>
 </tr>
 </tbody>
 </table>
@@ -3700,7 +3597,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>助记词</td>
-<td><strong>我的钱包{n}</strong> — 算法同 <a href="#47-默认钱包命名">§4.7-默认钱包命名</a>（与助记词 <strong>创建</strong> 共用序号池）</td>
+<td><strong>我的钱包{n}</strong> — 算法同 <a href="#47-默认钱包命名">§4.7-默认钱包命名</a>（与助记词 <strong>创建</strong> 共用助记词钱包默认名递增序号）</td>
 </tr>
 <tr>
 <td>私钥 · EVM / TRON</td>
@@ -3817,6 +3714,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>—</td>
 </tr>
 <tr>
+<td>重复导入拦截</td>
+<td>助记词 / 私钥已存在</td>
+<td>同一助记词指纹、同一私钥指纹或同一派生地址已在本地钱包列表</td>
+<td>阻止导入；提示用户该钱包已存在</td>
+<td>—</td>
+<td>保留输入页草稿</td>
+</tr>
+<tr>
 <td>导入完成</td>
 <td>计时结束</td>
 <td>—</td>
@@ -3866,7 +3771,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>持久化</td>
-<td>钱包列表、当前钱包 id；助记词 / 私钥安全存储不在 PRD 展开</td>
+<td>钱包列表、当前钱包标识；助记词 / 私钥安全存储不在 PRD 展开；重复导入拦截不写入钱包对象、不递增助记词钱包默认名递增序号</td>
 </tr>
 <tr>
 <td>MVP 补丁</td>
@@ -3941,6 +3846,16 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><code>privateKey</code>；无待备份 / Banner / 备份入口（D-05）</td>
 </tr>
 <tr>
+<td>AC-V11-54a</td>
+<td>重复导入已存在助记词</td>
+<td>阻止导入并提示该钱包已存在；<strong>不</strong> 写入钱包列表；<strong>不</strong> 递增助记词钱包默认名递增序号</td>
+</tr>
+<tr>
+<td>AC-V11-54b</td>
+<td>重复导入已存在私钥</td>
+<td>阻止导入并提示该钱包已存在；<strong>不</strong> 写入钱包列表；<strong>不</strong> 切换当前钱包</td>
+</tr>
+<tr>
 <td>AC-V11-55</td>
 <td>扫码 Mock 12 词助记词</td>
 <td>填入输入区；后续与手动输入 AC-V11-46 一致</td>
@@ -3963,9 +3878,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="6-助记词备份m23">6. 助记词备份（M23） </h2>
+<h2 id="6-助记词备份m23">6. 助记词备份 </h2>
 <p><strong>Feature</strong>：F-015（三步安全引导）、F-016（截屏风险提示）、F-020（备份助记词展示与验证子流程）<br />
-<strong>关联</strong>：<a href="#4-助记词创建m21">§4-助记词创建</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a>、<a href="#8-钱包信息扩展m25">§8-查看助记词</a>（已备份后复用展示页）<br />
+<strong>关联</strong>：<a href="#4-助记词创建m21">§4-助记词创建</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a>、<a href="#8-钱包信息扩展m25">§8.4-查看助记词</a>（已备份后复用展示页）<br />
 <strong>基线</strong>：MVP 无助记词备份流程<br />
 <strong>原型屏</strong>：助记词安全引导页、备份助记词页、验证助记词页、截屏风险提示弹层、通行密钥权限说明弹窗、通行密钥系统确认弹窗</p>
 <h3 id="60-模块说明">6.0 模块说明 </h3>
@@ -3987,7 +3902,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>不做</td>
-<td>创建流程内展示助记词（见 <a href="#46-产品约束">§4.6-产品约束</a>）；助记词 <strong>导入</strong> 钱包走「已备份」默认态（D-05）；查看 / 导出助记词规则见 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td>创建流程内展示助记词（见 <a href="#46-产品约束">§4.6-产品约束</a>）；助记词 <strong>导入</strong> 钱包走「已备份」默认态（D-05）；查看助记词规则及社交 / 邮箱不支持导出助记词口径见 <a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 </tr>
 <tr>
 <td>适用钱包</td>
@@ -4022,7 +3937,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>1</td>
 <td>从入口进入</td>
-<td>打开 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导页</a></td>
+<td>打开 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导</a></td>
 <td>步骤 <strong>1/3</strong>，进度指示</td>
 </tr>
 <tr>
@@ -4034,7 +3949,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>3</td>
 <td>Passkey 通过</td>
-<td>打开 <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示页</a>，默认遮罩</td>
+<td>打开 <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a>，默认遮罩</td>
 <td>底部主按钮「继续」<strong>禁用</strong></td>
 </tr>
 <tr>
@@ -4063,7 +3978,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>返回链</strong>（与 <a href="#221-不可中断页">§2.2.1-不可中断页</a> 一致）：</p>
+<p><strong>返回链</strong>（备份流程权威定义；§2.2.1 索引至本节）：</p>
 <table>
 <thead>
 <tr>
@@ -4081,16 +3996,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>回 <strong>备份流程返回页标识</strong></td>
 </tr>
 <tr>
-<td>备份展示 · 词表 <strong>未揭示</strong></td>
-<td>回安全引导 <strong>第 3 步</strong></td>
-</tr>
-<tr>
-<td>备份展示 · 词表 <strong>已揭示</strong></td>
-<td><strong>先隐藏词表</strong>，再允许离开（见 <a href="#26-截屏与敏感信息全局规则">§2.6-截屏与敏感信息全局规则</a>）</td>
+<td>备份展示 · 词表 <strong>未揭示</strong> / <strong>已揭示</strong></td>
+<td>顶栏返回 → <strong>钱包信息</strong>（<strong>一次</strong>离开；与是否揭示无关；系统清除词表明文，不要求先点「隐藏助记词」）</td>
 </tr>
 <tr>
 <td>验证页</td>
-<td>回备份展示页（已选答案 <strong>保留</strong>）</td>
+<td>回备份展示页；再次进入验证页时重新生成验证题与选项状态</td>
 </tr>
 </tbody>
 </table>
@@ -4155,12 +4066,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
+<p><strong>例外</strong>：<a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a> 顶栏返回固定 → <strong>钱包信息</strong>，与入口及词表是否揭示无关。</p>
 <blockquote>
 <p>V1.1.0 <strong>无</strong> 独立钱包设置页；备份入口统一为 Banner、列表 pill、钱包信息行（<a href="#13-v110-范围边界">§1.3-V1.1.0 范围边界</a>）。</p>
 </blockquote>
 <hr />
-<h3 id="63-助记词安全引导页f-015">6.3 助记词安全引导页（F-015） </h3>
-<p><strong>页面</strong>：助记词安全引导页 · <strong>备份模式</strong>（与 <a href="#8-钱包信息扩展m25">§8-查看助记词</a> / 查看私钥 <strong>共用 UI</strong>，文案按模式切换；<strong>本章仅写备份模式</strong>）</p>
+<h3 id="63-助记词安全引导页f-015">6.3 助记词安全引导 </h3>
+<p><strong>页面</strong>：助记词安全引导页 · <strong>备份模式</strong>（与 <a href="#8-钱包信息扩展m25">§8.4-查看助记词</a> / 查看私钥 <strong>共用 UI</strong>，文案按模式切换；<strong>本章仅写备份模式</strong>）</p>
 <h4 id="631-页面信息">6.3.1 页面信息 </h4>
 <table>
 <thead>
@@ -4184,7 +4096,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="632-三步文案备份模式">6.3.2 三步文案（备份模式） </h4>
+<h4 id="632-三步文案备份模式">6.3.2 三步文案 </h4>
 <table>
 <thead>
 <tr>
@@ -4239,7 +4151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <hr />
 <h3 id="64-通行密钥">6.4 通行密钥 </h3>
-<p>备份路径 Passkey <strong>沿用</strong> <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#88-通行密钥">MVP §8.8-通行密钥</a> 与 <a href="#43-通行密钥">§4.3-通行密钥</a> 弹层规则；场景登记见 <a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景（扩展）</a>。</p>
+<p>备份路径 Passkey <strong>沿用</strong> <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#88-通行密钥">MVP §8.8-通行密钥</a> 与 <a href="#43-通行密钥">§4.3-通行密钥</a> 弹层规则；场景登记见 <a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景</a>。</p>
 <table>
 <thead>
 <tr>
@@ -4250,7 +4162,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>验证 <strong>通过</strong></td>
-<td>关闭通行密钥弹层 → <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示页</a>（重置为遮罩态）</td>
+<td>关闭通行密钥弹层 → <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a>（重置为遮罩态）</td>
 </tr>
 <tr>
 <td>用户 <strong>取消</strong> / 失败</td>
@@ -4258,12 +4170,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>从首页 Banner 进入后取消</td>
-<td>回 Web3 首页；Banner 展示规则见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现（D-04）</a></td>
+<td>回 Web3 首页；Banner 展示规则见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现</a></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="65-备份助记词展示页f-020">6.5 备份助记词展示页（F-020） </h3>
+<h3 id="65-备份助记词展示页f-020">6.5 备份助记词展示 </h3>
 <p><strong>页面</strong>：备份助记词页 · <strong>展示模式=backup</strong></p>
 <h4 id="651-页面信息">6.5.1 页面信息 </h4>
 <table>
@@ -4306,7 +4218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>已揭示</strong></td>
 <td><strong>12 词</strong> BIP-39，序号 01–12，<strong>两列</strong>网格</td>
-<td><strong>隐藏助记词</strong>；词表区可滚动（若需要）</td>
+<td><strong>隐藏助记词</strong>（可选，非返回前置）；词表区可滚动（若需要）</td>
 </tr>
 </tbody>
 </table>
@@ -4360,10 +4272,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <blockquote>
-<p><strong>查看模式</strong>（已备份后再看）：标题「查看助记词」、主按钮「完成」、<strong>无</strong> 验证页 — 见 <a href="#8-钱包信息扩展m25">§8-查看助记词</a>。</p>
+<p><strong>查看模式</strong>（已备份后再看）：标题「查看助记词」、主按钮「完成」、<strong>无</strong> 验证页 — 见 <a href="#8-钱包信息扩展m25">§8.4-查看助记词</a>。</p>
 </blockquote>
+<p><strong>顶栏返回</strong>：无论词表是否揭示，顶栏返回均 → <strong>钱包信息</strong>（<strong>一次</strong>离开）；系统清除词表明文，不要求先点「隐藏助记词」（见 <a href="#26-截屏与敏感信息全局规则">§2.6</a>）。</p>
 <hr />
-<h3 id="66-截屏风险提示f-016">6.6 截屏风险提示（F-016） </h3>
+<h3 id="66-截屏风险提示f-016">6.6 截屏风险提示 </h3>
 <p>词表 <strong>已揭示</strong> 时，触发与反馈 <strong>沿用</strong> <a href="#26-截屏与敏感信息全局规则">§2.6-截屏与敏感信息全局规则</a>、<a href="#223-截屏风险提示弹层">§2.2.3-截屏风险提示弹层</a>。</p>
 <table>
 <thead>
@@ -4517,7 +4430,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><code>钱包信息</code></td>
-<td>钱包信息（「备份助记词」行切换为「查看助记词」，见 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>）</td>
+<td>钱包信息（「备份助记词」行切换为「查看助记词」，见 <a href="#8-钱包信息扩展m25">§8-钱包信息</a>）</td>
 </tr>
 </tbody>
 </table>
@@ -4545,12 +4458,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>展示 · 遮罩</td>
 <td>备份助记词页</td>
-<td>查看助记词 / 返回</td>
+<td>查看助记词 / 顶栏返回 → 钱包信息</td>
 </tr>
 <tr>
 <td>展示 · 已揭示</td>
 <td>同上</td>
-<td>继续 / 隐藏助记词 / 返回（先隐藏）</td>
+<td>继续 / 隐藏助记词（可选）/ 顶栏返回 → 钱包信息</td>
 </tr>
 <tr>
 <td>截屏警告</td>
@@ -4640,7 +4553,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>截屏尝试</td>
 <td>双击词表等</td>
 <td>已揭示</td>
-<td><a href="#66-截屏风险提示f-016">§6.6-截屏风险提示（F-016）</a></td>
+<td><a href="#66-截屏风险提示f-016">§6.6-截屏风险提示</a></td>
 <td>—</td>
 <td>—</td>
 </tr>
@@ -4690,7 +4603,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>UI 复用</td>
-<td>助记词安全引导页、备份助记词展示页与 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a> 查看 / 导出路径 <strong>共用组件</strong>；<code>展示模式</code> 区分 backup / view / export</td>
+<td>助记词安全引导页、备份助记词展示页与 <a href="#8-钱包信息扩展m25">§8-钱包信息</a> 查看路径 <strong>共用组件</strong>；<code>展示模式</code> 区分 backup / view</td>
 </tr>
 </tbody>
 </table>
@@ -4714,7 +4627,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>§8</strong></td>
-<td>已备份后 <strong>查看助记词</strong> / 查看私钥 / 社交 <strong>导出</strong>；复用引导与展示 UI，<strong>跳过</strong> 验证页（backup 模式除外）</td>
+<td>已备份后 <strong>查看助记词</strong> / 查看私钥；查看助记词复用引导与展示 UI，<strong>跳过</strong> 验证页（backup 模式除外）</td>
 </tr>
 </tbody>
 </table>
@@ -4753,6 +4666,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>AC-V11-63</td>
 <td>点「查看助记词」</td>
 <td>展示 12 词；「继续」可点</td>
+</tr>
+<tr>
+<td>AC-V11-63a</td>
+<td>备份展示页 · 点顶栏返回（未揭示或已揭示）</td>
+<td><strong>一次</strong>回<strong>钱包信息</strong>；<strong>不要求</strong>先点「隐藏助记词」；词表恢复未揭示态</td>
 </tr>
 <tr>
 <td>AC-V11-64</td>
@@ -4807,9 +4725,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="7-待备份提示与状态机m24">7. 待备份提示与状态机（M24） </h2>
+<h2 id="7-待备份提示与状态机m24">7. 待备份提示与状态机 </h2>
 <p><strong>Feature</strong>：F-014（首页待备份 Banner）、F-064b（助记词备份子状态）<br />
-<strong>关联</strong>：<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a>（状态字段）<br />
+<strong>关联</strong>：<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a>（状态字段）<br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页</a> 无 Banner；<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#16-状态管理规范">MVP §16-状态管理</a> 无助记词备份子状态</p>
 <h3 id="70-模块说明">7.0 模块说明 </h3>
 <table>
@@ -4839,7 +4757,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="71-助记词备份子状态业务规则">7.1 助记词备份子状态（业务规则） </h3>
+<h3 id="71-助记词备份子状态业务规则">7.1 助记词备份子状态 </h3>
 <h4 id="711-适用钱包">7.1.1 适用钱包 </h4>
 <table>
 <thead>
@@ -4951,7 +4869,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="72-首页待备份-bannerf-014">7.2 首页待备份 Banner（F-014） </h3>
+<h3 id="72-首页待备份-bannerf-014">7.2 首页待备份 Banner </h3>
 <h4 id="721-展示条件">7.2.1 展示条件 </h4>
 <p>须 <strong>同时满足</strong>：</p>
 <table>
@@ -4964,7 +4882,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>1</td>
-<td>当前页面为 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">§4-Web3首页（有钱包时）</a>（MVP 基线 + V1.1 补丁）</td>
+<td>当前页面为 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">§4-助记词创建</a>（MVP 基线 + V1.1 补丁）</td>
 </tr>
 <tr>
 <td>2</td>
@@ -4972,7 +4890,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>3</td>
-<td>该钱包在本 App <strong>会话内</strong> 未被用户点 ✕ 关闭 Banner（见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现（D-04）</a>）</td>
+<td>该钱包在本 App <strong>会话内</strong> 未被用户点 ✕ 关闭 Banner（见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现</a>）</td>
 </tr>
 </tbody>
 </table>
@@ -5005,17 +4923,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>中部</td>
 <td>点击热区</td>
-<td>点击标题/说明区域 → 进入 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导页（F-015）</a>（返回锚点为 Web3 首页）</td>
+<td>点击标题/说明区域 → 进入 <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导</a>（返回锚点为 Web3 首页）</td>
 </tr>
 <tr>
 <td>右侧</td>
 <td>关闭 ✕</td>
-<td>见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现（D-04）</a></td>
+<td>见 <a href="#723-关闭与再现d-04">§7.2.3-关闭与再现</a></td>
 </tr>
 </tbody>
 </table>
 <p>Banner 位于 Web3 首页 <strong>快捷操作区下方、币种 Tab 上方</strong>（与 v4-all 原型 <strong>Web3 首页待备份 Banner</strong> 区域一致）。</p>
-<h4 id="723-关闭与再现d-04">7.2.3 关闭与再现（D-04） </h4>
+<h4 id="723-关闭与再现d-04">7.2.3 关闭与再现 </h4>
 <table>
 <thead>
 <tr>
@@ -5110,11 +5028,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>钱包信息 · <strong>查看助记词</strong></td>
 <td>助记词类且已备份</td>
-<td>见 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td>见 <a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 </tr>
 </tbody>
 </table>
-<p>行可见性矩阵见 <a href="#27-钱包类型与全局行为">§2.7-钱包类型与全局行为</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a>。</p>
+<p>行可见性矩阵见 <a href="#27-钱包类型与全局行为">§2.7-钱包类型与全局行为</a>、<a href="#8-钱包信息扩展m25">§8-钱包信息</a>。</p>
 <hr />
 <h3 id="74-与发送-资产能力的关系">7.4 与发送 / 资产能力的关系 </h3>
 <table>
@@ -5190,7 +5108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="76-数据管理业务">7.6 数据管理（业务） </h3>
+<h3 id="76-数据管理业务">7.6 数据管理 </h3>
 <table>
 <thead>
 <tr>
@@ -5201,7 +5119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>权威字段</td>
-<td>待备份标记、会话 Banner 关闭标记 — 见 <a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td>待备份标记、会话 Banner 关闭标记 — 见 <a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 </tr>
 <tr>
 <td>刷新时机</td>
@@ -5272,11 +5190,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="8-钱包信息扩展m25">8. 钱包信息扩展（M25） </h2>
-<p><strong>Feature</strong>：F-021（查看助记词）、F-022（查看私钥 · 自托管）、F-023（导出助记词 · 邮箱社交）、F-025（自托管删除）<br />
-<strong>关联</strong>：<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a><br />
+<h2 id="8-钱包信息扩展m25">8. 钱包信息 </h2>
+<p><strong>Feature</strong>：F-021（查看助记词）、F-022（查看私钥 · 自托管）、F-025（自托管删除）<br />
+<strong>关联</strong>：<a href="#6-助记词备份m23">§6-助记词备份</a>、<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a><br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#11-钱包信息">MVP §11-钱包信息</a>（社交钱包信息页、Privy 查看私钥、退出钱包、自定义钱包）<br />
-<strong>原型屏</strong>：钱包信息页、助记词安全引导页、备份助记词页、选择私钥所属主网页、查看私钥页、导出助记词确认弹层、导出前备份确认弹层、删除钱包确认弹层</p>
+<strong>原型屏</strong>：钱包信息页、助记词安全引导页、备份助记词页、选择私钥所属主网页、查看私钥页、删除钱包确认弹层</p>
 <h3 id="80-模块说明">8.0 模块说明 </h3>
 <table>
 <thead>
@@ -5288,11 +5206,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>用户目标</td>
-<td>在统一 <strong>钱包信息页</strong> 按钱包品类管理备份/查看敏感信息、自定义展示、删除自托管钱包；邮箱社交钱包可 <strong>导出助记词</strong></td>
+<td>在统一 <strong>钱包信息页</strong> 按钱包品类管理备份/查看敏感信息、自定义展示、删除自托管钱包；社交 / 邮箱钱包不支持导出助记词</td>
 </tr>
 <tr>
 <td>本期范围</td>
-<td>信息页 <strong>行可见性</strong> 扩展；自托管查看助记词/私钥；邮箱导出；自托管删除；自托管头像可编辑</td>
+<td>信息页 <strong>行可见性</strong> 扩展；自托管查看助记词/私钥；自托管删除；自托管头像可编辑；社交钱包导出助记词入口隐藏</td>
 </tr>
 <tr>
 <td>基线沿用</td>
@@ -5300,7 +5218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>不做</td>
-<td>独立钱包设置页；Google / Apple 社交钱包 <strong>导出助记词</strong></td>
+<td>独立钱包设置页；社交 / 邮箱 / Google / Apple 钱包 <strong>导出助记词</strong></td>
 </tr>
 </tbody>
 </table>
@@ -5318,7 +5236,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>信息列表行</td>
 <td>登录账号、查看私钥（Privy）</td>
-<td>按品类显隐 <strong>备份 / 查看助记词 / 查看私钥 / 导出</strong></td>
+<td>按品类显隐 <strong>备份 / 查看助记词 / 查看私钥 / 删除 / 退出</strong>；社交 / 邮箱钱包不展示导出助记词</td>
 </tr>
 <tr>
 <td>查看私钥</td>
@@ -5338,7 +5256,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>导出助记词</td>
 <td>无</td>
-<td><strong>仅邮箱</strong> 社交钱包</td>
+<td><strong>不支持</strong>；社交 / 邮箱 / Google / Apple 钱包均不展示入口</td>
 </tr>
 <tr>
 <td>底部操作</td>
@@ -5402,7 +5320,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="822-行-按钮可见性权威矩阵">8.2.2 行 / 按钮可见性（权威矩阵） </h4>
+<h4 id="822-行-按钮可见性权威矩阵">8.2.2 行与按钮可见性 </h4>
 <table>
 <thead>
 <tr>
@@ -5419,8 +5337,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>导出助记词</strong></td>
-<td><strong>邮箱</strong></td>
-<td><a href="#86-导出助记词f-023">§8.6-导出助记词（F-023）</a></td>
+<td>不展示</td>
+<td>社交 / 邮箱 / Google / Apple 钱包均不支持；见 <a href="#86-导出助记词f-023">§8.6-不支持导出助记词</a></td>
 </tr>
 <tr>
 <td><strong>查看私钥</strong></td>
@@ -5430,7 +5348,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>查看助记词</strong></td>
 <td>助记词已备份、助记词导入</td>
-<td><a href="#84-查看助记词f-021">§8.4-查看助记词（F-021）</a></td>
+<td><a href="#84-查看助记词f-021">§8.4-查看助记词</a></td>
 </tr>
 <tr>
 <td><strong>备份助记词</strong></td>
@@ -5445,7 +5363,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>删除钱包</strong></td>
 <td>自托管全品类</td>
-<td><a href="#87-删除自托管钱包f-025">§8.7-删除自托管钱包（F-025）</a></td>
+<td><a href="#87-删除自托管钱包f-025">§8.7-删除钱包</a></td>
 </tr>
 </tbody>
 </table>
@@ -5453,7 +5371,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>本表为 <a href="#27-钱包类型与全局行为">§2.7-钱包类型与全局行为</a>、<a href="#73-其它入口联动">§7.3-其它入口联动</a> 的 <strong>权威定义</strong>。</p>
 </blockquote>
 <hr />
-<h3 id="83-钱包信息页-v11-增补">8.3 钱包信息页 · V1.1 增补 </h3>
+<h3 id="83-钱包信息页-v11-增补">8.3 钱包信息页 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#113-展示字段说明">MVP §11.3-展示字段说明</a> 仍成立。V1.1.0 <strong>补充</strong>：</p>
 <h4 id="831-头部区">8.3.1 头部区 </h4>
 <table>
@@ -5485,7 +5403,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>待备份标记 <strong>是</strong></td>
-<td>绿色 Pill「<strong>去备份</strong>」+ <code>&gt;</code></td>
+<td>展示「<strong>去备份</strong>」入口，点击进入备份流程</td>
 </tr>
 <tr>
 <td>已备份</td>
@@ -5498,25 +5416,22 @@ document.addEventListener("DOMContentLoaded", function () {
 <thead>
 <tr>
 <th>按钮</th>
-<th>样式</th>
-<th>可见</th>
+<th>可见条件</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>退出钱包</strong></td>
-<td>描边</td>
 <td>社交三类</td>
 </tr>
 <tr>
 <td><strong>删除钱包</strong></td>
-<td>描边 danger</td>
 <td>自托管全品类</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="84-查看助记词f-021">8.4 查看助记词（F-021） </h3>
+<h3 id="84-查看助记词f-021">8.4 查看助记词 </h3>
 <p><strong>入口</strong>：钱包信息 · <strong>查看助记词</strong>（<code>mnemonic_backed</code> / <code>mnemonic_import</code>）</p>
 <div class="mermaid">flowchart LR
   I[钱包信息] --&gt; G[助记词安全引导 1/3→3/3]
@@ -5535,7 +5450,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>1</td>
 <td>助记词安全引导页</td>
-<td>文案 <strong>同</strong> <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导页（F-015）</a>（备份模式三步）</td>
+<td>文案 <strong>同</strong> <a href="#63-助记词安全引导页f-015">§6.3-助记词安全引导</a>（备份模式三步）</td>
 </tr>
 <tr>
 <td>2</td>
@@ -5579,12 +5494,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>继续 → 验证</td>
 <td>完成 → 回信息页</td>
 </tr>
+<tr>
+<td>顶栏返回</td>
+<td>直接回<strong>钱包信息</strong>（系统清除明文）</td>
+<td>直接回<strong>钱包信息</strong>（系统清除明文）</td>
+</tr>
 </tbody>
 </table>
-<p><strong>展示页规则</strong>：遮罩 / 揭示 / 12 词网格 / 隐藏 / 截屏提示 — <strong>同</strong> <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示页（F-020）</a>，仅文案与主按钮不同。未揭示点「完成」→ Toast「请先查看助记词」。</p>
-<p><strong>返回</strong>：未揭示 → 钱包信息；已揭示 → <strong>先隐藏词表</strong>（<a href="#26-截屏与敏感信息全局规则">§2.6-截屏与敏感信息全局规则</a>）。</p>
+<p><strong>展示页规则</strong>：遮罩 / 揭示 / 12 词网格 / 隐藏 / 截屏提示 — <strong>同</strong> <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a>，仅文案与主按钮不同。未揭示点「完成」→ Toast「请先查看助记词」。</p>
+<p><strong>返回</strong>：顶栏返回 → <strong>钱包信息</strong>（未揭示 / 已揭示均可，<strong>一次</strong>离开）；与 §6.5 备份展示页规则相同。</p>
 <hr />
-<h3 id="85-查看私钥f-022">8.5 查看私钥（F-022） </h3>
+<h3 id="85-查看私钥f-022">8.5 查看私钥 </h3>
 <p><strong>适用</strong>：<strong>自托管</strong> 钱包（助记词创建/导入、私钥导入）。<br />
 <strong>社交钱包</strong>：<strong>不进入</strong> 本章流程，仍 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#114-子流程privy-查看私钥">MVP §11.4-子流程：Privy 查看私钥</a>。</p>
 <div class="mermaid">flowchart LR
@@ -5733,128 +5653,48 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>返回 · 已揭示</td>
-<td><strong>先隐藏私钥</strong>；多网时回选网页，单网时回钱包信息</td>
+<td>顶栏返回 <strong>直接离开</strong>（多网时回选网页，单网时回钱包信息）；系统清除私钥明文，不要求先点「隐藏私钥」</td>
 </tr>
 </tbody>
 </table>
 <p>Passkey <strong>取消</strong> → Toast「已取消查看私钥」+ 钱包信息。</p>
 <hr />
-<h3 id="86-导出助记词f-023">8.6 导出助记词（F-023） </h3>
-<p><strong>入口</strong>：钱包信息 · <strong>导出助记词</strong>（<strong>仅</strong> <code>email</code> 品类）<br />
-<strong>结果</strong>：导出完成后 <strong>注销并删除</strong> 该社交钱包，不可恢复。</p>
-<div class="mermaid">flowchart LR
-  I[钱包信息] --&gt; C1[确认导出弹层 · 3s]
-  C1 --&gt; P[通行密钥]
-  P --&gt; E[备份助记词页 · 导出模式]
-  E --&gt; C2[导出前备份确认弹层]
-  C2 --&gt; H[Web3 首页]</div>
-<h4 id="861-确认导出弹层">8.6.1 确认导出弹层 </h4>
-<p><strong>弹层</strong>：导出助记词确认弹层</p>
+<h3 id="86-导出助记词f-023">8.6 不支持导出助记词 </h3>
+<p><strong>结论</strong>：社交 / 邮箱 / Google / Apple 钱包均 <strong>不支持导出助记词</strong>。钱包信息页不得展示「导出助记词」入口，也不得进入确认导出、Passkey 导出、导出前备份确认等流程。</p>
 <table>
 <thead>
 <tr>
-<th>元素</th>
-<th>规则</th>
+<th>钱包品类</th>
+<th>导出助记词入口</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>标题</td>
-<td><strong>确认导出？</strong></td>
+<td>邮箱社交</td>
+<td><strong>不展示</strong></td>
+<td>通过 Privy 嵌入式钱包能力管理；本期无助记词导出能力</td>
 </tr>
 <tr>
-<td>说明</td>
-<td><strong>导出助记词后会立即注销并删除当前通过社交登录创建的钱包，且无法恢复</strong></td>
+<td>Google / Apple 社交</td>
+<td><strong>不展示</strong></td>
+<td>同邮箱社交；仅保留 MVP 退出钱包与 Privy 查看私钥路径</td>
 </tr>
 <tr>
-<td>主按钮</td>
-<td>初始 <strong>禁用</strong>；文案「<strong>确认导出 3S</strong>」→ 倒计时 <strong>3 秒</strong> 后启用「<strong>确认导出</strong>」</td>
+<td>自托管助记词钱包</td>
+<td><strong>不展示“导出”</strong></td>
+<td>使用「备份助记词」或「查看助记词」完成自助管理</td>
 </tr>
 <tr>
-<td>取消</td>
-<td>关闭弹层，不进入后续</td>
+<td>自托管私钥钱包</td>
+<td><strong>不展示</strong></td>
+<td>无助记词概念，仅支持查看所属链私钥</td>
 </tr>
 </tbody>
 </table>
-<h4 id="862-passkey-导出展示页">8.6.2 Passkey + 导出展示页 </h4>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>展示页</td>
-<td>备份助记词页 · <strong>export 模式</strong></td>
-</tr>
-<tr>
-<td>标题</td>
-<td><strong>导出助记词</strong></td>
-</tr>
-<tr>
-<td>底部主按钮</td>
-<td><strong>已安全备份</strong></td>
-</tr>
-<tr>
-<td>未揭示点击</td>
-<td>Toast「请先查看助记词」</td>
-</tr>
-</tbody>
-</table>
-<h4 id="863-导出前备份确认弹层">8.6.3 导出前备份确认弹层 </h4>
-<p><strong>弹层</strong>：导出前备份确认弹层 · 点「已安全备份」且词表 <strong>已揭示</strong> 后打开</p>
-<table>
-<thead>
-<tr>
-<th>元素</th>
-<th>行为</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>标题</td>
-<td><strong>请确保助记词已安全备份</strong></td>
-</tr>
-<tr>
-<td>说明</td>
-<td>助记词是唯一能找回钱包资产的方式，请妥善保存。确认后将完成导出并注销当前社交钱包。</td>
-</tr>
-<tr>
-<td>主按钮</td>
-<td><strong>确认已完成备份并导出</strong> → 从列表移除该钱包；若其为当前选中则切首钱包 → <strong>Web3 首页</strong></td>
-</tr>
-<tr>
-<td>取消</td>
-<td>关闭弹层，停留导出展示页</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th>Toast</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>导出成功</td>
-<td><strong>社交钱包已注销，助记词已导出</strong></td>
-</tr>
-<tr>
-<td>用户取消导出流程</td>
-<td><strong>已取消导出</strong></td>
-</tr>
-<tr>
-<td>Passkey 取消</td>
-<td><strong>已取消验证</strong>（或 MVP 统一文案）；回钱包信息</td>
-</tr>
-</tbody>
-</table>
+<p><strong>实现要求</strong>：研发不得保留任何可触发的导出入口、确认弹层、导出状态或导出结果 Toast；测试以「入口不可见、流程不可达」为验收口径。</p>
 <hr />
-<h3 id="87-删除自托管钱包f-025">8.7 删除自托管钱包（F-025） </h3>
+<h3 id="87-删除自托管钱包f-025">8.7 删除钱包 </h3>
 <p><strong>入口</strong>：钱包信息 · <strong>删除钱包</strong>（自托管全品类）<br />
 <strong>基线对比</strong>：社交钱包仍用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#115-子流程退出钱包">MVP §11.5-退出钱包</a>，<strong>不</strong> 使用本章删除流程。</p>
 <h4 id="871-删除钱包确认弹层">8.7.1 删除钱包确认弹层 </h4>
@@ -5913,7 +5753,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="88-自定义钱包自托管扩展">8.8 自定义钱包（自托管扩展） </h3>
+<h3 id="88-自定义钱包自托管扩展">8.8 自定义钱包 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#118-自定义钱包">MVP §11.8-自定义钱包</a> 规则 <strong>扩展至自托管</strong> 钱包：自托管用户可通过钱包信息 <strong>头像区</strong> 进入自定义页，修改预设头像与名称。</p>
 <table>
 <thead>
@@ -5965,11 +5805,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>完成 → 钱包信息</td>
 </tr>
 <tr>
-<td>导出助记词</td>
-<td>导出展示页</td>
-<td>二次确认 → 删钱包 → Web3 首页</td>
-</tr>
-<tr>
 <td>删除自托管</td>
 <td>—（确认弹层后 Passkey）</td>
 <td>删钱包 → 钱包管理</td>
@@ -5981,7 +5816,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p>Passkey 弹层细则 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#88-通行密钥">MVP §8.8-通行密钥</a>、<a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景（扩展）</a>。</p>
+<p>Passkey 弹层细则 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#88-通行密钥">MVP §8.8-通行密钥</a>、<a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景</a>。</p>
 <hr />
 <h3 id="810-页面状态矩阵">8.10 页面状态矩阵 </h3>
 <table>
@@ -6015,13 +5850,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>信息页 · 邮箱社交</td>
-<td>登录账号、导出、查看私钥（Privy）、退出</td>
+<td>登录账号、查看私钥（Privy）、退出；<strong>无</strong>「导出助记词」</td>
 <td>同上</td>
 </tr>
 <tr>
 <td>查看助记词 · 展示</td>
 <td>view 模式词表页</td>
-<td>揭示 / 完成</td>
+<td>揭示 / 完成 / 顶栏返回（直接回信息页）</td>
 </tr>
 <tr>
 <td>查看私钥 · 多网</td>
@@ -6032,11 +5867,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>查看私钥 · 展示</td>
 <td>分段私钥</td>
 <td>复制、隐藏、完成</td>
-</tr>
-<tr>
-<td>导出 · 倒计时</td>
-<td>确认导出弹层</td>
-<td>3s 后确认</td>
 </tr>
 <tr>
 <td>删除确认</td>
@@ -6073,7 +5903,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>已备份/导入</td>
 <td>引导 + Passkey + 展示</td>
 <td>Passkey</td>
-<td>须揭示后完成</td>
+<td>顶栏返回 → 信息页；「完成」须已揭示</td>
 </tr>
 <tr>
 <td>查看私钥 · 自托管</td>
@@ -6090,14 +5920,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>MVP Privy 流程</td>
 <td>Passkey</td>
 <td>信息页</td>
-</tr>
-<tr>
-<td>导出助记词</td>
-<td>邮箱点行</td>
-<td>倒计时结束</td>
-<td>Passkey + 展示 + 备份确认</td>
-<td><strong>两次</strong> 弹层</td>
-<td>删钱包回首页</td>
 </tr>
 <tr>
 <td>删除自托管</td>
@@ -6140,12 +5962,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>按钱包 <strong>复制地址范围</strong> + <a href="#91-网络白名单与链校验">§9.1-网络白名单与链校验</a> 过滤</td>
 </tr>
 <tr>
-<td>导出</td>
-<td>记录待导出钱包 ID；完成后移除并刷新当前选中</td>
+<td>导出助记词</td>
+<td>社交 / 邮箱钱包不支持；不写入待导出钱包 ID，不触发导出后删除逻辑</td>
 </tr>
 <tr>
 <td>敏感明文</td>
-<td>私钥 / 助记词 <strong>不</strong> 本地持久化明文；离开页面前隐藏</td>
+<td>私钥 / 助记词 <strong>不</strong> 本地持久化明文；离开页面时由客户端<strong>自动清除</strong> UI/内存中的明文（不要求用户先点「隐藏」）</td>
 </tr>
 </tbody>
 </table>
@@ -6183,7 +6005,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>AC-V11-78</td>
 <td>邮箱社交钱包</td>
-<td>展示「导出助记词」；Google / Apple <strong>无</strong> 导出行</td>
+<td>展示登录账号、查看私钥（Privy）、退出钱包；<strong>无</strong>「导出助记词」</td>
 </tr>
 <tr>
 <td>AC-V11-79</td>
@@ -6198,12 +6020,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>AC-V11-81</td>
 <td>查看助记词完整流程</td>
-<td>引导 → Passkey → 揭示 12 词 →「完成」→ 回信息页；<strong>无</strong> 验证页</td>
+<td>引导 → Passkey → 揭示 12 词 →「完成」→ 回信息页；<strong>无</strong> 验证页；已揭示态顶栏返回亦可一次回信息页</td>
 </tr>
 <tr>
 <td>AC-V11-82</td>
 <td>查看助记词未揭示点「完成」</td>
 <td>Toast「请先查看助记词」</td>
+</tr>
+<tr>
+<td>AC-V11-82a</td>
+<td>查看助记词 · 已揭示 · 点顶栏返回</td>
+<td><strong>一次</strong>回钱包信息；<strong>不要求</strong>先点「隐藏助记词」；再次进入时词表为未揭示态</td>
 </tr>
 <tr>
 <td>AC-V11-83</td>
@@ -6222,13 +6049,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-86</td>
-<td>导出 · 打开确认弹层</td>
-<td>主按钮禁用「确认导出 3S」；3 秒后可点</td>
+<td>社交 / 邮箱钱包导出助记词入口</td>
+<td>钱包信息页不展示「导出助记词」，不可进入确认导出流程</td>
 </tr>
 <tr>
 <td>AC-V11-87</td>
-<td>导出全流程确认</td>
-<td>移除邮箱钱包；Toast「社交钱包已注销，助记词已导出」；进 Web3 首页</td>
+<td>Google / Apple 社交钱包导出助记词入口</td>
+<td>同样不展示「导出助记词」；仅保留 MVP 退出钱包与 Privy 查看私钥能力</td>
 </tr>
 <tr>
 <td>AC-V11-88</td>
@@ -6253,9 +6080,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="9-多链扩展m26">9. 多链扩展（M26） </h2>
+<h2 id="9-多链扩展m26">9. 多链 </h2>
 <p><strong>Feature</strong>：F-067（EVM-L2 + Solana + TRON · 网络白名单 / 复制地址 / 收发）<br />
-<strong>关联</strong>：<a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a>、<a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a><br />
+<strong>关联</strong>：<a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a>、<a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a><br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#12-复制地址">MVP §12-复制地址</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#5-接收">MVP §5-接收</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#7-发送">MVP §7-发送</a><br />
 <strong>原型屏</strong>：复制地址页、网络选择器、接收页、发送 · 输入地址页（v4-all 网络常量约 L7030）</p>
 <blockquote>
@@ -6297,9 +6124,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>与 MVP 关系</strong>：MVP 以 <strong>Ethereum 单链</strong> 为主；V1.1 将 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 固化为运行时白名单，并扩展 <strong>Solana / Tron</strong> 地址规则。MVP 未改动的交互仍以 MVP 正文为准；多链差异见 <a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a>。</p>
+<p><strong>与 MVP 关系</strong>：MVP 以 <strong>Ethereum 单链</strong> 为主；V1.1 将 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 固化为运行时白名单，并扩展 <strong>Solana / Tron</strong> 地址规则。MVP 未改动的交互仍以 MVP 正文为准；多链差异见 <a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a>。</p>
 <h4 id="912-权威网络白名单">9.1.2 权威网络白名单 </h4>
-<p><strong>V1.1 运行时仅允许以下 10 个 <code>networkId</code></strong>（与 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 一致；原型 <code>NETWORKS</code> 真源）：</p>
+<p><strong>V1.1 运行时仅允许以下 10 个 <code>networkId</code></strong>（与 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 一致；原型 <code>NETWORKS</code> 真源）：</p>
 <table>
 <thead>
 <tr>
@@ -6425,7 +6252,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="914-复制地址范围按钱包类型">9.1.4 复制地址范围（按钱包类型） </h4>
+<h4 id="914-复制地址范围按钱包类型">9.1.4 复制地址范围 </h4>
 <p>与 <a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a> 中 <strong>复制地址范围</strong> 一致；<strong>§9.2</strong> 引用本表，不另定义。</p>
 <table>
 <thead>
@@ -6583,7 +6410,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>共用模块</strong></td>
-<td><a href="#85-查看私钥f-022">§8.5-查看私钥（F-022）</a> 选网、<a href="#56-私钥导入选择网络页">§5.6-私钥导入选择网络页</a> <strong>共用</strong> 本排序与展示名</td>
+<td><a href="#85-查看私钥f-022">§8.5-查看私钥</a> 选网、<a href="#56-私钥导入选择网络页">§5.6-私钥导入选择网络页</a> <strong>共用</strong> 本排序与展示名</td>
 </tr>
 </tbody>
 </table>
@@ -6597,11 +6424,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td><a href="#92-复制地址相对-mvp-12">§9.2-复制地址（相对 MVP §12）</a></td>
+<td><a href="#92-复制地址相对-mvp-12">§9.2-复制地址</a></td>
 <td>白名单 §9.1.2；范围 §9.1.4；排序 §9.1.6</td>
 </tr>
 <tr>
-<td><a href="#93-接收与发送相对-mvp-5--7">§9.3-接收与发送（相对 MVP §5 / §7）</a></td>
+<td><a href="#93-接收与发送相对-mvp-5--7">§9.3-接收与发送</a></td>
 <td>白名单 §9.1.2；校验 §9.1.5；单链选择 <strong>不得</strong> 用 <code>all</code></td>
 </tr>
 <tr>
@@ -6609,7 +6436,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>私钥选网；候选 §9.1.4 末表</td>
 </tr>
 <tr>
-<td><a href="#85-查看私钥f-022">§8.5-查看私钥（F-022）</a></td>
+<td><a href="#85-查看私钥f-022">§8.5-查看私钥</a></td>
 <td>自托管选网 <strong>10 链之一</strong></td>
 </tr>
 <tr>
@@ -6700,7 +6527,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="92-复制地址相对-mvp-12">9.2 复制地址（相对 MVP §12） </h3>
+<h3 id="92-复制地址相对-mvp-12">9.2 复制地址 </h3>
 <p><strong>Feature</strong>：F-067（第二部分 · 复制地址多链扩展）<br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#12-复制地址">MVP §12-复制地址</a>（Ethereum / BSC 双链 · 仅社交钱包）<br />
 <strong>原型屏</strong>：复制地址页（Dark 全屏）</p>
@@ -6719,7 +6546,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>入口</strong></td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a> 钱包名称旁 <strong>复制地址</strong> 图标</td>
+<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a> 钱包名称旁 <strong>复制地址</strong> 图标</td>
 </tr>
 <tr>
 <td><strong>前置条件</strong></td>
@@ -6901,7 +6728,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>导航-返回</td>
-<td>回到 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-Web3首页（有钱包时）</a></td>
+<td>回到 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#4-web3-首页有钱包时">MVP §4-助记词创建</a></td>
 </tr>
 <tr>
 <td>页面标题</td>
@@ -7210,11 +7037,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<a id="93-接收与发送相对-mvp-5--7" aria-hidden="true"></a><h3 id="93-接收与发送相对-mvp-5-7">9.3 接收与发送（相对 MVP §5 / §7） </h3>
+<a id="93-接收与发送相对-mvp-5--7" aria-hidden="true"></a><h3 id="93-接收与发送相对-mvp-5-7">9.3 接收与发送 </h3>
 <p><strong>Feature</strong>：F-067（第三部分 · 接收 / 发送多链扩展 + Tron 资源）<br />
 <strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#5-接收功能">MVP §5-接收功能</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#7-发送功能">MVP §7-发送功能</a>（Ethereum / BSC · EVM 单体系）<br />
 <strong>逻辑参考</strong>：<a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>（EVM / Solana / Tron 链上校验细则）<br />
-<strong>原型屏</strong>：接收选择币种层、接收选择网络层、收款二维码层、发送选择币种层、发送选择网络层、发送填写地址页、发送输入金额页、发送确认交易页、主网费用弹窗</p>
+<strong>原型屏</strong>：选择接收币种层、接收选择网络层、收款二维码层、选择发送币种层、发送选择网络层、发送填写地址页、开启相机访问权限弹窗、发送输入金额页、签名预览页、主网费用弹窗</p>
 <h4 id="931-范围">9.3.1 范围 </h4>
 <table>
 <thead>
@@ -7226,7 +7053,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>用户目标</strong></td>
-<td>在 <strong>当前选中钱包</strong> 支持的各主网上 <strong>接收</strong>（二维码）与 <strong>发送</strong> 资产；避免跨链误转；Tron 发送时明确 <strong>Bandwidth / Energy / fee_limit</strong></td>
+<td>在 <strong>当前选中钱包</strong> 支持的各主网上 <strong>接收</strong>（二维码）与 <strong>发送</strong> 资产；避免跨链误转；Tron 发送时明确 <strong>带宽资源 / 能量资源 / 费用上限</strong></td>
 </tr>
 <tr>
 <td><strong>入口</strong></td>
@@ -7242,7 +7069,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>不在范围</strong></td>
-<td>自定义币种 / 币种管理（<a href="#133-本期明确不做">§1.3.3-本期明确不做</a>）；发送 <strong>扫一扫</strong>（仍 MVP 占位 Toast）；PIN 码签名</td>
+<td>自定义币种 / 币种管理（<a href="#133-本期明确不做">§1.3.3-本期明确不做</a>）；PIN 码签名</td>
 </tr>
 </tbody>
 </table>
@@ -7284,12 +7111,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>费用弹窗</td>
 <td>EVM 慢/平均/快</td>
-<td><strong>+ Solana</strong> 普通/极速；<strong>+ Tron 网络资源</strong> + TRC-20 <strong>fee_limit</strong></td>
+<td><strong>+ Solana</strong> 普通/极速；Tron 签名预览页费用行仅静态展示资源预估，不提供费用弹窗入口</td>
 </tr>
 <tr>
-<td>确认页费用行</td>
+<td>签名预览页费用行</td>
 <td><strong>主网费用</strong></td>
-<td>Tron 显示 <strong>网络资源</strong></td>
+<td>Tron 仍显示 <strong>主网费用</strong>，但费用行不可点击且不展示右侧箭头入口</td>
 </tr>
 <tr>
 <td>适用钱包</td>
@@ -7363,13 +7190,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <p><strong>交互形态</strong>：仍 <strong>全屏叠加层</strong>，叠在 Web3 首页（或代币详情）之上，<strong>不切换主屏</strong>（同 MVP）。</p>
-<p><strong>签名</strong>：仍 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#746-通行密钥发送签名">MVP §7.4.6-通行密钥（发送签名）</a>；<strong>不用</strong> PIN。</p>
+<p><strong>签名</strong>：仍 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#746-通行密钥发送签名">MVP §7.4.6-通行密钥</a>；<strong>不用</strong> PIN。</p>
 <p><strong>待备份（D-01）</strong>：助记词 <strong>待备份</strong> 钱包可正常 <strong>接收 / 发送</strong>，无拦截弹层。</p>
 <p><strong>与 §9.2 关系</strong>：复制地址为 <strong>地址簿</strong>；本模块按 <strong>资产 + 网络</strong> 展示 <strong>收款二维码</strong> 或发起 <strong>转出</strong>，功能互补。</p>
-<a id="934-接收--v11-增补" aria-hidden="true"></a><h4 id="934-接收-v11-增补">9.3.4 接收 · V1.1 增补 </h4>
+<p><strong>数值展示（§9.3 共用）</strong>：选择接收币种层、选择发送币种层、选网子层、发送金额层、签名预览等出现的 <strong>余额、数量、费用、法币估值</strong>，均遵循 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#a1-数值分层显示规范">附录 A.1</a>；MVP 既有层（选币 / 金额 / 签名预览）字段细则另见 MVP §5 / §7 展示字段表；无行情时法币估值为 <strong>「––」</strong> 或不展示。</p>
+<a id="934-接收--v11-增补" aria-hidden="true"></a><h4 id="934-接收-v11-增补">9.3.4 接收 </h4>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#5-接收功能">MVP §5-接收功能</a> 流程与叠加层编号 <strong>仍成立</strong>；以下仅为 <strong>多链增量</strong>。</p>
+<p><strong>选择接收币种层</strong>：页面标题为「<strong>选择接收币种</strong>」；支持搜索币种，搜索子层规则见下表。</p>
 <div class="mermaid">flowchart TD
-  R[点接收] --&gt; L[选择币种层]
+  R[点接收] --&gt; L[选择接收币种层]
   L --&gt; M{多链 Symbol?}
   M --&gt;|否| Q[收款二维码层]
   M --&gt;|是| N[选择网络子层]
@@ -7387,7 +7216,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>触发</td>
-<td>选择币种层点击 <strong>多链</strong> 行</td>
+<td>选择接收币种层点击 <strong>多链</strong> 行</td>
 </tr>
 <tr>
 <td>标题</td>
@@ -7395,7 +7224,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>列表</td>
-<td>该 Symbol 在 <strong>scope 内各链</strong> 的实例；展示网络 Logo、名称、余额、估值</td>
+<td>该 Symbol 在 <strong>scope 内各链</strong> 的实例；展示网络 Logo、名称、余额、估值；余额 / 估值展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>排序</td>
@@ -7407,7 +7236,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>返回</td>
-<td>回到选择币种层</td>
+<td>回到选择接收币种层</td>
 </tr>
 </tbody>
 </table>
@@ -7449,7 +7278,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td>匹配 Symbol / 名称</td>
+<td>匹配 Symbol / 名称 / 展示全称 / 网络名称</td>
 <td>✅</td>
 <td>✅ 不变</td>
 </tr>
@@ -7465,12 +7294,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>从发送引导充值</strong>：金额页 / 确认页因 <strong>Gas 或 Tron 资源不足</strong> 跳转收款二维码时，返回 <strong>仅关闭二维码层</strong>，保留发送上下文（同 MVP §5.2 / §7.3）。</p>
-<a id="935-发送--v11-增补" aria-hidden="true"></a><h4 id="935-发送-v11-增补">9.3.5 发送 · V1.1 增补 </h4>
+<p><strong>从发送引导充值</strong>：金额页 / 签名预览页因 <strong>Gas 或 Tron 资源不足</strong> 跳转收款二维码时，返回 <strong>仅关闭二维码层</strong>，保留发送上下文（同 MVP §5.2 / §7.3）。发送选币空态点击「<strong>去充值</strong>」时，流程同点击首页「<strong>接收</strong>」，进入选择接收币种 / 收款流程。</p>
+<a id="935-发送--v11-增补" aria-hidden="true"></a><h4 id="935-发送-v11-增补">9.3.5 发送 </h4>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#7-发送功能">MVP §7-发送功能</a> 流程与弹层编号 <strong>仍成立</strong>；链差异集中在 <strong>选网、地址校验、金额校验、费用/资源弹窗</strong>。</p>
 <div class="mermaid">flowchart TD
-  S[点发送] --&gt; C[选择币种层]
+  S[点发送] --&gt; C[选择发送币种层]
   C --&gt; M{多链 Symbol?}
+  C --&gt; SE[搜索子层]
   M --&gt;|是| N[选择网络子层]
   M --&gt;|否| A[接收地址层]
   N --&gt; A
@@ -7493,12 +7323,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td><strong>选择币种层</strong></td>
-<td>同 §9.3.3 资产过滤；空态「<strong>暂无可发送资产</strong>」</td>
+<td><strong>选择发送币种层</strong></td>
+<td>页面标题为「<strong>选择发送币种</strong>」；同 §9.3.3 资产过滤；支持搜索币种，逻辑同 §9.3.4 接收搜索子层；空态展示「<strong>钱包内暂无资产</strong>」+「<strong>去充值</strong>」按钮，点击后流程同首页「接收」；行内持有数量 / 估值展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td><strong>选择网络子层</strong></td>
-<td>同 §9.3.4 选网结构；仅展示该 Symbol <strong>余额 &gt; 0</strong> 的链实例</td>
+<td>同 §9.3.4 选网结构；仅展示该 Symbol <strong>余额 &gt; 0</strong> 的链实例；余额 / 估值展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td><strong>单链资产</strong></td>
@@ -7557,9 +7387,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>扫一扫</strong>：仍 Toast「<strong>扫码功能即将上线</strong>」（与 <a href="#5-钱包导入m22">§5-钱包导入 · F-013</a> 扫码导入 <strong>无关</strong>）。</p>
+<p><strong>扫一扫</strong>：点击后先检查相机权限；未授权时展示 <a href="#571-相机权限前置拦截">§5.7.1-开启相机访问权限弹窗</a>，点击「取消」关闭弹窗并停留发送地址页；点击「去开启」跳转系统设置 / App 权限设置，授权后继续原扫码动作。已授权时进入地址二维码识别，识别成功后将地址回填到输入框并触发本页地址校验；识别失败 Toast「<strong>扫码失败：未识别到有效地址</strong>」，停留发送地址页。</p>
 <a id="9353-发送金额层--三链校验" aria-hidden="true"></a><h5 id="9353-发送金额层-三链校验">9.3.5.3 发送金额层 · 三链校验 </h5>
-<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#743-发送金额层">MVP §7.4.3-发送金额层</a> 输入、键盘、<strong>全部</strong>、USD 切换 <strong>仍成立</strong>。</p>
+<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#743-发送金额层">MVP §7.4.3-发送金额层</a> 输入、键盘、<strong>全部</strong>、USD 切换 <strong>仍成立</strong>。<strong>可用余额、输入金额、Gas / 租金 / 关联代币账户费用提示数值</strong> 的最终展示见 <a href="#a1-数值分层显示规范">附录 A.1</a>（先按链上精度与校验规则计算，再格式化）。</p>
 <table>
 <thead>
 <tr>
@@ -7576,19 +7406,65 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>Solana</strong></td>
-<td>原生 SOL：保留 <strong>租金豁免</strong> 下限；SPL / Token2022：余额、<strong>ATA 存在/冻结</strong>、开户费、转账手续费等（详见 <a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>）</td>
-<td>—</td>
+<td>原生 SOL：保留 <strong>租金豁免</strong> 下限、基础交易费与当前优先费；SPL / Token-2022：余额、<strong>关联代币账户</strong>存在 / 冻结、开户费、转账手续费、交易模拟等（详见 <a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>）</td>
+<td>金额输入、点击「全部」与进入签名前均须复算</td>
 </tr>
 <tr>
 <td><strong>Tron</strong></td>
 <td>见 §9.3.5.4</td>
-<td>资源预估 <strong>每 3 秒</strong> 刷新</td>
+<td>资源预估 <strong>每 3 秒</strong> 刷新；进入签名前再次复算</td>
 </tr>
 </tbody>
 </table>
-<p><strong>充值引导</strong>：校验横幅内「充值 {Symbol}」链接触发 <strong>收款二维码层</strong>（携带对应 Symbol + networkId；来源 <code>sendAmount</code> 时返回保留金额页）。</p>
-<a id="9354-tron-网络资源f-067--重点" aria-hidden="true"></a><h5 id="9354-tron-网络资源f-067-重点">9.3.5.4 Tron 网络资源（F-067 · 重点） </h5>
-<p>Tron 发送须区分资产标准：<strong>TRX（原生）</strong>、<strong>TRC-10</strong>、<strong>TRC-20</strong>（如 USDT-Tron）。</p>
+<p><strong>Solana 发送验证活动图</strong>（同步自 <a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>）：</p>
+<div class="mermaid">flowchart TD
+    A([开始: 输入金额]) --&gt; B{发送资产是 SOL 原生币?}
+    B --&gt;|是| C[查询账户余额、租金豁免额、基础交易费和当前优先费]
+    C --&gt; D{余额 ≤ 租金豁免额 + 预估交易费?}
+    D --&gt;|是| E["❌ 错误:&lt;br/&gt;请保留足额账户租金和交易费用"]
+    E --&gt; Z([禁用下一步])
+    D --&gt;|否| F{点击全部?}
+    F --&gt;|是| G[自动填入&lt;br/&gt;余额 - 租金豁免额 - 预估交易费]
+    G --&gt; H["ℹ️ 提示:&lt;br/&gt;已自动保留租金和交易费用"]
+    F --&gt;|否| I{输入金额 &gt;&lt;br/&gt;余额 - 租金豁免额 - 预估交易费?}
+    H --&gt; J[交易模拟]
+    I --&gt;|是| K["❌ 错误:&lt;br/&gt;余额不足"]
+    K --&gt; Z
+    I --&gt;|否| J
+    J --&gt; L{模拟通过?}
+    L --&gt;|否| M["❌ 错误:&lt;br/&gt;交易模拟失败，请调整金额后重试"]
+    M --&gt; Z
+    L --&gt;|是| OK1[✓ 验证通过]
+    OK1 --&gt; Z
+
+    B --&gt;|否| N[读取代币账户、Token-2022 扩展和发送方 SOL 余额]
+    N --&gt; O{代币禁止转账或转账钩子不可用?}
+    O --&gt;|是| P["❌ 错误:&lt;br/&gt;该代币不支持转账"]
+    P --&gt; Z
+    O --&gt;|否| Q{接收方关联代币账户已冻结?}
+    Q --&gt;|是| R["❌ 错误:&lt;br/&gt;对方地址已被冻结"]
+    R --&gt; Z
+    Q --&gt;|否| S{接收方关联代币账户不存在?}
+    S --&gt;|是| T{SOL 余额足够支付&lt;br/&gt;开户费 + 交易费?}
+    T --&gt;|否| U["❌ 错误:&lt;br/&gt;需额外支付开户费和交易费&lt;br/&gt;请充值 SOL"]
+    U --&gt; Z
+    T --&gt;|是| V["ℹ️ 提示:&lt;br/&gt;首次发送需支付关联代币账户开户费&lt;br/&gt;以链上实时计算为准"]
+    S --&gt;|否| W{SOL 余额足够支付交易费?}
+    W --&gt;|否| X["❌ 错误:&lt;br/&gt;SOL 不足以支付交易费用"]
+    X --&gt; Z
+    W --&gt;|是| Y{有转账手续费?}
+    V --&gt; Y
+    Y --&gt;|是| Y1["ℹ️ 提示:&lt;br/&gt;展示手续费率、手续费和实际到账"]
+    Y --&gt;|否| Y2[交易模拟]
+    Y1 --&gt; Y2
+    Y2 --&gt; Y3{模拟通过?}
+    Y3 --&gt;|否| Y4["❌ 错误:&lt;br/&gt;交易模拟失败或代币状态异常"]
+    Y4 --&gt; Z
+    Y3 --&gt;|是| OK2[✓ 验证通过]
+    OK2 --&gt; Z</div>
+<p><strong>充值引导</strong>：校验横幅内「充值 {币种符号}」链接触发 <strong>收款二维码层</strong>（携带对应币种符号 + 网络标识；来源为发送金额页时返回保留金额页）。</p>
+<a id="9354-tron-网络资源f-067--重点" aria-hidden="true"></a><h5 id="9354-tron-网络资源f-067-重点">9.3.5.4 Tron 网络资源 </h5>
+<p>Tron 发送须区分资产标准：<strong>TRX（原生）</strong>、<strong>TRC-10</strong>、<strong>TRC-20</strong>（如 USDT-Tron）。地址校验须采用 Tron Base58Check 规则；用户侧失败文案仍为「请输入正确的 Tron 地址」。</p>
 <p><strong>资源模型</strong>：</p>
 <table>
 <thead>
@@ -7599,24 +7475,24 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td><strong>Bandwidth</strong></td>
-<td>TRX / TRC-10 / TRC-20 均消耗；<strong>优先</strong> 免费/质押 Bandwidth</td>
+<td><strong>带宽资源（Bandwidth）</strong></td>
+<td>TRX / TRC-10 / TRC-20 均消耗；<strong>优先</strong> 使用免费或质押获得的带宽资源</td>
 </tr>
 <tr>
-<td><strong>Energy</strong></td>
+<td><strong>能量资源（Energy）</strong></td>
 <td><strong>TRC-20</strong> 主消耗；不足时 <strong>燃烧 TRX</strong></td>
 </tr>
 <tr>
-<td><strong>fee_limit</strong></td>
-<td><strong>仅 TRC-20</strong> 必填上限；默认 <strong>30 TRX</strong>，可选 <strong>15 / 30 / 50 TRX</strong>（原型 <code>TRON_FEE_LIMIT_OPTIONS</code>）</td>
+<td><strong>费用上限（fee_limit）</strong></td>
+<td><strong>仅 TRC-20</strong> 交易构建必填；系统按预估资源设置默认上限，签名预览页 <strong>不提供用户手动调整入口</strong></td>
 </tr>
 <tr>
 <td><strong>账户激活</strong></td>
-<td>接收方 <strong>未激活</strong> 时，TRX / TRC-10 转账可能 <strong>额外消耗约 1.1 TRX</strong>（info 提示，不一定阻断）</td>
+<td>接收方 <strong>未激活</strong> 时，需覆盖账户激活费 + 带宽资源燃烧；常见约 <strong>1.1 TRX</strong>，以链上预估为准</td>
 </tr>
 <tr>
 <td><strong>刷新</strong></td>
-<td>进入金额页加载 Tron 上下文；<strong>每 3 秒</strong> 刷新 <strong>燃烧 TRX</strong> 估算</td>
+<td>进入金额页加载 Tron 上下文；<strong>每 3 秒</strong> 刷新 <strong>燃烧 TRX</strong> 估算；进入签名前再次复算</td>
 </tr>
 </tbody>
 </table>
@@ -7637,17 +7513,67 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>TRC-10</strong></td>
-<td>代币余额不足；<strong>TRX &lt; Bandwidth 燃烧预估</strong></td>
+<td>代币余额不足；<strong>TRX &lt; 带宽资源燃烧预估</strong></td>
 <td>未激活接收方</td>
 </tr>
 <tr>
 <td><strong>TRC-20</strong></td>
-<td>代币余额不足；<strong>TRX &lt; Energy 燃烧预估</strong>（文案含当前 <strong>fee_limit</strong>）</td>
-<td>Energy 不足 <strong>warn</strong>；通过时 info 展示 Energy / fee_limit / 燃烧 TRX</td>
+<td>代币余额不足；<strong>TRX &lt; 带宽资源 + 能量资源 + 账户激活成本的燃烧预估</strong>（文案含当前费用上限）</td>
+<td>能量资源不足但 TRX 足够燃烧时展示警告，可继续；通过时展示带宽资源 / 能量资源 / 费用上限 / 燃烧 TRX</td>
 </tr>
 </tbody>
 </table>
-<p><strong>确认页</strong>：</p>
+<p><strong>Tron 发送验证活动图</strong>（同步自 <a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>）：</p>
+<div class="mermaid">flowchart TD
+    A([开始: 输入金额]) --&gt; B{Tron 地址 Base58Check 有效?}
+    B --&gt;|否| B1["❌ 错误:&lt;br/&gt;请输入正确的 Tron 地址"]
+    B1 --&gt; Z([禁用下一步])
+    B --&gt;|是| C{发送资产类型}
+
+    C --&gt;|TRX| D[获取 TRX 余额、带宽资源和接收方激活状态]
+    D --&gt; E{接收账户未激活?}
+    E --&gt;|是| F["ℹ️ 提示:&lt;br/&gt;首次接收可能产生账户激活费用和资源消耗"]
+    E --&gt;|否| G
+    F --&gt; G[预估带宽燃烧和账户激活成本]
+    G --&gt; H{点击全部?}
+    H --&gt;|是| I[自动填入&lt;br/&gt;余额 - 预估燃烧 TRX]
+    I --&gt; J["ℹ️ 提示:&lt;br/&gt;已自动预留可能燃烧的 TRX"]
+    H --&gt;|否| K
+    J --&gt; K{输入金额 + 预估燃烧 TRX&lt;br/&gt;是否超过余额?}
+    K --&gt;|是| L["❌ 错误:&lt;br/&gt;余额不足或需保留资源费用"]
+    L --&gt; Z
+    K --&gt;|否| OK1[✓ 验证通过]
+    OK1 --&gt; Z
+
+    C --&gt;|TRC-10| M[检查代币 ID、精度、余额和带宽资源]
+    M --&gt; N{代币余额充足?}
+    N --&gt;|否| O["❌ 错误:&lt;br/&gt;TRC-10 余额不足"]
+    O --&gt; Z
+    N --&gt;|是| P{TRX 足够覆盖&lt;br/&gt;带宽燃烧和激活成本?}
+    P --&gt;|否| Q["❌ 错误:&lt;br/&gt;TRX 不足以覆盖资源消耗"]
+    Q --&gt; Z
+    P --&gt;|是| OK2[✓ 验证通过]
+    OK2 --&gt; Z
+
+    C --&gt;|TRC-20| R[读取合约信息&lt;br/&gt;精度、名称、符号]
+    R --&gt; S[读取代币余额]
+    S --&gt; T{代币余额充足?}
+    T --&gt;|否| U["❌ 错误:&lt;br/&gt;TRC-20 余额不足"]
+    U --&gt; Z
+    T --&gt;|是| V[模拟合约调用并预估&lt;br/&gt;能量资源、带宽资源和激活成本]
+    V --&gt; W{模拟通过?}
+    W --&gt;|否| X["❌ 错误:&lt;br/&gt;合约模拟失败或接收地址不支持"]
+    X --&gt; Z
+    W --&gt;|是| Y[系统设置交易费用上限]
+    Y --&gt; Y1{TRX 足够覆盖&lt;br/&gt;可能燃烧费用?}
+    Y1 --&gt;|否| Y2["❌ 错误:&lt;br/&gt;TRX 不足以支付资源费用"]
+    Y2 --&gt; Z
+    Y1 --&gt;|是| Y3{能量资源不足但 TRX 可燃烧?}
+    Y3 --&gt;|是| Y4["⚠️ 警告:&lt;br/&gt;将燃烧 TRX 支付能量资源"]
+    Y4 --&gt; OK3[✓ 验证通过]
+    Y3 --&gt;|否| OK3
+    OK3 --&gt; Z</div>
+<p><strong>签名预览页</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -7658,23 +7584,23 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>费用行标签</td>
-<td><strong>网络资源</strong>（非「主网费用」）</td>
+<td><strong>主网费用</strong>（与当前原型一致）</td>
 </tr>
 <tr>
 <td>展示</td>
-<td>燃烧 TRX 预估；TRC-20 含 <strong>fee_limit</strong></td>
+<td>燃烧 TRX 预估；TRC-20 含 <strong>费用上限</strong>；数值展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
 <td>不足</td>
-<td>横幅 + 底部 <strong>「补充 TRX 网络资源」</strong> → 跳转 TRX 收款二维码</td>
+<td>横幅文案「<strong>TRX 余额不足以覆盖主网费用，请补充后重试</strong>」+ 底部 <strong>「补充 TRX 主网费用」</strong> → 跳转 TRX 收款二维码</td>
 </tr>
 <tr>
 <td>点费用行</td>
-<td>打开 <strong>网络资源弹窗</strong>（非 EVM Gas 三档）</td>
+<td><strong>不可点击</strong>；不打开费用 / 网络资源弹窗；右侧不展示 <strong>&gt;</strong> / 箭头入口</td>
 </tr>
 </tbody>
 </table>
-<p><strong>网络资源弹窗</strong>：</p>
+<p><strong>网络资源说明</strong>：</p>
 <table>
 <thead>
 <tr>
@@ -7685,15 +7611,15 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>说明文案</td>
-<td>Tron <strong>优先消耗</strong> 免费/质押 Bandwidth 与 Energy；不足时燃烧 TRX；TRC-20 须设置 <strong>fee_limit</strong></td>
+<td>Tron <strong>优先消耗</strong> 免费 / 质押获得的带宽资源与能量资源；不足时燃烧 TRX；TRC-20 须设置 <strong>费用上限</strong></td>
 </tr>
 <tr>
 <td>资源预估行</td>
-<td>Bandwidth 需求量 ｜ Energy 需求量 ｜ 燃烧 TRX ≈</td>
+<td>带宽资源需求量 ｜ 能量资源需求量 ｜ 燃烧 TRX ≈；展示见 <a href="#a1-数值分层显示规范">附录 A.1</a></td>
 </tr>
 <tr>
-<td>fee_limit 档位</td>
-<td><strong>仅 TRC-20</strong>：15 / 30 / 50 TRX；选中后重算并刷新确认页</td>
+<td>费用上限</td>
+<td><strong>仅 TRC-20</strong>：作为交易构建与资源预估参数展示；签名预览页不提供用户手动选择档位</td>
 </tr>
 </tbody>
 </table>
@@ -7701,11 +7627,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>链上构建、签名广播、回执轮询等 <strong>实现细则</strong> 见 <a href="../05-业务分析/发送模块逻辑.md">发送模块逻辑.md</a>；PRD 仅规定 <strong>用户可见校验、文案与阻断</strong>。</p>
 </blockquote>
 <h5 id="9355-签名预览与费用弹窗">9.3.5.5 签名预览与费用弹窗 </h5>
+<p><strong>签名预览字段</strong>：在「<strong>主网费用</strong>」前新增「<strong>主网名称</strong>」字段；字段值展示为 <strong>主网 Logo + 主网全称</strong>，Logo 与全称数据来源同「选择主网」弹窗 / §9.1.6 网络展示名配置。</p>
 <table>
 <thead>
 <tr>
 <th>链</th>
-<th>确认页费用行</th>
+<th>签名预览页费用行</th>
 <th>费用弹窗</th>
 </tr>
 </thead>
@@ -7722,13 +7649,14 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>Tron</strong></td>
-<td><strong>网络资源</strong>（§9.3.5.4）</td>
-<td><strong>网络资源弹窗</strong> + fee_limit（TRC-20）</td>
+<td><strong>主网费用</strong>；展示燃烧 TRX 预估（TRC-20 可包含费用上限信息）</td>
+<td><strong>不支持点击</strong>；不展示右侧箭头入口；不打开费用 / 网络资源弹窗</td>
 </tr>
 </tbody>
 </table>
-<p><strong>提交后</strong>：Toast「<strong>交易已提交</strong>」；关闭发送全流程；异步成功/失败反馈 <strong>同 MVP</strong>。</p>
-<h4 id="936-页面状态矩阵增补">9.3.6 页面状态矩阵（增补） </h4>
+<p><strong>费用展示</strong>：各链签名预览页费用行、费用弹窗中的原生币数量与法币折合（有行情时）均遵循 <a href="#a1-数值分层显示规范">附录 A.1</a>；EVM Gwei 仍保持 MVP 2 位小数规则；无行情时法币括弧段为 <strong>「––」</strong> 或不展示。</p>
+<p><strong>提交后</strong>：Toast「<strong>交易已提交</strong>」；关闭发送全流程；异步成功 Toast 为「<strong>{数量} {币种} 已发送</strong>」；异步失败仅 Toast 提示「<strong>{数量} {币种} 发送失败</strong>」，不展示错误弹窗，不暴露 <code>OUT_OF_ENERGY</code> 等链上内部错误码。</p>
+<h4 id="936-页面状态矩阵增补">9.3.6 页面状态矩阵 </h4>
 <table>
 <thead>
 <tr>
@@ -7764,6 +7692,18 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>选网、返回</td>
 </tr>
 <tr>
+<td>发送 · 无资产空态</td>
+<td>钱包无任一可发送资产，点击首页发送</td>
+<td>选择发送币种层展示「<strong>钱包内暂无资产</strong>」+「<strong>去充值</strong>」</td>
+<td>点去充值进入选择接收币种 / 收款流程</td>
+</tr>
+<tr>
+<td>发送 · 搜索币种</td>
+<td>选择发送币种层点击搜索</td>
+<td>搜索子层；匹配逻辑同选择接收币种</td>
+<td>选择结果后继续发送流程</td>
+</tr>
+<tr>
 <td>发送 · Tron 金额页</td>
 <td>TRC-20 + 低 TRX</td>
 <td>error 横幅 + 充值链接</td>
@@ -7771,18 +7711,18 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>发送 · Tron 金额页</td>
-<td>Energy 不足</td>
-<td><strong>warn</strong> 横幅</td>
-<td>可下一步；确认页可调 fee_limit</td>
+<td>能量资源不足但 TRX 足够燃烧</td>
+<td><strong>警告</strong> 横幅</td>
+<td>可下一步；签名预览页仅展示主网费用，不提供费用上限调整入口</td>
 </tr>
 <tr>
-<td>发送 · 确认 · Tron 资源不足</td>
+<td>发送 · 签名预览 · Tron 主网费用不足</td>
 <td>TRX &lt; 燃烧预估</td>
-<td>补充 TRX 按钮</td>
-<td>跳转 TRX 收款 QR</td>
+<td>「<strong>TRX 余额不足以覆盖主网费用，请补充后重试</strong>」+ 补充 TRX 主网费用按钮</td>
+<td>跳转 TRX 收款二维码</td>
 </tr>
 <tr>
-<td>私钥 · scope 外资产</td>
+<td>私钥 · 钱包可用链范围外资产</td>
 <td>EVM 私钥钱包</td>
 <td>列表 <strong>无</strong> Solana / Tron 行</td>
 <td>—</td>
@@ -7795,7 +7735,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="937-交互规则表增补">9.3.7 交互规则表（增补） </h4>
+<h4 id="937-交互规则表增补">9.3.7 交互规则表 </h4>
 <table>
 <thead>
 <tr>
@@ -7819,9 +7759,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>否</td>
 </tr>
 <tr>
-<td>Tron TRC-20 调 fee_limit</td>
-<td>确认页点费用行</td>
-<td>网络资源弹窗</td>
+<td>Tron 签名预览费用行</td>
+<td>查看 Tron 签名预览页主网费用行</td>
+<td>静态展示燃烧 TRX 预估；费用行不可点击且无右侧箭头入口</td>
 <td>否</td>
 </tr>
 <tr>
@@ -7853,11 +7793,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>网络范围</td>
-<td><code>copyAddressScope</code> → §9.1.4；收发 <strong>不得</strong> 使用 <code>all</code> 作为操作链</td>
+<td>按 <a href="#914-复制地址范围按钱包类型">§9.1.4-复制地址范围</a> 解析当前钱包可用链范围；收发 <strong>不得</strong> 使用「全部网络」作为链上操作目标</td>
 </tr>
 <tr>
 <td>锁定上下文</td>
-<td>下游须携带 <strong>Symbol + networkId + 接收地址</strong>（地址 trim 后）</td>
+<td>下游须携带 <strong>币种符号 + 网络标识 + 接收地址</strong>（地址去除首尾空格后）</td>
 </tr>
 <tr>
 <td>地址来源</td>
@@ -7916,11 +7856,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-124</td>
-<td>TRC-20 确认页点费用行</td>
+<td>TRC-20 签名预览页费用行不可点击</td>
 </tr>
 <tr>
 <td>AC-V11-125</td>
-<td>Tron 确认页费用行文案</td>
+<td>Tron 签名预览页费用行文案为 <strong>主网费用</strong>，且不展示右侧箭头入口；主网费用前展示 <strong>主网名称</strong></td>
+</tr>
+<tr>
+<td>AC-V11-125A</td>
+<td>选择发送币种层支持搜索；无资产时展示「<strong>钱包内暂无资产</strong>」并可点「<strong>去充值</strong>」进入接收流程</td>
 </tr>
 <tr>
 <td>AC-V11-126</td>
@@ -7995,7 +7939,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>产品概述 / 全局规范</td>
 <td>—</td>
 <td>术语 / 横切</td>
-<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a></td>
+<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范</a></td>
 <td>抽测</td>
 </tr>
 <tr>
@@ -8011,7 +7955,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>Web3 首页（有钱包）</td>
 <td>Web3 首页</td>
 <td><strong>有</strong></td>
-<td><a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a> F-014；<a href="#9-多链扩展m26">§9-多链扩展</a> F-067</td>
+<td><a href="#72-首页待备份-bannerf-014">§7.2-首页待备份 Banner</a> F-014；<a href="#9-多链扩展m26">§9-多链</a> F-067</td>
 <td><strong>要测 + 增量</strong></td>
 </tr>
 <tr>
@@ -8019,7 +7963,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>接收</td>
 <td>接收选币 / 搜索 / 二维码</td>
 <td><strong>有</strong></td>
-<td><a href="#934-接收--v11-增补">§9.3.4-接收 · V1.1 增补</a> F-067</td>
+<td><a href="#934-接收--v11-增补">§9.3.4-接收</a> F-067</td>
 <td><strong>要测 + 增量</strong></td>
 </tr>
 <tr>
@@ -8035,7 +7979,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>发送</td>
 <td>发送选币～签名预览</td>
 <td><strong>有</strong></td>
-<td><a href="#935-发送--v11-增补">§9.3.5-发送 · V1.1 增补</a>；D-01</td>
+<td><a href="#935-发送--v11-增补">§9.3.5-发送</a>；D-01</td>
 <td><strong>要测 + 增量</strong></td>
 </tr>
 <tr>
@@ -8067,7 +8011,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>钱包信息</td>
 <td>钱包信息页</td>
 <td><strong>有</strong></td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a> F-021～F-025</td>
+<td><a href="#8-钱包信息扩展m25">§8-钱包信息</a> F-021～F-025</td>
 <td><strong>要测 + 增量</strong></td>
 </tr>
 <tr>
@@ -8083,7 +8027,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>异常 / Toast</td>
 <td>—</td>
 <td><strong>增补</strong></td>
-<td><a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a>、<a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a></td>
+<td><a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a>、<a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a></td>
 <td>增补</td>
 </tr>
 <tr>
@@ -8091,12 +8035,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>非功能 / 状态</td>
 <td>—</td>
 <td><strong>增补</strong></td>
-<td><a href="#13-非功能需求-v11-增补">§13-非功能需求 · V1.1 增补</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td><a href="#13-非功能需求-v11-增补">§13-非功能需求</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 <td>增补</td>
 </tr>
 </tbody>
 </table>
 <h3 id="102-分触点补丁明细">10.2 分触点补丁明细 </h3>
+<p><strong>数值展示（MVP 基线触点）</strong>：除下表「V1.1 行为」列明补丁外，各触点余额 / 估值 / 费用 / 涨跌幅等数值型字段的展示格式仍遵循 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；字段细则见 MVP 对应章展示字段表。</p>
 <h4 id="1021-mvp-3-交易所首页">10.2.1 MVP §3 · 交易所首页 </h4>
 <table>
 <thead>
@@ -8110,11 +8055,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>补丁</td>
 <td><strong>无</strong></td>
-<td>Web3 Tab 分流逻辑不变；无钱包仍进 <a href="#35-web3-无钱包首页--v11-增补">§3.5-Web3无钱包首页 · V1.1 增补</a></td>
+<td>Web3 Tab 分流逻辑不变；无钱包仍进 <a href="#35-web3-无钱包首页--v11-增补">§3.5-Web3 无钱包首页</a></td>
 </tr>
 </tbody>
 </table>
-<a id="1022-mvp-4--web3-首页有钱包" aria-hidden="true"></a><h4 id="1022-mvp-4-web3-首页有钱包">10.2.2 MVP §4 · Web3 首页（有钱包） </h4>
+<a id="1022-mvp-4--web3-首页有钱包" aria-hidden="true"></a><h4 id="1022-mvp-4-web3-首页有钱包">10.2.2 Web3 首页 </h4>
 <table>
 <thead>
 <tr>
@@ -8264,13 +8209,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>费用弹窗</strong></td>
 <td>EVM 慢/平均/快</td>
-<td><strong>+ Sol Priority 两档</strong>；<strong>+ Tron 网络资源 + fee_limit</strong></td>
+<td><strong>+ Sol Priority 两档</strong>；Tron 签名预览页主网费用行仅静态展示资源预估，不支持点击</td>
 <td>§9.3.5.5</td>
 </tr>
 <tr>
-<td><strong>确认页费用行</strong></td>
+<td><strong>签名预览页费用行</strong></td>
 <td>主网费用</td>
-<td>Tron 为 <strong>网络资源</strong></td>
+<td>Tron 仍为 <strong>主网费用</strong>；隐藏右侧箭头入口且不可点击；主网费用前展示 <strong>主网名称</strong></td>
 <td>§9.3.5.4</td>
 </tr>
 <tr>
@@ -8282,8 +8227,8 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>地址扫一扫</strong></td>
 <td>Toast「扫码功能即将上线」</td>
-<td><strong>仍占位</strong>（D-02 扫码仅用于 <strong>§5 钱包导入</strong>）</td>
-<td>§5.5、§9.3.5.2</td>
+<td>接入相机权限检查；未授权展示「开启相机访问权限」弹窗；已授权后识别地址并回填输入框</td>
+<td>§5.7.1、§9.3.5.2</td>
 </tr>
 <tr>
 <td><strong>签名</strong></td>
@@ -8355,7 +8300,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>发送 / 接收入口</td>
 <td>携带 Symbol + ETH/BSC</td>
-<td>携带 Symbol + <strong>§9.1 十链内 networkId</strong>；下游走 §9.3 多链规则</td>
+<td>携带 Symbol + <strong>§9.1 十链内 networkId</strong>；下游走 §9.3 多链规则；资产余额 <strong>&gt; 0</strong> 时发送入口可点击，资产余额 <strong>= 0</strong> 时发送入口禁用；接收入口不受余额影响</td>
 </tr>
 <tr>
 <td>复制地址</td>
@@ -8364,6 +8309,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
+<p><strong>数值展示</strong>：代币详情余额区数量 / 法币估值仍遵循 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；字段细则见 MVP <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#63-展示字段说明">§6.3-展示字段说明</a>。</p>
 <a id="1027-mvp-9--钱包列表" aria-hidden="true"></a><h4 id="1027-mvp-9-钱包列表">10.2.7 MVP §9 · 钱包列表 </h4>
 <table>
 <thead>
@@ -8384,13 +8330,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>待备份标识</strong></td>
 <td>无</td>
-<td>助记词新创建卡展示 <strong>「去备份」</strong> Pill</td>
+<td>助记词新创建卡展示 <strong>「去备份」</strong> 入口</td>
 <td>§7.3</td>
 </tr>
 <tr>
 <td><strong>添加钱包</strong></td>
 <td>MVP §8.6 单社交页</td>
-<td>→ <a href="#32-添加钱包页f-002b--三卡片">§3.2-三卡片添加钱包页</a></td>
+<td>→ <a href="#32-添加钱包页f-002b--三卡片">§3.2-添加钱包页</a></td>
 <td>§3</td>
 </tr>
 <tr>
@@ -8417,10 +8363,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>备注</td>
-<td>管理页编辑 <strong>HD 钱包</strong> 时，进入的仍为 MVP 钱包信息 <strong>同一页面</strong>，行可见性见 <a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
+<td>管理页编辑 <strong>HD 钱包</strong> 时，进入的仍为 MVP 钱包信息 <strong>同一页面</strong>，行可见性见 <a href="#8-钱包信息扩展m25">§8-钱包信息</a></td>
 </tr>
 </tbody>
 </table>
+<p><strong>数值展示</strong>：管理项资产估值仍遵循 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；与 MVP §9 钱包列表行同源。</p>
 <h4 id="1029-mvp-11-钱包信息">10.2.9 MVP §11 · 钱包信息 </h4>
 <table>
 <thead>
@@ -8447,7 +8394,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>助记词</strong></td>
 <td>无</td>
-<td>备份 / 查看 / 导出（邮箱社交）</td>
+<td>自托管助记词钱包支持备份 / 查看；社交 / 邮箱钱包不支持导出</td>
 <td>§6、§8.4、§8.6</td>
 </tr>
 <tr>
@@ -8464,7 +8411,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p><strong>不变</strong>：Google / Apple 社交钱包 <strong>无</strong> 导出助记词 — 同 MVP §11。</p>
+<p><strong>补充</strong>：社交 / 邮箱 / Google / Apple 钱包均 <strong>无</strong> 导出助记词入口。</p>
 <h4 id="10210-mvp-12-复制地址">10.2.10 MVP §12 · 复制地址 </h4>
 <table>
 <thead>
@@ -8514,23 +8461,27 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>§13 异常</td>
-<td>增量异常 <strong>索引 + 统一口径</strong> → <a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a></td>
+<td>增量异常 <strong>索引 + 统一口径</strong> → <a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a></td>
 </tr>
 <tr>
 <td>§14 Toast</td>
-<td>V1.1 Toast <strong>汇总</strong> → <a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a>；高频增量见 <a href="#24-toast-提示">§2.4-Toast-提示</a></td>
+<td>V1.1 Toast <strong>汇总</strong> → <a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a>；高频增量见 <a href="#24-toast-提示">§2.4-Toast-提示</a></td>
 </tr>
 <tr>
 <td>§15 非功能</td>
-<td>HD / 多链 NFR → <a href="#13-非功能需求-v11-增补">§13-非功能需求 · V1.1 增补</a></td>
+<td>HD / 多链 NFR → <a href="#13-非功能需求-v11-增补">§13-非功能需求</a></td>
 </tr>
 <tr>
 <td>§16 状态</td>
-<td>待备份 / 钱包品类 / Banner 会话态 → <a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td>待备份 / 钱包品类 / Banner 会话态 → <a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
+</tr>
+<tr>
+<td>§2.7 数据分层</td>
+<td>MVP §2.7 适用页面清单 + 附录 A → V1.1 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；增量字段见 <a href="#9-多链扩展m26">§9.3</a></td>
 </tr>
 </tbody>
 </table>
-<a id="103-产品决策--mvp-触点落点" aria-hidden="true"></a><h3 id="103-产品决策-mvp-触点落点">10.3 产品决策 · MVP 触点落点 </h3>
+<a id="103-产品决策--mvp-触点落点" aria-hidden="true"></a><h3 id="103-产品决策-mvp-触点落点">10.3 产品决策落点 </h3>
 <table>
 <thead>
 <tr>
@@ -8548,7 +8499,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>D-02</strong></td>
 <td>F-013 扫码导入 P1</td>
-<td><strong>§7 发送地址扫一扫仍占位</strong>；<strong>§5 钱包导入</strong> 扫码弹窗本期交付（不与发送扫码混用）</td>
+<td><strong>§5 钱包导入</strong>扫码与 <strong>§9.3.5.2 发送地址</strong>扫码均接入；共用相机权限前置弹窗</td>
 </tr>
 <tr>
 <td><strong>D-03</strong></td>
@@ -8602,7 +8553,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-136</td>
-<td>MVP §7 发送 · 地址扫一扫</td>
+<td>发送地址页「扫一扫」：未授权弹出「开启相机访问权限」；授权后识别地址并回填输入框</td>
 </tr>
 <tr>
 <td>AC-V11-137</td>
@@ -8619,7 +8570,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="11-异常处理与边界场景-v11-增补">11. 异常处理与边界场景 · V1.1 增补 </h2>
+<h2 id="11-异常处理与边界场景-v11-增补">11. 异常与边界 </h2>
 <p><strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#13-异常处理与边界场景">MVP §13-异常处理与边界场景</a>（社交登录、TSS、OTP、发送失败等 <strong>仍成立</strong>）</p>
 <blockquote>
 <p><strong>V1.1 增补</strong>：汇总 <strong>HD 钱包、备份、导出、扫码导入、多链发送</strong> 等增量模块的 <strong>失败 / 边界 / 中断</strong> 口径。各模块字段级校验仍以功能章为准；本章作 <strong>索引 + 跨模块统一规则</strong>。</p>
@@ -8647,7 +8598,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>Toast 文案</strong></td>
-<td>成功 / 取消 / 全局错误见 <a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a></td>
+<td>成功 / 取消 / 全局错误见 <a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a></td>
 </tr>
 </tbody>
 </table>
@@ -8679,7 +8630,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>发送边界</td>
 <td>EVM Gas 不足</td>
-<td><strong>+ Solana ATA/租金</strong>；<strong>+ Tron 资源 / fee_limit</strong>（行内横幅为主）</td>
+<td><strong>+ Solana 关联代币账户 / 租金</strong>；<strong>+ Tron 资源 / 费用上限</strong>（行内横幅为主）</td>
 </tr>
 <tr>
 <td>待备份 vs 发送</td>
@@ -8693,7 +8644,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="112-模块异常映射索引v11-增补">11.2 模块异常映射索引（V1.1 增补） </h3>
+<h3 id="112-模块异常映射索引v11-增补">11.2 模块异常映射索引 </h3>
 <table>
 <thead>
 <tr>
@@ -8732,7 +8683,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>M22 扫码导入</td>
 <td>相机 / 识别失败</td>
 <td><a href="#1135-扫码导入失败">§11.3.5</a></td>
-<td>Toast（§12.4）</td>
+<td>相机权限为弹窗；识别失败为 Toast（§12.4）</td>
 </tr>
 <tr>
 <td>M23 助记词备份</td>
@@ -8748,15 +8699,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>M25 钱包信息</td>
-<td>Passkey 取消（查看 / 导出 / 删除）</td>
+<td>Passkey 取消（查看 / 删除）</td>
 <td><a href="#1137-通行密钥取消-扩展场景">§11.3.7</a></td>
 <td>场景区分 Toast；§12.3</td>
 </tr>
 <tr>
 <td>M25 钱包信息</td>
-<td>导出倒计时未满足</td>
-<td><a href="#86-导出助记词f-023">§8.6-导出助记词（F-023）</a></td>
-<td>主按钮禁用</td>
+<td>社交 / 邮箱不支持导出助记词</td>
+<td><a href="#86-导出助记词f-023">§8.6-不支持导出助记词</a></td>
+<td>入口不展示；不可进入导出流程</td>
 </tr>
 <tr>
 <td>M26 多链发送</td>
@@ -8811,7 +8762,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>后续</td>
-<td>回 <strong>流程入口页标识</strong> 对应页（<a href="#222-通行密钥取消扩展">§2.2.2-通行密钥取消（扩展）</a>）；<strong>不写入</strong> 钱包列表</td>
+<td>回 <strong>流程入口页标识</strong> 对应页（<a href="#222-通行密钥取消扩展">§2.2.2-通行密钥取消</a>）；<strong>不写入</strong> 钱包列表</td>
 </tr>
 <tr>
 <td>阻断</td>
@@ -8868,7 +8819,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <h4 id="1135-扫码导入失败">11.3.5 扫码导入失败 </h4>
-<p><strong>场景</strong>：<a href="#57-扫码导入弹窗f-013">§5.7-扫码导入（F-013）</a> 生产环境相机或识别失败。</p>
+<p><strong>场景</strong>：扫码入口生产环境相机权限未授权或识别失败。适用于 <a href="#57-扫码导入弹窗f-013">§5.7-扫码导入</a> 与 <a href="#9352-接收地址层">§9.3.5.2-发送地址页扫一扫</a>。</p>
 <table>
 <thead>
 <tr>
@@ -8879,14 +8830,14 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td>相机权限拒绝</td>
-<td>Toast「<strong>无法访问相机，请在系统设置中允许相机权限</strong>」</td>
-<td>停留输入页；可改用手动输入</td>
+<td>相机权限未授权 / 已拒绝 / 不可用</td>
+<td>展示 <strong>开启相机访问权限</strong>弹窗（非 Toast，文案见 §5.7.1）</td>
+<td>点「取消」关闭弹窗并停留当前页；点「去开启」跳转系统设置 / App 权限设置，授权后继续原扫码动作</td>
 </tr>
 <tr>
 <td>无法识别有效内容</td>
-<td>Toast「<strong>未识别到有效的助记词或私钥</strong>」</td>
-<td>关闭扫码弹层；停留输入页</td>
+<td>钱包导入：Toast「<strong>扫码失败：未识别到有效的助记词或私钥</strong>」；发送地址：Toast「<strong>扫码失败：未识别到有效地址</strong>」</td>
+<td>停留当前页；不清空用户已输入内容</td>
 </tr>
 <tr>
 <td>识别成功但校验失败</td>
@@ -8901,7 +8852,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <blockquote>
-<p><strong>D-02</strong>：本场景 <strong>不替换</strong> <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#742-接收地址层">MVP §7.4.2</a> 发送地址「扫一扫即将上线」。</p>
+<p><strong>D-02</strong>：相机权限弹窗为扫码入口统一拦截，研发不得将「开启相机访问权限」实现为 Toast。</p>
 </blockquote>
 <h4 id="1136-助记词备份中断">11.3.6 助记词备份中断 </h4>
 <p><strong>场景</strong>：用户在 <a href="#6-助记词备份m23">§6-助记词备份</a> 任一步 <strong>返回 / 杀进程 / Passkey 取消</strong>（未完成验证）。</p>
@@ -8972,12 +8923,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>回钱包信息</td>
 </tr>
 <tr>
-<td><strong>导出</strong> 助记词（邮箱社交）</td>
-<td>已取消导出助记词</td>
-<td>通行密钥验证失败</td>
-<td>回钱包信息</td>
-</tr>
-<tr>
 <td><strong>删除</strong> 自托管钱包</td>
 <td>已取消验证</td>
 <td>通行密钥验证失败</td>
@@ -8985,7 +8930,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="1138-待备份与收发边界d-01">11.3.8 待备份与收发边界（D-01） </h4>
+<h4 id="1138-待备份与收发边界d-01">11.3.8 待备份与收发边界 </h4>
 <table>
 <thead>
 <tr>
@@ -9008,7 +8953,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h4 id="1139-多链发送-边界反馈形态">11.3.9 多链发送 · 边界（反馈形态） </h4>
+<h4 id="1139-多链发送-边界反馈形态">11.3.9 多链发送边界 </h4>
 <p><strong>场景</strong>：Solana / Tron / 扩展 EVM 发送校验失败（详见 <a href="#935-发送--v11-增补">§9.3.5</a>）。</p>
 <table>
 <thead>
@@ -9026,27 +8971,27 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>余额 / Gas / 资源不足</td>
-<td><strong>金额页或确认页校验横幅</strong></td>
-<td>可含「充值 {Symbol}」链接 → 收款 QR</td>
+<td><strong>金额页或签名预览页校验横幅</strong></td>
+<td>可含「充值 {币种符号}」链接 → 收款二维码</td>
 </tr>
 <tr>
-<td>Token2022 不可转 / ATA 冻结</td>
+<td>Token-2022 不可转 / 关联代币账户冻结</td>
 <td>error 横幅；<strong>阻断</strong> 下一步</td>
 <td>Solana 专章</td>
 </tr>
 <tr>
-<td>Tron Energy / TRX 不足</td>
+<td>Tron 能量资源 / TRX 不足</td>
 <td>error 横幅；<strong>阻断</strong> 或 warn</td>
 <td>TRC-20 见 §9.3.5.4</td>
 </tr>
 <tr>
 <td>广播失败</td>
-<td>MVP 全局 Toast「<strong>发送失败：{原因}</strong>」</td>
-<td>适用 <strong>全链</strong></td>
+<td>Toast「<strong>{数量} {币种} 发送失败</strong>」</td>
+<td>适用 <strong>全链</strong>；不弹窗，不展示内部错误码</td>
 </tr>
 </tbody>
 </table>
-<h3 id="114-全局反馈形态-v11-增补">11.4 全局反馈形态 · V1.1 增补 </h3>
+<h3 id="114-全局反馈形态-v11-增补">11.4 全局反馈方式 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#134-全局反馈形态">MVP §13.4-全局反馈形态</a> 仍成立。V1.1 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -9064,17 +9009,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>校验横幅</strong></td>
-<td>多链发送金额页 / 确认页</td>
-<td>修正金额、充值、或调整 fee_limit</td>
-</tr>
-<tr>
-<td><strong>倒计时禁用</strong></td>
-<td>导出助记词确认弹层</td>
-<td>满 3s 后可确认</td>
+<td>多链发送金额页 / 签名预览页</td>
+<td>修正金额、充值；Tron 费用上限由系统设置，签名预览页不提供调整入口</td>
 </tr>
 </tbody>
 </table>
-<h3 id="115-交互规则表-v11-增补">11.5 交互规则表 · V1.1 增补 </h3>
+<h3 id="115-交互规则表-v11-增补">11.5 交互规则表 </h3>
 <table>
 <thead>
 <tr>
@@ -9104,22 +9044,16 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>待备份 <strong>不变</strong></td>
 </tr>
 <tr>
-<td>导出 Passkey 取消</td>
-<td>Toast</td>
-<td>否</td>
-<td>停留信息页</td>
-</tr>
-<tr>
 <td>删除 Passkey 取消</td>
 <td>Toast</td>
 <td>否</td>
 <td>停留信息页</td>
 </tr>
 <tr>
-<td>扫码权限拒绝</td>
-<td>Toast</td>
+<td>扫码相机权限未授权 / 已拒绝 / 不可用</td>
+<td><strong>阻塞弹层</strong></td>
 <td>否</td>
-<td>可手动输入</td>
+<td>可取消并手动输入，或去系统设置开启权限</td>
 </tr>
 <tr>
 <td>待备份发起发送</td>
@@ -9137,11 +9071,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>Tron 资源不足</td>
 <td>横幅 error / 补充 TRX</td>
 <td>是 / 引导</td>
-<td>停留金额或确认页</td>
+<td>停留金额页或签名预览页</td>
 </tr>
 </tbody>
 </table>
-<h3 id="116-数据管理-v11-增补">11.6 数据管理 · V1.1 增补 </h3>
+<h3 id="116-数据管理-v11-增补">11.6 数据管理 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#136-数据管理">MVP §13.6-数据管理</a> 仍成立。V1.1 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -9162,10 +9096,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>导入失败</td>
 <td><strong>不写入</strong> 钱包对象；<strong>不切换</strong> 当前钱包</td>
-</tr>
-<tr>
-<td>导出成功</td>
-<td><strong>移除</strong> 社交钱包对象（§8.6）；非「失败回滚」</td>
 </tr>
 <tr>
 <td>多链发送失败</td>
@@ -9196,7 +9126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-143</td>
-<td>导出助记词 Passkey 取消</td>
+<td>社交 / 邮箱钱包不展示导出助记词入口</td>
 </tr>
 <tr>
 <td>AC-V11-144</td>
@@ -9204,7 +9134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-145</td>
-<td>扫码 · 相机权限拒绝</td>
+<td>扫码 · 相机权限未授权 / 已拒绝 / 不可用</td>
 </tr>
 <tr>
 <td>AC-V11-146</td>
@@ -9213,8 +9143,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="12-错误-toast-规范-v11-增补">12. 错误 Toast 规范 · V1.1 增补 </h2>
-<p><strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#14-错误-toast-规范">MVP §14-错误 Toast 规范</a>（形态、时长、<strong>无 errorModal</strong>）</p>
+<h2 id="12-错误-toast-规范-v11-增补">12. Toast 规范 </h2>
+<p><strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#14-错误-toast-规范">MVP §14-错误 Toast 规范</a>（文案格式、时长；<strong>不使用</strong>需点击确认的独占错误弹窗 <code>errorModal</code>）</p>
 <blockquote>
 <p><strong>V1.1 增补</strong>：在 MVP 全局错误 Toast 之上，<strong>汇总</strong> V1.1 成功 / 取消 / 信息 / 错误文案；模块章与 <a href="#24-toast-提示">§2.4-Toast-提示</a> 冲突时 <strong>以本章对照表为准</strong>。</p>
 </blockquote>
@@ -9237,12 +9167,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>不重复</strong></td>
-<td>MVP §14.3 已有条目（钱包准备失败、验证已锁定、发送失败等）<strong>直接沿用</strong>，本章仅 <strong>索引 + V1.1 增补行</strong></td>
+<td>MVP §14.3 已有条目（钱包准备失败、验证已锁定等）<strong>直接沿用</strong>；发送失败以 V1.1 最新 Toast 文案为准，本章仅 <strong>索引 + V1.1 增补行</strong></td>
 </tr>
 </tbody>
 </table>
-<h3 id="121-展示与交互">12.1 展示与交互 </h3>
-<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#142-展示与交互">MVP §14.2-展示与交互</a> 与 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#24-toast-提示">MVP §2.4-Toast-提示</a> <strong>仍成立</strong>：</p>
+<h3 id="121-展示与交互">12.1 反馈行为规则 </h3>
+<p>沿用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#142-展示与交互">MVP §14.2</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#24-toast-提示">MVP §2.4</a> 中与<strong>文案、时长、叠加</strong>相关的约定（<strong>不含</strong>屏幕位置、颜色等视觉样式）：</p>
 <table>
 <thead>
 <tr>
@@ -9252,8 +9182,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
-<td>形态</td>
-<td>底部 Toast；<strong>无</strong> 遮罩；<strong>无</strong>「我知道了」</td>
+<td>错误反馈</td>
+<td>以 Toast 文案告知结果；<strong>不使用</strong> <code>errorModal</code>；<strong>不要求</strong>用户点击「我知道了」，自动消失</td>
 </tr>
 <tr>
 <td>默认时长</td>
@@ -9265,13 +9195,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>叠加</td>
-<td>新 Toast <strong>覆盖</strong> 旧 Toast</td>
+<td>新 Toast <strong>覆盖</strong> 旧 Toast，不队列堆叠</td>
 </tr>
 </tbody>
 </table>
 <p><strong>例外</strong>：截屏风险提示为 <strong>弹层</strong>，<strong>非</strong> Toast（§2.6）。</p>
 <h3 id="122-mvp-全局错误-toast-索引">12.2 MVP 全局错误 Toast 索引 </h3>
-<p>以下场景 <strong>文案以 MVP 为准</strong>，V1.1 不改动：</p>
+<p>以下场景 <strong>文案以 MVP 为准</strong>，V1.1 不改动；发送失败除外，见 §12.4。</p>
 <table>
 <thead>
 <tr>
@@ -9286,10 +9216,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>验证已锁定</td>
-<td>同上</td>
-</tr>
-<tr>
-<td>发送失败</td>
 <td>同上</td>
 </tr>
 <tr>
@@ -9359,12 +9285,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><a href="#85-查看私钥f-022">§8.5</a></td>
 </tr>
 <tr>
-<td>导出完成</td>
-<td><strong>社交钱包已注销，助记词已导出</strong></td>
-<td>2s</td>
-<td><a href="#86-导出助记词f-023">§8.6</a></td>
-</tr>
-<tr>
 <td>删除自托管</td>
 <td><strong>钱包已删除</strong></td>
 <td>2s</td>
@@ -9374,7 +9294,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>钱包信息保存</td>
 <td><strong>钱包信息已更新</strong></td>
 <td>2s</td>
-<td><a href="#88-自定义钱包自托管扩展">§8.8-自定义钱包（自托管扩展）</a></td>
+<td><a href="#88-自定义钱包自托管扩展">§8.8-自定义钱包</a></td>
 </tr>
 <tr>
 <td>分享（占位）</td>
@@ -9411,19 +9331,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>取消查看助记词</td>
 <td><strong>已取消查看助记词</strong></td>
 <td>2s</td>
-<td><a href="#84-查看助记词f-021">§8.4-查看助记词（F-021）</a></td>
+<td><a href="#84-查看助记词f-021">§8.4-查看助记词</a></td>
 </tr>
 <tr>
 <td>取消查看私钥</td>
 <td><strong>已取消查看私钥</strong></td>
 <td>2s</td>
 <td><a href="#85-查看私钥f-022">§8.5</a></td>
-</tr>
-<tr>
-<td>取消导出助记词</td>
-<td><strong>已取消导出助记词</strong></td>
-<td>2s</td>
-<td><a href="#86-导出助记词f-023">§8.6</a></td>
 </tr>
 <tr>
 <td>取消发送签名</td>
@@ -9450,14 +9364,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>§5</td>
 </tr>
 <tr>
-<td>发送 · 扫一扫占位</td>
-<td><strong>扫码功能即将上线</strong></td>
+<td>发送 · 扫一扫无法识别</td>
+<td><strong>扫码失败：未识别到有效地址</strong></td>
 <td>2s</td>
-<td>MVP §7（<strong>不替换</strong>）</td>
+<td><a href="#9352-接收地址层">§9.3.5.2</a></td>
 </tr>
 </tbody>
 </table>
-<h4 id="1233-行内错误非-toast-索引">12.3.3 行内错误（非 Toast · 索引） </h4>
+<h4 id="1233-行内错误非-toast-索引">12.3.3 行内错误 </h4>
 <table>
 <thead>
 <tr>
@@ -9503,6 +9417,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </thead>
 <tbody>
 <tr>
+<td>发送失败</td>
+<td><strong>发送失败</strong></td>
+<td><strong>{数量} {币种} 发送失败</strong>，示例：<strong>10 USDT 发送失败</strong>；不展示 <code>OUT_OF_ENERGY</code> 等内部错误码</td>
+<td>2.5s</td>
+<td><a href="#9355-签名预览与费用弹窗">§9.3.5.5</a></td>
+</tr>
+<tr>
 <td>钱包创建失败</td>
 <td><strong>钱包创建失败</strong></td>
 <td>无法完成助记词钱包创建，请稍后重试。</td>
@@ -9517,18 +9438,18 @@ document.addEventListener("DOMContentLoaded", function () {
 <td><a href="#1134-钱包导入失败">§11.3.4</a></td>
 </tr>
 <tr>
-<td>相机权限拒绝</td>
-<td><strong>无法访问相机</strong></td>
-<td>请在系统设置中允许相机权限。</td>
-<td>2.5s</td>
-<td><a href="#1135-扫码导入失败">§11.3.5</a></td>
-</tr>
-<tr>
-<td>扫码无法识别</td>
+<td>扫码无法识别 · 钱包导入</td>
 <td><strong>扫码失败</strong></td>
 <td>未识别到有效的助记词或私钥。</td>
 <td>2.5s</td>
 <td>§11.3.5</td>
+</tr>
+<tr>
+<td>扫码无法识别 · 发送地址</td>
+<td><strong>扫码失败</strong></td>
+<td>未识别到有效地址。</td>
+<td>2s</td>
+<td><a href="#9352-接收地址层">§9.3.5.2</a></td>
 </tr>
 </tbody>
 </table>
@@ -9560,12 +9481,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>AC-V11-151</td>
-<td>MVP 全局错误（TSS / OTP / 发送失败）</td>
+<td>MVP 全局错误（TSS / OTP）及 V1.1 发送失败 Toast</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="13-非功能需求-v11-增补">13. 非功能需求 · V1.1 增补 </h2>
+<h2 id="13-非功能需求-v11-增补">13. 非功能需求 </h2>
 <p><strong>基线</strong>：<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#15-非功能需求">MVP §15-非功能需求</a>（社交登录、TSS、ETH/BSC 双链、发送 Passkey、审计与幂等 <strong>仍成立</strong>）</p>
 <blockquote>
 <p><strong>V1.1 增补</strong>：在 MVP 指标之上，规定 <strong>自托管 HD 钱包</strong>（创建 / 导入 / 备份 / 敏感信息）与 <strong>十链多链</strong> 的可验收性能、安全、审计与幂等要求。各功能模块 SLA <strong>以本章为准</strong>；正文流程章（§4–§9）不重复列指标。</p>
@@ -9593,11 +9514,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>引用</strong></td>
-<td>异常与 Toast 见 <a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a>–<a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a>；状态字段见 <a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
+<td>异常与 Toast 见 <a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a>–<a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a>；状态字段见 <a href="#14-状态管理规范-v11-增补">§14-状态管理</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="131-性能-v11-增补">13.1 性能 · V1.1 增补 </h3>
+<h3 id="131-性能-v11-增补">13.1 性能 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#152-性能">MVP §15.2-性能</a> 指标 <strong>仍适用</strong>（社交登录 P95 &lt; 15s、TSS 分片约 7.4s、发送提交 P95 &lt; 10s、Web3 首页首屏 P95 &lt; 3s）。V1.1.0 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -9616,7 +9537,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>助记词 / 私钥导入全流程</strong></td>
 <td>P95 <strong>&lt; 8s</strong></td>
-<td>自导入页点 <strong>确认</strong> 且校验通过至 <a href="#59-钱包创建或导入中页导入态">§5.9-钱包创建或导入中页（导入态）</a> 结束并写入列表</td>
+<td>自导入页点 <strong>确认</strong> 且校验通过至 <a href="#59-钱包创建或导入中页导入态">§5.9-钱包创建或导入中页</a> 结束并写入列表</td>
 </tr>
 <tr>
 <td><strong>扫码导入识别</strong></td>
@@ -9631,7 +9552,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>Web3 首页首屏（多链 scope）</strong></td>
 <td>P95 <strong>&lt; 3s</strong></td>
-<td>与 MVP 一致：当前钱包、网络为「全部网络」时，骨架至 <strong>scope 内</strong> 首屏资产就绪（十链白名单见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a>）</td>
+<td>与 MVP 一致：当前钱包、网络为「全部网络」时，骨架至 <strong>scope 内</strong> 首屏资产就绪（十链白名单见 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a>）</td>
 </tr>
 <tr>
 <td><strong>多链余额 / Gas / Tron 资源查询</strong></td>
@@ -9640,7 +9561,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="132-安全-v11-增补">13.2 安全 · V1.1 增补 </h3>
+<h3 id="132-安全-v11-增补">13.2 安全 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#153-安全">MVP §15.3-安全</a>（Privy TSS、通行密钥、TLS、凭证不落盘）<strong>仍成立</strong>。V1.1.0 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -9656,15 +9577,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>助记词存储与展示</strong></td>
-<td>助记词 <strong>仅</strong> 在 <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示页（F-020）</a>、<a href="#8-钱包信息扩展m25">§8-查看助记词</a> / 导出路径 <strong>短暂明文</strong>；离开页 <strong>清除 UI 内存缓存</strong>；<strong>禁止</strong> 写入日志、埋点、Toast（同 <a href="#116-数据管理-v11-增补">§11.6-数据管理 · V1.1 增补</a>）</td>
+<td>助记词 <strong>仅</strong> 在 <a href="#65-备份助记词展示页f-020">§6.5-备份助记词展示</a>、<a href="#8-钱包信息扩展m25">§8.4-查看助记词</a> / 导出路径 <strong>短暂明文</strong>；离开页 <strong>清除 UI 内存缓存</strong>；<strong>禁止</strong> 写入日志、埋点、Toast（同 <a href="#116-数据管理-v11-增补">§11.6-数据管理</a>）</td>
 </tr>
 <tr>
 <td><strong>私钥存储</strong></td>
-<td>私钥导入后 <strong>本地加密存储</strong>；<strong>不上传</strong> BiyaPay / Privy 服务端；查看私钥须经 Passkey + 安全引导（<a href="#85-查看私钥f-022">§8.5-查看私钥（F-022）</a>）</td>
+<td>私钥导入后 <strong>本地加密存储</strong>；<strong>不上传</strong> BiyaPay / Privy 服务端；查看私钥须经 Passkey + 安全引导（<a href="#85-查看私钥f-022">§8.5-查看私钥</a>）</td>
 </tr>
 <tr>
 <td><strong>助记词创建 Passkey</strong></td>
-<td>创建、导入、备份、查看 / 导出助记词、查看私钥、删除自托管钱包等敏感操作须经 <a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景（扩展）</a></td>
+<td>创建、导入、备份、查看助记词、查看私钥、删除自托管钱包等敏感操作须经 <a href="#28-通行密钥适用场景扩展">§2.8-通行密钥适用场景</a>；社交 / 邮箱钱包不支持导出助记词</td>
 </tr>
 <tr>
 <td><strong>截屏风险</strong></td>
@@ -9672,7 +9593,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>发送签名</strong></td>
-<td><strong>仍仅通行密钥</strong>（无 PIN 发送）；自托管与社交 <strong>同一签名触发路径</strong>（<a href="#935-发送--v11-增补">§9.3.5-发送 · V1.1 增补</a>）</td>
+<td><strong>仍仅通行密钥</strong>（无 PIN 发送）；自托管与社交 <strong>同一签名触发路径</strong>（<a href="#935-发送--v11-增补">§9.3.5-发送</a>）</td>
 </tr>
 <tr>
 <td><strong>传输</strong></td>
@@ -9680,8 +9601,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="133-多链约束-v11-增补">13.3 多链约束 · V1.1 增补 </h3>
-<p>相对 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#154-双链evm约束">MVP §15.4-双链（EVM）约束</a>，V1.1.0 <strong>扩展</strong> 为十链白名单：</p>
+<h3 id="133-多链约束-v11-增补">13.3 多链约束 </h3>
+<p>相对 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#154-双链evm约束">MVP §15.4-双链约束</a>，V1.1.0 <strong>扩展</strong> 为十链白名单：</p>
 <table>
 <thead>
 <tr>
@@ -9692,33 +9613,33 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>网络白名单</strong></td>
-<td>仅 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-V1.1.0 网络白名单（对齐 v4-all）</a> 所列 <strong>10 链</strong> + UI 聚合项 <code>all</code></td>
+<td>仅 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1-网络白名单</a> 所列 <strong>10 链</strong> + UI 聚合项 <code>all</code></td>
 </tr>
 <tr>
 <td><strong>地址模型</strong></td>
-<td><strong>社交 / 助记词 HD</strong>：EVM 八链 <strong>共用一条 EVM 地址</strong>；Solana、TRON <strong>各独立地址</strong>；<strong>私钥钱包</strong> 按 <a href="#914-复制地址范围按钱包类型">§9.1.4-复制地址范围（按钱包类型）</a> 限定可见链</td>
+<td><strong>社交 / 助记词 HD</strong>：EVM 八链 <strong>共用一条 EVM 地址</strong>；Solana、TRON <strong>各独立地址</strong>；<strong>私钥钱包</strong> 按 <a href="#914-复制地址范围按钱包类型">§9.1.4-复制地址范围</a> 限定可见链</td>
 </tr>
 <tr>
 <td><strong>适用范围</strong></td>
-<td><a href="#9-多链扩展m26">§9-多链扩展</a> 资产展示、复制地址、接收、发送；<strong>拒绝</strong> 白名单外 <code>chainId</code> / 网络 ID 的交易构造与广播</td>
+<td><a href="#9-多链扩展m26">§9-多链</a> 资产展示、复制地址、接收、发送；<strong>拒绝</strong> 白名单外链标识 / 网络标识的交易构造与广播</td>
 </tr>
 <tr>
 <td><strong>RPC / 索引</strong></td>
-<td>余额、Gas、Tron Bandwidth / Energy 仅请求白名单内节点；Solana / Tron 地址校验见 <a href="#915-地址格式校验">§9.1.5-地址格式校验</a></td>
+<td>余额、Gas、Tron 带宽资源 / 能量资源仅请求白名单内节点；Solana / Tron 地址校验见 <a href="#915-地址格式校验">§9.1.5-地址格式校验</a></td>
 </tr>
 <tr>
 <td><strong>行情</strong></td>
-<td><strong>仍不接入</strong> 实时行情；法币估值可为占位（同 MVP）</td>
+<td><strong>仍不接入</strong> 实时行情；法币估值可为占位（同 MVP <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#46-数据管理">§4.6-数据管理</a>）；有有效数值时展示格式见 <a href="#附录-a通用数据分层显示规范">附录 A</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="134-审计与埋点-v11-增补">13.4 审计与埋点 · V1.1 增补 </h3>
-<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#155-审计与埋点">MVP §15.5-审计与埋点</a> 字段与保留周期（≥ <strong>180</strong> 天）<strong>仍成立</strong>。V1.1.0 <strong>追加</strong> 记录事件与 <code>eventType</code>：</p>
+<h3 id="134-审计与埋点-v11-增补">13.4 审计与埋点 </h3>
+<p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#155-审计与埋点">MVP §15.5-审计与埋点</a> 字段与保留周期（≥ <strong>180</strong> 天）<strong>仍成立</strong>。V1.1.0 <strong>追加</strong> 记录事件与 <strong>事件类型</strong>（实现字段可映射为 <code>eventType</code>）：</p>
 <table>
 <thead>
 <tr>
 <th>记录事件</th>
-<th>eventType 建议</th>
+<th>事件类型建议</th>
 <th>说明</th>
 </tr>
 </thead>
@@ -9726,12 +9647,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>助记词 <strong>新创建</strong> 成功 / 失败</td>
 <td><code>wallet_create_hd</code></td>
-<td><code>walletType=mnemonic</code>；失败时 <code>result=fail</code> + 错误码</td>
+<td>钱包品类 = 助记词新创建；失败时记录失败结果 + 错误码</td>
 </tr>
 <tr>
 <td>助记词 / 私钥 <strong>导入</strong> 成功 / 失败</td>
 <td><code>wallet_import</code></td>
-<td><code>walletType=mnemonicImport</code> / <code>privateKey</code>；扫码路径加 <code>source=scan</code></td>
+<td>钱包品类 = 助记词导入 / 私钥导入；扫码路径加记录来源 = 扫码</td>
 </tr>
 <tr>
 <td><strong>备份验证</strong> 成功 / 失败</td>
@@ -9746,17 +9667,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>删除</strong> 自托管钱包</td>
 <td><code>wallet_delete</code></td>
-<td>含 <code>walletType</code></td>
+<td>含钱包品类</td>
 </tr>
 <tr>
 <td><strong>多链发送提交</strong></td>
 <td><code>send_submit</code></td>
-<td>追加 <code>networkId</code>（如 <code>solana</code>、<code>tron</code>）；其余字段同 MVP</td>
+<td>追加网络标识（如 <code>solana</code>、<code>tron</code>）；其余字段同 MVP</td>
 </tr>
 </tbody>
 </table>
-<p><strong>建议字段（V1.1 扩展）</strong>：在 MVP 建议字段基础上，埋点须带 <strong><code>walletType</code></strong>（与 <a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a> <strong>钱包品类</strong> 枚举对齐）、<code>networkId</code>（多链场景）、<code>result</code>、<code>durationMs</code>。<code>result=fail</code> 时与 <a href="#122-mvp-全局错误-toast-索引">§12.2-MVP 全局错误 Toast 索引</a>、<a href="#124-全局错误-toast-增补">§12.4-全局错误 Toast 增补</a> 场景可对齐排障。</p>
-<h3 id="135-幂等与可用性-v11-增补">13.5 幂等与可用性 · V1.1 增补 </h3>
+<p><strong>建议字段（V1.1 扩展）</strong>：在 MVP 建议字段基础上，埋点须带 <strong>钱包品类</strong>（与 <a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a> 枚举对齐）、<strong>网络标识</strong>（多链场景）、<strong>执行结果</strong>、<strong>耗时毫秒</strong>。失败结果须与 <a href="#122-mvp-全局错误-toast-索引">§12.2-MVP 全局错误 Toast 索引</a>、<a href="#124-全局错误-toast-增补">§12.4-全局错误 Toast 增补</a> 场景可对齐排障。</p>
+<h3 id="135-幂等与可用性-v11-增补">13.5 幂等与可用性 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#156-幂等与可用性">MVP §15.6-幂等与可用性</a> <strong>仍成立</strong>。V1.1.0 <strong>补充</strong>：</p>
 <table>
 <thead>
@@ -9768,7 +9689,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>HD 创建 / 导入幂等</strong></td>
-<td><strong>60s</strong> 内同一设备对 <strong>同一助记词 / 私钥</strong> 重复提交创建或导入，返回「进行中」或已成功结果；<strong>不重复派生</strong> 新地址、<strong>不重复写入</strong> 列表</td>
+<td>同一设备对 <strong>同一助记词 / 私钥</strong> 不允许重复写入钱包列表；若短时间重复提交同一请求，返回「进行中」或已成功结果；若本地已存在对应钱包，则阻止导入并提示用户该钱包已存在。重复提交 / 重复导入均 <strong>不重复派生</strong> 新地址、<strong>不重复写入</strong> 列表、<strong>不递增</strong>助记词钱包默认名递增序号</td>
+</tr>
+<tr>
+<td><strong>社交钱包去重</strong></td>
+<td>同一 <strong>登录方式 + 登录邮箱</strong> 在本地钱包列表中已存在时，不创建新的社交钱包；提示用户该账号已登录或引导切换已有钱包；不进入默认命名流程</td>
 </tr>
 <tr>
 <td><strong>备份幂等</strong></td>
@@ -9780,7 +9705,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td><strong>离线 / 弱网</strong></td>
-<td>多链 RPC 查询或发送失败 → Toast（见 §12）；<strong>不损坏</strong> 本地钱包列表与 <a href="#144-本地持久化增补">§14.4-本地持久化（增补）</a> 字段</td>
+<td>多链 RPC 查询或发送失败 → Toast（见 §12）；<strong>不损坏</strong> 本地钱包列表与 <a href="#144-本地持久化增补">§14.4-本地持久化</a> 字段</td>
 </tr>
 <tr>
 <td><strong>可用性目标</strong></td>
@@ -9788,7 +9713,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="136-数据管理nfr-v11-增补">13.6 数据管理（NFR）· V1.1 增补 </h3>
+<h3 id="136-数据管理nfr-v11-增补">13.6 数据管理 </h3>
 <table>
 <thead>
 <tr>
@@ -9799,15 +9724,19 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>指标采集</strong></td>
-<td>关键路径埋点须带 <code>walletType</code>、<code>networkId</code>（多链）、<code>result</code>、<code>durationMs</code></td>
+<td>关键路径埋点须带钱包品类、网络标识（多链）、执行结果、耗时毫秒</td>
 </tr>
 <tr>
 <td><strong>状态对齐</strong></td>
-<td>审计 <code>walletType</code> 与持久化 <strong>钱包品类</strong>、<strong>待备份标记</strong> 字段定义见 <a href="#142-助记词备份子状态字段">§14.2-助记词备份子状态字段</a>、<a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a></td>
+<td>审计中的钱包品类与持久化 <strong>钱包品类</strong>、<strong>待备份标记</strong> 字段定义见 <a href="#142-助记词备份子状态字段">§14.2-助记词备份子状态字段</a>、<a href="#143-钱包对象扩展字段">§14.3-钱包对象扩展字段</a></td>
 </tr>
 <tr>
 <td><strong>失败关联</strong></td>
-<td><code>result=fail</code> 与 <a href="#11-异常处理与边界场景-v11-增补">§11-异常处理与边界场景 · V1.1 增补</a> 场景、<a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a> 文案 <strong>可对齐</strong> 排障</td>
+<td>失败结果与 <a href="#11-异常处理与边界场景-v11-增补">§11-异常与边界</a> 场景、<a href="#12-错误-toast-规范-v11-增补">§12-Toast 规范</a> 文案 <strong>可对齐</strong> 排障</td>
+</tr>
+<tr>
+<td><strong>数值展示</strong></td>
+<td>余额 / 估值 / 费用 / 涨跌幅等用户可见数值，统一见 <a href="#211-通用数据分层显示规范适用页面清单">§2.11</a> + <a href="#附录-a通用数据分层显示规范">附录 A</a>；与 MVP <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#154-数据管理与链约束">§15.4-数据管理与链约束</a> 口径一致</td>
 </tr>
 </tbody>
 </table>
@@ -9859,7 +9788,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>AC-V11-159</td>
 <td>HD 创建 / 导入 / 备份 / 发送</td>
-<td>各至少 <strong>1</strong> 条审计含 <code>walletType</code> 与 <code>result</code></td>
+<td>各至少 <strong>1</strong> 条审计含钱包品类与执行结果</td>
 </tr>
 <tr>
 <td>AC-V11-160</td>
@@ -9884,7 +9813,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="14-状态管理规范-v11-增补">14. 状态管理规范 · V1.1 增补 </h2>
+<h2 id="14-状态管理规范-v11-增补">14. 状态管理 </h2>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#16-状态管理规范">MVP §16-状态管理规范</a> 仍成立。本章规定 V1.1.0 <strong>新增</strong> 的账户子状态、钱包对象字段与会话态；业务表现见 <a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>。</p>
 <h3 id="140-模块说明">14.0 模块说明 </h3>
 <table>
@@ -9909,12 +9838,12 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 <tr>
 <td>NFR 对齐</td>
-<td>埋点 <code>walletType</code> 与 <strong>钱包品类</strong> 枚举一致；见 <a href="#134-审计与埋点-v11-增补">§13.4-审计与埋点 · V1.1 增补</a></td>
+<td>埋点中的钱包品类与 <strong>钱包品类</strong> 枚举一致；见 <a href="#134-审计与埋点-v11-增补">§13.4-审计与埋点</a></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3 id="141-账户状态机v11-扩展">14.1 账户状态机（V1.1 扩展） </h3>
+<h3 id="141-账户状态机v11-扩展">14.1 账户状态机 </h3>
 <p>在 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#162-账户状态机">MVP §16.2-账户状态机</a> 基础上扩展：</p>
 <div class="mermaid">stateDiagram-v2
   [*] --&gt; 无钱包
@@ -10046,9 +9975,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<p>命名、头像、排序等仍遵循 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#119-数据管理">MVP §11.9-数据管理</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#106-数据管理">MVP §10.6-数据管理</a>。</p>
+<p>命名、头像、排序等仍遵循 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#119-数据管理">MVP §11.9-数据管理</a>、<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#106-数据管理">MVP §10.6-数据管理</a>；助记词默认名序号规则以 <a href="#47-默认钱包命名">§4.7-默认钱包命名</a> 为准。</p>
 <hr />
-<h3 id="144-本地持久化增补">14.4 本地持久化（增补） </h3>
+<h3 id="144-本地持久化增补">14.4 本地持久化 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#163-本地持久化字段">MVP §16.3</a> 字段仍持久化。V1.1.0 <strong>追加</strong>：</p>
 <table>
 <thead>
@@ -10073,10 +10002,16 @@ document.addEventListener("DOMContentLoaded", function () {
 <td>创建 / 导入成功</td>
 </tr>
 <tr>
-<td><strong>Banner 会话关闭钱包 ID 集合</strong></td>
+<td><strong>助记词钱包默认名递增序号</strong>（实现字段可映射为 <code>mnemonicWalletNameSeq</code>）</td>
+<td>生成「我的钱包{n}」的持久化递增计数器</td>
+<td><strong>是</strong></td>
+<td>助记词新创建 / 助记词导入成功写入列表前递增；删除钱包、用户改名、重复导入拦截均不回退、不递增</td>
+</tr>
+<tr>
+<td><strong>待备份横幅会话关闭钱包标识集合</strong></td>
 <td>本会话内用户点 ✕ 的钱包</td>
 <td><strong>否</strong>（仅内存 / 会话存储）</td>
-<td>点 Banner ✕；<strong>冷启动清空</strong></td>
+<td>点待备份横幅 ✕；<strong>冷启动清空</strong></td>
 </tr>
 </tbody>
 </table>
@@ -10090,11 +10025,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td>切换当前钱包</td>
-<td>更新 <code>当前钱包 id</code>、<code>最近使用钱包 id</code>（同 MVP）；刷新 Banner 判定</td>
+<td>更新当前钱包标识、最近使用钱包标识（同 MVP）；刷新待备份横幅判定</td>
 </tr>
 <tr>
 <td>删除钱包</td>
-<td>移除对象；若删当前钱包 → 列表首项或 <strong>无钱包</strong>（同 MVP §16.5）</td>
+<td>移除对象；若删当前钱包 → 列表首项或 <strong>无钱包</strong>（同 MVP §16.5）；不回收助记词钱包默认名递增序号</td>
 </tr>
 <tr>
 <td>备份完成</td>
@@ -10103,7 +10038,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="145-页面状态矩阵账户级-增补">14.5 页面状态矩阵（账户级 · 增补） </h3>
+<h3 id="145-页面状态矩阵账户级-增补">14.5 页面状态矩阵 </h3>
 <table>
 <thead>
 <tr>
@@ -10141,7 +10076,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h3 id="146-切换与删除规则增补">14.6 切换与删除规则（增补） </h3>
+<h3 id="146-切换与删除规则增补">14.6 切换与删除规则 </h3>
 <p><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#165-切换与退出规则">MVP §16.5</a> 仍成立。V1.1.0 <strong>补充</strong>：</p>
 <table>
 <thead>
@@ -10214,1033 +10149,141 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <hr />
 <h2 id="15-追溯矩阵">15. 追溯矩阵 </h2>
-<p>原型文件：<strong>V1.1 增量</strong>以 <a href="../03-交互原型/Biya钱包-交互原型-v4-all.html">Biya钱包-交互原型-v4-all.html</a> 为准；<strong>MVP 基线屏</strong>以 <a href="../03-交互原型/Biya钱包-交互原型-v4-mvp_Final.html">Biya钱包-交互原型-v4-mvp_Final.html</a> 为准。屏 <code>id</code> 与中文产品名对照见 <a href="#附录-a--参考文件索引">附录 A · 参考文件索引</a>。</p>
-<h3 id="150-模块说明">15.0 模块说明 </h3>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>目标</strong></td>
-<td>将 §1.6 Feature 表扩展为 <strong>模块 / 原型 / AC</strong> 全链路追溯</td>
-</tr>
-<tr>
-<td><strong>范围</strong></td>
-<td>V1.1.0 增量模块 M20–M26、横切 M00；MVP 基线索引见 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#17-追溯矩阵">MVP §17-追溯矩阵</a></td>
-</tr>
-<tr>
-<td><strong>AC 前缀</strong></td>
-<td><strong>AC-V11-</strong>（与 MVP <strong>AC-M</strong> 区分）</td>
-</tr>
-</tbody>
-</table>
-<a id="151-feature--章节--ac-映射" aria-hidden="true"></a><h3 id="151-feature-章节-ac-映射">15.1 Feature → 章节 → AC 映射 </h3>
-<table>
-<thead>
-<tr>
-<th>Feature ID</th>
-<th>名称</th>
-<th>优先级</th>
-<th>V1.1 章</th>
-<th>AC 范围</th>
-<th>原型屏（v4-all · 中文名）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>F-002b</td>
-<td>添加钱包页（完整三卡片）</td>
-<td>P0</td>
-<td>§3</td>
-<td>AC-V11-23～34</td>
-<td>添加钱包页、创建或导入钱包弹窗、选择登录方式弹窗</td>
-</tr>
-<tr>
-<td>F-006</td>
-<td>助记词创建（BIP-39）</td>
-<td>P0</td>
-<td>§4</td>
-<td>AC-V11-35～43</td>
-<td>钱包创建或导入中页（创建态）、通行密钥权限说明弹窗、通行密钥系统确认弹窗</td>
-</tr>
-<tr>
-<td>F-007</td>
-<td>助记词导入</td>
-<td>P0</td>
-<td>§5</td>
-<td>AC-V11-44～49、53、55～58</td>
-<td>导入助记词或私钥页</td>
-</tr>
-<tr>
-<td>F-008</td>
-<td>私钥导入</td>
-<td>P0</td>
-<td>§5</td>
-<td>AC-V11-50～52、54、56～58</td>
-<td>导入助记词或私钥页、私钥导入选择网络页</td>
-</tr>
-<tr>
-<td>F-013</td>
-<td>扫码导入</td>
-<td><strong>P1</strong></td>
-<td>§5</td>
-<td>AC-V11-55、145</td>
-<td>扫码导入弹窗</td>
-</tr>
-<tr>
-<td>F-014</td>
-<td>首页待备份 Banner</td>
-<td>P0</td>
-<td>§7</td>
-<td>AC-V11-08～16、03～04</td>
-<td>Web3 首页待备份 Banner</td>
-</tr>
-<tr>
-<td>F-015</td>
-<td>三步备份流程</td>
-<td>P0</td>
-<td>§6</td>
-<td>AC-V11-59～61、71～72</td>
-<td>助记词安全引导页</td>
-</tr>
-<tr>
-<td>F-016</td>
-<td>截屏风险提示</td>
-<td>P0</td>
-<td>§6、§2</td>
-<td>AC-V11-02、72</td>
-<td>截屏风险提示弹层</td>
-</tr>
-<tr>
-<td>F-020</td>
-<td>备份助记词子流程</td>
-<td>P0</td>
-<td>§6</td>
-<td>AC-V11-62～70</td>
-<td>备份助记词展示页、验证助记词页</td>
-</tr>
-<tr>
-<td>F-021</td>
-<td>查看助记词</td>
-<td>P0</td>
-<td>§8</td>
-<td>AC-V11-81～82</td>
-<td>钱包信息 → 查看助记词子流程</td>
-</tr>
-<tr>
-<td>F-022</td>
-<td>查看私钥</td>
-<td>P0</td>
-<td>§8</td>
-<td>AC-V11-83～85、91</td>
-<td>选择私钥所属主网页、查看私钥页</td>
-</tr>
-<tr>
-<td>F-023</td>
-<td>社交钱包导出助记词</td>
-<td>P0</td>
-<td>§8</td>
-<td>AC-V11-86～87、143</td>
-<td>导出助记词确认弹层、导出前备份确认弹层</td>
-</tr>
-<tr>
-<td>F-025</td>
-<td>自托管钱包删除</td>
-<td>P0</td>
-<td>§8</td>
-<td>AC-V11-88～90</td>
-<td>删除钱包确认弹层</td>
-</tr>
-<tr>
-<td>F-064b</td>
-<td>HD 钱包「待备份」子状态</td>
-<td>P0</td>
-<td>§7、§14</td>
-<td>AC-V11-08～22、17～22</td>
-<td>状态字段；Banner 展示逻辑</td>
-</tr>
-<tr>
-<td>F-067</td>
-<td>EVM-L2 + SOL + TRON</td>
-<td>P0</td>
-<td>§9</td>
-<td>AC-V11-92～129</td>
-<td>复制地址 / 收发 / 网络选择相关屏</td>
-</tr>
-</tbody>
-</table>
-<p><strong>横切 Feature（无独立 ID）</strong>：全局规范 §2（AC-V11-01～07）；MVP 补丁 §10（AC-V11-130～139）；异常 §11（AC-V11-140～146）；Toast §12（AC-V11-147～151）；NFR §13（AC-V11-152～163）。</p>
-<h3 id="152-v11-模块追溯">15.2 V1.1 模块追溯 </h3>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>V1.1 章</th>
-<th>Feature</th>
-<th>原型 / 附件</th>
-<th>关联规则</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>M20</td>
-<td><a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a></td>
-<td>F-002b</td>
-<td>v4-all 添加钱包页、弹窗</td>
-<td>三卡片与 MVP 社交路径 <strong>并存</strong></td>
-</tr>
-<tr>
-<td>M21</td>
-<td><a href="#4-助记词创建m21">§4-助记词创建</a></td>
-<td>F-006</td>
-<td>创建中页、Passkey 弹层</td>
-<td>创建全流程 <strong>不展示</strong> 词表</td>
-</tr>
-<tr>
-<td>M22</td>
-<td><a href="#5-钱包导入m22">§5-钱包导入</a></td>
-<td>F-007/F-008/F-013</td>
-<td>导入页、选网页、扫码弹窗</td>
-<td>D-05 导入备份态</td>
-</tr>
-<tr>
-<td>M23</td>
-<td><a href="#6-助记词备份m23">§6-助记词备份</a></td>
-<td>F-015/F-016/F-020</td>
-<td>安全引导、展示、验证页</td>
-<td>与 §8 查看 / 导出 <strong>共用 UI</strong></td>
-</tr>
-<tr>
-<td>M24</td>
-<td><a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
-<td>F-014/F-064b</td>
-<td>Banner、列表 pill</td>
-<td>§7 业务规则 + §14 字段</td>
-</tr>
-<tr>
-<td>M25</td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
-<td>F-021～F-025</td>
-<td>钱包信息、查看 / 导出 / 删除</td>
-<td>社交 vs 自托管 <strong>分流</strong></td>
-</tr>
-<tr>
-<td>M26</td>
-<td><a href="#9-多链扩展m26">§9-多链扩展</a></td>
-<td>F-067</td>
-<td>复制地址、收发叠加层</td>
-<td>十链白名单 §1.5.1</td>
-</tr>
-<tr>
-<td>M02′</td>
-<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a></td>
-<td>—</td>
-<td>全局 Toast / 截屏</td>
-<td>术语、D-01～D-05 横切</td>
-</tr>
-<tr>
-<td>M00</td>
-<td><a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a>–<a href="#17-测试与验收执行">§17-测试与验收执行</a></td>
-<td>—</td>
-<td>MVP 补丁表</td>
-<td>治理、回归排期</td>
-</tr>
-</tbody>
-</table>
-<p>全量 PRD（<code>BiyaWallet_PRD.md</code>）模块对照见 <a href="#163-与-mvp--全量文档映射">§16.3-与 MVP / 全量文档映射</a>。</p>
-<h3 id="153-v11-增量原型屏索引">15.3 V1.1 增量原型屏索引 </h3>
-<p>以下屏在 <a href="../04-设计导出/prototype-screen-manifest.json">prototype-screen-manifest.json</a> 中标记 <strong><code>mvpExcluded: true</code></strong>，属 V1.1.0 验收范围（<strong>不含</strong> 币种管理、交易历史、PIN 发送等 defer 屏）：</p>
-<table>
-<thead>
-<tr>
-<th>原型 screen / overlay ID</th>
-<th>产品名称（中文）</th>
-<th>V1.1 章</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>screen-add-wallet</code>（三卡片态）</td>
-<td>添加钱包页</td>
-<td>§3</td>
-</tr>
-<tr>
-<td><code>walletOnboardingSheet</code></td>
-<td>创建或导入钱包弹窗</td>
-<td>§3</td>
-</tr>
-<tr>
-<td><code>screen-wallet-import-seed</code></td>
-<td>导入助记词或私钥页</td>
-<td>§5</td>
-</tr>
-<tr>
-<td><code>screen-wallet-import-network</code></td>
-<td>私钥导入选择网络页</td>
-<td>§5</td>
-</tr>
-<tr>
-<td><code>importSeedScanModal</code></td>
-<td>扫码导入弹窗</td>
-<td>§5</td>
-</tr>
-<tr>
-<td><code>screen-wallet-preparing</code>（创建 / 导入态）</td>
-<td>钱包创建或导入中页</td>
-<td>§4、§5</td>
-</tr>
-<tr>
-<td><code>screen-wallet-create-guide</code></td>
-<td>助记词安全引导页</td>
-<td>§6</td>
-</tr>
-<tr>
-<td><code>screen-wallet-backup-mnemonic</code></td>
-<td>备份助记词展示页</td>
-<td>§6</td>
-</tr>
-<tr>
-<td><code>screen-wallet-verify-mnemonic</code></td>
-<td>验证助记词页</td>
-<td>§6</td>
-</tr>
-<tr>
-<td><code>mnemonicScreenshotModal</code></td>
-<td>截屏风险提示弹层</td>
-<td>§6、§2</td>
-</tr>
-<tr>
-<td><code>screen-web3home</code>（Banner 态）</td>
-<td>Web3 首页 · 待备份 Banner</td>
-<td>§7</td>
-</tr>
-<tr>
-<td><code>screen-wallet-viewpk-net</code></td>
-<td>选择私钥所属主网页</td>
-<td>§8</td>
-</tr>
-<tr>
-<td><code>screen-wallet-view-private-key</code></td>
-<td>查看私钥页</td>
-<td>§8</td>
-</tr>
-<tr>
-<td><code>exportMnemonicConfirmOverlay</code></td>
-<td>导出助记词确认弹层</td>
-<td>§8</td>
-</tr>
-<tr>
-<td><code>exportMnemonicBackupConfirmOverlay</code></td>
-<td>导出前备份确认弹层</td>
-<td>§8</td>
-</tr>
-</tbody>
-</table>
-<p><strong>MVP 基线屏</strong>（交易所首页、Web3 首页、收发、钱包列表等）仍按 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#172-全屏页与叠加层索引">MVP §17.2-全屏页与叠加层索引</a> 追溯；V1.1 <strong>补丁行为</strong>以 <a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a> 为准。</p>
-<h3 id="154-mvp-v11-章节对照">15.4 MVP ↔ V1.1 章节对照 </h3>
-<table>
-<thead>
-<tr>
-<th>MVP 章</th>
-<th>MVP 能力</th>
-<th>V1.1 处理</th>
-<th>V1.1 权威章</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>§4 首页</td>
-<td>ETH/BSC 资产</td>
-<td><strong>补丁</strong>：Banner、十链</td>
-<td>§7、§9</td>
-</tr>
-<tr>
-<td>§5 接收</td>
-<td>双链 QR</td>
-<td><strong>补丁</strong>：SOL/TRON/L2</td>
-<td>§9.3.4</td>
-</tr>
-<tr>
-<td>§7 发送</td>
-<td>EVM + Passkey</td>
-<td><strong>补丁</strong>：三链校验、Tron 资源</td>
-<td>§9.3.5</td>
-</tr>
-<tr>
-<td>§8 登录创建</td>
-<td>社交单轨</td>
-<td><strong>补丁</strong>：三卡片并存</td>
-<td>§3</td>
-</tr>
-<tr>
-<td>§9 列表</td>
-<td>仅社交</td>
-<td><strong>补丁</strong>：HD 混排、去备份</td>
-<td>§3、§7</td>
-</tr>
-<tr>
-<td>§11 信息</td>
-<td>Privy 私钥</td>
-<td><strong>补丁</strong>：HD 行可见性</td>
-<td>§8</td>
-</tr>
-<tr>
-<td>§12 复制地址</td>
-<td>ETH/BSC</td>
-<td><strong>补丁</strong>：十链 + 快捷复制</td>
-<td>§9.2</td>
-</tr>
-<tr>
-<td>§13–§16 横切</td>
-<td>异常/NFR/状态</td>
-<td><strong>增补</strong></td>
-<td>§11–§14</td>
-</tr>
-<tr>
-<td>§4–§12 其余</td>
-<td>基线能力</td>
-<td><strong>回归要测</strong></td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md">MVP PRD</a> + §10</td>
-</tr>
-</tbody>
-</table>
-<h3 id="155-验收标准">15.5 验收标准 </h3>
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>验收条件</th>
-<th>预期结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AC-V11-164</td>
-<td>对照 <a href="#151-feature--章节--ac-映射">§15.1-Feature → 章节 → AC 映射</a> 与 <a href="#16-feature-追溯矩阵">§1.6-Feature 追溯矩阵</a></td>
-<td>Feature 行 <strong>一致</strong>；AC 区间 <strong>无缺口、无重复</strong></td>
-</tr>
-<tr>
-<td>AC-V11-165</td>
-<td>对照 <a href="#152-v11-模块追溯">§15.2-V1.1 模块追溯</a></td>
-<td>M20–M26 均有 PRD 章 + 原型或横切说明</td>
-</tr>
-<tr>
-<td>AC-V11-166</td>
-<td>V1.1 增量屏</td>
-<td><code>mvpExcluded</code> 且 <strong>非</strong> §16.4 defer 能力的屏，均可映射到 §15.3 或 MVP §17</td>
-</tr>
-</tbody>
-</table>
+<p>本章已<strong>外移</strong>至 <a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a> <strong>§3</strong>，避免在需求正文重复 Feature / 原型 / AC 映射大表。</p>
+<ul>
+<li>Feature → 章节 → AC 映射、V1.1 模块追溯、增量原型屏索引、MVP ↔ V1.1 章节对照 → 外移包 §3</li>
+<li>原型真源：<code>v4-all</code>（增量）、<code>v4-mvp_Final</code>（基线）；屏 <code>id</code> 见 <a href="#附录-b-参考文件索引">附录 B</a></li>
+</ul>
 <hr />
 <h2 id="16-范围说明">16. 范围说明 </h2>
-<h3 id="160-模块说明">16.0 模块说明 </h3>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>目标</strong></td>
-<td>明确 V1.1.0 <strong>相对 MVP</strong> 的交付边界、回归范围与文档映射</td>
-</tr>
-<tr>
-<td><strong>基线</strong></td>
-<td><a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md">MVP V1.0.0</a> 已实现；本文 <strong>不重复</strong> MVP 正文</td>
-</tr>
-</tbody>
-</table>
-<h3 id="161-v110-交付边界">16.1 V1.1.0 交付边界 </h3>
-<table>
-<thead>
-<tr>
-<th>能力域</th>
-<th>交付内容</th>
-<th>PRD 章节</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>账户入链</strong></td>
-<td>三卡片添加钱包；助记词 <strong>新创建</strong>；助记词 / 私钥 / <strong>扫码（P1）</strong> 导入；社交路径 <strong>保留</strong></td>
-<td><a href="#3-添加钱包与创建入口m20">§3-添加钱包与创建入口</a>–<a href="#5-钱包导入m22">§5-钱包导入</a></td>
-</tr>
-<tr>
-<td><strong>备份闭环</strong></td>
-<td>三步安全引导 → 展示 12 词 → 验证；截屏警告；首页 Banner；<strong>待备份状态机</strong></td>
-<td><a href="#6-助记词备份m23">§6-助记词备份</a>–<a href="#7-待备份提示与状态机m24">§7-待备份提示与状态机</a>、<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
-</tr>
-<tr>
-<td><strong>钱包信息</strong></td>
-<td>查看 / 导出助记词；自托管查看私钥；删除自托管；社交 <strong>导出助记词</strong></td>
-<td><a href="#8-钱包信息扩展m25">§8-钱包信息扩展</a></td>
-</tr>
-<tr>
-<td><strong>多链</strong></td>
-<td><strong>十链</strong>白名单内收发、复制地址、链校验；Tron <strong>fee_limit</strong></td>
-<td><a href="#9-多链扩展m26">§9-多链扩展</a>、<a href="#151-v110-网络白名单对齐-v4-all">§1.5.1</a></td>
-</tr>
-<tr>
-<td><strong>MVP 回归</strong></td>
-<td>MVP §3–§12 基线 + <a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a> 列明差分</td>
-<td><a href="#12-基线能力索引已实现-本文不展开">§1.2-基线能力索引</a>、§10</td>
-</tr>
-<tr>
-<td><strong>横切</strong></td>
-<td>全局增补、异常 / Toast、NFR、状态</td>
-<td><a href="#2-全局交互规范-v11-增补">§2-全局交互规范 · V1.1 增补</a>–<a href="#14-状态管理规范-v11-增补">§14-状态管理规范 · V1.1 增补</a></td>
-</tr>
-</tbody>
-</table>
-<p><strong>已确认决策落点</strong>：D-01～D-05 见 <a href="#15-已确认产品决策">§1.5-已确认产品决策</a>、<a href="#103-产品决策--mvp-触点落点">§10.3-产品决策 · MVP 触点落点</a>。</p>
-<h3 id="162-mvp-基线与回归策略">16.2 MVP 基线与回归策略 </h3>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>规则</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>正文</strong></td>
-<td>MVP 已实现流程 <strong>不展开</strong>；冲突时 MVP 正文 + V1.1 <strong>补丁章</strong> 合并理解</td>
-</tr>
-<tr>
-<td><strong>要测</strong></td>
-<td><a href="#12-基线能力索引已实现-本文不展开">§1.2-基线能力索引</a> 标 <strong>要测</strong> 的 MVP 章节须 <strong>全量回归</strong></td>
-</tr>
-<tr>
-<td><strong>要测 + 增量</strong></td>
-<td>标 <strong>要测 + 增量</strong> 的章节：MVP AC（<a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#190-模块-ac-索引">MVP §19.0</a>）+ V1.1 AC（§17.1）</td>
-</tr>
-<tr>
-<td><strong>增补</strong></td>
-<td>§11–§14 仅测 V1.1 增量 AC；MVP 横切 AC 仍有效</td>
-</tr>
-<tr>
-<td><strong>原型</strong></td>
-<td>基线路径 <code>v4-mvp_Final</code>；增量路径 <code>v4-all</code></td>
-</tr>
-</tbody>
-</table>
-<a id="163-与-mvp--全量文档映射" aria-hidden="true"></a><h3 id="163-与-mvp-全量文档映射">16.3 与 MVP / 全量文档映射 </h3>
-<table>
-<thead>
-<tr>
-<th>V1.1 章</th>
-<th>内容</th>
-<th>MVP 章</th>
-<th>全量 <code>BiyaWallet_PRD.md</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>§1</td>
-<td>产品概述</td>
-<td>§1</td>
-<td>§1</td>
-</tr>
-<tr>
-<td>§2</td>
-<td>全局增补</td>
-<td>§2（补丁）</td>
-<td>§2</td>
-</tr>
-<tr>
-<td>§3</td>
-<td>添加钱包</td>
-<td>§8（补丁）</td>
-<td>§9.0–§9.2</td>
-</tr>
-<tr>
-<td>§4</td>
-<td>助记词创建</td>
-<td>—</td>
-<td>§9.3</td>
-</tr>
-<tr>
-<td>§5</td>
-<td>钱包导入</td>
-<td>—</td>
-<td>§9.4</td>
-</tr>
-<tr>
-<td>§6</td>
-<td>助记词备份</td>
-<td>—</td>
-<td>§10</td>
-</tr>
-<tr>
-<td>§7</td>
-<td>待备份 Banner</td>
-<td>§4（补丁）</td>
-<td>§4、§20.3</td>
-</tr>
-<tr>
-<td>§8</td>
-<td>钱包信息扩展</td>
-<td>§11（补丁）</td>
-<td>§13</td>
-</tr>
-<tr>
-<td>§9</td>
-<td>多链扩展</td>
-<td>§4/§5/§7/§12（补丁）</td>
-<td>§5、§8、§16</td>
-</tr>
-<tr>
-<td>§10</td>
-<td>MVP 触点补丁</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td>§11–§12</td>
-<td>异常 / Toast 增补</td>
-<td>§13–§14</td>
-<td>§17–§18</td>
-</tr>
-<tr>
-<td>§13–§14</td>
-<td>NFR / 状态增补</td>
-<td>§15–§16</td>
-<td>§19–§20</td>
-</tr>
-<tr>
-<td>§15–§17</td>
-<td>治理</td>
-<td>§17–§19</td>
-<td>§21–§23</td>
-</tr>
-</tbody>
-</table>
-<h3 id="164-后续版本规划非-v110">16.4 后续版本规划（非 V1.1.0） </h3>
-<table>
-<thead>
-<tr>
-<th>能力</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>币种管理（添加 / 隐藏资产）</td>
-<td>原型「管理资产」为占位；仍 defer</td>
-</tr>
-<tr>
-<td>交易历史 / 交易详情</td>
-<td>仍 defer</td>
-</tr>
-<tr>
-<td>PIN 码发送</td>
-<td>仍仅通行密钥</td>
-</tr>
-<tr>
-<td>发送地址 <strong>扫一扫</strong></td>
-<td>MVP Toast「即将上线」；<strong>≠</strong> F-013 钱包导入扫码（D-02）</td>
-</tr>
-<tr>
-<td>跨链资产聚合 Tab</td>
-<td>仍为单链资产模型</td>
-</tr>
-<tr>
-<td>换机 HD 自动恢复</td>
-<td>用户须 <strong>再导入</strong> 助记词 / 私钥</td>
-</tr>
-<tr>
-<td>行情与法币估值实时计算</td>
-<td>仍占位</td>
-</tr>
-</tbody>
-</table>
-<h3 id="165-验收标准">16.5 验收标准 </h3>
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>验收条件</th>
-<th>预期结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AC-V11-167</td>
-<td>对照 <a href="#161-v110-交付边界">§16.1-V1.1.0 交付边界</a></td>
-<td>每项 P0 能力可映射到 <strong>具体 V1.1 章节</strong></td>
-</tr>
-<tr>
-<td>AC-V11-168</td>
-<td>对照 <a href="#164-后续版本规划非-v110">§16.4-后续版本规划（非 V1.1.0）</a></td>
-<td>defer 能力 <strong>不写入</strong> V1.1 正文主流程</td>
-</tr>
-<tr>
-<td>AC-V11-169</td>
-<td>对照 <a href="#101-总览表">§10.1-总览表</a></td>
-<td>MVP 章节 <strong>回归策略</strong> 与 §16.2 <strong>一致</strong></td>
-</tr>
-</tbody>
-</table>
+<p>交付边界、MVP 回归策略、与全量 PRD 映射、defer 清单 → <a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a> <strong>§4</strong>。</p>
+<p>产品边界摘要仍见 <a href="#11-相对-mvp-的增量摘要">§1.1-相对 MVP 的增量摘要</a>、<a href="#13-v110-范围边界">§1.3-V1.1.0 范围边界</a>、<a href="#15-已确认产品决策">§1.5-已确认产品决策</a>。</p>
 <hr />
 <h2 id="17-测试与验收执行">17. 测试与验收执行 </h2>
-<p>各模块章末 <strong>AC 表为 V1.1 增量验收依据</strong>；MVP 模块 AC 仍按 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#19-测试与验收执行">MVP §19-测试与验收执行</a> 执行 <strong>基线回归</strong>。本章提供 <strong>AC 索引、P0 冒烟路径与统计</strong>。</p>
-<p><strong>AC 编号前缀</strong>：<strong>AC-V11-</strong>（V1.1 增量）；<strong>AC-M</strong>（MVP 基线，回归时沿用）。</p>
-<h3 id="170-模块说明">17.0 模块说明 </h3>
-<table>
-<thead>
-<tr>
-<th>项</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>通过标准</strong></td>
-<td>V1.1 变更模块：<strong>AC-V11 全部通过</strong>；MVP 补丁触点：<strong>对应 AC-M + AC-V11</strong> 均通过</td>
-</tr>
-<tr>
-<td><strong>缺陷分级</strong></td>
-<td>阻塞：主路径不可用；严重：文案 / 规则与 PRD 不符；一般：体验优化</td>
-</tr>
-<tr>
-<td><strong>真源</strong></td>
-<td>与 PRD 冲突时以 <strong>本 PRD + MVP PRD</strong> 为准；原型为辅助</td>
-</tr>
-</tbody>
-</table>
-<h3 id="171-模块-ac-索引v11-增量">17.1 模块 AC 索引（V1.1 增量） </h3>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>AC 章节</th>
-<th>AC 范围</th>
-<th>条数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>M02′</td>
-<td><a href="#210-验收标准">§2.10-验收标准</a></td>
-<td>AC-V11-01～07</td>
-<td>7</td>
-</tr>
-<tr>
-<td>M24</td>
-<td><a href="#77-验收标准">§7.7-验收标准</a></td>
-<td>AC-V11-08～16</td>
-<td>9</td>
-</tr>
-<tr>
-<td>M24</td>
-<td><a href="#147-验收标准">§14.7-验收标准</a></td>
-<td>AC-V11-17～22</td>
-<td>6</td>
-</tr>
-<tr>
-<td>M20</td>
-<td><a href="#310-验收标准">§3.10-验收标准</a></td>
-<td>AC-V11-23～34</td>
-<td>12</td>
-</tr>
-<tr>
-<td>M21</td>
-<td><a href="#411-验收标准">§4.11-验收标准</a></td>
-<td>AC-V11-35～43</td>
-<td>9</td>
-</tr>
-<tr>
-<td>M22</td>
-<td><a href="#515-验收标准">§5.15-验收标准</a></td>
-<td>AC-V11-44～58</td>
-<td>15</td>
-</tr>
-<tr>
-<td>M23</td>
-<td><a href="#613-验收标准">§6.13-验收标准</a></td>
-<td>AC-V11-59～73</td>
-<td>15</td>
-</tr>
-<tr>
-<td>M25</td>
-<td><a href="#813-验收标准">§8.13-验收标准</a></td>
-<td>AC-V11-74～91</td>
-<td>18</td>
-</tr>
-<tr>
-<td>M26</td>
-<td><a href="#919-验收标准">§9.1.9-验收标准</a></td>
-<td>AC-V11-92～103</td>
-<td>12</td>
-</tr>
-<tr>
-<td>M26</td>
-<td><a href="#929-验收标准">§9.2.9-验收标准</a></td>
-<td>AC-V11-104～115</td>
-<td>12</td>
-</tr>
-<tr>
-<td>M26</td>
-<td><a href="#939-验收标准">§9.3.9-验收标准</a></td>
-<td>AC-V11-116～129</td>
-<td>14</td>
-</tr>
-<tr>
-<td>M00</td>
-<td><a href="#104-验收标准">§10.4-验收标准</a></td>
-<td>AC-V11-130～139</td>
-<td>10</td>
-</tr>
-<tr>
-<td>M17</td>
-<td><a href="#117-验收标准">§11.7-验收标准</a></td>
-<td>AC-V11-140～146</td>
-<td>7</td>
-</tr>
-<tr>
-<td>M17</td>
-<td><a href="#125-验收标准">§12.5-验收标准</a></td>
-<td>AC-V11-147～151</td>
-<td>5</td>
-</tr>
-<tr>
-<td>M18</td>
-<td><a href="#137-验收标准">§13.7-验收标准</a></td>
-<td>AC-V11-152～163</td>
-<td>12</td>
-</tr>
-<tr>
-<td>M00</td>
-<td><a href="#155-验收标准">§15.5-验收标准</a></td>
-<td>AC-V11-164～166</td>
-<td>3</td>
-</tr>
-<tr>
-<td>M00</td>
-<td><a href="#165-验收标准">§16.5-验收标准</a></td>
-<td>AC-V11-167～169</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>合计</strong></td>
-<td>—</td>
-<td><strong>AC-V11-01～172</strong></td>
-<td><strong>172</strong></td>
-</tr>
-</tbody>
-</table>
+<p>AC 索引（172 条）、P0 冒烟 12 路径、执行说明、全文扫雷记录 → <a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a> <strong>§5</strong>。</p>
+<p><strong>验收依据</strong>：各功能章末 <strong>AC 表</strong>（§2.10、§3.10 … §14.7）仍为可执行验收条件；MVP 基线 AC 沿用 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#19-测试与验收执行">MVP §19</a>。</p>
+<hr />
+<a id="附录-a通用数据分层显示规范" aria-hidden="true"></a><h2 id="附录-a通用数据分层显示规范">附录 A：通用数据分层显示规范 </h2>
 <blockquote>
-<p><strong>说明</strong>：AC-V11-01～163 为功能 / 横切模块 AC；AC-V11-164～172 为治理章（§15–§17）自检 AC。</p>
+<p>本附录定义可复用的数值与涨跌幅显示规范，供 <a href="#211-通用数据分层显示规范适用页面清单">§2.11 通用数据分层显示规范适用页面清单</a> 中页面统一引用；规则与 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.html#附录-a通用数据分层显示规范">MVP 附录 A</a> 保持一致。</p>
 </blockquote>
-<h3 id="172-p0-冒烟路径v11-增量">17.2 P0 冒烟路径（V1.1 增量） </h3>
+<h3 id="a1-数值分层显示规范">A.1 数值分层显示规范 </h3>
+<p>适用于：代币价格、代币余额、代币估值、资产总额、主网费用等数值型字段。</p>
 <table>
 <thead>
 <tr>
-<th>序号</th>
-<th>路径</th>
-<th>覆盖 AC（示例）</th>
+<th>分层范围（X）</th>
+<th>显示格式</th>
+<th>精度规则</th>
+<th>示例</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>添加钱包页 → <strong>创建钱包</strong> → Passkey → 创建中页 → 首页 Banner</td>
-<td>AC-V11-24、35、39、43、08</td>
+<td>X ≥ 1×10¹⁶</td>
+<td>科学计数法</td>
+<td>2 位有效数字</td>
+<td>1.23 × 10¹⁶</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Banner → 三步备份 → 验证成功 → Banner 消失</td>
-<td>AC-V11-59～67、13</td>
+<td>10 ≤ X &lt; 1×10¹⁵</td>
+<td>原值（千分位分隔）</td>
+<td>最多 2 位小数</td>
+<td>9,999.99</td>
 </tr>
 <tr>
-<td>3</td>
-<td>添加钱包 → <strong>导入助记词</strong> → Passkey → 首页 <strong>无 Banner</strong></td>
-<td>AC-V11-46、53、09</td>
+<td>1 ≤ X &lt; 10</td>
+<td>动态 2–4 位小数</td>
+<td>去尾 0</td>
+<td>1.234 / 2.3</td>
 </tr>
 <tr>
-<td>4</td>
-<td>导入 <strong>EVM 私钥</strong> → 选网 → 导入成功</td>
-<td>AC-V11-50、54</td>
+<td>1×10⁻³ ≤ X &lt; 1</td>
+<td>动态有效小数</td>
+<td>2–8 位有效数字</td>
+<td>0.01234567</td>
 </tr>
 <tr>
-<td>5</td>
-<td>首页 → <strong>复制地址</strong>（社交 / 助记词 <strong>十链</strong>）</td>
-<td>AC-V11-104～106、112</td>
+<td>0 &lt; X &lt; 1×10⁻³</td>
+<td>极小数压缩表示</td>
+<td>见下方规则</td>
+<td>0.0₄12345 / 0.0₁₃12345</td>
 </tr>
 <tr>
-<td>6</td>
-<td>私钥 Solana 钱包 → 首页 <strong>快捷复制</strong></td>
-<td>AC-V11-106～108</td>
+<td>X = 0</td>
+<td>固定显示</td>
+<td>—</td>
+<td>0</td>
 </tr>
 <tr>
-<td>7</td>
-<td>接收 → 多链 <strong>USDT</strong> → 选 <strong>TRON</strong> → QR</td>
-<td>AC-V11-117～118</td>
-</tr>
-<tr>
-<td>8</td>
-<td>发送 <strong>USDT-Tron</strong> → 地址校验 → 资源横幅 → fee_limit → Passkey 提交</td>
-<td>AC-V11-121、123～125、162</td>
-</tr>
-<tr>
-<td>9</td>
-<td>钱包信息 → <strong>查看助记词</strong> / <strong>删除</strong> 自托管</td>
-<td>AC-V11-81、88～90</td>
-</tr>
-<tr>
-<td>10</td>
-<td>邮箱社交钱包 → <strong>导出助记词</strong> 全流程</td>
-<td>AC-V11-86～87</td>
-</tr>
-<tr>
-<td>11</td>
-<td><strong>扫码导入</strong> Mock 助记词 → 导入成功</td>
-<td>AC-V11-55、145</td>
-</tr>
-<tr>
-<td>12</td>
-<td>MVP <strong>ETH/BSC</strong> 收发 + 社交创建（<code>v4-mvp_Final</code> 基线）</td>
-<td>AC-M05、AC-M08、AC-V11-135</td>
+<td>异常 / NULL</td>
+<td>占位符</td>
+<td>—</td>
+<td>––</td>
 </tr>
 </tbody>
 </table>
-<h3 id="173-执行说明">17.3 执行说明 </h3>
+<p><strong>极小数压缩表示规则</strong>（0 &lt; X &lt; 1×10⁻³）：</p>
+<ul>
+<li>当小数点后连续 0 的个数 &gt; 3 时（即第一个非零数字前的 0 个数 &gt; 3），采用紧凑式：<code>0.0ₙE</code>
+<ul>
+<li><strong>n</strong> = 小数点后连续 0 的个数（第一个非零数字前的 0 个数）</li>
+<li><strong>E</strong> = 从第一个非零数字起，取最多 5 位有效数字</li>
+<li>组合显示：<code>0.</code> + 下标 n + E</li>
+</ul>
+</li>
+<li>当连续 0 的个数 ≤ 3 时，正常显示小数（保留 2–8 位有效数字）</li>
+</ul>
+<h3 id="a2-涨跌幅分层显示规范">A.2 涨跌幅分层显示规范 </h3>
+<p>适用于：24h 涨跌幅等百分比字段。正负方向以「显示格式」列中的 <code>+</code> / <code>−</code> 前缀为准。</p>
 <table>
 <thead>
 <tr>
-<th>项</th>
-<th>规则</th>
+<th>分层范围</th>
+<th>显示格式</th>
+<th>示例</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>原型</strong></td>
-<td>V1.1 增量用 <code>v4-all</code>；MVP 回归用 <code>v4-mvp_Final</code></td>
+<td>X &gt; +999,999.99%</td>
+<td>&gt; +999,999.99%</td>
+<td>&gt; +999,999.99%</td>
 </tr>
 <tr>
-<td><strong>Passkey / TSS</strong></td>
-<td>测试环境可用 Mock；<strong>文案与分支</strong>须与 PRD 一致</td>
+<td>+0.01% ≤ X ≤ +999,999.99%</td>
+<td>最多 2 位小数</td>
+<td>+23.45%</td>
 </tr>
 <tr>
-<td><strong>多链</strong></td>
-<td>至少覆盖 <strong>EVM（Polygon）+ Solana + TRON</strong> 各 1 条收发或复制路径</td>
+<td>0 &lt; X &lt; +0.01%</td>
+<td>&lt; +0.01%</td>
+<td>&lt; +0.01%</td>
 </tr>
 <tr>
-<td><strong>回归范围</strong></td>
-<td>§17.2 全部 12 条 + 本次迭代变更模块 AC + <a href="#101-总览表">§10.1</a> 标 <strong>要测</strong> 的 MVP 章节</td>
+<td>X = 0</td>
+<td>0.00%</td>
+<td>0.00%</td>
 </tr>
 <tr>
-<td><strong>MVP 全局错误</strong></td>
-<td>TSS / OTP / 发送失败 Toast 仍对照 <a href="../01-PRD-MVP/BiyaWallet_PRD_MVP_Final.md#143-错误信息对照">MVP §14.3</a>（AC-V11-151）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="174-全文扫雷记录step-16">17.4 全文扫雷记录（Step 16） </h3>
-<table>
-<thead>
-<tr>
-<th>检查项</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A. MVP 基线正文不重复展开</td>
-<td><strong>通过</strong>；能力索引 <a href="#12-基线能力索引已实现-本文不展开">§1.2-基线能力索引</a>；差分集中在 <a href="#10-mvp-触点补丁表">§10-MVP 触点补丁表</a></td>
+<td>-99.99% ≤ X &lt; 0</td>
+<td>最多 2 位小数（不足 2 位补 0）</td>
+<td>-23.45%</td>
 </tr>
 <tr>
-<td>B. 无 PIN 发送</td>
-<td><strong>通过</strong>；发送签名仍仅通行密钥（<a href="#132-安全-v11-增补">§13.2-安全 · V1.1 增补</a>、<a href="#935-发送--v11-增补">§9.3.5-发送 · V1.1 增补</a>）</td>
+<td>X &lt; -99.99%</td>
+<td>&lt; -99.99%</td>
+<td>&lt; -99.99%</td>
 </tr>
 <tr>
-<td>C. 多链（SOL / TRON / L2）在 V1.1 范围</td>
-<td><strong>通过</strong>；十链白名单 <a href="#151-v110-网络白名单对齐-v4-all">§1.5.1</a>、<a href="#9-多链扩展m26">§9-多链扩展</a> 为 <strong>本期交付</strong></td>
-</tr>
-<tr>
-<td>D. 币种管理 / 交易历史 / PIN 屏 defer</td>
-<td><strong>通过</strong>；仅 <a href="#164-后续版本规划非-v110">§16.4-后续版本规划（非 V1.1.0）</a> 与 AC 可测表述提及</td>
-</tr>
-<tr>
-<td>E. §10 为 MVP 补丁表（非全量助记词 §10）</td>
-<td><strong>通过</strong></td>
-</tr>
-<tr>
-<td>F. §12 为 Toast 增补（非全量钱包设置 §14）</td>
-<td><strong>通过</strong>；<strong>无</strong> 全局 <code>errorModal</code>（AC-V11-146、149）</td>
-</tr>
-<tr>
-<td>G. 交叉引用格式</td>
-<td><strong>已修正</strong>：§10.1 横切链、§6.8、§11 索引、§16.1、§15.2、AC-V11-171 等 bare <code>§N</code> 链接补全小节名</td>
-</tr>
-<tr>
-<td>H. D-02 与发送扫一扫</td>
-<td><strong>已修正</strong> §1.5 D-02 表述：钱包导入扫码 <strong>≠</strong> 发送地址扫一扫（与 §10.2.4、AC-V11-136 一致）</td>
-</tr>
-<tr>
-<td>I. AC 编号连续性</td>
-<td><strong>通过</strong>；AC-V11-01～172 <strong>无缺口</strong>；章末表 <strong>172</strong> 条与 <a href="#171-模块-ac-索引v11-增量">§17.1</a> 一致</td>
-</tr>
-<tr>
-<td>J. Feature / 追溯一致</td>
-<td><strong>通过</strong>；<a href="#16-feature-追溯矩阵">§1.6</a> 与 <a href="#151-feature--章节--ac-映射">§15.1</a> 行项一致</td>
-</tr>
-<tr>
-<td>K. 目录与占位</td>
-<td><strong>已修正</strong> §1.6 目录去「草稿」；无「待 Step / 待写入」残留</td>
-</tr>
-<tr>
-<td>L. 视觉 / 样式实现描述</td>
-<td><strong>通过</strong>；无高亮 / 渐变 / CSS 类 UI 规范残留</td>
-</tr>
-<tr>
-<td>M. 「见 §N」代替链接（正文）</td>
-<td><strong>已修正</strong> §6.8；章内「见 §9.x」等同章索引 <strong>保留</strong></td>
-</tr>
-<tr>
-<td>N. 产品决策 D-01～D-05</td>
-<td><strong>通过</strong>；落点可追溯到 §7、§10.3 与各模块章</td>
-</tr>
-<tr>
-<td>O. HTML 与 MD 同步</td>
-<td><strong>通过</strong>；<a href="./BiyaWallet_PRD_V1.1.0.html">BiyaWallet_PRD_V1.1.0.html</a> / <a href="../03-交互原型/biya-wallet-prototype-demo/prd-v11.html">prd-v11.html</a> 由 <code>scripts/sync_v11_prd_html.py</code> 生成；校验 PASS</td>
-</tr>
-</tbody>
-</table>
-<h3 id="175-验收标准">17.5 验收标准 </h3>
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>验收条件</th>
-<th>预期结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AC-V11-170</td>
-<td>按 <a href="#171-模块-ac-索引v11-增量">§17.1-模块 AC 索引（V1.1 增量）</a> 统计</td>
-<td>各模块条数与章末表一致；合计 <strong>172</strong> 条</td>
-</tr>
-<tr>
-<td>AC-V11-171</td>
-<td>执行 <a href="#172-p0-冒烟路径v11-增量">§17.2-P0 冒烟路径（V1.1 增量）</a> 全部 <strong>12</strong> 条</td>
-<td>无阻塞缺陷；关键 Toast 与 <a href="#12-错误-toast-规范-v11-增补">§12-错误 Toast 规范 · V1.1 增补</a> 一致</td>
-</tr>
-<tr>
-<td>AC-V11-172</td>
-<td>MVP 补丁触点（§10 标 <strong>要测 + 增量</strong>）</td>
-<td>对应 <strong>AC-M</strong> 回归通过且无补丁项遗漏</td>
+<td>异常 / NULL</td>
+<td>––</td>
+<td>––</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<a id="附录-a--参考文件索引" aria-hidden="true"></a><h2 id="附录-a-参考文件索引">附录 A · 参考文件索引 </h2>
+<a id="附录-b--参考文件索引" aria-hidden="true"></a><h2 id="附录-b-参考文件索引">附录 B：参考文件索引 </h2>
 <table>
 <thead>
 <tr>
@@ -11268,7 +10311,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td><strong>V1.1 PRD HTML</strong></td>
 <td><a href="./BiyaWallet_PRD_V1.1.0.html">BiyaWallet_PRD_V1.1.0.html</a></td>
-<td>本地 HTML；同步脚本 <code>scripts/sync_v11_prd_html.py</code></td>
+<td>本地 HTML；需求规格正文（§1–§14 + 附录 A）</td>
+</tr>
+<tr>
+<td><strong>治理 / 验收外移包</strong></td>
+<td><a href="./90_V1.1_PRD治理验收外移包.md">90_V1.1_PRD治理验收外移包.md</a></td>
+<td>§15–§17 追溯、范围、测试执行；含 PRD 瘦身 Prompt</td>
 </tr>
 <tr>
 <td><strong>V1.1 在线 PRD</strong></td>

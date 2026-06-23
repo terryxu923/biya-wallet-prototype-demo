@@ -1086,6 +1086,14 @@
   }
   .mc-single-action:active .sa-circle { opacity: 0.65; }
   .mc-single-action .sa-circle svg { width: 22px; height: 22px; fill: #fff; }
+  .mc-single-action.disabled,
+  .mc-single-action:disabled {
+    opacity: 0.42; cursor: not-allowed;
+  }
+  .mc-single-action.disabled .sa-circle,
+  .mc-single-action:disabled .sa-circle {
+    opacity: 0.55;
+  }
 
   /* Receive address section */
   .mc-addr-section {
@@ -2806,6 +2814,74 @@
   }
   .wallet-exists-btn:active { opacity: 0.85; }
 
+  /* ======== Camera Permission Sheet ======== */
+  .camera-permission-overlay {
+    position: absolute; inset: 0;
+    display: none; align-items: flex-end; justify-content: center;
+    background: rgba(0,0,0,0.58); z-index: 460;
+  }
+  .camera-permission-overlay.visible { display: flex; }
+  .camera-permission-sheet {
+    width: 100%; background: var(--bg-primary);
+    border-radius: 28px 28px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 -18px 48px rgba(0,0,0,0.34);
+    padding: 12px 28px calc(32px + env(safe-area-inset-bottom, 0));
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .camera-permission-overlay.visible .camera-permission-sheet { transform: translateY(0); }
+  .camera-permission-handle {
+    width: 40px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.22); margin: 0 auto 28px;
+  }
+  .camera-permission-icon {
+    width: 92px; height: 92px; margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .camera-permission-icon svg { width: 92px; height: 92px; display: block; }
+  .camera-permission-title {
+    font-size: 24px; line-height: 1.25; font-weight: 800; color: #fff;
+    margin-bottom: 12px;
+  }
+  .camera-permission-desc {
+    font-size: 15px; line-height: 1.55; color: var(--text-secondary);
+    margin: 0 auto 22px; max-width: 320px;
+  }
+  .camera-permission-benefits {
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 22px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+  .camera-permission-benefits div {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: rgba(255,255,255,0.72);
+    line-height: 1.5;
+  }
+  .camera-permission-benefits div + div { margin-top: 10px; }
+  .camera-permission-benefits span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .camera-permission-primary,
+  .camera-permission-secondary {
+    width: 100%; height: 56px; border: none; border-radius: 999px;
+    font-size: 17px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .camera-permission-primary {
+    background: var(--accent); color: #111; margin-bottom: 12px;
+  }
+  .camera-permission-secondary {
+    background: rgba(0, 212, 170, 0.16); color: #d8fbff;
+  }
+  .camera-permission-primary:active,
+  .camera-permission-secondary:active { opacity: 0.82; }
+
   /* ======== Passkey Permission & Device Confirm ======== */
   .passkey-overlay {
     position: absolute; inset: 0;
@@ -3972,6 +4048,27 @@
     flex-direction: column; background: var(--bg-primary); z-index: 280;
   }
   .send-select.visible { display: flex; }
+  #sendSearchScreen { z-index: 282; }
+  .send-empty-state {
+    min-height: 430px; padding: 48px 20px 72px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .send-empty-icon {
+    width: 92px; height: 92px; margin-bottom: 30px;
+    color: rgba(124, 143, 143, 0.38);
+  }
+  .send-empty-icon svg { width: 100%; height: 100%; display: block; }
+  .send-empty-title {
+    font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.42);
+    margin-bottom: 22px;
+  }
+  .send-empty-topup {
+    min-width: 126px; height: 56px; padding: 0 28px;
+    border: none; border-radius: 999px; background: rgba(0, 119, 130, 0.78);
+    color: #d8fbff; font-size: 19px; font-weight: 700; cursor: pointer;
+  }
+  .send-empty-topup:active { opacity: 0.72; }
 
   /* Send: Network Select overlay */
   .send-net-select {
@@ -4083,7 +4180,15 @@
   .scf-divider { height: 1px; background: var(--divider); }
   .scf-section { padding: 14px 20px; }
   .scf-section-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .scf-network-row { display: flex; align-items: center; gap: 10px; }
+  .scf-network-logo {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0; color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .scf-network-name { font-size: 15px; color: #fff; }
   .scf-gas-row { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .scf-gas-row.static { cursor: default; }
   .scf-gas-text { font-size: 15px; color: #fff; }
   .scf-gas-chevron { font-size: 18px; color: var(--text-tertiary); flex-shrink: 0; margin-left: 8px; }
   .scf-addr-body { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -4744,7 +4849,7 @@
     <div class="nav-bar nav-bar-dark">
       <button class="nav-back nav-back-dark" onclick="backFromWalletImportSeed()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
       <div class="nav-title" style="color:#fff;">导入钱包</div>
-      <button type="button" class="nav-scan-btn" onclick="openImportSeedScanModal()" aria-label="扫码">
+      <button type="button" class="nav-scan-btn" onclick="requestCameraPermissionForScan('importSeed')" aria-label="扫码">
         <svg viewBox="0 0 24 24"><path d="M4 4h4v2H6v2H4V4zm14 0h2v4h-2V6h-2V4zM4 14h2v2h2v2H4v-4zm14 2h2v2h2v2h-4v-2h2v-2zM9 9h6v6H9z"/></svg>
       </button>
     </div>
@@ -5087,7 +5192,7 @@
     </div>
   </div>
 
-  <!-- 导出助记词 — 确认导出（附件1） -->
+  <!-- 旧导出助记词弹层：入口已隐藏，保留结构避免历史引用报错 -->
   <div class="wallet-info-sheet-overlay" id="exportMnemonicConfirmOverlay" onclick="closeExportMnemonicConfirmSheet()">
     <div class="wallet-info-confirm-sheet" onclick="event.stopPropagation()">
       <div class="wallet-info-sheet-handle"></div>
@@ -5095,7 +5200,7 @@
         <svg viewBox="0 0 56 56"><path fill="rgba(255,107,157,0.35)" d="M28 4L52 48H4L28 4z"/><path fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" d="M28 20v14M28 38v2"/></svg>
       </div>
       <div class="wallet-info-sheet-title">确认导出？</div>
-      <p class="wallet-info-sheet-desc">导出助记词后会立即注销并删除当前通过社交登录创建的钱包，且无法恢复</p>
+      <p class="wallet-info-sheet-desc"></p>
       <button type="button" class="wallet-info-sheet-primary" id="exportMnemonicConfirmBtn" disabled onclick="confirmExportMnemonicProceed()">确认导出 3S</button>
       <button type="button" class="wallet-info-sheet-cancel" onclick="closeExportMnemonicConfirmSheet()">取消</button>
     </div>
@@ -5719,7 +5824,7 @@
       <button class="nav-back nav-back-dark" onclick="closeReceiveSelect()">
         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
       </button>
-      <div class="nav-title" style="color:#fff;">选择币种</div>
+      <div class="nav-title" style="color:#fff;">选择接收币种</div>
       <div style="width:40px;"></div>
     </div>
     <!-- Search bar (tappable, opens search screen) -->
@@ -5932,11 +6037,31 @@
     <div class="status-bar status-bar-dark"><span class="time">11:46</span><div class="icons"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div></div>
     <div class="nav-bar nav-bar-dark">
       <button class="nav-back nav-back-dark" onclick="closeSendSelect()"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
-      <div class="nav-title" style="color:#fff;">发送</div>
+      <div class="nav-title" style="color:#fff;">选择发送币种</div>
       <div class="nav-right"></div>
+    </div>
+    <div class="rs-search-wrap">
+      <div class="rs-search-bar" onclick="openSendSearch()">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <span class="rs-search-placeholder">搜索币种</span>
+      </div>
     </div>
     <div class="screen-content" style="padding:0;">
       <div id="sendAssetList"></div>
+    </div>
+    <div class="rs-search-screen" id="sendSearchScreen">
+      <div class="status-bar status-bar-dark">
+        <span class="time">11:46</span>
+        <div class="icons">
+          <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+        </div>
+      </div>
+      <div class="rs-search-input-wrap">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--text-tertiary);flex-shrink:0;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input class="rs-search-input" id="sendSearchInput" type="text" placeholder="搜索币种" oninput="renderSendSearch(this.value)" />
+        <button class="rs-search-cancel" onclick="closeSendSearch()">取消</button>
+      </div>
+      <div class="rs-list" id="sendSearchList"></div>
     </div>
   </div>
 
@@ -5980,7 +6105,7 @@
           <div class="sa-quick-btns">
             <button class="sa-paste-btn" id="saPasteBtn" onclick="pasteAddress()">粘贴</button>
             <button class="sa-clear-btn" id="saClearBtn" onclick="clearAddress()" style="display:none;">清除</button>
-            <button class="sa-scan-btn" onclick="showToast('扫码功能即将上线')">
+            <button class="sa-scan-btn" onclick="requestCameraPermissionForScan('sendAddress')">
               <svg viewBox="0 0 24 24"><path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5zM16 13h1.5v1.5H16V13zm-3 3h1.5v1.5H13V16zm1.5 1.5H16V19h-1.5v-1.5zM16 16h1.5v1.5H16V16zm1.5-1.5H19V16h-1.5v-1.5zm0 3H19V19h-1.5v-1.5z"/></svg>
               扫一扫
             </button>
@@ -6159,6 +6284,29 @@
   </div>
 
 
+  <!-- Camera Permission Modal -->
+  <div class="camera-permission-overlay" id="cameraPermissionModal" onclick="closeCameraPermissionModal()">
+    <div class="camera-permission-sheet" onclick="event.stopPropagation()">
+      <div class="camera-permission-handle"></div>
+      <div class="camera-permission-icon" aria-hidden="true">
+        <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 34l7-9h22l7 9h6c6 0 11 5 11 11v24c0 6-5 11-11 11H24c-6 0-11-5-11-11V45c0-6 5-11 11-11h6z" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="48" cy="57" r="13" stroke="currentColor" stroke-width="6"/>
+          <circle cx="67" cy="43" r="4" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="camera-permission-title">开启相机访问权限</div>
+      <p class="camera-permission-desc">需要使用相机识别二维码。开启后可快速扫描转账地址、DApp 或 WalletConnect 等二维码。</p>
+      <div class="camera-permission-benefits">
+        <div><span></span>快速识别转账地址</div>
+        <div><span></span>识别 DApp、WalletConnect 等二维码</div>
+      </div>
+      <button type="button" class="camera-permission-primary" onclick="openAppCameraSettings()">去开启</button>
+      <button type="button" class="camera-permission-secondary" onclick="closeCameraPermissionModal()">取消</button>
+    </div>
+  </div>
+
+
   <!-- iOS System: Google OAuth (Privy loginWithOAuth) -->
   <div class="ios-oauth-overlay" id="googleOAuthModal">
     <div class="ios-alert" onclick="event.stopPropagation()">
@@ -6313,7 +6461,7 @@
       </div>
       <div class="demo-scene">
         <div class="demo-scene-title"><span class="demo-scene-id">C</span>钱包状态</div>
-        <div class="demo-scene-desc">待备份 Banner、钱包信息、邮箱导出助记词</div>
+        <div class="demo-scene-desc">待备份 Banner、钱包信息、社交钱包导出入口隐藏</div>
         <div class="demo-kw-list">
           <span class="demo-kw" data-demo="home-pending-backup">待备份 Banner</span>
           <span class="demo-kw" data-demo="wallet-info-unbacked">钱包信息 · 待备份</span>
@@ -6342,6 +6490,7 @@
           <span class="demo-kw" data-demo="receive-select">接收 · 选币</span>
           <span class="demo-kw" data-demo="receive-usdt-tron">接收 USDT · TRON</span>
           <span class="demo-kw" data-demo="send-select">发送 · 选币</span>
+          <span class="demo-kw" data-demo="send-empty-assets">发送资产为空</span>
           <span class="demo-kw" data-demo="send-usdt-tron">发送 USDT · TRON</span>
           <span class="demo-kw" data-demo="token-detail-eth">ETH 代币详情</span>
         </div>
@@ -6374,39 +6523,83 @@
     </div>
 
     <div class="demo-cat">
-      <div class="demo-cat-head cat-error"><span class="demo-cat-icon">⚠️</span>⑥ 异常场景</div>
+      <div class="demo-cat-head cat-error"><span class="demo-cat-icon">⚠️</span>⑥ V1.1.0 异常场景</div>
       <div class="demo-scene">
         <div class="demo-scene-title"><span class="demo-scene-id">H</span>账号与验证</div>
-        <div class="demo-scene-desc">Passkey 取消、邮箱冲突、OTP 错误、TSS 分片失败</div>
+        <div class="demo-scene-desc">Passkey 取消 / 失败、社交/邮箱冲突、OTP 错误、TSS 分片失败</div>
         <div class="demo-kw-list">
           <span class="demo-kw" data-demo="err-passkey-cancel">Passkey 取消验证</span>
+          <span class="demo-kw" data-demo="err-passkey-fail">Passkey 验证失败</span>
           <span class="demo-kw" data-demo="err-email-exists">邮箱已在此设备登录</span>
+          <span class="demo-kw" data-demo="err-social-exists">社交账号已在此设备登录</span>
           <span class="demo-kw" data-demo="err-otp-wrong">OTP 验证码错误</span>
           <span class="demo-kw" data-demo="err-tss-fail">TSS 分片同步失败</span>
         </div>
       </div>
       <div class="demo-scene">
-        <div class="demo-scene-title"><span class="demo-scene-id">I</span>导入与备份</div>
-        <div class="demo-scene-desc">助记词/私钥校验、验证错误、截屏风险提示</div>
+        <div class="demo-scene-title"><span class="demo-scene-id">I</span>创建 / 导入 / 扫码</div>
+        <div class="demo-scene-desc">创建失败、导入校验、导入失败、扫码异常</div>
         <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-create-fail">助记词创建失败</span>
+          <span class="demo-kw" data-demo="err-create-uninterruptible">创建中不可中断</span>
           <span class="demo-kw" data-demo="err-import-empty">导入内容为空</span>
           <span class="demo-kw" data-demo="err-import-word">助记词单词错误</span>
+          <span class="demo-kw" data-demo="err-import-mnemonic-exists">助记词钱包已存在</span>
           <span class="demo-kw" data-demo="err-import-pk">私钥格式错误</span>
-          <span class="demo-kw" data-demo="err-verify-mnemonic">助记词验证错误</span>
-          <span class="demo-kw" data-demo="err-screenshot">截屏风险提示</span>
+          <span class="demo-kw" data-demo="err-import-pk-exists">私钥钱包已存在</span>
+          <span class="demo-kw" data-demo="err-import-fail">钱包导入失败</span>
+          <span class="demo-kw" data-demo="err-scan-camera">扫码相机权限拒绝</span>
+          <span class="demo-kw" data-demo="err-scan-unrecognized">扫码无法识别</span>
         </div>
       </div>
       <div class="demo-scene">
-        <div class="demo-scene-title"><span class="demo-scene-id">J</span>发送异常</div>
-        <div class="demo-scene-desc">地址格式、TRON 资源、Solana 限制、链上失败</div>
+        <div class="demo-scene-title"><span class="demo-scene-id">J</span>备份与钱包信息</div>
+        <div class="demo-scene-desc">备份中断、验证错误、敏感信息</div>
         <div class="demo-kw-list">
-          <span class="demo-kw" data-demo="err-send-addr-evm">EVM 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-backup-passkey-cancel">备份 Passkey 取消</span>
+          <span class="demo-kw" data-demo="err-verify-mnemonic">助记词验证错误</span>
+          <span class="demo-kw" data-demo="err-screenshot">截屏风险提示</span>
+          <span class="demo-kw" data-demo="err-view-mnemonic-cancel">取消查看助记词</span>
+          <span class="demo-kw" data-demo="err-view-pk-cancel">取消查看私钥</span>
+          <span class="demo-kw" data-demo="err-delete-passkey-cancel">删除验证取消</span>
+          <span class="demo-kw" data-demo="err-pending-backup-send">待备份不拦截发送</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">K</span>Solana 发送异常</div>
+        <div class="demo-scene-desc">地址格式、租金豁免、主网费用、ATA、Token-2022、模拟失败</div>
+        <div class="demo-kw-list">
           <span class="demo-kw" data-demo="err-send-addr-sol">Solana 地址格式错误</span>
-          <span class="demo-kw" data-demo="err-tron-unactivated">TRON 未激活接收地址</span>
-          <span class="demo-kw" data-demo="err-tron-low-energy">TRON Energy 不足</span>
+          <span class="demo-kw" data-demo="err-sol-rent">SOL 租金豁免不足</span>
+          <span class="demo-kw" data-demo="err-sol-balance">SOL 余额不足</span>
+          <span class="demo-kw" data-demo="err-sol-gas-insufficient">SOL 主网费用不足</span>
+          <span class="demo-kw" data-demo="err-sol-ata-missing">SPL ATA 开户费不足</span>
           <span class="demo-kw" data-demo="err-sol-frozen">Solana ATA 已冻结</span>
           <span class="demo-kw" data-demo="err-sol-non-transfer">Solana 禁止转账</span>
-          <span class="demo-kw" data-demo="err-send-fail">发送失败 OUT_OF_ENERGY</span>
+          <span class="demo-kw" data-demo="err-sol-transfer-fee">Token-2022 转账手续费</span>
+          <span class="demo-kw" data-demo="err-sol-sim-fail">Solana 模拟失败</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">L</span>Tron 发送异常</div>
+        <div class="demo-scene-desc">地址格式、账户激活、Bandwidth / Energy / TRX 资源</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-send-addr-tron">Tron 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-tron-unactivated">Tron 未激活接收地址</span>
+          <span class="demo-kw" data-demo="err-tron-trx-insufficient">TRX 余额不足</span>
+          <span class="demo-kw" data-demo="err-tron-trc10-insufficient">TRC-10 余额不足</span>
+          <span class="demo-kw" data-demo="err-tron-low-energy">TRC-20 Energy 不足</span>
+          <span class="demo-kw" data-demo="err-tron-energy-warn">Energy 不足可燃烧 TRX</span>
+          <span class="demo-kw" data-demo="err-tron-gas-insufficient">Tron 主网费用不足</span>
+        </div>
+      </div>
+      <div class="demo-scene">
+        <div class="demo-scene-title"><span class="demo-scene-id">M</span>发送通用异常</div>
+        <div class="demo-scene-desc">EVM 地址格式、签名取消、广播失败</div>
+        <div class="demo-kw-list">
+          <span class="demo-kw" data-demo="err-send-addr-evm">EVM 地址格式错误</span>
+          <span class="demo-kw" data-demo="err-send-sign-cancel">发送签名取消</span>
+          <span class="demo-kw" data-demo="err-send-fail">发送失败 Toast</span>
         </div>
       </div>
     </div>
@@ -6526,6 +6719,7 @@ let walletImportTimer = null;
 let walletImportInputType = '';
 let importPrivateKeyTypes = [];
 let walletImportSelectedNetworkType = '';
+let walletImportFingerprint = '';
 let countdownTimer = null;
 let countdownSec = 59;
 let web3ClickCount = 0; // DEPRECATED: 已删除双击/三击功能（2026-05-19）
@@ -6545,15 +6739,15 @@ const WALLET_TYPE_LOGO = {
 };
 
 let WALLET_LIST_DATA = [
-  { id: 'w-google', type: 'google', name: 'ter***923@gmail.com', balance: 428.12, avatar: '🐕', avatarBg: '#3d3528', isSocialLogin: true, loginEmail: 'terryxu923@gmail.com', walletDisplayId: 'a8be…7596' },
-  { id: 'w-apple', type: 'apple', name: 'bx4***qkp@privaterelay....', balance: 312.45, avatar: '🐋', avatarBg: '#2a3548', isSocialLogin: true, loginEmail: 'bx4qkp@privaterelay.appleid.com', walletDisplayId: 'c2f1…8a3b' },
-  { id: 'w-email', type: 'email', name: '0xt***yxu@gmail.com', balance: 545.96, avatar: '👽', avatarBg: '#352a48', isSocialLogin: true, loginEmail: '0xtterryyxu@gmail.com', walletDisplayId: 'f3d9…2c71' },
+  { id: 'w-google', type: 'google', name: 'ter***923@gmail.com', balance: 428.12, avatar: '🐕', avatarBg: '#3d3528', isSocialLogin: true, loginEmail: 'terryxu923@gmail.com', loginState: 'loggedOutLocal', privyUserId: 'privy-google-terryxu923', privyIdentityKey: 'google_oauth:google-sub-terryxu923', walletDisplayId: 'a8be…7596' },
+  { id: 'w-apple', type: 'apple', name: 'bx4***qkp@privaterelay....', balance: 312.45, avatar: '🐋', avatarBg: '#2a3548', isSocialLogin: true, loginEmail: 'bx4qkp@privaterelay.appleid.com', loginState: 'loggedOutLocal', privyUserId: 'privy-apple-bx4qkp', privyIdentityKey: 'apple_oauth:apple-sub-bx4qkp', walletDisplayId: 'c2f1…8a3b' },
+  { id: 'w-email', type: 'email', name: '0xt***yxu@gmail.com', balance: 545.96, avatar: '👽', avatarBg: '#352a48', isSocialLogin: true, loginEmail: '0xtterryyxu@gmail.com', loginState: 'loggedIn', privyUserId: 'privy-email-0xtterryyxu', privyIdentityKey: 'email:0xtterryyxu@gmail.com', walletDisplayId: 'f3d9…2c71' },
   // V1.1 演示：自托管 HD / 私钥（对齐 v4-all mock）
-  { id: 'w-mnemonic-2', type: 'mnemonic', name: '我的钱包2', balance: 128.0, avatar: '🏆', avatarBg: '#3a3a3a', backedUp: true, walletDisplayId: 'b1c4…9e02' },
-  { id: 'w-mnemonic-3', type: 'mnemonic', name: '我的钱包3', balance: 56.2, avatar: '🏆', avatarBg: '#3a3a3a', needBackup: true, walletDisplayId: 'd7a2…5f88' },
-  { id: 'w-private-4', type: 'privateKey', name: '3M4J…3mK9', balance: 12.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'sol', walletDisplayId: 'e9b3…1d44' },
-  { id: 'w-private-evm', type: 'privateKey', name: '0xAb3…9f01', balance: 128.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'evm', walletDisplayId: 'b2e7…4c90' },
-  { id: 'w-import-6', type: 'mnemonicImport', name: '我的钱包6', balance: 3504.33, avatar: '🦇', avatarBg: '#3d3528', backedUp: true, walletDisplayId: 'a4c8…7b19' },
+  { id: 'w-mnemonic-2', type: 'mnemonic', name: '我的钱包2', balance: 128.0, avatar: '🏆', avatarBg: '#3a3a3a', backedUp: true, selfCustodyFingerprint: 'mnemonic:created:wallet-2', walletDisplayId: 'b1c4…9e02' },
+  { id: 'w-mnemonic-3', type: 'mnemonic', name: '我的钱包3', balance: 56.2, avatar: '🏆', avatarBg: '#3a3a3a', needBackup: true, selfCustodyFingerprint: 'mnemonic:created:wallet-3', walletDisplayId: 'd7a2…5f88' },
+  { id: 'w-private-4', type: 'privateKey', name: '3M4J…3mK9', balance: 12.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'sol', selfCustodyFingerprint: 'privateKey:sol:[12,34,56,78,90,12,34,56,78,90,12,34,56,78,90,12,34,56,78,90,12,34,56,78,90,12,34,56,78,90,12,34]', walletDisplayId: 'e9b3…1d44' },
+  { id: 'w-private-evm', type: 'privateKey', name: '0xAb3…9f01', balance: 128.5, avatar: '🔐', avatarBg: '#2e2e2e', copyAddressScope: 'evm', selfCustodyFingerprint: 'privateKey:evm:0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef', walletDisplayId: 'b2e7…4c90' },
+  { id: 'w-import-6', type: 'mnemonicImport', name: '我的钱包6', balance: 3504.33, avatar: '🦇', avatarBg: '#3d3528', backedUp: true, selfCustodyFingerprint: 'mnemonic:abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about', walletDisplayId: 'a4c8…7b19' },
 ];
 let walletInfoActiveId = null;
 let walletCustomizeReturnScreen = 'screen-manage-wallet';
@@ -6580,10 +6774,13 @@ let selectedAssetTab = 'CRYPTO'; // current asset type tab (first tab: 币种)
 let walletPasskeyPermissionGranted = false;
 let walletPasskeyPendingGrant = false;
 let walletPasskeyVerifying = false;
+let cameraPermissionGranted = false;
+let pendingScanAction = '';
 let privyGoogleLoginInFlight = false;
+let pendingPrivyAuth = null;
 // 原型演示：false = 模拟 Privy loginWithOAuth({ provider: 'google' }) 失败
 const PRIVY_GOOGLE_LOGIN_SUCCESS = true;
-// 原型：OAuth 成功后 Privy 返回的 Google 账号邮箱（与 DEVICE_LOGGED_IN_EMAILS 重合则提示已登录）
+// 原型：OAuth 成功后 Privy 返回的 Google 账号邮箱
 const PRIVY_GOOGLE_MOCK_ACCOUNT = 'terryxu923@gmail.com';
 let privyAppleLoginInFlight = false;
 // 原型演示：false = 模拟 Privy loginWithOAuth({ provider: 'apple' }) 失败
@@ -6635,6 +6832,10 @@ function openWalletImportSeedScreen() {
     ta.value = '';
     ta.scrollTop = 0;
   }
+  walletImportInputType = '';
+  importPrivateKeyTypes = [];
+  walletImportSelectedNetworkType = '';
+  walletImportFingerprint = '';
   importSeedLastCursorPos = null;
   setImportSeedError('');
   renderImportSeedSuggestions([]);
@@ -6645,6 +6846,10 @@ function openWalletImportSeedScreen() {
 
 function backFromWalletImportSeed() {
   closeImportSeedScanModal();
+  walletImportInputType = '';
+  importPrivateKeyTypes = [];
+  walletImportSelectedNetworkType = '';
+  walletImportFingerprint = '';
   switchScreen(getWalletFlowReturnScreen());
 }
 
@@ -6675,6 +6880,42 @@ function normalizeImportSeedPasteText(text) {
 
 function normalizeImportSeedText(text) {
   return normalizeImportSeedPasteText(text);
+}
+
+function buildMnemonicImportFingerprint(text) {
+  return 'mnemonic:' + normalizeImportSeedText(text).toLowerCase();
+}
+
+function normalizePrivateKeyFingerprintValue(text) {
+  const raw = normalizeImportSeedText(text);
+  if (/^0x[a-fA-F0-9]{64}$/i.test(raw)) return raw.toLowerCase();
+  if (/^[a-fA-F0-9]{64}$/.test(raw)) return '0x' + raw.toLowerCase();
+  if (/^\[[\d,\s]+\]$/.test(raw)) {
+    try {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) return JSON.stringify(arr);
+    } catch (e) { /* ignore */ }
+  }
+  return raw.toLowerCase();
+}
+
+function buildPrivateKeyImportFingerprint(text, scope) {
+  return 'privateKey:' + (scope || 'evm') + ':' + normalizePrivateKeyFingerprintValue(text);
+}
+
+function findSelfCustodyWalletByFingerprint(fingerprint) {
+  if (!fingerprint) return null;
+  return WALLET_LIST_DATA.find((wallet) => wallet.selfCustodyFingerprint === fingerprint) || null;
+}
+
+function showWalletImportExistsError() {
+  setImportSeedError('钱包已存在');
+  showToast('钱包已存在', 2000, 'error');
+}
+
+function getCurrentImportSeedText() {
+  const ta = getImportSeedTextarea();
+  return normalizeImportSeedText(ta ? ta.value : '');
 }
 
 function isImportPrivateKeyInputMode(text) {
@@ -7039,8 +7280,14 @@ async function confirmWalletImportSeed() {
       setImportSeedError(result.error);
       return;
     }
+    const fingerprint = buildMnemonicImportFingerprint(text);
+    if (findSelfCustodyWalletByFingerprint(fingerprint)) {
+      showWalletImportExistsError();
+      return;
+    }
     setImportSeedError('');
     walletImportInputType = 'mnemonic';
+    walletImportFingerprint = fingerprint;
     startWalletImportPasskeyFlow();
     return;
   }
@@ -7051,6 +7298,7 @@ async function confirmWalletImportSeed() {
   }
   setImportSeedError('');
   walletImportInputType = 'privateKey';
+  walletImportFingerprint = '';
   importPrivateKeyTypes = getImportPrivateKeyTypes(text);
   startWalletImportPasskeyFlow('privateKey');
 }
@@ -7182,7 +7430,16 @@ function backFromWalletImportNetwork() {
 
 function onImportNetworkTypeSelect(type) {
   if (!importPrivateKeyTypes.includes(type)) return;
+  const fingerprint = buildPrivateKeyImportFingerprint(getCurrentImportSeedText(), type);
+  if (findSelfCustodyWalletByFingerprint(fingerprint)) {
+    walletImportSelectedNetworkType = '';
+    walletImportFingerprint = '';
+    switchScreen('screen-wallet-import-seed');
+    showWalletImportExistsError();
+    return;
+  }
   walletImportSelectedNetworkType = type;
+  walletImportFingerprint = fingerprint;
   proceedWalletImportDirect();
 }
 
@@ -7376,6 +7633,7 @@ function addPrototypeSelfCustodyWallet(kind, opts) {
       name: opts.name || generateDefaultMnemonicWalletName(),
       needBackup: true,
       backedUp: false,
+      selfCustodyFingerprint: opts.selfCustodyFingerprint || ('mnemonic:created:' + id),
     });
   } else if (kind === 'mnemonicImport') {
     WALLET_LIST_DATA.push({
@@ -7384,6 +7642,7 @@ function addPrototypeSelfCustodyWallet(kind, opts) {
       name: opts.name || generateDefaultMnemonicWalletName(),
       backedUp: true,
       needBackup: false,
+      selfCustodyFingerprint: opts.selfCustodyFingerprint || '',
     });
   } else if (kind === 'privateKey') {
     WALLET_LIST_DATA.push({
@@ -7391,6 +7650,7 @@ function addPrototypeSelfCustodyWallet(kind, opts) {
       type: 'privateKey',
       name: opts.name || generateDefaultPrivateKeyWalletName(opts.address),
       copyAddressScope: opts.copyAddressScope || 'evm',
+      selfCustodyFingerprint: opts.selfCustodyFingerprint || '',
     });
   }
   saveLastSelectedWallet(id);
@@ -7488,7 +7748,7 @@ function selectWalletOnboardingSocial(method) {
   walletSocialIntent = walletOnboardingMode === 'import' ? 'import' : 'create';
   flowReturnScreen = getWalletFlowReturnScreen();
   if (method === 'email') {
-    currentFlow = walletSocialIntent === 'import' ? 'import' : 'create';
+    currentFlow = 'create';
     openWalletEmailInput();
     return;
   }
@@ -7505,7 +7765,7 @@ function selectWalletOnboardingSocial(method) {
 
 function startPrivyGoogleLoginForImport() {
   walletCreateMethod = 'google';
-  currentFlow = 'import';
+  currentFlow = 'create';
   flowReturnScreen = getWalletFlowReturnScreen();
   configureCreateFlow();
   ensureWalletFlowBackdropScreen();
@@ -7514,7 +7774,7 @@ function startPrivyGoogleLoginForImport() {
 
 function startPrivyAppleLoginForImport() {
   walletCreateMethod = 'apple';
-  currentFlow = 'import';
+  currentFlow = 'create';
   flowReturnScreen = getWalletFlowReturnScreen();
   configureCreateFlow();
   ensureWalletFlowBackdropScreen();
@@ -7542,12 +7802,14 @@ function finishWalletMnemonicCreateFlow() {
 function finishWalletImportFlow() {
   const importKind = walletImportInputType;
   const netType = walletImportSelectedNetworkType;
+  const importFingerprint = walletImportFingerprint;
   currentFlow = '';
   walletImportInputType = '';
   importPrivateKeyTypes = [];
   walletImportSelectedNetworkType = '';
+  walletImportFingerprint = '';
   if (importKind === 'mnemonic') {
-    addPrototypeSelfCustodyWallet('mnemonicImport');
+    addPrototypeSelfCustodyWallet('mnemonicImport', { selfCustodyFingerprint: importFingerprint });
   } else if (importKind === 'privateKey') {
     const scope = netType === 'sol' ? 'sol' : netType === 'tron' ? 'tron' : 'evm';
     const mockAddr = scope === 'sol'
@@ -7555,12 +7817,69 @@ function finishWalletImportFlow() {
       : scope === 'tron'
         ? 'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf'
         : '0x742d35Cc6634C0532925a3b8D4C9b5F1234567a1';
-    addPrototypeSelfCustodyWallet('privateKey', { copyAddressScope: scope, address: mockAddr });
+    addPrototypeSelfCustodyWallet('privateKey', { copyAddressScope: scope, address: mockAddr, selfCustodyFingerprint: importFingerprint });
   } else if (WALLET_LIST_DATA.length) {
     saveLastSelectedWallet(WALLET_LIST_DATA[WALLET_LIST_DATA.length - 1].id);
   }
   enterWeb3Home();
   showToast('钱包导入成功', 2000);
+}
+
+function requestCameraPermissionForScan(action) {
+  pendingScanAction = action || '';
+  if (!cameraPermissionGranted) {
+    openCameraPermissionModal(action);
+    return;
+  }
+  continueScanAction(action);
+}
+
+function openCameraPermissionModal(action) {
+  pendingScanAction = action || pendingScanAction || '';
+  const modal = document.getElementById('cameraPermissionModal');
+  if (modal) modal.classList.add('visible');
+}
+
+function closeCameraPermissionModal() {
+  const modal = document.getElementById('cameraPermissionModal');
+  if (modal) modal.classList.remove('visible');
+  pendingScanAction = '';
+}
+
+function openAppCameraSettings() {
+  const nextAction = pendingScanAction;
+  closeCameraPermissionModal();
+  cameraPermissionGranted = true;
+  showToast('已模拟开启相机权限', 1800);
+  if (nextAction) {
+    setTimeout(() => continueScanAction(nextAction), 360);
+  }
+}
+
+function continueScanAction(action) {
+  if (action === 'importSeed') {
+    openImportSeedScanModal();
+    return;
+  }
+  if (action === 'sendAddress') {
+    applySendAddressScan();
+    return;
+  }
+  showToast('请重新点击扫一扫', 1800);
+}
+
+function applySendAddressScan() {
+  const input = document.getElementById('saInput');
+  const scannedAddr = _sendNetworkId === 'tron'
+    ? TRON_SEND_DEMO_ADDR.default
+    : _sendNetworkId === 'solana'
+      ? '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU'
+      : '0x742d35Cc6634C0532925a3b8D4C9b5F1234567a1';
+  if (input) {
+    input.value = scannedAddr;
+    onAddressInput(scannedAddr);
+  }
+  showToast('已识别二维码地址', 1600);
 }
 
 function openImportSeedScanModal() {
@@ -8395,11 +8714,9 @@ function confirmPrivyGoogleLogin(options) {
   privyLoginWithGoogle()
     .then((auth) => {
       privyGoogleLoginInFlight = false;
-      const googleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
-      if (simulateExists) {
-        openWalletAccountExistsModal('google', googleEmail);
-        return;
-      }
+      const privyAuth = buildMockPrivyAuth('google', auth && auth.email ? auth.email : PRIVY_GOOGLE_MOCK_ACCOUNT);
+      const result = resolvePrivyAuthAfterSuccess('google', privyAuth, { forceCurrentExists: simulateExists });
+      if (result.blocked || result.switched) return;
       startWalletPasskeyFlow();
     })
     .catch(() => {
@@ -8487,11 +8804,9 @@ function confirmPrivyAppleLogin(options) {
     .then((auth) => {
       privyAppleLoginInFlight = false;
       if (btn) { btn.disabled = false; btn.textContent = '登录'; }
-      const appleEmail = (auth && auth.email) ? auth.email.trim().toLowerCase() : '';
-      if (simulateExists) {
-        openWalletAccountExistsModal('apple', appleEmail);
-        return;
-      }
+      const privyAuth = buildMockPrivyAuth('apple', auth || PRIVY_APPLE_MOCK_ACCOUNT);
+      const result = resolvePrivyAuthAfterSuccess('apple', privyAuth, { forceCurrentExists: simulateExists });
+      if (result.blocked || result.switched) return;
       startWalletPasskeyFlow();
     })
     .catch(() => {
@@ -8543,17 +8858,151 @@ function clearWalletEmailInput() {
   updateWalletEmailInputUI();
 }
 
-
-// 原型演示：以下账号（邮箱 / Google）视为「已在当前设备登录」
-const DEVICE_LOGGED_IN_EMAILS = ['terryxu923@gmail.com', '0xterryxu@gmail.com'];
-
-function isWalletAccountLoggedInOnDevice(account) {
-  return DEVICE_LOGGED_IN_EMAILS.includes(account.trim().toLowerCase());
+function getWalletAvatarForProvider(provider) {
+  if (provider === 'google') return 'G';
+  if (provider === 'apple') return '';
+  return '@';
 }
+
+function getWalletAvatarBgForProvider(provider) {
+  if (provider === 'google') return '#283d35';
+  if (provider === 'apple') return '#2a2d33';
+  return '#352a48';
+}
+
+function addPrototypePrivyWalletFromAuth(auth) {
+  if (!auth) return '';
+  const provider = auth.provider === 'google' || auth.provider === 'apple' ? auth.provider : 'email';
+  const id = 'w-' + provider + '-' + Date.now();
+  const email = normalizeLoginEmail(auth.email);
+  const displayName = provider === 'apple' ? maskApplePrivateRelayEmail(email) : maskEmailAddress(email);
+  WALLET_LIST_DATA.forEach((wallet) => {
+    if (isWalletSocialLogin(wallet)) wallet.loginState = 'loggedOutLocal';
+  });
+  WALLET_LIST_DATA.push({
+    id,
+    type: provider,
+    name: displayName,
+    balance: 0,
+    avatar: getWalletAvatarForProvider(provider),
+    avatarBg: getWalletAvatarBgForProvider(provider),
+    isSocialLogin: true,
+    loginEmail: email,
+    loginState: 'loggedIn',
+    privyUserId: auth.privyUserId,
+    privyIdentityKey: auth.privyIdentityKey,
+    walletDisplayId: id.slice(2, 6) + '…' + id.slice(-4),
+  });
+  selectedWalletId = id;
+  saveLastSelectedWallet(id);
+  renderWalletList();
+  renderManageWalletList();
+  return id;
+}
+
 let walletPendingEmail = '';
 let walletVerifyCountdownTimer = null;
 let walletVerifyCountdownSec = 59;
 let walletVerifySubmitting = false;
+
+function normalizeLoginEmail(email) {
+  return (email || '').trim().toLowerCase();
+}
+
+function getMockPrivySubject(provider, email) {
+  const normalizedEmail = normalizeLoginEmail(email);
+  if (provider === 'email') return normalizedEmail;
+  const local = (normalizedEmail.split('@')[0] || provider).replace(/[^a-z0-9]/gi, '').toLowerCase() || provider;
+  return provider + '-sub-' + local;
+}
+
+function buildPrivyIdentityKey(provider, subject) {
+  if (provider === 'google') return 'google_oauth:' + subject;
+  if (provider === 'apple') return 'apple_oauth:' + subject;
+  return 'email:' + normalizeLoginEmail(subject);
+}
+
+function buildMockPrivyAuth(provider, account) {
+  const normalizedProvider = provider === 'apple' ? 'apple' : provider === 'google' ? 'google' : 'email';
+  const rawEmail = typeof account === 'string' ? account : (account && account.email) || '';
+  const email = normalizeLoginEmail(rawEmail);
+  const subject = getMockPrivySubject(normalizedProvider, email);
+  const local = (email.split('@')[0] || normalizedProvider).replace(/[^a-z0-9]/gi, '').toLowerCase() || normalizedProvider;
+  return {
+    provider: normalizedProvider,
+    email,
+    name: account && account.name ? account.name : '',
+    subject,
+    privyUserId: 'privy-' + normalizedProvider + '-' + local,
+    privyIdentityKey: buildPrivyIdentityKey(normalizedProvider, subject),
+  };
+}
+
+function isSamePrivyWalletIdentity(wallet, auth) {
+  if (!wallet || !auth) return false;
+  if (wallet.privyUserId && auth.privyUserId && wallet.privyUserId === auth.privyUserId) return true;
+  if (wallet.privyIdentityKey && auth.privyIdentityKey && wallet.privyIdentityKey === auth.privyIdentityKey) return true;
+  return wallet.type === auth.provider && normalizeLoginEmail(wallet.loginEmail) === normalizeLoginEmail(auth.email);
+}
+
+function getCurrentLoggedInPrivyWallet() {
+  const selected = getWalletById(selectedWalletId);
+  if (isWalletSocialLogin(selected) && selected.loginState === 'loggedIn') return selected;
+  return WALLET_LIST_DATA.find((w) => isWalletSocialLogin(w) && w.loginState === 'loggedIn') || null;
+}
+
+function findLocalPrivyWalletByAuth(auth) {
+  return WALLET_LIST_DATA.find((wallet) => isWalletSocialLogin(wallet) && isSamePrivyWalletIdentity(wallet, auth)) || null;
+}
+
+function isCurrentLoggedInPrivyAuth(auth) {
+  const current = getCurrentLoggedInPrivyWallet();
+  return !!(current && isSamePrivyWalletIdentity(current, auth));
+}
+
+function activatePrivyLocalWallet(walletId) {
+  WALLET_LIST_DATA.forEach((wallet) => {
+    if (!isWalletSocialLogin(wallet)) return;
+    wallet.loginState = wallet.id === walletId ? 'loggedIn' : 'loggedOutLocal';
+  });
+  selectedWalletId = walletId;
+  saveLastSelectedWallet(walletId);
+  syncWeb3HomeWalletDisplay();
+  renderWalletList();
+  renderManageWalletList();
+}
+
+function finishExistingPrivyWalletLogin(wallet) {
+  if (!wallet) return;
+  activatePrivyLocalWallet(wallet.id);
+  pendingPrivyAuth = null;
+  currentFlow = '';
+  closeSocialLoginSheet();
+  closeGoogleOAuthModal();
+  closeAppleOAuthModal();
+  closePasskeyPermissionModal();
+  closePasskeyDeviceModal();
+  enterWeb3Home();
+  showToast('已进入钱包', 2000);
+}
+
+function resolvePrivyAuthAfterSuccess(provider, auth, options) {
+  const resolvedAuth = auth || buildMockPrivyAuth(provider, provider === 'apple' ? PRIVY_APPLE_MOCK_ACCOUNT : PRIVY_GOOGLE_MOCK_ACCOUNT);
+  const forceCurrentExists = !!(options && options.forceCurrentExists);
+  const current = getCurrentLoggedInPrivyWallet();
+  if ((forceCurrentExists && current) || isCurrentLoggedInPrivyAuth(resolvedAuth)) {
+    openWalletAccountExistsModal(provider, resolvedAuth.email);
+    pendingPrivyAuth = null;
+    return { blocked: true };
+  }
+  const localWallet = findLocalPrivyWalletByAuth(resolvedAuth);
+  if (localWallet) {
+    finishExistingPrivyWalletLogin(localWallet);
+    return { switched: true, wallet: localWallet };
+  }
+  pendingPrivyAuth = resolvedAuth;
+  return { newWallet: true, auth: resolvedAuth };
+}
 
 function maskEmailAddress(email) {
   const parts = email.split('@');
@@ -8565,7 +9014,7 @@ function maskEmailAddress(email) {
 }
 
 function isEmailLoggedInOnDevice(email) {
-  return isWalletAccountLoggedInOnDevice(email);
+  return isCurrentLoggedInPrivyAuth(buildMockPrivyAuth('email', email));
 }
 
 function maskApplePrivateRelayEmail(email) {
@@ -8707,6 +9156,7 @@ function closePasskeyDeviceModal() {
 }
 
 function endWalletPrivyAuthFlow(message) {
+  pendingPrivyAuth = null;
   closePasskeyPermissionModal();
   closePasskeyDeviceModal();
   walletVerifySubmitting = false;
@@ -8720,6 +9170,7 @@ function endWalletPrivyAuthFlow(message) {
     walletImportInputType = '';
     importPrivateKeyTypes = [];
     walletImportSelectedNetworkType = '';
+    walletImportFingerprint = '';
     if (message) showToast(message, 2200);
     switchScreen('screen-wallet-import-seed');
     return;
@@ -8842,6 +9293,9 @@ function startWalletPasskeyFlow() {
 }
 
 function onWalletEmailOtpVerified() {
+  const auth = buildMockPrivyAuth('email', walletPendingEmail);
+  const result = resolvePrivyAuthAfterSuccess('email', auth);
+  if (result.blocked || result.switched) return;
   startWalletPasskeyFlow();
 }
 
@@ -8855,6 +9309,18 @@ function cancelPasskeyPermissionFlow() {
     closePasskeyPermissionModal();
     currentFlow = '';
     showToast('已取消签名验证', 1600);
+    return;
+  }
+  if (currentFlow === 'viewMnemonic') {
+    endWalletPrivyAuthFlow('已取消查看助记词');
+    return;
+  }
+  if (currentFlow === 'viewPrivateKey' || currentFlow === 'viewPrivateKeyPrivy') {
+    endWalletPrivyAuthFlow('已取消查看私钥');
+    return;
+  }
+  if (currentFlow === 'walletInfoDelete') {
+    cancelWalletInfoRemoveFlow('已取消验证');
     return;
   }
   endWalletPrivyAuthFlow('已取消验证');
@@ -9092,7 +9558,7 @@ function submitWalletEmail() {
     showToast('请输入有效邮箱地址', 2000, 'error');
     return;
   }
-  if (isWalletAccountLoggedInOnDevice(email)) {
+  if (isEmailLoggedInOnDevice(email)) {
     openWalletEmailExistsModal(email);
     return;
   }
@@ -9528,10 +9994,6 @@ function backFromBackupMnemonic() {
     return;
   }
   if (mnemonicDisplayMode === 'view') {
-    if (backupMnemonicRevealed) {
-      hideBackupMnemonic();
-      return;
-    }
     currentFlow = '';
     mnemonicDisplayMode = 'backup';
     syncBackupMnemonicScreenChrome();
@@ -9540,13 +10002,12 @@ function backFromBackupMnemonic() {
     switchScreen(viewMnemonicReturnScreen || 'screen-wallet-info');
     return;
   }
-  if (backupMnemonicRevealed) {
-    hideBackupMnemonic();
-    return;
-  }
-  walletCreateGuideStep = getActiveSafetyGuideSteps().length - 1;
-  renderCreateGuideStep();
-  switchScreen('screen-wallet-create-guide');
+  currentFlow = '';
+  mnemonicDisplayMode = 'backup';
+  syncBackupMnemonicScreenChrome();
+  backupMnemonicRevealed = false;
+  resetBackupMnemonicScreen();
+  switchScreen('screen-wallet-info');
 }
 
 function openMnemonicScreenshotModal() {
@@ -10149,6 +10610,10 @@ function animateCompleting() {
 function goToWeb3Home() { goToWeb3Module(); }
 
 function finishWalletCreateFlow() {
+  if (isPrivyEmbeddedCreate() && pendingPrivyAuth) {
+    addPrototypePrivyWalletFromAuth(pendingPrivyAuth);
+    pendingPrivyAuth = null;
+  }
   if (WALLET_LIST_DATA[0]) saveLastSelectedWallet(selectedWalletId || WALLET_LIST_DATA[0].id);
   enterWeb3Home();
   const toastMsg = isPrivyEmbeddedCreate() ? '已进入钱包' : '钱包创建成功';
@@ -10247,6 +10712,11 @@ function renderManageWalletList() {
 function selectWalletById(walletId) {
   const wallet = getWalletById(walletId);
   if (!wallet) return;
+  if (isWalletSocialLogin(wallet)) {
+    WALLET_LIST_DATA.forEach((item) => {
+      if (isWalletSocialLogin(item)) item.loginState = item.id === walletId ? 'loggedIn' : 'loggedOutLocal';
+    });
+  }
   selectedWalletId = walletId;
   saveLastSelectedWallet(walletId);
   syncWeb3HomeWalletDisplay();
@@ -10290,7 +10760,7 @@ const WALLET_INFO_VISIBILITY = PROTOTYPE_MVP ? {
   deleteWallet: [],
 } : {
   loginAccount: ['google', 'apple', 'email'],
-  exportMnemonic: ['email'],
+  exportMnemonic: [],
   viewPrivateKey: ['google', 'apple', 'email', 'mnemonic_unbacked', 'mnemonic_backed', 'mnemonic_import', 'private_key'],
   viewMnemonic: ['mnemonic_backed', 'mnemonic_import'],
   backupMnemonic: ['mnemonic_unbacked'],
@@ -10492,6 +10962,7 @@ function clearExportMnemonicCountdown() {
 }
 
 function openExportMnemonicConfirmSheet() {
+  return;
   exportMnemonicPendingWalletId = walletInfoActiveId;
   exportMnemonicCountdownSec = 3;
   const overlay = document.getElementById('exportMnemonicConfirmOverlay');
@@ -10566,6 +11037,7 @@ function confirmExportMnemonicExit() {
 }
 
 function finishExportMnemonicFlow() {
+  return;
   const id = exportMnemonicPendingWalletId || walletInfoActiveId;
   if (id) {
     WALLET_LIST_DATA = WALLET_LIST_DATA.filter((w) => w.id !== id);
@@ -10584,7 +11056,6 @@ function finishExportMnemonicFlow() {
   renderWalletList();
   renderManageWalletList();
   enterWeb3Home();
-  showToast('社交钱包已注销，助记词已导出', 2200);
 }
 
 function cancelExportMnemonicFlow(showToastMsg) {
@@ -10993,13 +11464,15 @@ const TRON_SEND_DEMO_ADDR = {
   default: 'TXYZopYRdjKrhtvHYn8vJ8k7KqJmYvZ3mK',
   unactivated: 'TUnactRecvDemoySVPVR1pym7ZVxDxb5Ag',
   lowEnergy: 'TLowEngyDemoZewxp3ZrHv5brS9UVQvBQV',
+  energyWarn: 'TWarnEngyDemoZewxp3ZrHv5brS9UVQvBQ',
   localWallet: 'TYASr5UV6Hc3qCrdTGkVHz7mB9XaH8n5f8',
 };
 
 const TRON_ADDR_SCENARIOS = {
   [TRON_SEND_DEMO_ADDR.default]: { activated: true },
   [TRON_SEND_DEMO_ADDR.unactivated]: { activated: false },
-  [TRON_SEND_DEMO_ADDR.lowEnergy]: { activated: true, lowEnergy: true },
+  [TRON_SEND_DEMO_ADDR.lowEnergy]: { activated: true, lowEnergy: true, lowTrx: true },
+  [TRON_SEND_DEMO_ADDR.energyWarn]: { activated: true, lowEnergy: true },
   [TRON_SEND_DEMO_ADDR.localWallet]: { activated: true },
 };
 
@@ -11407,11 +11880,16 @@ function buildSingleChainBodyHTML(t, symbol, receiveSource) {
   const walletAddr = CHAIN_ADDRESSES[t.network] || '';
   const net = NETWORKS.find(n => n.id === t.network);
   const networkName = net ? net.name : t.network;
+  const canSend = Number(t.balance || 0) > 0;
+  const sendActionClass = `mc-single-action${canSend ? '' : ' disabled'}`;
+  const sendClickAttr = canSend
+    ? ` onclick="openSendAddress('${symbol}','${t.network}','${receiveSource}')"`
+    : ' disabled aria-disabled="true"';
 
   if (PROTOTYPE_V11) {
     return `
     <div class="mc-single-actions">
-      <button class="mc-single-action" onclick="openSendAddress('${symbol}','${t.network}','${receiveSource}')">
+      <button class="${sendActionClass}"${sendClickAttr}>
         <div class="sa-circle"><svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></div>
         <span>发送</span>
       </button>
@@ -11575,7 +12053,7 @@ function buildSingleChainBodyHTML(t, symbol, receiveSource) {
 
   return `
     <div class="mc-single-actions">
-      <button class="mc-single-action" onclick="openSendAddress('${symbol}','${t.network}','${receiveSource}')">
+      <button class="${sendActionClass}"${sendClickAttr}>
         <div class="sa-circle"><svg viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></div>
         <span>发送</span>
       </button>
@@ -13178,6 +13656,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let _sendSymbol       = '';
 let _sendNetworkId    = '';
 let _sendDemoKey      = '';
+let _demoForceEmptySendAssets = false;
 
 // Wallet data mirrored from #walletListContainer for display in send address page
 const SEND_WALLETS = [
@@ -13190,6 +13669,7 @@ const SEND_WALLETS = [
 
 // Returns sendable tokens: CRYPTO or SECURITY with balance > 0, grouped + sorted
 function getSendAssets() {
+  if (_demoForceEmptySendAssets) return [];
   let tokens;
   if (PROTOTYPE_MVP) {
     tokens = TOKEN_DATA.filter((t) => isMvpDisplayCryptoToken(t)).map((t) => ({ ...t, _isMultiChain: false }));
@@ -13218,10 +13698,7 @@ function openSendSelect(sourceScreen) {
   const assets = getSendAssets();
   const container = document.getElementById('sendAssetList');
   if (assets.length === 0) {
-    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--text-tertiary);">
-      <div style="font-size:40px;margin-bottom:12px;">📭</div>
-      <div style="font-size:14px;">暂无可发送资产</div>
-    </div>`;
+    container.innerHTML = buildSendEmptyStateHTML();
   } else {
     container.innerHTML = assets.map(t => buildSendItemHTML(t)).join('');
   }
@@ -13232,9 +13709,101 @@ function closeSendSelect() {
   document.getElementById('sendAddress').classList.remove('visible');
   document.getElementById('sendNetSelect').classList.remove('visible');
   document.getElementById('sendSelect').classList.remove('visible');
+  closeSendSearch();
+  _demoForceEmptySendAssets = false;
 }
 
-function buildSendItemHTML(t) {
+function openSendSearch() {
+  const screen = document.getElementById('sendSearchScreen');
+  if (!screen) return;
+  screen.classList.add('visible');
+  setTimeout(() => {
+    const input = document.getElementById('sendSearchInput');
+    if (input) input.focus();
+  }, 50);
+  renderSendSearch('');
+}
+
+function closeSendSearch() {
+  const screen = document.getElementById('sendSearchScreen');
+  if (screen) screen.classList.remove('visible');
+  const input = document.getElementById('sendSearchInput');
+  if (input) input.value = '';
+}
+
+function buildSendEmptyStateHTML() {
+  return `
+    <div class="send-empty-state">
+      <div class="send-empty-icon" aria-hidden="true">
+        <svg viewBox="0 0 96 96" fill="none">
+          <path d="M20 28c0-5.5 4.5-10 10-10h16.5c3.1 0 6 1.4 7.9 3.9l4.6 6.1H66c5.5 0 10 4.5 10 10v30c0 5.5-4.5 10-10 10H30c-5.5 0-10-4.5-10-10V28Z" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+          <path d="M22 39h52" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="send-empty-title">钱包内暂无资产</div>
+      <button class="send-empty-topup" onclick="openReceiveFromSendEmpty()">去充值</button>
+    </div>`;
+}
+
+function openReceiveFromSendEmpty() {
+  closeSendSelect();
+  openReceiveSelect();
+}
+
+function renderSendSearch(query) {
+  const assets = getSendAssets();
+  const raw = (query || '').trim();
+  const q = raw.toLowerCase();
+  const isAddr = _isContractAddress(raw);
+
+  let filtered;
+  if (!q) {
+    filtered = assets;
+  } else if (isAddr) {
+    filtered = assets.filter(t => {
+      const addr = getContractAddress(t.symbol, t.network);
+      if (typeof addr === 'string' && addr.toLowerCase() === q) return true;
+      if (t._isMultiChain) {
+        return TOKEN_DATA.some(td =>
+          td.symbol === t.symbol &&
+          typeof getContractAddress(td.symbol, td.network) === 'string' &&
+          getContractAddress(td.symbol, td.network).toLowerCase() === q
+        );
+      }
+      if (t._contract && t._contract.toLowerCase() === q) return true;
+      return false;
+    });
+  } else {
+    filtered = assets.filter(t => {
+      const fullName = resolveReceiveFullName(t);
+      const net = NETWORKS.find(n => n.id === t.network);
+      const netName = net ? net.name : '';
+      return (
+        t.symbol.toLowerCase().includes(q) ||
+        (t.name || '').toLowerCase().includes(q) ||
+        (fullName || '').toLowerCase().includes(q) ||
+        netName.toLowerCase().includes(q)
+      );
+    });
+  }
+
+  const container = document.getElementById('sendSearchList');
+  if (!container) return;
+  if (filtered.length === 0 && q) {
+    container.innerHTML = `
+      <div class="rs-empty">
+        <div class="rs-empty-text">未找到 <strong>"${raw}"</strong><br>请重新输入</div>
+      </div>`;
+    return;
+  }
+  if (filtered.length === 0) {
+    container.innerHTML = buildSendEmptyStateHTML();
+    return;
+  }
+  container.innerHTML = filtered.map(t => buildSendItemHTML(t, true)).join('');
+}
+
+function buildSendItemHTML(t, fromSearch) {
   if (PROTOTYPE_V11) t = { ...t, _isMultiChain: false };
   const logoInner = tokenLogoInner(t.symbol, t.logoUrl, 16);
   let badgeHtml = '';
@@ -13252,8 +13821,8 @@ function buildSendItemHTML(t) {
   const valStr = formatValuation(valuation > 0 ? valuation : 0);
   const demoKey = t._tron?.demoKey || '';
   const clickAttr = t._isMultiChain
-    ? `onclick="openSendNetSelect('${t.symbol}')"`
-    : `onclick="openSendAddress('${t.symbol}','${t.network || ''}','sendSelect','${demoKey}')"` ;
+    ? `onclick="${fromSearch ? 'closeSendSearch(); ' : ''}openSendNetSelect('${t.symbol}')"`
+    : `onclick="${fromSearch ? 'closeSendSearch(); ' : ''}openSendAddress('${t.symbol}','${t.network || ''}','sendSelect','${demoKey}')"` ;
   return `
     <div class="rs-item" ${clickAttr}>
       <div class="rs-logo-wrap">
@@ -13501,6 +14070,8 @@ let _samAllClicked     = false;   // whether 全部 was last clicked (controls g
 let _scfGasTimer       = null;    // interval for gas refresh on confirm page
 let _gasTier           = 'avg';   // selected gas tier: EVM=slow|avg|fast  SOL=normal|turbo
 let _gasBaseGwei       = 3.1;     // current base Gwei for EVM (fluctuates)
+let _demoForceSolGasInsufficient = false;
+let _demoForceTronGasInsufficient = false;
 let _gasSheetTimer     = null;    // interval timer for gas sheet refresh
 
 function openSendAmount(symbol, networkId, toAddress) {
@@ -13643,10 +14214,11 @@ function _samLoadTronContext(recipient) {
   const rec = (recipient || _samRecipient || '').trim();
   const scen = TRON_ADDR_SCENARIOS[rec] || {};
   const lowEnergy = scen.lowEnergy === true;
+  const lowTrx = scen.lowTrx === true;
   const receiverActivated = scen.activated !== false;
   const trxBal = _samToken.symbol === 'TRX' && (!_samToken._tron || _samToken._tron.standard === 'TRX')
     ? _samToken.balance
-    : _samGetTronTrxBalance(lowEnergy);
+    : _samGetTronTrxBalance(lowTrx);
 
   let bandwidthNeed = standard === 'TRC20' ? 345 : 268;
   let energyNeed = standard === 'TRC20' ? 64895 : 0;
@@ -13667,7 +14239,7 @@ function _samLoadTronContext(recipient) {
   }
 
   return {
-    standard, trxBalance: trxBal, receiverActivated, lowEnergy,
+    standard, trxBalance: trxBal, receiverActivated, lowEnergy, lowTrx,
     bandwidthNeed, energyNeed, burnTrx, feeLimitTrx: _tronFeeLimitTrx,
     freeBw, freeEnergy, tokenId: meta.tokenId || '',
     contractAddress: meta.contractAddress || '',
@@ -14003,30 +14575,92 @@ function _scfGasNativeSymbol() {
   return EVM_NATIVE[net] || '';
 }
 
-// Does the user have enough native balance to cover gas?
+// Does the user have enough native balance to cover gas (tier-adjusted)?
+function _scfGetTierGasCost() {
+  if (!_samToken) return 0;
+  const net = _samToken.network;
+  if (net === 'solana') {
+    const cfg = SOL_TIER_CONFIG[_gasTier] || SOL_TIER_CONFIG.normal;
+    return cfg.feeSol;
+  }
+  if (net === 'tron') {
+    if (!_samTronCtx) _samTronCtx = _samLoadTronContext(_samRecipient);
+    return _samTronCtx ? _samTronCtx.burnTrx : 0.5;
+  }
+  const base = _samGasEstimate > 0 ? _samGasEstimate : (EVM_GAS_BASE[net] || 0.001);
+  const tierMult = (EVM_TIER_CONFIG[_gasTier] || EVM_TIER_CONFIG.avg).mult;
+  return base * tierMult;
+}
+
+function _scfGetSendTokenQty() {
+  if (!_samToken) return 0;
+  const inputNum = parseFloat(_samInputStr) || 0;
+  const price = _samToken.price || 0;
+  return _samMode === 'token' ? inputNum : (price > 0 ? inputNum / price : 0);
+}
+
 function _scfCanAffordGas() {
   if (!_samToken) return true;
   const net = _samToken.network;
   const gasSym = _scfGasNativeSymbol();
-  if (!gasSym) return true; // unknown chain – allow
+  if (!gasSym) return true;
 
-  // For Solana, native coin is SOL itself; check SOL rent exemption was already validated in amount page
   if (net === 'solana') {
+    if (_demoForceSolGasInsufficient) return false;
     const solToken = TOKEN_DATA.find(t => t.symbol === 'SOL' && t.network === 'solana' && !t._sol);
     const solBal = solToken ? solToken.balance : 0;
-    // need at least 5000 lamports (~0.000005 SOL) for tx fee
-    return solBal >= 0.000005;
+    return solBal >= _scfGetTierGasCost();
   }
   if (net === 'tron') {
-    if (!_samTronCtx) _samTronCtx = _samLoadTronContext(_samRecipient);
-    const trxBal = _samGetTronTrxBalance(_samTronCtx && _samTronCtx.lowEnergy);
-    return trxBal >= (_samTronCtx ? _samTronCtx.burnTrx : 0.5);
+    if (_demoForceTronGasInsufficient) return false;
+    const trxBal = _samGetTronTrxBalance(_samTronCtx && _samTronCtx.lowTrx);
+    return trxBal >= _scfGetTierGasCost();
   }
-  // EVM: tier-adjusted gas estimate vs native balance
   const nativeToken = TOKEN_DATA.find(t => t.symbol === gasSym && t.network === net);
   const nativeBal = nativeToken ? nativeToken.balance : 0;
-  const tierMult = (EVM_TIER_CONFIG[_gasTier] || EVM_TIER_CONFIG.avg).mult;
-  return nativeBal >= _samGasEstimate * tierMult;
+  const gasCost = _scfGetTierGasCost();
+  const isNativeSend = EVM_NATIVE[net] === _samToken.symbol;
+  if (isNativeSend) {
+    return nativeBal >= _scfGetSendTokenQty() + gasCost;
+  }
+  return nativeBal >= gasCost;
+}
+
+function _scfRefreshAffordance() {
+  const confirm = document.getElementById('sendConfirm');
+  if (!confirm || !confirm.classList.contains('visible') || !_samToken) return;
+
+  const net = _samToken.network;
+  const isTron = net === 'tron';
+  const canAfford = _scfCanAffordGas();
+  const gasSym = _scfGasNativeSymbol();
+  const banner = document.getElementById('scfGasBanner');
+  if (banner) {
+    if (!canAfford && gasSym) {
+      const bannerText = document.getElementById('scfGasBannerText');
+      if (bannerText) {
+        bannerText.textContent = isTron
+          ? `${gasSym} 余额不足以覆盖主网费用，请补充后重试`
+          : `${gasSym} 余额不足以覆盖主网费用，请补充后重试`;
+      }
+      banner.classList.add('visible');
+    } else {
+      banner.classList.remove('visible');
+    }
+  }
+
+  const btnArea = document.getElementById('scfBtnArea');
+  if (!btnArea || !gasSym) return;
+  if (canAfford) {
+    btnArea.innerHTML = `
+      <div class="scf-btn-row">
+        <button class="scf-btn-cancel" onclick="goBackFromSendConfirm()">取消</button>
+        <button class="scf-btn-confirm" onclick="openSendSignAuth()">确认</button>
+      </div>`;
+  } else {
+    btnArea.innerHTML = `
+      <button class="scf-btn-topup" onclick="openReceiveQrScreen('${gasSym}','${net}','sendAmount')">${isTron ? '补充 TRX 主网费用' : `补充主网费用(${gasSym})`}</button>`;
+  }
 }
 
 function _scfFmtTronResource() {
@@ -14035,14 +14669,10 @@ function _scfFmtTronResource() {
   if (!ctx) return '—';
   const trxTok = TOKEN_DATA.find(t => t.symbol === 'TRX' && t.network === 'tron' && (!t._tron || t._tron.standard === 'TRX'));
   const trxPrice = trxTok ? trxTok.price : 0;
-  const burnStr = _samFmtBal(ctx.burnTrx, 'TRX', true);
+  const gasAmtStr = _samFmtBal(ctx.burnTrx, '', true);
   const usdVal = ctx.burnTrx * trxPrice;
-  const usdStr = usdVal > 0 ? `($${usdVal < 0.01 ? usdVal.toFixed(4) : usdVal.toFixed(2)})` : '';
-  if (ctx.standard === 'TRC20') {
-    return `燃烧 ≈${burnStr} TRX ｜ fee_limit ${ctx.feeLimitTrx} TRX ${usdStr}`.trim();
-  }
-  const resLabel = ctx.standard === 'TRC10' ? 'Bandwidth' : 'Bandwidth';
-  return `${resLabel} 优先 ｜ 燃烧 ≈${burnStr} TRX ${usdStr}`.trim();
+  const usdStr = usdVal > 0 ? `($${usdVal < 0.0001 ? usdVal.toFixed(6) : usdVal.toFixed(4)})` : '';
+  return `${gasAmtStr} TRX ${usdStr}`.trim();
 }
 
 // Format gas display string using selected tier
@@ -14081,7 +14711,12 @@ function _scfStartGasTimer() {
   _scfStopGasTimer();
   _scfGasTimer = setInterval(() => {
     if (_samToken?.network === 'tron') {
-      _samTronCtx = _samLoadTronContext(_samRecipient);
+      const ctx = _samLoadTronContext(_samRecipient);
+      if (ctx) {
+        const f = 1 + (Math.random() - 0.5) * 0.08;
+        ctx.burnTrx = parseFloat((ctx.burnTrx * f).toFixed(4));
+        _samTronCtx = ctx;
+      }
     } else if (_samToken) {
       const base = EVM_GAS_BASE[_samToken.network];
       if (base) {
@@ -14091,6 +14726,7 @@ function _scfStartGasTimer() {
     }
     const el = document.getElementById('scfGasText');
     if (el) el.textContent = _scfFmtGas();
+    _scfRefreshAffordance();
   }, 3000);
 }
 function _scfStopGasTimer() {
@@ -14120,18 +14756,18 @@ function openGasSheet() {
 function closeGasSheet() {
   _stopGasSheetTimer();
   document.getElementById('gasSheetOverlay').classList.remove('visible');
-  // Sync selected tier back to confirm page
   const el = document.getElementById('scfGasText');
   if (el) el.textContent = _scfFmtGas();
+  _scfRefreshAffordance();
 }
 
 function selectGasTier(tier) {
   _gasTier = tier;
-  // Close sheet and sync value back to confirm page immediately
   _stopGasSheetTimer();
   document.getElementById('gasSheetOverlay').classList.remove('visible');
   const el = document.getElementById('scfGasText');
   if (el) el.textContent = _scfFmtGas();
+  _scfRefreshAffordance();
 }
 
 function selectTronFeeLimit(limitTrx) {
@@ -14142,6 +14778,7 @@ function selectTronFeeLimit(limitTrx) {
   const el = document.getElementById('scfGasText');
   if (el) el.textContent = _scfFmtGas();
   _samUpdateDisplay();
+  _scfRefreshAffordance();
 }
 
 function _renderGasSheet() {
@@ -14275,54 +14912,27 @@ function openSendConfirm() {
   const net      = t.network;
   const price    = t.price || 0;
   const isTron   = net === 'tron';
-  // Reset gas tier to network default
   _gasTier     = (net === 'solana') ? 'normal' : 'avg';
   _gasBaseGwei = EVM_GWEI_BASE[net] || 3.1;
   if (isTron) {
     _samTronCtx = _samLoadTronContext(_samRecipient);
   }
-  const canAfford = _scfCanAffordGas();
 
-  // Amount: token qty
   const inputNum = parseFloat(_samInputStr) || 0;
   let tokenQty = _samMode === 'token' ? inputNum : (price > 0 ? inputNum / price : 0);
-
-  // Display qty: up to token's decimals, strip trailing zeros
   const decimals = t.decimals || 8;
   const qtyStr   = tokenQty.toFixed(Math.min(decimals, 13)).replace(/\.?0+$/, '') || '0';
-
-  // Symbol display (truncate to 8 chars)
   const symDisplay = sym.length > 8 ? sym.slice(0, 8) + '···' : sym;
-
-  // Fiat sub
   const fiatStr = price > 0 ? _samFmtFiatSub(tokenQty * price) : '';
-
-  // Addresses
   const fromAddr = CHAIN_ADDRESSES[net] || '';
   const toAddr   = _samRecipient;
-
-  // Wallet labels (always "我的钱包 - 账户01")
   const fromLabel = '我的钱包 - 账户01';
-  // Detect if recipient is also a local address
   const knownAddrs = Object.values(CHAIN_ADDRESSES);
   const toLabel = knownAddrs.includes(toAddr) ? '我的钱包 - 账户01' : '';
-
-  // Gas banner
-  const gasSym = _scfGasNativeSymbol();
-  const banner = document.getElementById('scfGasBanner');
-  if (!canAfford && gasSym) {
-    document.getElementById('scfGasBannerText').textContent = isTron
-      ? `${gasSym} 余额不足以覆盖网络资源费用（预估燃烧 TRX），请补充后重试`
-      : `${gasSym}余额不足以覆盖主网费用，请补充后重试`;
-    banner.classList.add('visible');
-  } else {
-    banner.classList.remove('visible');
-  }
-
-  // Token logo
   const logoInner = tokenLogoInner(sym, t.logoUrl, 24);
+  const netMeta = NETWORKS.find(n => n.id === net) || { id: net, name: net, color: '#444', logoUrl: '' };
+  const networkLogoInner = netLogoInner(netMeta, 12);
 
-  // Content
   document.getElementById('scfContent').innerHTML = `
     <div class="scf-amount-area">
       <div class="scf-token-logo" style="background:${t.color};">${logoInner}</div>
@@ -14335,10 +14945,18 @@ function openSendConfirm() {
     </div>
     <div class="scf-divider"></div>
     <div class="scf-section">
-      <div class="scf-section-label">${isTron ? '网络资源' : '主网费用'}</div>
-      <div class="scf-gas-row" onclick="openGasSheet()">
+      <div class="scf-section-label">主网名称</div>
+      <div class="scf-network-row">
+        <span class="scf-network-logo" style="background:${netMeta.color || '#444'};">${networkLogoInner}</span>
+        <span class="scf-network-name">${netMeta.name || net}</span>
+      </div>
+    </div>
+    <div class="scf-divider"></div>
+    <div class="scf-section">
+      <div class="scf-section-label">主网费用</div>
+      <div class="scf-gas-row${isTron ? ' static' : ''}"${isTron ? '' : ' onclick="openGasSheet()"'}>
         <span class="scf-gas-text" id="scfGasText">${_scfFmtGas()}</span>
-        <span class="scf-gas-chevron">›</span>
+        ${isTron ? '' : '<span class="scf-gas-chevron">›</span>'}
       </div>
     </div>
     <div class="scf-divider"></div>
@@ -14359,24 +14977,15 @@ function openSendConfirm() {
     </div>
   `;
 
-  // Buttons
-  if (canAfford) {
-    document.getElementById('scfBtnArea').innerHTML = `
-      <div class="scf-btn-row">
-        <button class="scf-btn-cancel" onclick="goBackFromSendConfirm()">取消</button>
-        <button class="scf-btn-confirm" onclick="openSendSignAuth()">确认</button>
-      </div>`;
-  } else {
-    document.getElementById('scfBtnArea').innerHTML = `
-      <button class="scf-btn-topup" onclick="openReceiveQrScreen('${gasSym}','${net}','sendAmount')">${isTron ? '补充 TRX 网络资源' : `补充主网费用(${gasSym})`}</button>`;
-  }
-
   document.getElementById('sendConfirm').classList.add('visible');
+  _scfRefreshAffordance();
   _scfStartGasTimer();
 }
 
 function goBackFromSendConfirm() {
   closeSendSignAuth();
+  _demoForceSolGasInsufficient = false;
+  _demoForceTronGasInsufficient = false;
   _scfStopGasTimer();
   _stopGasSheetTimer();
   document.getElementById('gasSheetOverlay').classList.remove('visible');
@@ -14400,6 +15009,8 @@ function closeSendSignAuth() {
 function _completeSendTransaction() {
   closeSendSignAuth();
   document.getElementById('sendConfirm').classList.remove('visible');
+  _demoForceSolGasInsufficient = false;
+  _demoForceTronGasInsufficient = false;
   const sym = _samToken ? _samToken.symbol : '';
   const qty = _samInputStr || '0';
   const isTron = (_samToken && _samToken.network === 'tron') || _sendNetworkId === 'tron';
@@ -14415,8 +15026,7 @@ function _completeSendTransaction() {
       const extra = isTron && mockTxId ? ` txID …${mockTxId.slice(-8)}` : '';
       showToast(`✓ ${qty} ${sym} 已发送${extra}`, 2500, 'success');
     } else {
-      const failMsg = isTron ? `✕ ${qty} ${sym} 发送失败（可能 OUT_OF_ENERGY）` : `✕ ${qty} ${sym} 发送失败`;
-      showGlobalError('发送失败', failMsg.replace(/^✕\s*/, ''));
+      showToast(`${qty} ${sym} 发送失败`, 2500, 'error');
     }
   }, 2600);
 }
@@ -14434,7 +15044,7 @@ function demoCloseAllOverlays() {
     closeWalletOnboardingSheet, closeSocialLoginSheet,
     closePasskeyPermissionModal, closePasskeyDeviceModal,
     closeImportSeedScanModal, closeError, closeWalletEmailExistsModal,
-    closeMnemonicScreenshotModal,
+    closeMnemonicScreenshotModal, closeCameraPermissionModal,
   ];
   closers.forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
   ['sendConfirm', 'scDetail', 'scInfoScreen', 'mcInfoScreen', 'txDetail', 'txHistoryScreen',
@@ -14471,6 +15081,59 @@ function demoOpenSendAmountScene(symbol, networkId, toAddress, amountStr) {
     _samInputStr = amountStr;
     _samUpdateDisplay();
   }
+}
+
+function demoShowSendAmountBanner(level, message, blockNext) {
+  const banner = document.getElementById('samValidateBanner');
+  if (banner) {
+    banner.className = 'sam-validate-banner show sam-vb-' + (level || 'error');
+    banner.innerHTML = message || '';
+  }
+  const btn = document.getElementById('samNextBtn');
+  if (btn && blockNext !== undefined) btn.disabled = !!blockNext;
+}
+
+function demoOpenSolAmountScene(symbol, amountStr) {
+  demoOpenSendAmountScene(symbol, 'solana', '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU', amountStr || '');
+}
+
+function demoOpenSolGasInsufficientScene() {
+  demoOpenSolAmountScene('USDT', '1');
+  _demoForceSolGasInsufficient = true;
+  openSendConfirm();
+}
+
+function demoOpenTronAmountScene(symbol, address, amountStr, demoKey) {
+  selectWalletById('w-google');
+  switchScreen('screen-web3home');
+  _sendDemoKey = demoKey || '';
+  _sendSymbol = symbol;
+  _sendNetworkId = 'tron';
+  openSendAmount(symbol, 'tron', address);
+  if (amountStr) {
+    _samInputStr = amountStr;
+    _samUpdateDisplay();
+  }
+}
+
+function demoOpenTronGasInsufficientScene() {
+  demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.default, '10');
+  _demoForceTronGasInsufficient = true;
+  openSendConfirm();
+}
+
+function demoOpenImportSeedWithValue(value) {
+  demoOpenImportSeedScreen();
+  const ta = getImportSeedTextarea();
+  if (ta) {
+    ta.value = value || '';
+    onImportSeedInput();
+    updateImportSeedActionBtn();
+  }
+}
+
+function demoShowPrdErrorToast(title, message) {
+  showToast((title || '操作失败') + '：' + (message || '请稍后重试'), 3000, 'error');
 }
 
 function demoOpenBackupMnemonicForError() {
@@ -14532,6 +15195,7 @@ const DEMO_SCENE_RUNNERS = {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
     flowReturnScreen = 'screen-wallet-import-seed';
+    cameraPermissionGranted = true;
     openWalletImportSeedScreen();
     openImportSeedScanModal();
   },
@@ -14597,6 +15261,13 @@ const DEMO_SCENE_RUNNERS = {
     selectWalletById('w-google');
     openSendSelect('web3home');
   },
+  'send-empty-assets'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    _demoForceEmptySendAssets = true;
+    openSendSelect('web3home');
+  },
   'send-usdt-tron'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
@@ -14649,12 +15320,34 @@ const DEMO_SCENE_RUNNERS = {
     document.getElementById('passkeyPermissionModal').classList.add('visible');
     cancelPasskeyPermissionFlow();
   },
+  'err-passkey-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    currentFlow = 'create';
+    walletCreateMethod = 'mnemonic';
+    flowReturnScreen = 'screen-wallet-login';
+    enterWalletLoginEntry('screen-exchange');
+    startWalletPasskeyFlow();
+    completePasskeyVerification(false);
+  },
   'err-email-exists'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
+    selectWalletById('w-email');
     enterWalletLoginEntry('screen-exchange');
     switchScreen('screen-wallet-email-input');
-    openWalletEmailExistsModal('existing@test.com');
+    openWalletEmailExistsModal('0xtterryyxu@gmail.com');
+  },
+  'err-social-exists'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    selectWalletById('w-google');
+    enterWalletLoginEntry('screen-exchange');
+    startPrivyGoogleLogin();
+    setTimeout(() => {
+      closeGoogleOAuthModal();
+      openWalletAccountExistsModal('google', PRIVY_GOOGLE_MOCK_ACCOUNT);
+    }, 120);
   },
   'err-otp-wrong'() {
     demoCloseAllOverlays();
@@ -14677,6 +15370,21 @@ const DEMO_SCENE_RUNNERS = {
     switchScreen('screen-completing');
     animateCompleting();
   },
+  'err-create-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    enterWalletLoginEntry('screen-exchange');
+    demoShowPrdErrorToast('钱包创建失败', '无法完成助记词钱包创建，请稍后重试。');
+  },
+  'err-create-uninterruptible'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    walletCreateMethod = 'mnemonic';
+    currentFlow = 'create';
+    updateWalletCreatingScreenCopy();
+    switchScreen('screen-wallet-importing');
+    showToast('创建中不可中断，请等待完成或失败出口', 2600);
+  },
   'err-import-empty'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
@@ -14694,6 +15402,13 @@ const DEMO_SCENE_RUNNERS = {
       updateImportSeedActionBtn();
     }
   },
+  'err-import-mnemonic-exists'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedWithValue(IMPORT_SEED_MOCK_MNEMONIC);
+    setImportSeedError('钱包已存在');
+    showToast('钱包已存在', 2000, 'error');
+  },
   'err-import-pk'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
@@ -14704,6 +15419,41 @@ const DEMO_SCENE_RUNNERS = {
       setImportSeedError(getImportPrivateKeyErrorMessage('0x1234'));
       updateImportSeedActionBtn();
     }
+  },
+  'err-import-pk-exists'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedWithValue(IMPORT_SEED_MOCK_EVM_KEY);
+    setImportSeedError('钱包已存在');
+    showToast('钱包已存在', 2000, 'error');
+  },
+  'err-import-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedWithValue('abandon ability able about above absent absorb abstract absurd abuse access accident');
+    demoShowPrdErrorToast('钱包导入失败', '无法恢复钱包，请检查助记词或私钥后重试。');
+  },
+  'err-scan-camera'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedScreen();
+    cameraPermissionGranted = false;
+    requestCameraPermissionForScan('importSeed');
+  },
+  'err-scan-unrecognized'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenImportSeedScreen();
+    demoShowPrdErrorToast('扫码失败', '未识别到有效的助记词或私钥。');
+  },
+  'err-backup-passkey-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    pendingBackupWalletId = 'w-mnemonic-3';
+    mnemonicBackupGuideReturnScreen = 'screen-web3home';
+    currentFlow = 'backupMnemonic';
+    startWalletPasskeyFlow();
+    cancelPasskeyPermissionFlow();
   },
   'err-verify-mnemonic'() {
     demoCloseAllOverlays();
@@ -14722,6 +15472,40 @@ const DEMO_SCENE_RUNNERS = {
     demoOpenBackupMnemonicForError();
     openMnemonicScreenshotModal();
   },
+  'err-view-mnemonic-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-mnemonic-2');
+    currentFlow = 'viewMnemonic';
+    viewMnemonicReturnScreen = 'screen-wallet-info';
+    startWalletPasskeyFlow();
+    cancelPasskeyPermissionFlow();
+  },
+  'err-view-pk-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-mnemonic-2');
+    currentFlow = 'viewPrivateKey';
+    viewPrivateKeyReturnScreen = 'screen-wallet-info';
+    startWalletPasskeyFlow();
+    cancelPasskeyPermissionFlow();
+  },
+  'err-delete-passkey-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    openWalletInfo('w-mnemonic-2');
+    onWalletInfoDelete();
+    confirmWalletInfoDelete();
+    cancelPasskeyPermissionFlow();
+  },
+  'err-pending-backup-send'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    web3BannerDismissedWalletIds.delete('w-mnemonic-3');
+    selectWalletById('w-mnemonic-3');
+    openSendAddress('USDT', 'tron', 'web3home', '');
+    showToast('待备份钱包不拦截发送，仅保留首页备份提示', 2600);
+  },
   'err-send-addr-evm'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
@@ -14732,6 +15516,31 @@ const DEMO_SCENE_RUNNERS = {
     clearWeb3EmptyDemoMode();
     demoOpenSendAddressError('SOL', 'solana', 'not-a-valid-solana-address');
   },
+  'err-send-addr-tron'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAddressError('USDT', 'tron', 'invalid-tron-address');
+  },
+  'err-sol-rent'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolAmountScene('SOL', '0.0015');
+  },
+  'err-sol-balance'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolAmountScene('SOL', '1');
+  },
+  'err-sol-gas-insufficient'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolGasInsufficientScene();
+  },
+  'err-sol-ata-missing'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolAmountScene('BONK', '');
+  },
   'err-tron-unactivated'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
@@ -14740,17 +15549,57 @@ const DEMO_SCENE_RUNNERS = {
   'err-tron-low-energy'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
-    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.lowEnergy, '10');
+    demoOpenTronAmountScene('USDT', TRON_SEND_DEMO_ADDR.lowEnergy, '10');
   },
   'err-sol-frozen'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
-    demoOpenSendAmountScene('JITO', 'solana', '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU', '');
+    demoOpenSolAmountScene('JITO', '');
   },
   'err-sol-non-transfer'() {
     demoCloseAllOverlays();
     clearWeb3EmptyDemoMode();
-    demoOpenSendAmountScene('BERN', 'solana', '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU', '');
+    demoOpenSolAmountScene('BERN', '');
+  },
+  'err-sol-transfer-fee'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolAmountScene('PYUSD', '10');
+  },
+  'err-sol-sim-fail'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSolAmountScene('USDT', '10');
+    demoShowSendAmountBanner('error', '模拟交易失败：代币状态异常或接收地址暂不支持', true);
+  },
+  'err-tron-trx-insufficient'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenTronAmountScene('TRX', TRON_SEND_DEMO_ADDR.unactivated, '2', 'trx-low');
+  },
+  'err-tron-trc10-insufficient'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenTronAmountScene('BTT', TRON_SEND_DEMO_ADDR.default, '1000000');
+  },
+  'err-tron-energy-warn'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.energyWarn, '10');
+  },
+  'err-tron-gas-insufficient'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenTronGasInsufficientScene();
+  },
+  'err-send-sign-cancel'() {
+    demoCloseAllOverlays();
+    clearWeb3EmptyDemoMode();
+    demoOpenSendAmountScene('USDT', 'tron', TRON_SEND_DEMO_ADDR.default, '10');
+    openSendConfirm();
+    currentFlow = 'sendSign';
+    startWalletPasskeyFlow();
+    cancelPasskeyPermissionFlow();
   },
   'err-send-fail'() {
     demoCloseAllOverlays();
