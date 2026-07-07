@@ -1,0 +1,4515 @@
+<!DOCTYPE html><html><head>
+      <title>Biya Web3 钱包 · V1.2.0 PRD</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+      
+      
+      
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+/* PRD_SIDEBAR_V1 */
+html body[for=html-export] #sidebar-toc-btn { display: none !important; }
+
+html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #e8e8e8;
+  box-shadow: none;
+  background: #fafafa;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+html body[for=html-export] .sidebar-toc-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  padding: 16px 12px 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+html body[for=html-export] .sidebar-toc-actions {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+html body[for=html-export] .sidebar-toc-actions button {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+html body[for=html-export] .sidebar-toc-actions button:hover {
+  background: #f3f4f6;
+  border-color: #0969da;
+  color: #0969da;
+}
+
+html body[for=html-export] .sidebar-toc-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px 0 24px;
+}
+
+html body[for=html-export] .sidebar-toc-tree,
+html body[for=html-export] .sidebar-toc-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 26px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 22px;
+  margin: 1px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 10px;
+  line-height: 22px;
+  cursor: pointer;
+  text-align: center;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle:hover {
+  color: #0969da;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle[aria-expanded="false"]::before {
+  content: "▸";
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle[aria-expanded="true"]::before {
+  content: "▾";
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link {
+  flex: 1 1 auto;
+  display: block;
+  padding: 3px 10px 3px 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #444;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  word-break: break-word;
+}
+
+html body[for=html-export] .sidebar-toc-tree > .toc-item > .toc-row > .toc-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="3"] > .toc-row > .toc-link {
+  padding-left: 4px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="4"] > .toc-row > .toc-link {
+  padding-left: 8px;
+  font-size: 11.5px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="5"] > .toc-row > .toc-link {
+  padding-left: 12px;
+  font-size: 11px;
+  color: #555;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-children {
+  padding-left: 10px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-children.is-collapsed {
+  display: none;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link:hover {
+  color: #0969da;
+  background: rgba(9, 105, 218, 0.06);
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link.active {
+  color: #0969da;
+  font-weight: 600;
+  border-left-color: #0969da;
+  background: rgba(9, 105, 218, 0.08);
+}
+
+html body[for=html-export] .markdown-preview {
+  margin-left: 300px !important;
+  left: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  transform: none !important;
+  padding: 2em 2em 4em !important;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    width: 260px;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 260px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    display: none;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 0 !important;
+    padding: 1em !important;
+  }
+}
+
+@media print {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    display: none !important;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 0 !important;
+  }
+}
+
+
+      </style>
+      <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function () {
+  var preview = document.querySelector(".markdown-preview");
+  if (!preview) return;
+
+  var headings = Array.prototype.slice.call(
+    preview.querySelectorAll("h1, h2, h3, h4, h5, h6")
+  ).filter(function (el) { return el.id; });
+
+  if (!headings.length) return;
+
+  function titleText(el) {
+    return (el.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function buildTree(nodes) {
+    var root = { children: [] };
+    var stack = [{ level: 0, node: root }];
+    nodes.forEach(function (el) {
+      var level = parseInt(el.tagName.slice(1), 10);
+      var item = {
+        id: el.id,
+        title: titleText(el),
+        level: level,
+        children: []
+      };
+      while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+      stack[stack.length - 1].node.children.push(item);
+      stack.push({ level: level, node: item });
+    });
+    return root.children;
+  }
+
+  function renderList(items) {
+    var ul = document.createElement("ul");
+    ul.className = "sidebar-toc-tree";
+    items.forEach(function (item) {
+      var li = document.createElement("li");
+      li.className = "toc-item";
+      li.setAttribute("data-level", String(item.level));
+
+      var row = document.createElement("div");
+      row.className = "toc-row";
+
+      var toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "toc-toggle";
+      var hasChildren = item.children.length > 0;
+      if (!hasChildren) toggle.classList.add("is-hidden");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "展开或收起");
+
+      var link = document.createElement("a");
+      link.className = "toc-link";
+      link.href = "#" + item.id;
+      link.textContent = item.title;
+
+      row.appendChild(toggle);
+      row.appendChild(link);
+      li.appendChild(row);
+
+      var childUl = null;
+      if (hasChildren) {
+        childUl = renderList(item.children);
+        childUl.classList.add("toc-children");
+        li.appendChild(childUl);
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var expanded = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+          childUl.classList.toggle("is-collapsed", expanded);
+        });
+      }
+
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  var tree = buildTree(headings);
+
+  var sidebar = document.createElement("nav");
+  sidebar.className = "md-sidebar-toc scrollbar-style prd-sidebar-toc";
+  sidebar.setAttribute("aria-label", "文档目录");
+
+  var header = document.createElement("div");
+  header.className = "sidebar-toc-header";
+  header.innerHTML = '<span>目录</span>';
+
+  var actions = document.createElement("div");
+  actions.className = "sidebar-toc-actions";
+  var btnExpand = document.createElement("button");
+  btnExpand.type = "button";
+  btnExpand.textContent = "全部展开";
+  var btnCollapse = document.createElement("button");
+  btnCollapse.type = "button";
+  btnCollapse.textContent = "全部收起";
+  actions.appendChild(btnExpand);
+  actions.appendChild(btnCollapse);
+  header.appendChild(actions);
+
+  var scroll = document.createElement("div");
+  scroll.className = "sidebar-toc-scroll";
+  scroll.appendChild(renderList(tree));
+
+  sidebar.appendChild(header);
+  sidebar.appendChild(scroll);
+  document.body.insertBefore(sidebar, document.body.firstChild);
+  document.body.setAttribute("html-show-sidebar-toc", "");
+
+  function allToggles() {
+    return Array.prototype.slice.call(sidebar.querySelectorAll(".toc-toggle:not(.is-hidden)"));
+  }
+  function allChildLists() {
+    return Array.prototype.slice.call(sidebar.querySelectorAll(".toc-children"));
+  }
+  function setAllExpanded(expanded) {
+    allToggles().forEach(function (btn) {
+      btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+    });
+    allChildLists().forEach(function (ul) {
+      ul.classList.toggle("is-collapsed", !expanded);
+    });
+  }
+  btnExpand.addEventListener("click", function () { setAllExpanded(true); });
+  btnCollapse.addEventListener("click", function () { setAllExpanded(false); });
+
+  var links = Array.prototype.slice.call(sidebar.querySelectorAll(".toc-link"));
+  var sections = links.map(function (a) {
+    return document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+  }).filter(Boolean);
+
+  function setActive() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= scrollY) current = sections[i];
+    }
+    links.forEach(function (a) {
+      a.classList.remove("active");
+      if (current && decodeURIComponent(a.getAttribute("href").slice(1)) === current.id) {
+        a.classList.add("active");
+        try { a.scrollIntoView({ block: "nearest" }); } catch (e) {}
+      }
+    });
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = decodeURIComponent(a.getAttribute("href").slice(1));
+      var el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", "#" + id);
+      }
+    });
+  });
+
+  window.addEventListener("scroll", setActive, { passive: true });
+  setActive();
+});
+
+</script>
+    </head>
+    <body for="html-export" html-show-sidebar-toc>
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="biya-web3-钱包-v120-产品需求文档">Biya Web3 钱包 · V1.2.0 产品需求文档 </h1>
+<h2 id="文档说明">文档说明 </h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文档版本</td>
+<td><strong>V1.2.0</strong>（批次 D8 · 字段级丰满定稿）</td>
+</tr>
+<tr>
+<td>创建日期</td>
+<td>2026-07-06</td>
+</tr>
+<tr>
+<td>最后更新</td>
+<td>2026-07-06（批次 F5 · CMC 映射 + 十链 SPIKE）</td>
+</tr>
+<tr>
+<td>产品经理</td>
+<td>Terry</td>
+</tr>
+<tr>
+<td>基线版本</td>
+<td><a href="prd-v11.html">V1.1 产品需求文档</a>（已实现，本文不展开）</td>
+</tr>
+<tr>
+<td>交互原型</td>
+<td><a href="prototype-v12.html">V1.2 交互原型</a> · <a href="prototype-v12.html">在线 prototype-v12</a></td>
+</tr>
+<tr>
+<td>在线 PRD</td>
+<td><a href="https://terryxu923.github.io/biya-wallet-prototype-demo/prd-v12.html">prd-v12.html</a></td>
+</tr>
+<tr>
+<td>外置附件</td>
+<td><a href="./V1.2_基线与补丁对照.md">基线与补丁对照</a> · <a href="./V1.2_需求追溯矩阵.md">需求追溯矩阵</a> · <a href="./V1.2_验收与测试清单.md">验收与测试清单</a> · <a href="./V1.2_Tatum字段映射表.md">Tatum 字段映射表</a> · <a href="./V1.2_CMC字段映射表.md">CMC 字段映射表</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>文档定位</strong>：本文仅描述 <strong>V1.2.0 相对 V1.1 的新增与变更</strong>。钱包创建、助记词备份、十链单链收发基线、通行密钥发送等已在 V1.1 交付，细节见 V1.1 文档；V1.2 对 V1.1 触点的修订见《基线与补丁对照》。</p>
+<p><strong>撰写语言</strong>：正文以 <strong>中文</strong> 为主；接口路径、JSON 字段名等研发对接标识保留英文，并在表中给出 <strong>中文含义</strong> 对照。</p>
+<hr />
+<h2 id="目录">目录 </h2>
+<ul>
+<li><a href="#1-本版交付摘要">1. 本版交付摘要</a></li>
+<li><strong>2. 资产与首页</strong></li>
+<li><a href="#21-web3-首页">2.1 Web3 首页</a></li>
+<li><a href="#22-多链代币详情页">2.2 多链代币详情页</a></li>
+<li><a href="#23-单链代币详情页">2.3 单链代币详情页</a></li>
+<li><a href="#24-代币信息页">2.4 代币信息页</a></li>
+<li><a href="#25-交易历史页">2.5 交易历史页</a></li>
+<li><a href="#26-交易详情页">2.6 交易详情页</a></li>
+<li><strong>3. 收发</strong></li>
+<li><a href="#31-发送--选币">3.1 发送 · 选币</a></li>
+<li><a href="#32-发送--选网络">3.2 发送 · 选网络</a></li>
+<li><a href="#33-发送--填地址">3.3 发送 · 填地址</a></li>
+<li><a href="#34-发送--确认与结果">3.4 发送 · 确认与结果</a></li>
+<li><a href="#35-接收--选币">3.5 接收 · 选币</a></li>
+<li><a href="#36-接收--选网络">3.6 接收 · 选网络</a></li>
+<li><a href="#37-收款二维码页">3.7 收款二维码页</a></li>
+<li><strong>4. 币种管理</strong></li>
+<li><a href="#41-币种管理页">4.1 币种管理页</a></li>
+<li><a href="#42-选网络筛选页">4.2 选网络筛选页</a></li>
+<li><a href="#43-添加自定义币种页">4.3 添加自定义币种页</a></li>
+<li><strong>5. 横切规则</strong></li>
+<li><a href="#51-全局字段展示与校验规范">5.1 全局字段展示与校验规范</a></li>
+<li><a href="#52-多链资产产品规则">5.2 多链资产产品规则</a></li>
+<li><a href="#53-异常与提示">5.3 异常与提示</a></li>
+<li><a href="#54-性能与安全">5.4 性能与安全</a></li>
+<li><a href="#55-客户端状态">5.5 客户端状态</a></li>
+<li><a href="#6-不在本版范围">6. 不在本版范围</a></li>
+<li><a href="#7-验收与测试">7. 验收与测试</a></li>
+<li><a href="#8-附录--关联文档">8. 附录 · 关联文档</a></li>
+</ul>
+<hr />
+<h2 id="1-本版交付摘要">1. 本版交付摘要 </h2>
+<h3 id="相对-v1-1-的核心变化">相对 V1.1 的核心变化 </h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V1.1</th>
+<th>V1.2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资产展示</td>
+<td>一行代币对应一条链</td>
+<td><strong>全部网络</strong> 下 USDT/USDC/ETH/BNB 等 <strong>合并为一行多链资产</strong></td>
+</tr>
+<tr>
+<td>行情</td>
+<td>占位或未强调</td>
+<td>列表展示 <strong>最新价、24 小时涨跌幅、法币估值</strong></td>
+</tr>
+<tr>
+<td>收发</td>
+<td>选币后直达地址或二维码</td>
+<td>多链资产须 <strong>先选链</strong> 再收发</td>
+</tr>
+<tr>
+<td>币种管理</td>
+<td>未交付</td>
+<td><strong>交付</strong> 添加/移除、网络筛选、自定义币种</td>
+</tr>
+<tr>
+<td>交易历史</td>
+<td>未交付</td>
+<td><strong>交付</strong> 列表与详情</td>
+</tr>
+<tr>
+<td>详情扩展</td>
+<td>单链为主</td>
+<td>多链总览 + 分链 Tab；代币信息、历史摘要</td>
+</tr>
+<tr>
+<td>发送验证</td>
+<td>通行密钥</td>
+<td><strong>不变</strong>（仍不用 PIN 码发送）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="本版交付能力按优先级">本版交付能力（按优先级） </h3>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td>多链资产聚合、代币行情、多链代币详情、发送/接收选网络</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>币种管理、代币信息、交易历史/详情</td>
+</tr>
+<tr>
+<td><strong>规划</strong></td>
+<td>详情页「交易」「跨链桥」完整流程（本版仅入口可见，点击提示即将上线）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="21-web3-首页">2.1 Web3 首页 </h2>
+<p><strong>用户目标</strong><br />
+在有钱包状态下，一眼查看跨链合并后的持仓、单价与涨跌，并进入对应详情或收发。</p>
+<p><strong>相对 V1.1</strong><br />
+列表由「每行一条链」升级为「全部网络下多链币种合并一行」；新增行情行；余额列顺序改为 <strong>数量在上、估值在下</strong>。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>用户进入 Web3 首页 · <strong>币种 Tab</strong>（默认 Tab）</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>已登录且存在激活钱包</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>多链资产聚合（USDT/USDC/ETH/BNB）、行情展示、网络筛选、管理资产入口</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>V1.1 十链白名单、钱包可见范围 过滤、待备份 Banner</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>证券/合约/DEFI Tab 的多链合并；买入/on-ramp</td>
+</tr>
+</tbody>
+</table>
+<h3 id="范围与边界">范围与边界 </h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V1.1</th>
+<th>V1.2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列表行模型</td>
+<td>每行 = 单链实例</td>
+<td><strong>全部网络</strong> 下 D-07 Symbol <strong>聚合为一行</strong></td>
+</tr>
+<tr>
+<td>网络角标</td>
+<td>始终为链 Logo</td>
+<td>多链行 = 🌐；单链行 = 链 Logo</td>
+</tr>
+<tr>
+<td>行点击</td>
+<td>一律进单链详情</td>
+<td>多链行 → 多链代币详情页；单链行 → 单链代币详情页</td>
+</tr>
+<tr>
+<td>行情</td>
+<td>占位或未强调</td>
+<td>单价、24h 涨跌、估值；失败 → 「––」</td>
+</tr>
+<tr>
+<td>余额列</td>
+<td>估值在上、数量在下</td>
+<td><strong>数量在上（主）、估值在下（副）</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<div class="mermaid">flowchart TD
+  A[进入 Web3 首页 · 币种 Tab] --&gt; B{网络筛选}
+  B --&gt;|全部网络| C[合并多链持仓为一行]
+  B --&gt;|指定单链| D[按链过滤 · 不合并]
+  C --&gt; E[渲染资产列表]
+  D --&gt; E
+  E --&gt; F{点击某行}
+  F --&gt;|多链行| G[进入多链代币详情页]
+  F --&gt;|单链行| H[进入单链代币详情页]
+  E --&gt; I[滚动到底 · 管理资产]
+  I --&gt; J[进入币种管理页]</div>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入 Web3 首页</td>
+<td>默认币种 Tab；网络默认「全部网络」</td>
+<td>拉取资产列表并渲染</td>
+</tr>
+<tr>
+<td>2</td>
+<td>保持「全部网络」</td>
+<td>对币种 Tab 执行多链聚合（Symbol ∈ D-07）</td>
+<td>USDT/USDC/ETH/BNB 各 <strong>最多一行</strong>；角标 🌐</td>
+</tr>
+<tr>
+<td>3</td>
+<td>选择指定网络（如 Polygon）</td>
+<td>过滤 <code>networkId === polygon</code>；<strong>取消聚合</strong></td>
+<td>仅该链实例行</td>
+</tr>
+<tr>
+<td>4</td>
+<td>查看列表行</td>
+<td>渲染 Logo、Symbol、单价、涨跌、数量、估值</td>
+<td>行情字段为 null 时对应位「––」</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点击多链行</td>
+<td>携带 <code>symbol</code> 打开 <a href="#22-多链代币详情页">多链代币详情页</a></td>
+<td>默认「总览」Tab</td>
+</tr>
+<tr>
+<td>6</td>
+<td>点击单链行</td>
+<td>携带 <code>symbol</code> + <code>networkId</code> 打开 <a href="#23-单链代币详情页">单链代币详情页</a></td>
+<td>导航带链角标</td>
+</tr>
+<tr>
+<td>7</td>
+<td>切换钱包</td>
+<td>按钱包类型过滤可见链实例后重算列表</td>
+<td>列表与顶栏总余额刷新</td>
+</tr>
+<tr>
+<td>8</td>
+<td>币种 Tab 滚动至底部</td>
+<td>展示「管理资产」入口</td>
+<td>进入 <a href="#41-币种管理页">币种管理页</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<p>各字段展示规则：<strong>数值、涨跌幅</strong> 引用 <a href="#51-全局字段展示与校验规范">5.1 全局字段展示与校验规范</a>；地址缩略、图标降级、时间格式、复制行为见各页字段表。<strong>第三方数据源</strong> 列标注外部数据提供方；聚合与映射逻辑见同表下一列。下表补充首页特有逻辑。</p>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代币图标</td>
+<td>Tatum · Token Details（主）；CoinMarketCap · Metadata（Logo 兜底）</td>
+<td>按 symbol（+ networkId）取 Logo</td>
+<td>圆形图标；无图或加载失败→币种符号 <strong>首字母</strong></td>
+<td>—</td>
+<td>点击行进详情</td>
+</tr>
+<tr>
+<td>网络角标</td>
+<td>BiyaPay · 十链网络配置</td>
+<td>多链行→地球标识+「多链」；单链行→链标识</td>
+<td>链 Logo；无图或加载失败→网络名 <strong>首字母</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>币种简称</td>
+<td>BiyaPay · 资产列表（聚合自 Tatum · Wallet Portfolio）</td>
+<td>原样</td>
+<td>大写展示</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>单价</td>
+<td>Tatum · Exchange Rate API（主）；CoinMarketCap · Quotes（兜底）</td>
+<td>多链行取 <strong>估值最高链实例</strong> 的行情；同估值取 networkId 字典序最小</td>
+<td>美元符号 + <a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>null→「––」</td>
+<td>不阻断点击</td>
+</tr>
+<tr>
+<td>24h 涨跌</td>
+<td>同上行单价</td>
+<td>与单价同源链实例</td>
+<td><a href="#涨跌幅分层展示24h">涨跌幅分层规范</a></td>
+<td>null→「––」</td>
+<td>不阻断点击</td>
+</tr>
+<tr>
+<td>持仓数量（主）</td>
+<td>Tatum · Wallet Portfolio</td>
+<td>多链行=可见链余额相加；单链行=该链余额</td>
+<td>按币种 decimals 展示，去尾零</td>
+<td>0 显示「0」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>法币估值（副）</td>
+<td>客户端（price × balance）</td>
+<td>多链行用合计数量；单链行用该链数量；price 见上行</td>
+<td>美元符号 + <a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>无单价→「––」；有单价且余额为 0→「$0」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>顶栏总余额</td>
+<td>客户端（累加各行法币估值）</td>
+<td>仅累加 <strong>有法币估值</strong> 的行；缺失估值行不计入</td>
+<td><a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>全无可估值行→「––」</td>
+<td>允许四舍五入误差</td>
+</tr>
+</tbody>
+</table>
+<p><strong>聚合 Symbol 集合（D-07）</strong>：<code>USDT</code>、<code>USDC</code>、<code>ETH</code>、<code>BNB</code>（后台可扩展，客户端以配置下发为准）。</p>
+<p><strong>排序规则</strong>：有法币估值 → 按估值 <strong>降序</strong>；无估值 → 按数量 <strong>降序</strong>；同值 → Symbol <strong>字母序 A→Z</strong>；再相同则按 networkId 字典序稳定排序。</p>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认 · 全部网络</td>
+<td>币种 Tab + 全部网络</td>
+<td>含多链聚合行 + 行情</td>
+<td>进详情、筛网络、收发、管理资产</td>
+</tr>
+<tr>
+<td>单链筛选</td>
+<td>选择 Polygon 等</td>
+<td><strong>无</strong>多链聚合行</td>
+<td>同 V1.1 单链体验</td>
+</tr>
+<tr>
+<td>空列表</td>
+<td>白名单内无资产</td>
+<td>空态文案</td>
+<td>切换 Tab/网络；进币种管理添加</td>
+</tr>
+<tr>
+<td>行情失败</td>
+<td>接口超时或字段 null</td>
+<td>对应字段「––」</td>
+<td><strong>不阻断</strong>点击与收发</td>
+</tr>
+<tr>
+<td>行情加载中</td>
+<td>首次请求进行中</td>
+<td>骨架/占位（设计稿）</td>
+<td>可切换 Tab（若产品允许）</td>
+</tr>
+<tr>
+<td>待备份 Banner</td>
+<td>V1.1 待备份钱包</td>
+<td>Banner + 列表</td>
+<td>继承 V1.1；<strong>不因 V1.2 聚合而隐藏</strong></td>
+</tr>
+<tr>
+<td>管理资产入口</td>
+<td>仅证券/币种 Tab 滚到底</td>
+<td>「管理资产」按钮</td>
+<td>合约/DEFI Tab <strong>不出现</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>反馈</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点击多链行</td>
+<td>聚合行</td>
+<td>打开 <a href="#22-多链代币详情页">多链代币详情页</a></td>
+<td>仅传 symbol</td>
+</tr>
+<tr>
+<td>点击单链行</td>
+<td>非聚合行</td>
+<td>打开 <a href="#23-单链代币详情页">单链代币详情页</a></td>
+<td>传币种符号 + 网络标识</td>
+</tr>
+<tr>
+<td>切换网络 → 全部</td>
+<td>网络弹层选「全部网络」</td>
+<td>列表重新聚合；总余额重算</td>
+<td>—</td>
+</tr>
+<tr>
+<td>切换网络 → 单链</td>
+<td>网络弹层选具体链</td>
+<td>取消聚合；仅显示该链行</td>
+<td>—</td>
+</tr>
+<tr>
+<td>切换钱包</td>
+<td>钱包选择器</td>
+<td>列表按可见范围刷新</td>
+<td>EVM 私钥钱包不含 Solana/TRON 实例</td>
+</tr>
+<tr>
+<td>管理资产</td>
+<td>滚动到底点击</td>
+<td>打开币种管理页</td>
+<td>P1 能力</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据管理与接口契约">数据管理与接口契约 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资产列表</td>
+<td>BiyaPay 后端聚合 <strong>Tatum · Wallet Portfolio</strong> 分链明细；客户端按 D-07 在「全部网络」下合并</td>
+</tr>
+<tr>
+<td>币种白名单</td>
+<td>仅展示已添加白名单内资产（与币种管理同步）</td>
+</tr>
+<tr>
+<td>钱包可见范围</td>
+<td>见 <a href="#钱包可见网络">钱包可见网络</a></td>
+</tr>
+<tr>
+<td>行情缓存</td>
+<td>建议 TTL <strong>60s</strong>；Tab 切换不强制刷新</td>
+</tr>
+<tr>
+<td>总余额</td>
+<td>当前筛选范围内各行法币估值之和</td>
+</tr>
+</tbody>
+</table>
+<p><strong>行情接口（BiyaPay Adapter · 研发占位）</strong></p>
+<table>
+<thead>
+<tr>
+<th>BiyaPay 接口</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>第三方封装</th>
+<th>超时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/market/prices</code></td>
+<td>GET</td>
+<td><code>symbols[]</code></td>
+<td><code>{ symbol, price, change24h, updatedAt }[]</code></td>
+<td><strong>Tatum · Exchange Rate API</strong>（主）；<strong>CoinMarketCap · Quotes</strong>（symbol 无报价时兜底）</td>
+<td><strong>3s</strong> 行级降级「––」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="22-多链代币详情页">2.2 多链代币详情页 </h2>
+<p><strong>用户目标</strong><br />
+查看同一币种在各链上的合计持仓、分布占比，并可切换至某条链的单链视图进行收发。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>新增</strong> 页面；由首页多链资产行进入。V1.1 单链详情行为在分链 Tab 内 <strong>完整保留</strong>。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>首页点击 <strong>多链聚合行</strong>（🌐 角标）</td>
+</tr>
+<tr>
+<td><strong>必传参数</strong></td>
+<td><code>symbol</code>（如 USDT）</td>
+</tr>
+<tr>
+<td><strong>默认视图</strong></td>
+<td>「总览」Tab：各链分布 + 合计余额</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>交易/跨链 <strong>完整流程</strong>（本版仅入口 + Toast）；链上实时索引服务</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>首页点 USDT 等多链行</td>
+<td>打开多链代币详情页（全屏容器）；过滤钱包可见范围 内链实例</td>
+<td>默认「总览」Tab</td>
+</tr>
+<tr>
+<td>2</td>
+<td>查看总览</td>
+<td>计算各链数量/估值及占比</td>
+<td>资产分布列表按估值降序</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点某链分布行或 Tab</td>
+<td>切换至该链 <strong>单链内容区</strong>（复用单链详情布局）</td>
+<td>余额区、操作区、地址、交易摘要更新为该链</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tab 栏点展开</td>
+<td>展示网络下拉</td>
+<td>可选其他链 Tab</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点发送 / 接收</td>
+<td>携带当前 <code>symbol</code> + 当前 Tab 的 <code>networkId</code></td>
+<td><strong>跳过</strong>发送/接收选币与选网，直达地址层或二维码层</td>
+</tr>
+<tr>
+<td>6</td>
+<td>点交易 / 跨链桥</td>
+<td>—</td>
+<td>Toast「即将上线」</td>
+</tr>
+<tr>
+<td>7</td>
+<td>点 ⓘ</td>
+<td>打开代币信息页（多链合约列表）</td>
+<td>见 <a href="#24-代币信息页">代币信息页</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>点交易摘要某行</td>
+<td>打开交易详情页</td>
+<td>见 <a href="#26-交易详情页">交易详情页</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>点「查看更多 ›」</td>
+<td>打开交易历史页</td>
+<td>见 <a href="#25-交易历史页">交易历史页</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>返回</td>
+<td>关闭详情层</td>
+<td>回首页，列表状态保持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<h3 id="导航栏">导航栏 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>返回</td>
+<td>关闭多链详情</td>
+</tr>
+<tr>
+<td>Logo</td>
+<td>代币 Logo；<strong>无</strong>网络角标</td>
+</tr>
+<tr>
+<td>标题</td>
+<td>Symbol（如 USDT）</td>
+</tr>
+<tr>
+<td>ⓘ</td>
+<td>进入 <a href="#24-代币信息页">代币信息页</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="余额区">余额区 </h3>
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>主展示（数量）</th>
+<th>副展示（法币估值）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总览</td>
+<td>各链实例数量 <strong>相加</strong></td>
+<td>各链估值相加</td>
+</tr>
+<tr>
+<td>某链 Tab</td>
+<td>该链持仓数量</td>
+<td>该链法币估值</td>
+</tr>
+</tbody>
+</table>
+<h3 id="总览-资产分布">总览 · 资产分布 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络标识 + 名称</td>
+<td>BiyaPay · 十链网络配置</td>
+<td>查 networkId 展示名与 Logo</td>
+<td>链 Logo + 展示名</td>
+<td>Logo 缺失→网络名首字</td>
+<td>点击行切换至该链 Tab</td>
+</tr>
+<tr>
+<td>占比</td>
+<td>客户端</td>
+<td>该链估值 ÷ 合计估值；合计估值为 0 时不除</td>
+<td>≥1% 保留 1 位小数 + %；0&lt;占比&lt;1%→「&lt;1%」；占比=0→「0%」</td>
+<td>无单价链实例估值按 0 计</td>
+<td>—</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>Tatum · Wallet Portfolio</td>
+<td>该链 balance</td>
+<td><a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>法币估值</td>
+<td>Tatum · Exchange Rate API（主）；CoinMarketCap · Quotes（兜底）</td>
+<td>price × balance；取该链实例行情</td>
+<td><a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>无单价→「––」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>列表排序</td>
+<td>客户端</td>
+<td>按法币估值降序；无估值按数量降序；再按 networkId 字典序</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="链-tab-栏">链 Tab 栏 </h3>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首 Tab</td>
+<td>「总览」（固定）</td>
+</tr>
+<tr>
+<td>其余 Tab</td>
+<td>可见范围内各链实例</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按该链持仓 <strong>法币估值降序</strong>；同值按 networkId 字典序</td>
+</tr>
+<tr>
+<td>可见范围</td>
+<td>EVM 私钥钱包 <strong>不展示</strong> Solana、TRON 分链标签</td>
+</tr>
+</tbody>
+</table>
+<a id="分链-tab--单链内容区" aria-hidden="true"></a><h3 id="分链-tab-单链内容区">分链 Tab · 单链内容区 </h3>
+<p>分链 Tab 选中某链后展示的单链视图。<a href="#23-单链代币详情页">单链代币详情页</a> 展示字段与以下各节 <strong>一致</strong>。</p>
+<a id="分链-tab--操作区" aria-hidden="true"></a><h3 id="分链-tab-操作区">分链 Tab · 操作区 </h3>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>本版行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发送</td>
+<td>直达发送填地址页（已带 symbol + networkId）</td>
+</tr>
+<tr>
+<td>接收</td>
+<td>直达收款二维码页</td>
+</tr>
+<tr>
+<td>交易</td>
+<td>Toast「即将上线」</td>
+</tr>
+<tr>
+<td>跨链桥</td>
+<td>Toast「即将上线」</td>
+</tr>
+</tbody>
+</table>
+<a id="分链-tab--接收地址区" aria-hidden="true"></a><h3 id="分链-tab-接收地址区">分链 Tab · 接收地址区 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>固定文案</td>
+<td>—</td>
+<td>「接收地址」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>地址文本</td>
+<td>BiyaPay · 钱包派生地址缓存</td>
+<td>当前钱包在该 networkId 的派生地址</td>
+<td><strong>完整地址</strong>（可换行）</td>
+<td>地址未派生→不展示复制</td>
+<td>点复制写入 <strong>完整地址</strong>（非缩略）；Toast「地址已复制」</td>
+</tr>
+</tbody>
+</table>
+<a id="分链-tab--交易摘要区" aria-hidden="true"></a><h3 id="分链-tab-交易摘要区">分链 Tab · 交易摘要区 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>区标题</td>
+<td>「交易历史」</td>
+</tr>
+<tr>
+<td>右上角</td>
+<td>「查看更多 ›」→ <a href="#25-交易历史页">交易历史页</a></td>
+</tr>
+<tr>
+<td><strong>数据范围</strong></td>
+<td>当前 <code>symbol</code> + 当前 Tab 对应 <code>networkId</code> 的交易记录</td>
+</tr>
+<tr>
+<td><strong>排序</strong></td>
+<td>按 <code>datetime</code> <strong>降序</strong>（最新在上）</td>
+</tr>
+<tr>
+<td><strong>条数上限</strong></td>
+<td><strong>最多展示 5 条</strong>；超出部分仅在 <a href="#25-交易历史页">交易历史页</a> 可见</td>
+</tr>
+<tr>
+<td><strong>分组</strong></td>
+<td>按交易日 <code>date</code>（格式 <code>YYYY/MM/DD</code>）插入分组标题</td>
+</tr>
+<tr>
+<td><strong>出现范围</strong></td>
+<td><strong>仅分链 Tab</strong>；总览 Tab <strong>无</strong>本区</td>
+</tr>
+<tr>
+<td><strong>空态</strong></td>
+<td>无记录时不展示列表行；保留区标题及「查看更多 ›」入口</td>
+</tr>
+<tr>
+<td><strong>点击行</strong></td>
+<td>打开 <a href="#26-交易详情页">交易详情页</a>，传入完整交易对象</td>
+</tr>
+</tbody>
+</table>
+<a id="交易摘要--列表行" aria-hidden="true"></a><h3 id="交易摘要-列表行">交易摘要 · 列表行 </h3>
+<p>与 <a href="#25-交易历史页">交易历史页</a> 列表 <strong>不同</strong>；字段规则见 <a href="#交易列表字段规范">交易列表字段规范</a>。</p>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>左侧标识</td>
+<td>客户端（映射 iconType）</td>
+<td>五类交易类型</td>
+<td><strong>仅展示交易类型标识</strong>；不展示代币图标、不展示网络角标</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>类型主文案</td>
+<td>Tatum · Transaction History → <code>type</code></td>
+<td>与 iconType 一致</td>
+<td>接收/发送/授权/取消授权/交易</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>副文案</td>
+<td>Tatum · Transaction History → from/to/spender</td>
+<td>客户端按类型拼接前缀 + 列表地址缩略（见 <a href="#交易列表字段规范">2.5 交易列表字段规范</a>）</td>
+<td>兑换类无副文案</td>
+<td>地址为空→不展示副文案行</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 收发</td>
+<td>Tatum · Transaction History → amt/sym/positive</td>
+<td>接口原样展示数量与符号；不二次格式化小数</td>
+<td>接收绿色带「+」；发送红色带「-」</td>
+<td>amt 空→不展示金额</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>金额 · 授权</td>
+<td>Tatum · Transaction History → approveAmt/sym</td>
+<td>null→「无限」；否则「额度 + 币种」</td>
+<td>授权专用色</td>
+<td>—</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>金额 · 取消授权</td>
+<td>Tatum · Transaction History → sym</td>
+<td>—</td>
+<td>仅展示币种符号</td>
+<td>—</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>金额 · 兑换</td>
+<td>Tatum · Transaction History → pay/recv 字段</td>
+<td><strong>代币详情页交易摘要区</strong>：若收到币种=当前详情币种，上行强调收到、下行弱化支付；否则上行强调支付、下行弱化收到</td>
+<td>双行数量+币种</td>
+<td>任一侧为空→仅展示有值侧</td>
+<td>点行进详情</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总览 Tab</td>
+<td>资产分布列表 + 合计余额（<strong>无</strong>交易摘要区）</td>
+<td>切换 Tab、点分布行、返回</td>
+</tr>
+<tr>
+<td>分链 Tab</td>
+<td>单链视图（操作区/地址/交易摘要）</td>
+<td>收发、信息、历史、交易/跨链 Toast</td>
+</tr>
+<tr>
+<td>可见范围过滤后仅 1 链</td>
+<td>仍展示总览 + 该链 Tab</td>
+<td>展示与可操作同上行「总览 Tab」</td>
+</tr>
+<tr>
+<td>交易摘要空</td>
+<td>仅标题 + 查看更多</td>
+<td>可进入 <a href="#25-交易历史页">交易历史页</a></td>
+</tr>
+<tr>
+<td>交易摘要有数据</td>
+<td>最多 5 条 + 日期分组</td>
+<td>点行进详情</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总览合计余额</td>
+<td>必须等于各链 <code>balance</code> 之和（允许精度误差）</td>
+</tr>
+<tr>
+<td>切换 Tab</td>
+<td>内容区、余额区同步切换；进入分链 Tab 时交易摘要区按该链刷新</td>
+</tr>
+<tr>
+<td>复制接收地址</td>
+<td>Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>交易/跨链按钮</td>
+<td>Toast「即将上线」，<strong>不</strong>跳转</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据管理">数据管理 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>链实例集合</td>
+<td>打开时按钱包可见范围过滤；与首页聚合行各链实例一致</td>
+</tr>
+<tr>
+<td>交易摘要数据源</td>
+<td>生产：BiyaPay 聚合 <strong>Tatum · Transaction History</strong>（<code>symbol</code> + <code>networkId</code> + <code>limit=5</code>）；原型用内置模拟数据</td>
+</tr>
+<tr>
+<td>Tab 状态</td>
+<td>会话内记忆当前 Tab；关闭详情后 <strong>不</strong>跨会话持久化</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="23-单链代币详情页">2.3 单链代币详情页 </h2>
+<p><strong>用户目标</strong><br />
+查看某一链上单一币种的余额、收发入口与近期交易。</p>
+<p><strong>相对 V1.1</strong><br />
+保留 V1.1 单链详情全部行为；V1.2 新增与多链详情的 <strong>分流规则</strong> 及 <strong>交易摘要区</strong>（V1.1 为精简体，无完整历史摘要）。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>首页单链行；或证券等非币种 Tab 行</td>
+</tr>
+<tr>
+<td><strong>必传参数</strong></td>
+<td><code>symbol</code> + <code>networkId</code></td>
+</tr>
+<tr>
+<td><strong>容器</strong></td>
+<td>单链代币详情页（全屏容器；与多链代币详情页容器分离）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="分流规则">分流规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>进入页面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首页「全部网络」下的多链合并行</td>
+<td><a href="#22-多链代币详情页">多链代币详情页</a>（非本章）</td>
+</tr>
+<tr>
+<td>首页指定单链筛选下的行</td>
+<td><a href="#23-单链代币详情页">单链代币详情页</a></td>
+</tr>
+<tr>
+<td>证券等非 CRYPTO Tab 的行</td>
+<td><a href="#23-单链代币详情页">单链代币详情页</a></td>
+</tr>
+<tr>
+<td>多链详情内切换某链 Tab</td>
+<td>内容区为单链视图，容器仍为 <a href="#22-多链代币详情页">多链代币详情页</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>必传参数</th>
+<th>导航 Logo 角标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单链（single）</td>
+<td><code>symbol</code> + <code>networkId</code></td>
+<td><strong>有</strong>链 Logo 角标</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<p>与 <a href="#22-多链代币详情页">多链代币详情页</a> 自 <a href="#分链-tab--单链内容区">分链 Tab · 单链内容区</a> 起各分链小节 <strong>完全一致</strong>，包括：</p>
+<ul>
+<li>导航：返回、Logo <strong>带链角标</strong>、Symbol、ⓘ  </li>
+<li>余额区：该链数量（主）+ 法币估值（副）  </li>
+<li><a href="#分链-tab--操作区">分链 Tab · 操作区</a>：发送、接收、交易、跨链桥（后两者 Toast）  </li>
+<li><a href="#分链-tab--接收地址区">分链 Tab · 接收地址区</a> + 复制  </li>
+<li><a href="#分链-tab--交易摘要区">分链 Tab · 交易摘要区</a>（symbol + networkId 过滤；最多 5 条；列表行规则同 <a href="#交易摘要--列表行">交易摘要 · 列表行</a>）</li>
+</ul>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认</td>
+<td>单链余额 + 四按钮 + 地址 + 摘要</td>
+<td>同 <a href="#分链-tab--单链内容区">多链代币详情页 · 分链 Tab</a> 各小节</td>
+</tr>
+<tr>
+<td>ETH · ethereum 原生币</td>
+<td>规则同上行「默认」；<a href="#24-代币信息页">代币信息页</a> <strong>无</strong>合约区</td>
+<td>ⓘ 仍可用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点发送</td>
+<td>直达填地址页（跳过选币选网）</td>
+</tr>
+<tr>
+<td>点接收</td>
+<td>直达收款二维码页</td>
+</tr>
+<tr>
+<td>点 ⓘ</td>
+<td>单链代币信息页（类型标签为网络名）</td>
+</tr>
+<tr>
+<td>点摘要行 / 查看更多</td>
+<td>同 <a href="#分链-tab--交易摘要区">多链代币详情页 · 交易摘要区</a> 规则</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="24-代币信息页">2.4 代币信息页 </h2>
+<p><strong>用户目标</strong><br />
+查看币种市场数据与各链合约地址（如有）。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 未交付；V1.2 正式启用。单链与多链详情共用 <strong>同一信息结构</strong>。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口</strong></td>
+<td>单链或多链详情导航栏 <strong>ⓘ</strong></td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>全量 PRD §7.5 字段与展开规则</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>实时行情刷新轮询；链上合约 bytecode 校验；官网/社交媒体外链</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<div class="mermaid">flowchart TD
+  A[详情页 · 点 ⓘ] --&gt; B{来源容器}
+  B --&gt;|单链详情| C[打开单链代币信息层]
+  B --&gt;|多链详情| D[打开多链代币信息层]
+  C --&gt; E[渲染市场数据 + 合约区]
+  D --&gt; E
+  E --&gt; F{用户操作}
+  F --&gt;|复制合约| G[Toast 地址已复制]
+  F --&gt;|合约超过3条| H[点查看全部展开]
+  F --&gt;|返回| I[关闭信息层 · 详情 Tab 不变]</div>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>单链详情点 ⓘ</td>
+<td>打开单链代币信息层</td>
+<td>展示市场数据</td>
+</tr>
+<tr>
+<td>2</td>
+<td>多链详情点 ⓘ</td>
+<td>打开多链代币信息层</td>
+<td>合约列表含 <strong>各链实例</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>查看市场数据</td>
+<td>读取行情/market 缓存</td>
+<td>市值、供应量；缺失「––」</td>
+</tr>
+<tr>
+<td>4</td>
+<td>合约超过 3 条</td>
+<td>默认折叠</td>
+<td>点「查看全部」展开</td>
+</tr>
+<tr>
+<td>5</td>
+<td>复制合约</td>
+<td>写入剪贴板</td>
+<td>Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>6</td>
+<td>返回</td>
+<td>关闭信息层</td>
+<td>详情 Tab 状态 <strong>不变</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logo</td>
+<td>Tatum · Token Details（主）；CoinMarketCap · Metadata（Logo 兜底）</td>
+<td>按 symbol</td>
+<td>代币图标；无图或加载失败→币种符号 <strong>首字母</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>类型标签</td>
+<td>客户端</td>
+<td>symbol、networkId、是否多链</td>
+<td>优先级：稳定币→「稳定币」；原生币→主链名；多链详情→「多链资产」；单链→网络名</td>
+<td>单行标签</td>
+<td>—</td>
+</tr>
+<tr>
+<td>市值</td>
+<td>CoinMarketCap · Quotes / Metadata</td>
+<td>—</td>
+<td><a href="#数值分层展示价格余额估值">数值分层规范</a></td>
+<td>null→「––」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>最大供应量</td>
+<td>CoinMarketCap · Quotes / Metadata</td>
+<td>拼接 symbol</td>
+<td>数量分层 + 空格 + symbol</td>
+<td>null→「––」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>流通供应量</td>
+<td>CoinMarketCap · Quotes / Metadata</td>
+<td>同最大供应量</td>
+<td>展示规则同上行最大供应量</td>
+<td>null→「––」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>合约地址行</td>
+<td>Tatum · Token Details → contractAddress</td>
+<td>原生币（合约地址为空）<strong>不展示本区块</strong></td>
+<td>网络标识 + 合约缩略（前 6 + <code>...</code> + 后 4）</td>
+<td>无合约映射→不展示该行</td>
+<td>复制 <strong>完整合约地址</strong>（非缩略）；Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>合约折叠</td>
+<td>客户端</td>
+<td>合约行数</td>
+<td>默认最多 3 条</td>
+<td>超出显示「查看全部（N）」；可展开/收起</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>本版不含</strong>：官方网站、社交媒体、区块浏览器外链入口。</p>
+</blockquote>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有完整市场数据</td>
+<td>三项均有值</td>
+</tr>
+<tr>
+<td>无行情 Symbol</td>
+<td>市值/供应量为「––」</td>
+</tr>
+<tr>
+<td>原生币 ETH</td>
+<td>无合约地址区</td>
+</tr>
+<tr>
+<td>USDT 多链</td>
+<td>合约区含 Ethereum、Polygon、TRON 等多行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复制合约地址</td>
+<td>Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>展开/收起合约</td>
+<td>列表高度动画切换</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据管理">数据管理 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>市场数据</td>
+<td>原型内置映射表；生产 BiyaPay <code>/market/token/{symbol}</code> → <strong>CoinMarketCap · Quotes / Metadata</strong></td>
+</tr>
+<tr>
+<td>合约列表</td>
+<td>Tatum · Token Details：多链=可见范围内各链 contractAddress；单链=当前链一条</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="25-交易历史页">2.5 交易历史页 </h2>
+<p><strong>用户目标</strong><br />
+查看钱包近期链上活动记录，按网络筛选，并进入单笔详情。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 未交付。V1.2 交付：<strong>代币详情页 · 交易摘要区</strong> + <strong><a href="#25-交易历史页">交易历史页</a></strong> + 网络筛选。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口</strong></td>
+<td>代币详情页 · 交易摘要区「查看更多 ›」</td>
+</tr>
+<tr>
+<td><strong>数据范围</strong></td>
+<td>当前钱包 · <strong>全资产</strong> · 默认近 <strong>14 天</strong>（可配置）</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>链上实时索引；分页加载（本版一次拉取或前端模拟全量）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<div class="mermaid">flowchart TD
+  A[代币详情页 · 查看更多] --&gt; B[打开交易历史页]
+  B --&gt; C[网络筛选 = 全部网络]
+  C --&gt; D[按日期分组渲染列表]
+  D --&gt; E{用户操作}
+  E --&gt;|点记录| F[打开交易详情页]
+  E --&gt;|点顶栏网络图标| G[打开网络筛选子层]
+  G --&gt; H[选网后刷新列表]
+  E --&gt;|返回| I[关闭交易历史页 · 回代币详情页]
+  F --&gt;|返回| D</div>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点「查看更多 ›」</td>
+<td>打开交易历史页；<code>networkFilter = all</code></td>
+<td>展示全部记录</td>
+</tr>
+<tr>
+<td>2</td>
+<td>默认列表</td>
+<td>按 <code>datetime</code> 降序；按 <code>date</code> 分组</td>
+<td>含多条记录时分组标题</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点顶栏网络图标</td>
+<td>打开网络筛选子层</td>
+<td>首项「全部网络」+ 十链</td>
+</tr>
+<tr>
+<td>4</td>
+<td>选择某网络</td>
+<td>过滤 <code>networkId === 所选</code></td>
+<td>仅该链记录</td>
+</tr>
+<tr>
+<td>5</td>
+<td>筛选后无记录</td>
+<td>—</td>
+<td>文案 <strong>「暂无交易记录」</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>点列表行</td>
+<td>携带交易对象打开交易详情</td>
+<td>见 <a href="#26-交易详情页">交易详情页</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>从详情返回</td>
+<td>关闭交易详情</td>
+<td><strong>仍停留</strong>交易历史页</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点返回</td>
+<td>关闭交易历史页</td>
+<td>回代币详情页</td>
+</tr>
+</tbody>
+</table>
+<h3 id="代币详情页交易摘要区-vs-交易历史页-列表展示对照">代币详情页交易摘要区 vs 交易历史页 · 列表展示对照 </h3>
+<p>两处列表 <strong>共用「交易列表字段规范」中的金额与副文案规则</strong>，但 <strong>左侧标识与数据范围不同</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>代币详情页 · 交易摘要区</th>
+<th>交易历史页 · 列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>出现位置</td>
+<td>多链/单链代币详情页 · <strong>分链 Tab</strong> 内嵌区</td>
+<td><a href="#25-交易历史页">2.5 交易历史页</a> 独立页面</td>
+</tr>
+<tr>
+<td>数据范围</td>
+<td>当前 symbol + networkId；最多 5 条</td>
+<td>当前钱包全资产；近 14 天</td>
+</tr>
+<tr>
+<td><strong>左侧标识</strong></td>
+<td><strong>仅</strong> 交易类型标识</td>
+<td><strong>代币图标 + 网络角标</strong>；兑换为双代币叠放</td>
+</tr>
+<tr>
+<td>副文案 / 金额</td>
+<td>见 <a href="#交易列表字段规范">交易列表字段规范</a></td>
+<td>规则同左列（兑换强调规则见该节 <a href="#列表行字段代币详情页交易摘要区-vs-交易历史页">交易历史页上下文</a> 行）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第三方数据分工tatum-coinmarketcap">第三方数据分工（Tatum / CoinMarketCap） </h3>
+<table>
+<thead>
+<tr>
+<th>数据类别</th>
+<th>主源</th>
+<th>兜底</th>
+<th>BiyaPay 封装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交易列表与详情字段</td>
+<td><strong>Tatum · Transaction History v4</strong></td>
+<td>—</td>
+<td><code>GET /transactions</code></td>
+</tr>
+<tr>
+<td>代币 Logo（交易历史页列表左侧）</td>
+<td><strong>Tatum · Token Details</strong></td>
+<td><strong>CoinMarketCap · Metadata</strong>（Logo）</td>
+<td>元数据缓存</td>
+</tr>
+<tr>
+<td>spenderName</td>
+<td>Tatum 合约/项目解析</td>
+<td>客户端「未知项目」</td>
+<td>—</td>
+</tr>
+<tr>
+<td>日期分组 / 网络筛选</td>
+<td>客户端</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>交易历史页 <strong>不从 CoinMarketCap 取价</strong>；收发/授权/兑换金额均来自 Tatum 交易记录原文字段。代币详情页交易摘要区与交易历史页共用 Tatum 交易数据，仅左侧标识与数据范围不同（见上节对照表）。</p>
+</blockquote>
+<h3 id="交易列表字段规范">交易列表字段规范 </h3>
+<p>代币详情页交易摘要区与交易历史页 <strong>共用</strong> 下列规则（六列表中未重复列出的交互，默认 <strong>点击整行进交易详情</strong>）。</p>
+<h4 id="副文案与地址取值">副文案与地址取值 </h4>
+<p><strong>列表地址缩略</strong>（副文案中的对手方/合约地址）：长度 <strong>&gt; 12</strong> → 前 6 位 + <code>...</code> + 后 4 位；长度 <strong>≤ 12</strong> → 完整展示；地址为空 → 不展示副文案行。列表副文案 <strong>不提供</strong> 地址复制。</p>
+<table>
+<thead>
+<tr>
+<th>交易类型</th>
+<th>前缀</th>
+<th>取值字段</th>
+<th>业务含义</th>
+<th>展示处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>「从:」</td>
+<td>fromAddr</td>
+<td>对手方=转出方</td>
+<td>按上表缩略；<strong>不展示本钱包地址</strong></td>
+</tr>
+<tr>
+<td>发送</td>
+<td>「到:」</td>
+<td>toAddr</td>
+<td>对手方=收款方</td>
+<td>按上表缩略</td>
+</tr>
+<tr>
+<td>授权 / 取消授权</td>
+<td>无前缀</td>
+<td>spenderAddr</td>
+<td>被授权合约</td>
+<td>仅地址缩略，不加「合约:」</td>
+</tr>
+<tr>
+<td>兑换</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>不展示副文案</td>
+</tr>
+</tbody>
+</table>
+<p><strong>拼接口径</strong>：由 <strong>客户端</strong> 按上表拼接前缀 + 缩略地址；接口下发的完整地址字段须齐全，客户端不得改写地址内容。</p>
+<h4 id="列表行字段代币详情页交易摘要区-vs-交易历史页">列表行字段（代币详情页交易摘要区 vs 交易历史页） </h4>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期分组</td>
+<td>Tatum · Transaction History → <code>date</code></td>
+<td>按交易日分组</td>
+<td><code>YYYY/MM/DD</code></td>
+<td>仅 1 条仍展示分组标题</td>
+<td>—</td>
+</tr>
+<tr>
+<td>左侧 · 代币详情页交易摘要区</td>
+<td>客户端（映射 <code>iconType</code>）</td>
+<td>Tatum → <code>iconType</code></td>
+<td>仅交易类型标识</td>
+<td>—</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>左侧 · 交易历史页 · 收发/授权</td>
+<td>Tatum · Token Details（主）；CoinMarketCap · Metadata（Logo 兜底）</td>
+<td><code>sym</code> + <code>network</code> 查元数据</td>
+<td>代币图标 + 网络角标；代币无图或加载失败→币种 <strong>首字母</strong>；网络无图或加载失败→网络名 <strong>首字母</strong></td>
+<td>元数据缺失仍展示类型主文案</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>左侧 · 交易历史页 · 兑换</td>
+<td>同上（支付侧与收到侧各查一次）</td>
+<td><code>paySym</code>/<code>payNetwork</code>、<code>recvSym</code>/<code>recvNetwork</code></td>
+<td>双代币图标横向叠放；各侧图标缺失→该侧币种 <strong>首字母</strong></td>
+<td>任一侧缺失→有数据侧单独展示</td>
+<td>点行进详情</td>
+</tr>
+<tr>
+<td>类型主文案</td>
+<td>Tatum · Transaction History → <code>type</code></td>
+<td>—</td>
+<td>五类中文类型名</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>副文案</td>
+<td>Tatum · Transaction History → <code>fromAddr</code>/<code>toAddr</code>/<code>spenderAddr</code></td>
+<td>客户端按 <a href="#副文案与地址取值">副文案与地址取值</a> 拼接前缀 + 列表地址缩略</td>
+<td>兑换类无副文案</td>
+<td>地址空→隐藏副文案行</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 收发</td>
+<td>Tatum · Transaction History → <code>amt</code>、<code>sym</code>、<code>positive</code></td>
+<td><strong>原样展示接口字符串</strong>，不做小数重格式化</td>
+<td>接收：绿色「+数量 币种」；发送：红色「-数量 币种」</td>
+<td>amt 空→不展示</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 授权</td>
+<td>Tatum · Transaction History → <code>approveAmt</code>、<code>sym</code></td>
+<td>null→「无限」</td>
+<td>「额度 币种」或「无限」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 取消授权</td>
+<td>Tatum · Transaction History → <code>sym</code></td>
+<td>—</td>
+<td>仅币种符号</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 兑换 · 代币详情页交易摘要区上下文</td>
+<td>Tatum · Transaction History → pay/recv 字段</td>
+<td>收到币种=当前详情 symbol→上行强调收到；否则强调支付</td>
+<td>双行：强调行主色，另一行弱化</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额 · 兑换 · 交易历史页上下文</td>
+<td>Tatum · Transaction History → pay/recv 字段</td>
+<td>收到数量解析为数值且 &gt;0→上行强调收到；否则强调支付</td>
+<td>双行同上</td>
+<td>解析失败→按收到侧在上</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段-交易历史页列表补充">展示字段 · 交易历史页列表补充 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶栏网络筛选图标</td>
+<td>客户端（<code>networkFilter</code> 状态）</td>
+<td>全部网络→地球标识；单链→该链标识</td>
+<td>与筛选结果联动</td>
+<td>—</td>
+<td>点按打开网络筛选子层</td>
+</tr>
+<tr>
+<td>空态文案</td>
+<td>筛选后列表</td>
+<td>—</td>
+<td>「暂无交易记录」</td>
+<td>—</td>
+<td>可改筛选或返回</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交易数据模型研发对接">交易数据模型（研发对接） </h3>
+<p>每条交易记录须包含以下字段（接口 JSON 与客户端模型对齐）。<strong>第三方数据源</strong> 列标注 BiyaPay 从 Tatum Transaction History v4 映射的原始字段；Tatum 原始键 → PRD 字段的完整对照见 <a href="./V1.2_Tatum字段映射表.md#5-transaction-history-v4--交易列表--详情">V1.2_Tatum字段映射表.md §5</a>。列表与详情 <strong>展示处理</strong> 见本章 <a href="#交易列表字段规范">交易列表字段规范</a> 与 <a href="#26-交易详情页">2.6 交易详情页</a>。</p>
+<table>
+<thead>
+<tr>
+<th>中文含义</th>
+<th>接口字段</th>
+<th>第三方数据源</th>
+<th>类型</th>
+<th>必填</th>
+<th>说明</th>
+<th>展示/校验补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交易类型文案</td>
+<td>type</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>接收 / 发送 / 授权 / 取消授权 / 交易</td>
+<td>列表主文案</td>
+</tr>
+<tr>
+<td>图标类型</td>
+<td>iconType</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>receive / send / approve / revoke / swap</td>
+<td>代币详情页交易摘要区左侧类型标识</td>
+</tr>
+<tr>
+<td>是否正数展示</td>
+<td>positive</td>
+<td>Tatum · Transaction History</td>
+<td>boolean</td>
+<td>✓</td>
+<td>收发金额颜色</td>
+<td>兑换类由双行规则覆盖</td>
+</tr>
+<tr>
+<td>分组日期</td>
+<td>date</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td><code>YYYY/MM/DD</code></td>
+<td>列表分组标题</td>
+</tr>
+<tr>
+<td>详情日期时间</td>
+<td>datetime</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code></td>
+<td>详情页原样；建议 UTC 存储、本地展示</td>
+</tr>
+<tr>
+<td>主金额</td>
+<td>amt</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>条件</td>
+<td>收发数量；授权类可为空</td>
+<td>原样展示，带正负号</td>
+</tr>
+<tr>
+<td>主币种符号</td>
+<td>sym</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>如 USDT</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络标识</td>
+<td>network</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>如 ethereum</td>
+<td>交易历史页列表网络角标</td>
+</tr>
+<tr>
+<td>网络名称</td>
+<td>networkName</td>
+<td>BiyaPay · 十链网络配置</td>
+<td>string</td>
+<td>✓</td>
+<td>如 Ethereum</td>
+<td>详情明细行</td>
+</tr>
+<tr>
+<td>发送方地址</td>
+<td>fromAddr</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>链上全文</td>
+<td>接收类副文案取值；详情 <strong>完整展示</strong></td>
+</tr>
+<tr>
+<td>接收方地址</td>
+<td>toAddr</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>链上全文</td>
+<td>发送类副文案取值；详情 <strong>完整展示</strong></td>
+</tr>
+<tr>
+<td>交易哈希</td>
+<td>txHash</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>链上全文</td>
+<td>详情 <strong>完整展示</strong>；复制完整哈希</td>
+</tr>
+<tr>
+<td>Gas 数量</td>
+<td>gasAmt</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>—</td>
+<td>与 gasSym 拼接</td>
+</tr>
+<tr>
+<td>Gas 币种</td>
+<td>gasSym</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Gas 法币估值</td>
+<td>gasUsd</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>可选</td>
+<td>—</td>
+<td>有值时括号展示；无值则仅数量+币种</td>
+</tr>
+<tr>
+<td>被授权合约地址</td>
+<td>spenderAddr</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>授权类</td>
+<td>—</td>
+<td>授权副文案；详情授权区块</td>
+</tr>
+<tr>
+<td>被授权项目名称</td>
+<td>spenderName</td>
+<td>Tatum · Transaction History（合约解析）</td>
+<td>string</td>
+<td>授权类</td>
+<td>空→「未知项目」</td>
+<td>授权详情「给」行</td>
+</tr>
+<tr>
+<td>授权额度</td>
+<td>approveAmt</td>
+<td>Tatum · Transaction History</td>
+<td>string/null</td>
+<td>授权类</td>
+<td>null=无限</td>
+<td>列表与详情</td>
+</tr>
+<tr>
+<td>兑换·支付</td>
+<td>payAmt / paySym / payNetwork</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>兑换类</td>
+<td>—</td>
+<td>兑换双行金额</td>
+</tr>
+<tr>
+<td>兑换·收到</td>
+<td>recvAmt / recvSym / recvNetwork</td>
+<td>Tatum · Transaction History</td>
+<td>string</td>
+<td>兑换类</td>
+<td>—</td>
+<td>兑换双行金额</td>
+</tr>
+</tbody>
+</table>
+<p><strong>地址格式校验</strong>（写入接口前或客户端校验）：EVM=<code>0x</code>+40 位十六进制；Solana=Base58 长度 32–44；TRON=<code>T</code> 开头共 34 字符。</p>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认 · 全部网络</td>
+<td>全量记录按日期分组</td>
+</tr>
+<tr>
+<td>筛选 Ethereum</td>
+<td>仅 <code>network=ethereum</code></td>
+</tr>
+<tr>
+<td>筛选后空</td>
+<td>「暂无交易记录」</td>
+</tr>
+<tr>
+<td>加载完成</td>
+<td>打开交易历史页 <strong>≤ 200ms</strong>（纯前端渲染目标）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络筛选子层无匹配</td>
+<td>「暂无匹配网络」</td>
+</tr>
+<tr>
+<td>点列表行</td>
+<td>进 <a href="#26-交易详情页">交易详情页</a></td>
+</tr>
+<tr>
+<td>从详情返回</td>
+<td>停留交易历史页，筛选条件保持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据管理与接口契约">数据管理与接口契约 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代币详情页交易摘要区 vs 交易历史页 · 数据</td>
+<td>摘要区：按币种符号 + 网络标识，最多 5 条；交易历史页：当前钱包全资产</td>
+</tr>
+<tr>
+<td>代币详情页交易摘要区 vs 交易历史页 · 列表 UI</td>
+<td>摘要区左侧 <strong>仅类型图标</strong>；交易历史页左侧 <strong>代币 Logo + 网络角标</strong>（兑换双 Logo）；禁止混写为同一列表样式</td>
+</tr>
+<tr>
+<td>筛选状态</td>
+<td>网络筛选状态会话内保持；关闭交易历史页后重置为「全部网络」</td>
+</tr>
+<tr>
+<td>原型</td>
+<td>内置近 14 天模拟数据集（含 5 种交易类型）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>接口占位</strong></p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>第三方封装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/transactions</code></td>
+<td>GET</td>
+<td><code>walletId</code>, <code>symbol?</code>, <code>networkId?</code>, <code>limit?</code>, <code>days=14</code></td>
+<td><code>Transaction[]</code></td>
+<td><strong>Tatum · Transaction History v4</strong>（按钱包地址聚合；字段映射见 <a href="./V1.2_Tatum字段映射表.md">V1.2_Tatum字段映射表.md</a> §5）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="26-交易详情页">2.6 交易详情页 </h2>
+<p><strong>用户目标</strong><br />
+查看单笔交易的类型、金额、地址、Gas、哈希等明细。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 未交付。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口</strong></td>
+<td>代币详情页 · 交易摘要区列表行；或交易历史页列表行</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>链上状态实时轮询（本版原型固定「已完成」）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="入口与返回">入口与返回 </h3>
+<table>
+<thead>
+<tr>
+<th>入口</th>
+<th>关闭后停留</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代币详情页 · 交易摘要区</td>
+<td>回 <strong>代币详情页</strong>（Tab 不变）</td>
+</tr>
+<tr>
+<td>交易历史页列表</td>
+<td>回 <strong>交易历史页</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型标识</td>
+<td>客户端（映射 Tatum → <code>iconType</code>）</td>
+<td>五类映射</td>
+<td>与列表一致</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>类型名称</td>
+<td>Tatum · Transaction History → <code>type</code></td>
+<td>—</td>
+<td>中文类型名</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>日期时间</td>
+<td>Tatum · Transaction History → <code>datetime</code></td>
+<td>—</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code>；建议接口 UTC 存储、客户端按本地时区展示</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>交易状态</td>
+<td>客户端（本版原型固定）</td>
+<td>生产由 Tatum 状态字段映射</td>
+<td>「已完成」</td>
+<td>生产：成功/失败/确认中映射表另订</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额区 · 收发</td>
+<td>Tatum · Transaction History → <code>amt</code>、<code>sym</code>、<code>positive</code>；Logo：Tatum · Token Details（主）+ CMC Metadata（兜底）</td>
+<td>—</td>
+<td>代币图标+网络角标（无图或加载失败→各取币种/网络名 <strong>首字母</strong>）；接收正色、发送负色</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>金额区 · 授权</td>
+<td>Tatum · Transaction History → <code>approveAmt</code>、<code>sym</code>、<code>spenderAddr</code>、<code>spenderName</code></td>
+<td>null→「无限」</td>
+<td>「给」+ 项目名 + 被授权地址缩略（前 6 + <code>...</code> + 后 4）</td>
+<td>项目名空→「未知项目」</td>
+<td>复制被授权地址 <strong>完整串</strong>（非缩略）；Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>金额区 · 兑换</td>
+<td>Tatum · Transaction History → pay/recv 四套字段</td>
+<td>—</td>
+<td>「支付」「收到」两行，各含图标、数量、币种</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>明细 · 发送地址</td>
+<td>Tatum · Transaction History → <code>fromAddr</code></td>
+<td>—</td>
+<td><strong>完整地址</strong></td>
+<td>空→不展示行</td>
+<td>复制 <strong>完整地址</strong>；Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>明细 · 接收地址</td>
+<td>Tatum · Transaction History → <code>toAddr</code></td>
+<td>收发类展示</td>
+<td><strong>完整地址</strong></td>
+<td>授权类 <strong>不展示本行</strong></td>
+<td>同上</td>
+</tr>
+<tr>
+<td>明细 · 交互地址</td>
+<td>Tatum · Transaction History → <code>toAddr</code></td>
+<td>仅授权/兑换类</td>
+<td><strong>完整地址</strong>（合约交互方）</td>
+<td>—</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>明细 · 网络</td>
+<td>BiyaPay · 十链网络配置 + Tatum → <code>network</code></td>
+<td>配网络标识</td>
+<td>网络名 + 网络标识</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>明细 · 网络费用</td>
+<td>Tatum · Transaction History → <code>gasAmt</code>、<code>gasSym</code>、<code>gasUsd</code></td>
+<td>—</td>
+<td><code>{数量} {币种}</code>；有 gasUsd 时追加 <code>({法币})</code></td>
+<td>gasUsd 空→仅数量币种</td>
+<td>—</td>
+</tr>
+<tr>
+<td>明细 · 交易哈希</td>
+<td>Tatum · Transaction History → <code>txHash</code></td>
+<td>—</td>
+<td><strong>完整哈希</strong></td>
+<td>—</td>
+<td>复制 <strong>完整哈希</strong>；Toast「哈希已复制」</td>
+</tr>
+<tr>
+<td>底部 · 浏览器查看</td>
+<td>Tatum → <code>txHash</code> + BiyaPay · 区块浏览器配置</td>
+<td>生产拼区块浏览器 URL</td>
+<td>本版 Toast「即将跳转浏览器」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>交易类型</th>
+<th>金额区展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>正色「+数量 币种」</td>
+</tr>
+<tr>
+<td>发送</td>
+<td>负色「-数量 币种」</td>
+</tr>
+<tr>
+<td>授权</td>
+<td>额度或「无限」+ 合约方</td>
+</tr>
+<tr>
+<td>取消授权</td>
+<td>同授权样式</td>
+</tr>
+<tr>
+<td>兑换</td>
+<td>支付行 + 收到行双代币</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复制地址</td>
+<td>Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>复制哈希</td>
+<td>Toast「哈希已复制」</td>
+</tr>
+<tr>
+<td>浏览器查看</td>
+<td>Toast「即将跳转浏览器」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="31-发送--选币" aria-hidden="true"></a><h2 id="31-发送-选币">3.1 发送 · 选币 </h2>
+<p><strong>用户目标</strong><br />
+从有余额的资产中选择要发送的币种。</p>
+<p><strong>相对 V1.1</strong><br />
+列表含多链合并行（🌐 角标）；单链行行为不变。多链行须进入选网络页。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>首页或详情点「发送」</td>
+</tr>
+<tr>
+<td><strong>列表范围</strong></td>
+<td>余额 <strong>&gt; 0</strong> 且在当前钱包可见范围 内</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>V1.1 地址校验、金额、通行密钥确认链</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点「发送」</td>
+<td>构建发送资产列表；多链聚合</td>
+<td>渲染选币页</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点单链资产（如 ETH·Ethereum）</td>
+<td><strong>跳过选网</strong></td>
+<td>直达 <a href="#33-发送--填地址">发送 · 填地址</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>点多链资产（如 USDT）</td>
+<td>打开发送选网络页</td>
+<td>见 <a href="#32-发送--选网络">发送 · 选网络</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>无可发送资产</td>
+<td>—</td>
+<td>空态 <strong>「暂无可发送资产」</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多链行角标</td>
+<td>🌐 + 标签「多链」</td>
+</tr>
+<tr>
+<td>单链行角标</td>
+<td>链 Logo；无图或加载失败→网络名 <strong>首字母</strong></td>
+</tr>
+<tr>
+<td>代币图标</td>
+<td>同 <a href="#21-web3-首页">2.1 Web3 首页</a> 列表行</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按各资产法币估值 <strong>降序</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有余额资产</td>
+<td>列表可点</td>
+</tr>
+<tr>
+<td>空列表</td>
+<td>「暂无可发送资产」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="32-发送--选网络" aria-hidden="true"></a><h2 id="32-发送-选网络">3.2 发送 · 选网络 </h2>
+<p><strong>用户目标</strong><br />
+为多链资产选择具体哪一条链上的实例进行发送。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>新增</strong> 页面；V1.1 无多链选网步骤。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>发送选币页点击多链行</td>
+</tr>
+<tr>
+<td><strong>特殊入口</strong></td>
+<td><a href="#22-多链代币详情页">多链代币详情页</a> 某链 Tab 点「发送」→ <strong>跳过本章与选币</strong>，直达 <a href="#33-发送--填地址">发送 · 填地址</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<div class="mermaid">flowchart TD
+  A[发送选币 · 点多链 USDT] --&gt; B[打开选网络页]
+  B --&gt; C[展示余额大于零的链实例]
+  C --&gt; D[用户点某网络]
+  D --&gt; E[关闭选网 · 打开填地址页]
+  E --&gt; F{填地址页返回}
+  F --&gt;|来自选网| B
+  F --&gt;|来自选币| G[回发送选币页]</div>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点多链 USDT</td>
+<td>打开选网络页</td>
+<td>列表含多条链</td>
+</tr>
+<tr>
+<td>2</td>
+<td>查看列表</td>
+<td>过滤余额大于零；按估值降序；可见范围过滤</td>
+<td>网络行</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点 Ethereum</td>
+<td>记录币种符号与网络标识；关闭选网</td>
+<td>进入填地址页</td>
+</tr>
+<tr>
+<td>4</td>
+<td>填地址页点返回</td>
+<td>若来自选网 → 回选网页；若来自选币 → 回选币页</td>
+<td>导航栈正确</td>
+</tr>
+<tr>
+<td>5</td>
+<td>多链详情 Ethereum 分链标签点发送</td>
+<td>跳过 1–4</td>
+<td>直接填地址（已带网络标识）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>「选择网络」</td>
+</tr>
+<tr>
+<td>网络行</td>
+<td>链 Logo、网络名、该链余额、法币估值；Logo 无图或加载失败→网络名 <strong>首字母</strong></td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按该链持仓估值 <strong>降序</strong></td>
+</tr>
+<tr>
+<td>过滤</td>
+<td>EVM 私钥钱包 <strong>不列出</strong> Solana、TRON 实例</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选网后</td>
+<td>填地址页顶栏展示当前币种 + 网络</td>
+</tr>
+<tr>
+<td>可见范围外链路</td>
+<td>不出现在列表</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="33-发送--填地址" aria-hidden="true"></a><h2 id="33-发送-填地址">3.3 发送 · 填地址 </h2>
+<p><strong>用户目标</strong><br />
+输入收款地址，通过校验后进入金额与确认。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>无变化</strong>；填地址、地址校验、扫码等能力继承 V1.1 发送模块，细节见 V1.1 文档。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口</strong></td>
+<td>发送流程地址层（含多链选网后进入）</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>V1.1 地址输入、格式校验、扫码回填、下一步启用规则</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入填地址页</td>
+<td>展示当前链与币种</td>
+<td>地址输入框空或保留</td>
+</tr>
+<tr>
+<td>2</td>
+<td>手动输入或粘贴</td>
+<td>实时格式校验</td>
+<td>下一步按钮按规则启用/禁用</td>
+</tr>
+<tr>
+<td>3</td>
+<td>校验通过</td>
+<td>—</td>
+<td>可进入金额页</td>
+</tr>
+</tbody>
+</table>
+<h3 id="地址校验">地址校验 </h3>
+<p>与 V1.1 发送模块 <strong>同一套规则</strong>（V1.2 内联摘要如下；边界文案以 V1.1 为准）。</p>
+<table>
+<thead>
+<tr>
+<th>网络类型</th>
+<th>格式要求</th>
+<th>失败提示（示例）</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EVM 八链</td>
+<td><code>0x</code> + 40 位十六进制（大小写不敏感）</td>
+<td>「请输入正确的地址」</td>
+<td>禁用下一步</td>
+</tr>
+<tr>
+<td>Solana</td>
+<td>Base58，长度 32–44</td>
+<td>「请输入正确的 Solana 地址」</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>TRON</td>
+<td><code>T</code> 开头，共 34 位</td>
+<td>「请输入正确的 Tron 地址」</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>切换网络后</td>
+<td>已填地址 <strong>按新链规则重新校验</strong></td>
+</tr>
+<tr>
+<td>填本钱包地址</td>
+<td>按 V1.1：提示不可向自己转账并禁用下一步</td>
+</tr>
+<tr>
+<td>TRON 未激活 / 资源不足</td>
+<td>按 V1.1 行内提示，阻断或警告</td>
+</tr>
+<tr>
+<td>Solana 账户冻结</td>
+<td>按 V1.1 行内提示</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶栏上下文</td>
+<td>BiyaPay · 发送上下文（<code>symbol</code>、<code>networkId</code>）</td>
+<td>—</td>
+<td>币种 + 网络展示名</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>地址输入框</td>
+<td>用户输入</td>
+<td>客户端实时格式校验</td>
+<td>支持粘贴</td>
+<td>非法→行内错误</td>
+<td>通过后可点下一步</td>
+</tr>
+<tr>
+<td>下一步</td>
+<td>校验结果</td>
+<td>地址合法且非本钱包</td>
+<td>主按钮</td>
+<td>未通过→禁用</td>
+<td>进入金额页</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非法地址</td>
+<td>行内错误提示；下一步禁用</td>
+</tr>
+<tr>
+<td>校验通过</td>
+<td>可进入金额页</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="34-发送--确认与结果" aria-hidden="true"></a><h2 id="34-发送-确认与结果">3.4 发送 · 确认与结果 </h2>
+<p><strong>用户目标</strong><br />
+确认金额与 Gas，通过通行密钥完成签名发送。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>无变化</strong>；仍使用通行密钥，<strong>不使用 PIN 码发送</strong>。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>填地址页校验通过后</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>V1.1 金额、Gas、确认、结果全链路</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>PIN 码发送</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<p>继承 V1.1：<strong>金额页</strong> → <strong>确认页</strong> → <strong>通行密钥验证</strong> → <strong>结果页</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>输入金额</td>
+<td>校验不超过可用余额</td>
+<td>可进入确认页</td>
+</tr>
+<tr>
+<td>2</td>
+<td>确认页核对</td>
+<td>展示收款地址、金额、网络、Gas</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td>通行密钥验证</td>
+<td>唤起系统通行密钥</td>
+<td>成功广播；取消则停留确认页</td>
+</tr>
+<tr>
+<td>4</td>
+<td>结果</td>
+<td>成功或失败提示</td>
+<td>成功回首页/详情；失败可重试</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通行密钥取消</td>
+<td>停留确认页</td>
+</tr>
+<tr>
+<td>链上失败</td>
+<td>同 V1.1 失败文案</td>
+</tr>
+<tr>
+<td>成功</td>
+<td>同 V1.1 成功文案</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="35-接收--选币" aria-hidden="true"></a><h2 id="35-接收-选币">3.5 接收 · 选币 </h2>
+<p><strong>用户目标</strong><br />
+选择要展示收款二维码的资产。</p>
+<p><strong>相对 V1.1</strong><br />
+列表与首页一致：仅 <strong>已添加</strong> 白名单内资产，且含多链合并行。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>列表来源</strong></td>
+<td>证券 + 币种 Tab 已添加资产；经多链聚合</td>
+</tr>
+<tr>
+<td><strong>联动</strong></td>
+<td>币种管理移除后本列表 <strong>同步消失</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="与-v1-1-差异">与 V1.1 差异 </h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V1.1</th>
+<th>V1.2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列表行</td>
+<td>每行一条链</td>
+<td>多链 Symbol 合并一行</td>
+</tr>
+<tr>
+<td>多链 USDT 点击</td>
+<td>可能直接进首链二维码</td>
+<td><strong>必须先选网络</strong></td>
+</tr>
+<tr>
+<td>列表范围</td>
+<td>钱包可见范围 内</td>
+<td>可见范围内 <strong>且</strong> 在白名单内</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>首页点「接收」</td>
+<td>构建接收资产列表</td>
+<td>打开选币页</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点单链资产</td>
+<td>跳过选网</td>
+<td>直达 <a href="#37-收款二维码页">收款二维码页</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>点多链 USDT</td>
+<td>打开接收选网络页</td>
+<td>见 <a href="#36-接收--选网络">接收 · 选网络</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>搜索命中多链行</td>
+<td>仍走选网路径</td>
+<td><strong>不</strong>跳过选网</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多链行</td>
+<td>🌐 +「多链」标签</td>
+</tr>
+<tr>
+<td>代币图标</td>
+<td>同 <a href="#21-web3-首页">2.1 Web3 首页</a> 列表行</td>
+</tr>
+<tr>
+<td>搜索</td>
+<td>按名称、Symbol 过滤</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>同 <a href="#21-web3-首页">Web3 首页</a> 估值降序</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="36-接收--选网络" aria-hidden="true"></a><h2 id="36-接收-选网络">3.6 接收 · 选网络 </h2>
+<p><strong>用户目标</strong><br />
+为多链资产选择具体链实例以展示对应收款地址。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>新增</strong>；V1.1 多链 USDT 可能直接进首链二维码。</p>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>接收选币页点多链行</td>
+<td>打开选网络页</td>
+<td>网络列表</td>
+</tr>
+<tr>
+<td>2</td>
+<td>点某网络（如 TRON）</td>
+<td>记录 symbol + networkId</td>
+<td>进入收款二维码页</td>
+</tr>
+<tr>
+<td>3</td>
+<td>二维码页展示</td>
+<td>顶栏横幅</td>
+<td><strong>「仅支持接收 {网络名} 网络资产」</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>「选择网络」</td>
+</tr>
+<tr>
+<td>网络行</td>
+<td>链 Logo、网络名、余额（如有）、法币估值；Logo 无图或加载失败→网络名 <strong>首字母</strong></td>
+</tr>
+<tr>
+<td>排序</td>
+<td>估值降序；钱包可见范围 过滤</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="37-收款二维码页">3.7 收款二维码页 </h2>
+<p><strong>用户目标</strong><br />
+展示收款地址与二维码，支持复制。</p>
+<p><strong>相对 V1.1</strong><br />
+<strong>无变化</strong>；继承 V1.1 收款二维码页能力，细节见 V1.1 文档。</p>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶栏</td>
+<td>BiyaPay · 接收上下文（<code>symbol</code>、<code>networkName</code>）</td>
+<td>—</td>
+<td>币种 + 网络名</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络横幅</td>
+<td>BiyaPay · 十链网络配置</td>
+<td>—</td>
+<td>「仅支持接收 {网络名} 网络资产」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>二维码</td>
+<td>BiyaPay · 钱包派生地址缓存</td>
+<td>当前钱包在该 networkId 的全地址</td>
+<td>编码完整地址</td>
+<td>地址未派生→不展示</td>
+<td>—</td>
+</tr>
+<tr>
+<td>地址文本</td>
+<td>BiyaPay · 钱包派生地址缓存</td>
+<td>—</td>
+<td><strong>完整地址</strong>，可换行</td>
+<td>—</td>
+<td>复制 <strong>完整地址</strong>；Toast「地址已复制」</td>
+</tr>
+<tr>
+<td>复制</td>
+<td>BiyaPay · 钱包派生地址缓存</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>剪贴板写入完整地址</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>反馈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复制</td>
+<td>Toast「地址已复制」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="41-币种管理页">4.1 币种管理页 </h2>
+<p><strong>用户目标</strong><br />
+配置当前钱包在首页（证券/币种 Tab）与接收页展示哪些资产。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 未交付；V1.2 正式启用。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口</strong></td>
+<td>证券/币种 Tab 滚动到底 →「管理资产」</td>
+</tr>
+<tr>
+<td><strong>多链</strong></td>
+<td>USDT 等与首页相同合并规则</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<div class="mermaid">flowchart TD
+  A[首页滚动 · 管理资产] --&gt; B[打开币种管理页]
+  B --&gt; C[重置网络=all · 清空搜索]
+  C --&gt; D[渲染已添加区 + 热门区]
+  D --&gt; E{操作}
+  E --&gt;|热门 +| F[加入白名单 · Toast 添加成功]
+  E --&gt;|已添加 −| G[移出白名单 · Toast 移除成功]
+  E --&gt;|网络图标| H[选网络筛选页]
+  E --&gt;|自定义币种| I[添加自定义币种页]
+  E --&gt;|返回| J[关闭并刷新首页列表]</div>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>币种 Tab 滚到底</td>
+<td>显示「管理资产」</td>
+<td>合约/DEFI Tab <strong>不出现</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>点「管理资产」</td>
+<td>打开管理页；网络 = 全部</td>
+<td>两区列表</td>
+</tr>
+<tr>
+<td>3</td>
+<td>热门区 +</td>
+<td>写入白名单</td>
+<td>Toast「添加成功」</td>
+</tr>
+<tr>
+<td>4</td>
+<td>已添加区 −</td>
+<td>移出白名单</td>
+<td>Toast「移除成功」；首页行消失</td>
+</tr>
+<tr>
+<td>5</td>
+<td>已添加 &gt; 5 条</td>
+<td>默认 5 条 + 展开</td>
+<td><code>TM_COLLAPSE = 5</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>返回</td>
+<td>重渲染首页</td>
+<td>接收列表同步</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示字段">展示字段 </h3>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>第三方数据源</th>
+<th>计算/映射逻辑</th>
+<th>展示规则</th>
+<th>空值/异常</th>
+<th>校验/交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>固定</td>
+<td>—</td>
+<td>「币种管理」</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络筛选入口</td>
+<td>当前筛选 networkId</td>
+<td>默认全部网络</td>
+<td>地球标识 / 单链标识</td>
+<td>—</td>
+<td>打开选网络筛选页</td>
+</tr>
+<tr>
+<td>搜索框</td>
+<td>用户输入</td>
+<td>300ms 防抖</td>
+<td>占位「搜索币种名称或合约地址」</td>
+<td>无匹配→空态</td>
+<td>见 <a href="#搜索匹配规则">搜索匹配规则</a></td>
+</tr>
+<tr>
+<td>已添加区</td>
+<td>BiyaPay · 币种白名单</td>
+<td>超 5 条默认折叠</td>
+<td>可展开</td>
+<td>空→提示添加</td>
+<td>− 移除</td>
+</tr>
+<tr>
+<td>热门区</td>
+<td>BiyaPay · 热门池配置 − 已添加</td>
+<td>—</td>
+<td>未添加项</td>
+<td>—</td>
+<td>+ 添加</td>
+</tr>
+<tr>
+<td>自定义入口</td>
+<td>—</td>
+<td>—</td>
+<td>「+ 自定义币种」</td>
+<td>—</td>
+<td>打开添加页</td>
+</tr>
+</tbody>
+</table>
+<h3 id="搜索匹配规则">搜索匹配规则 </h3>
+<table>
+<thead>
+<tr>
+<th>输入类型</th>
+<th>判定</th>
+<th>匹配方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EVM 合约</td>
+<td><code>0x</code> + 40 位十六进制</td>
+<td>精确匹配合约表（不区分大小写）</td>
+</tr>
+<tr>
+<td>Solana 合约</td>
+<td>Base58，32–44 位</td>
+<td>精确匹配</td>
+</tr>
+<tr>
+<td>TRON 合约</td>
+<td><code>T</code> 开头 34 位</td>
+<td>精确匹配</td>
+</tr>
+<tr>
+<td>名称/符号</td>
+<td>其他</td>
+<td>Symbol 或全称模糊匹配（不区分大小写）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="与首页-接收同步">与首页 / 接收同步 </h3>
+<table>
+<thead>
+<tr>
+<th>列表</th>
+<th>过滤</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首页</td>
+<td>仅白名单内资产</td>
+</tr>
+<tr>
+<td>接收</td>
+<td>仅白名单内资产</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="42-选网络筛选页">4.2 选网络筛选页 </h2>
+<p><strong>用户目标</strong><br />
+在币种管理内按网络过滤已添加区与热门区。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.2 币种管理子层（叠加全屏子层）。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>币种管理页右上角网络图标</td>
+</tr>
+<tr>
+<td><strong>默认</strong></td>
+<td>「全部网络」</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>点网络图标</td>
+<td>打开选网络子层</td>
+<td>首项「全部网络」</td>
+</tr>
+<tr>
+<td>2</td>
+<td>选 Polygon 等</td>
+<td>过滤两区列表</td>
+<td>图标更新为链 Logo</td>
+</tr>
+<tr>
+<td>3</td>
+<td>选「全部网络」</td>
+<td>恢复全量</td>
+<td>图标恢复 🌐</td>
+</tr>
+<tr>
+<td>4</td>
+<td>搜索无结果</td>
+<td>—</td>
+<td>「暂无匹配网络」</td>
+</tr>
+</tbody>
+</table>
+<h3 id="展示与规则">展示与规则 </h3>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触发</td>
+<td>币种管理右上角网络图标</td>
+</tr>
+<tr>
+<td>首项</td>
+<td>「全部网络」</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>V1.1 十链；按持仓估值降序；可搜索</td>
+</tr>
+<tr>
+<td>多链行</td>
+<td>所选网络 ∈ Symbol 链集合 → 展示</td>
+</tr>
+<tr>
+<td>单链行</td>
+<td>仅当网络标识匹配所选网络时展示</td>
+</tr>
+<tr>
+<td>选中后</td>
+<td>图标更新；两区立即过滤</td>
+</tr>
+<tr>
+<td>无匹配</td>
+<td>「暂无匹配网络」</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="43-添加自定义币种页">4.3 添加自定义币种页 </h2>
+<p><strong>用户目标</strong><br />
+通过合约地址添加不在热门列表中的代币。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 未交付。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>入口</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种管理</td>
+<td>「+ 自定义币种」</td>
+</tr>
+<tr>
+<td>接收搜索无结果</td>
+<td>引导进入；确认后刷新接收列表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流程步骤">流程步骤 </h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>用户操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>选择网络</td>
+<td>必选</td>
+<td>未选则确认禁用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>输入合约</td>
+<td><strong>600ms</strong> 防抖 + 格式校验</td>
+<td>合法则查询</td>
+</tr>
+<tr>
+<td>3</td>
+<td>查询成功</td>
+<td>填入 Symbol、精度（只读）</td>
+<td>确认可用</td>
+</tr>
+<tr>
+<td>4</td>
+<td>查询失败</td>
+<td>失败文案</td>
+<td>确认禁用</td>
+</tr>
+<tr>
+<td>5</td>
+<td>确认</td>
+<td>写资产 + 白名单</td>
+<td>Toast「添加成功」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>地址格式</strong>：EVM <code>0x</code>+40 位十六进制；Solana Base58 32–44 字符；TRON <code>T</code> 开头 34 字符。</p>
+<p><strong>查询阶段文案</strong>：合法 →「地址有效，正在自动查询…」；请求中 →「正在请求节点数据，请稍候…」；成功 →「✓ 代币信息读取成功」；失败 →「未找到该合约对应的代币信息，请检查地址是否正确」。</p>
+<p><strong>原型 Mock</strong>：地址以 40 个 <code>0</code> 结尾 → 失败；其余约 <strong>1.2s</strong> 成功。</p>
+<h3 id="确认后行为">确认后行为 </h3>
+<table>
+<thead>
+<tr>
+<th>来源</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种管理</td>
+<td>刷新管理页 + 首页</td>
+</tr>
+<tr>
+<td>接收</td>
+<td>刷新接收列表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="接口占位">接口占位 </h3>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>方法</th>
+<th>入参</th>
+<th>出参</th>
+<th>第三方封装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/rpc/token/metadata</code></td>
+<td>POST</td>
+<td><code>{ networkId, contractAddress }</code></td>
+<td><code>{ symbol, decimals, name? }</code></td>
+<td><strong>Tatum · Token Details</strong>（按合约地址查 symbol/decimals/name）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="51-全局字段展示与校验规范">5.1 全局字段展示与校验规范 </h2>
+<blockquote>
+<p><strong>适用范围</strong>：跨页面复用的 <strong>数值与涨跌幅</strong> 格式化，以及 <strong>钱包可见网络</strong> 过滤。地址缩略、图标降级、时间格式、复制完整串等 <strong>页面级规则</strong> 写在各章字段表中。与 V1.1 冲突时，V1.2 增量以本章 + 各页为准。</p>
+</blockquote>
+<a id="数值分层展示价格余额估值" aria-hidden="true"></a><h3 id="数值分层展示价格-余额-估值">数值分层展示（价格、余额、估值） </h3>
+<p>适用于：代币单价、持仓数量、法币估值、市值、供应量等 <strong>非交易列表金额</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>数值区间</th>
+<th>展示规则</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 1×10¹⁶</td>
+<td>科学计数法，2 位有效数字</td>
+<td>1.23 × 10¹⁶</td>
+</tr>
+<tr>
+<td>10 ≤ X &lt; 1×10¹⁶</td>
+<td>千分位，最多 2 位小数</td>
+<td>9,999.99</td>
+</tr>
+<tr>
+<td>1 ≤ X &lt; 10</td>
+<td>最多 4 位小数，去尾零</td>
+<td>1.234</td>
+</tr>
+<tr>
+<td>0.001 ≤ X &lt; 1</td>
+<td>2–8 位有效小数</td>
+<td>0.01234567</td>
+</tr>
+<tr>
+<td>0 &lt; X &lt; 0.001</td>
+<td>极小数压缩：连续零过多时用 <code>0.0ₙ有效数字</code></td>
+<td>0.0₄12345</td>
+</tr>
+<tr>
+<td>= 0</td>
+<td>固定「0」</td>
+<td>0</td>
+</tr>
+<tr>
+<td>空 / 异常</td>
+<td>「––」</td>
+<td>––</td>
+</tr>
+</tbody>
+</table>
+<p>法币估值 = 美元符号 + 上表规则（如 <code>$12.92</code>）。余额按币种 <strong>decimals</strong> 存储；展示时 <strong>去尾零</strong>，不超过链上精度。</p>
+<h3 id="涨跌幅分层展示24h">涨跌幅分层展示（24h） </h3>
+<table>
+<thead>
+<tr>
+<th>区间</th>
+<th>展示文案</th>
+<th>语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt; +999,999.99%</td>
+<td>&gt; +999,999.99%</td>
+<td>涨</td>
+</tr>
+<tr>
+<td>+0.01% ~ +999,999.99%</td>
+<td>+X.XX%（最多 2 位小数）</td>
+<td>涨</td>
+</tr>
+<tr>
+<td>0 &lt; X &lt; +0.01%</td>
+<td>&lt; +0.01%</td>
+<td>涨</td>
+</tr>
+<tr>
+<td>= 0</td>
+<td>0.00%</td>
+<td>平</td>
+</tr>
+<tr>
+<td>-99.99% ~ &lt; 0</td>
+<td>X.XX%</td>
+<td>跌</td>
+</tr>
+<tr>
+<td>&lt; -99.99%</td>
+<td>&lt; -99.99%</td>
+<td>跌</td>
+</tr>
+<tr>
+<td>空 / 异常</td>
+<td>––</td>
+<td>无数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="钱包可见网络">钱包可见网络 </h3>
+<table>
+<thead>
+<tr>
+<th>钱包类型</th>
+<th>可见网络</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>社交 / 助记词 / 全链钱包</td>
+<td>十链全部</td>
+</tr>
+<tr>
+<td>EVM 私钥钱包</td>
+<td>仅 EVM 系（Ethereum、BSC、Polygon、Arbitrum、Optimism、Avalanche、Base、zkSync）</td>
+</tr>
+<tr>
+<td>Solana 私钥钱包</td>
+<td>仅 Solana</td>
+</tr>
+<tr>
+<td>TRON 私钥钱包</td>
+<td>仅 TRON</td>
+</tr>
+</tbody>
+</table>
+<p>列表、详情、选网、交易筛选均须 <strong>先过滤可见网络</strong>，再执行业务逻辑。</p>
+<hr />
+<h2 id="52-多链资产产品规则">5.2 多链资产产品规则 </h2>
+<h3 id="何时合并为一行">何时合并为一行 </h3>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种 Tab + <strong>全部网络</strong></td>
+<td>USDT、USDC、ETH、BNB <strong>合并一行</strong></td>
+</tr>
+<tr>
+<td>币种 Tab + <strong>指定单链</strong></td>
+<td>不合并；每链独立一行</td>
+</tr>
+<tr>
+<td>证券/合约/DEFI Tab</td>
+<td>不合并</td>
+</tr>
+<tr>
+<td>私钥钱包不可见链</td>
+<td>不参与该钱包的多链合并行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="合并行字段合成">合并行字段合成 </h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symbol</td>
+<td>原 Symbol 不变</td>
+</tr>
+<tr>
+<td>余额</td>
+<td>各链实例 <code>balance</code> <strong>相加</strong></td>
+</tr>
+<tr>
+<td>单价</td>
+<td>各链实例行情</td>
+</tr>
+<tr>
+<td>24h 涨跌</td>
+<td>与单价同源链实例</td>
+</tr>
+<tr>
+<td>法币估值</td>
+<td>price × 合计 balance</td>
+</tr>
+<tr>
+<td>角标</td>
+<td>🌐</td>
+</tr>
+<tr>
+<td>内部链列表</td>
+<td>保留各链实例引用（供详情/选网）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="排序与可见范围">排序与可见范围 </h3>
+<p>与 <a href="#21-web3-首页">Web3 首页</a> 一致：估值降序 → 数量降序 → 币种符号 A→Z；须先按 <a href="#钱包可见网络">钱包可见网络</a> 过滤，再执行多链聚合。</p>
+<h3 id="与收发的关系">与收发的关系 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首页/发送/接收 · 多链行</td>
+<td><strong>必须先选网络</strong></td>
+</tr>
+<tr>
+<td>多链详情 · 某链 Tab 收发</td>
+<td><strong>跳过</strong>选币与选网</td>
+</tr>
+<tr>
+<td>单链行</td>
+<td>直达地址层或二维码层</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="53-异常与提示">5.3 异常与提示 </h2>
+<p><strong>基线</strong><br />
+V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链上失败等 <strong>继续有效</strong>，详见 V1.1 文档。</p>
+<p><strong>V1.2 增量</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用户反馈</th>
+<th>是否阻断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>行情拉取失败</td>
+<td>列表「––」</td>
+<td>否</td>
+</tr>
+<tr>
+<td>多链选网无可用链</td>
+<td>空列表或不可达</td>
+<td>—</td>
+</tr>
+<tr>
+<td>合约查询失败</td>
+<td>行内失败文案</td>
+<td>确认禁用</td>
+</tr>
+<tr>
+<td>非法合约格式</td>
+<td>「请输入合法的合约地址」</td>
+<td>确认禁用</td>
+</tr>
+<tr>
+<td>交易历史筛选无记录</td>
+<td>「暂无交易记录」</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Toast 增补（本版）</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>文案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种添加/移除</td>
+<td>添加成功 / 移除成功</td>
+</tr>
+<tr>
+<td>自定义币种确认</td>
+<td>添加成功</td>
+</tr>
+<tr>
+<td>复制交易哈希</td>
+<td>哈希已复制</td>
+</tr>
+<tr>
+<td>交易/跨链入口</td>
+<td>即将上线</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="54-性能与安全">5.4 性能与安全 </h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首页列表渲染</td>
+<td>100 行内 P95 ≤ <strong>300ms</strong>（含聚合 + 行情字段）</td>
+</tr>
+<tr>
+<td>行情接口</td>
+<td><strong>Tatum · Exchange Rate API</strong>（主）+ <strong>CoinMarketCap · Quotes</strong>（兜底）；超时 <strong>3s</strong> 行级降级「––」</td>
+</tr>
+<tr>
+<td>币种搜索</td>
+<td>输入防抖 <strong>300ms</strong></td>
+</tr>
+<tr>
+<td>合约地址输入</td>
+<td>防抖 <strong>600ms</strong> 后校验+查询</td>
+</tr>
+<tr>
+<td>合约查询</td>
+<td>原型模拟 <strong>1.2s</strong>；生产须超时与重试策略</td>
+</tr>
+<tr>
+<td>交易历史页</td>
+<td>打开 ≤ <strong>200ms</strong>（前端渲染目标）</td>
+</tr>
+<tr>
+<td>自定义币种</td>
+<td>生产须服务端/RPC <strong>白名单</strong>校验</td>
+</tr>
+</tbody>
+</table>
+<p><strong>接口汇总（研发占位）</strong></p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>说明</th>
+<th>第三方封装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /market/prices</code></td>
+<td>批量行情（price、change24h）</td>
+<td><strong>Tatum · Exchange Rate API</strong>（主）；<strong>CoinMarketCap · Quotes</strong>（兜底）</td>
+</tr>
+<tr>
+<td><code>GET /transactions</code></td>
+<td>交易历史（symbol/network/limit/days）</td>
+<td><strong>Tatum · Transaction History v4</strong></td>
+</tr>
+<tr>
+<td><code>POST /rpc/token/metadata</code></td>
+<td>自定义币种元数据</td>
+<td><strong>Tatum · Token Details</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="55-客户端状态">5.5 客户端状态 </h2>
+<table>
+<thead>
+<tr>
+<th>状态键</th>
+<th>作用</th>
+<th>持久化</th>
+<th>同步触发</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种白名单</td>
+<td>控制首页/接收可见资产</td>
+<td>本版会话内；生产宜服务端</td>
+<td>管理页增删</td>
+</tr>
+<tr>
+<td>多链详情当前 Tab</td>
+<td>总览或某链</td>
+<td>会话内</td>
+<td>—</td>
+</tr>
+<tr>
+<td>交易历史网络筛选</td>
+<td>全部或单链</td>
+<td>会话内；关闭交易历史页后重置</td>
+<td>选网筛选</td>
+</tr>
+<tr>
+<td>发送上下文</td>
+<td>币种符号 + 网络标识 + 导航来源</td>
+<td>会话内</td>
+<td>选网/返回</td>
+</tr>
+<tr>
+<td>接收上下文</td>
+<td>币种符号 + 网络标识</td>
+<td>会话内</td>
+<td>选网</td>
+</tr>
+<tr>
+<td>自定义币种来源</td>
+<td>币种管理 / 接收</td>
+<td>表单会话内</td>
+<td>确认后分支</td>
+</tr>
+</tbody>
+</table>
+<p><strong>同步规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>刷新范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种增删</td>
+<td>首页列表 + 接收列表</td>
+</tr>
+<tr>
+<td>关闭币种管理</td>
+<td>首页列表</td>
+</tr>
+<tr>
+<td>自定义币种确认</td>
+<td>按来源刷新管理页或接收列表</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-不在本版范围">6. 不在本版范围 </h2>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>本版行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>买入加密币 / On-ramp</td>
+<td>不交付</td>
+</tr>
+<tr>
+<td>DEX 交易、跨链桥 <strong>完整流程</strong></td>
+<td>详情页有「交易」「跨链桥」入口；点击 Toast「即将上线」</td>
+</tr>
+<tr>
+<td>PIN 码发送</td>
+<td>仍 通行密钥</td>
+</tr>
+<tr>
+<td>独立钱包设置页</td>
+<td>仍由钱包信息页承担</td>
+</tr>
+<tr>
+<td>HD 创建/导入/备份变更</td>
+<td>继承 V1.1，不改</td>
+</tr>
+<tr>
+<td>代币信息 · 官网/社交媒体</td>
+<td>不展示</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-验收与测试">7. 验收与测试 </h2>
+<blockquote>
+<p>完整 <strong>126 项</strong>编号对照、执行阶段与静态校验基线见 <a href="./V1.2_验收与测试清单.md">V1.2_验收与测试清单.md</a>。各页面要点与 AC 编号索引见清单 <a href="./V1.2_验收与测试清单.md#主-prd-页面--验收编号对照">主 PRD 页面 ↔ 验收编号对照</a>。</p>
+</blockquote>
+<h3 id="完成标准">完成标准 </h3>
+<ul>
+<li><strong>V1.1 回归</strong>：HD 创建/导入/备份、十链单链收发、通行密钥发送、钱包信息敏感操作在 V1.2 原型上全部通过  </li>
+<li><strong>P0 增量</strong>：首页聚合与行情、多链/单链详情、收发选网按下方要点验收  </li>
+<li><strong>P1 增量</strong>：币种管理、代币信息、交易历史/详情按下方要点验收  </li>
+<li><strong>横切一致</strong>：异常 Toast、空态、客户端状态同步与 <a href="#53-异常与提示">异常与提示</a>、<a href="#55-客户端状态">客户端状态</a> 两章一致  </li>
+<li><strong>追溯完整</strong>：126 条 AC 均在测试清单中有编号与预期，Feature 对照见《需求追溯矩阵》；第三方数据验收见清单 <a href="./V1.2_验收与测试清单.md#第三方数据源验收口径f3-p1">第三方数据源验收口径</a></li>
+</ul>
+<h3 id="v1-1-回归范围">V1.1 回归范围 </h3>
+<p>V1.2 未改 HD 与 通行密钥代码路径；以下能力 <strong>必须</strong> 在 v12 原型上复测后再签 V1.2：</p>
+<ul>
+<li>HD 钱包创建、导入、助记词备份  </li>
+<li>十链单链发送与接收（非多链选网路径）  </li>
+<li>通行密钥发送确认  </li>
+<li>钱包信息页敏感操作  </li>
+</ul>
+<h3 id="验收顺序建议">验收顺序建议 </h3>
+<ol>
+<li><strong>V1.1 回归</strong>（上表范围）  </li>
+<li><strong>P0</strong>：首页聚合与行情 → 多链/单链详情 → 收发选网  </li>
+<li><strong>P1</strong>：币种管理 → 历史/信息  </li>
+<li><strong>横切</strong>：异常 Toast、边界空态、补丁与范围对照  </li>
+<li><strong>收尾</strong>：演示场景一键验证 + 测试清单横切 AC（PATCH / ERR / TOAST / QA）</li>
+</ol>
+<h3 id="按页面验收要点">按页面验收要点 </h3>
+<table>
+<thead>
+<tr>
+<th>页面</th>
+<th>要点</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web3 首页</td>
+<td>全部网络下 USDT 等仅一行；Polygon 筛选不合并；行情失败「––」；生产行情 <strong>Tatum 主 + CMC 兜底</strong></td>
+<td>P0</td>
+</tr>
+<tr>
+<td>多链代币详情页</td>
+<td>总览合计正确（<strong>Wallet Portfolio</strong>）；分链 Tab；发送/接收/交易/跨链入口可见</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>单链代币详情页</td>
+<td>单链筛选进单链页；与多链分流正确</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>发送选网</td>
+<td>多链 USDT 先选网；详情 Tab 发送可跳过</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>接收选网</td>
+<td>多链 USDT 先选网；移除币种后接收列表同步</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>币种管理</td>
+<td>增删同步首页；网络筛选；自定义币种与合约查询</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>代币信息页</td>
+<td>市场数据（<strong>CMC</strong>）与合约（<strong>Tatum Token Details</strong>）；原生币无合约区</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>交易历史/详情</td>
+<td>交易历史页列表、筛选、详情字段；数据 <strong>Tatum Transaction History v4</strong>；摘要区 vs 历史页左侧标识区分</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>添加自定义币种</td>
+<td>合约查询 <strong>Tatum Token Details</strong>；失败禁用确认</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>交易/跨链入口</td>
+<td>Toast「即将上线」</td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="演示场景原型一键验证">演示场景（原型一键验证） </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>覆盖页面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多链资产列表</td>
+<td>Web3 首页</td>
+</tr>
+<tr>
+<td>USDT 多链详情 · 总览</td>
+<td>多链代币详情页</td>
+</tr>
+<tr>
+<td>发送/接收 USDT · 选网</td>
+<td>发送/接收选网</td>
+</tr>
+<tr>
+<td>打开币种管理</td>
+<td>币种管理页</td>
+</tr>
+<tr>
+<td>交易历史 / 交易详情</td>
+<td>历史与详情</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<a id="8-附录--关联文档" aria-hidden="true"></a><h2 id="8-附录-关联文档">8. 附录 · 关联文档 </h2>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V1.1 基线 PRD</td>
+<td><a href="prd-v11.html">BiyaWallet_PRD_V1.1.0.md</a></td>
+</tr>
+<tr>
+<td>全量 PRD 母本</td>
+<td><a href="../02-PRD-全量/BiyaWallet_PRD.md">BiyaWallet_PRD.md</a></td>
+</tr>
+<tr>
+<td>V1.2 交互原型</td>
+<td><a href="prototype-v12.html">Biya钱包-交互原型-v12.html</a> · <a href="prototype-v12.html">在线 prototype-v12</a></td>
+</tr>
+<tr>
+<td>在线 PRD（V1.2）</td>
+<td><a href="https://terryxu923.github.io/biya-wallet-prototype-demo/prd-v12.html">prd-v12.html</a></td>
+</tr>
+<tr>
+<td>基线与补丁对照</td>
+<td><a href="./V1.2_基线与补丁对照.md">V1.2_基线与补丁对照.md</a></td>
+</tr>
+<tr>
+<td>需求追溯矩阵</td>
+<td><a href="./V1.2_需求追溯矩阵.md">V1.2_需求追溯矩阵.md</a></td>
+</tr>
+<tr>
+<td>验收与测试清单</td>
+<td><a href="./V1.2_验收与测试清单.md">V1.2_验收与测试清单.md</a></td>
+</tr>
+<tr>
+<td>Tatum 字段映射（研发）</td>
+<td><a href="./V1.2_Tatum字段映射表.md">V1.2_Tatum字段映射表.md</a></td>
+</tr>
+<tr>
+<td>CMC 字段映射（研发）</td>
+<td><a href="./V1.2_CMC字段映射表.md">V1.2_CMC字段映射表.md</a></td>
+</tr>
+<tr>
+<td>分步确认计划</td>
+<td><a href="./BiyaWallet_PRD_V1.2_分步确认计划.md">BiyaWallet_PRD_V1.2_分步确认计划.md</a></td>
+</tr>
+<tr>
+<td>Feature 映射</td>
+<td><a href="./V1.2_feature_inventory.json">V1.2_feature_inventory.json</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>
