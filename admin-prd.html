@@ -1,36 +1,4145 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin 后台 · PRD</title>
-  <style>
-    :root { color-scheme: light; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: #f6f7f9;
-      color: #1f2328;
+<!DOCTYPE html><html><head>
+      <title>Biya Web3 钱包 Admin 后台 · PRD</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;tab-size:8;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000;font-weight:600}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body pre{padding:1em;overflow:auto;line-height:1.45;border-radius:3px;background:#f5f5f5}html body pre>code{padding:0;margin:0;background:0 0;border:0}html body blockquote{margin:16px 0;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body ul,html body ol{padding-left:2em;margin-bottom:16px}html body p{margin-top:0;margin-bottom:16px}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}
+/* PRD_SIDEBAR_V1 */
+html body[for=html-export] #sidebar-toc-btn { display: none !important; }
+
+html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #e8e8e8;
+  box-shadow: none;
+  background: #fafafa;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+html body[for=html-export] .sidebar-toc-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  padding: 16px 12px 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+html body[for=html-export] .sidebar-toc-actions {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+html body[for=html-export] .sidebar-toc-actions button {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+html body[for=html-export] .sidebar-toc-actions button:hover {
+  background: #f3f4f6;
+  border-color: #0969da;
+  color: #0969da;
+}
+
+html body[for=html-export] .sidebar-toc-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 6px 0 24px;
+}
+
+html body[for=html-export] .sidebar-toc-tree,
+html body[for=html-export] .sidebar-toc-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 26px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 22px;
+  margin: 1px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 10px;
+  line-height: 22px;
+  cursor: pointer;
+  text-align: center;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle:hover {
+  color: #0969da;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle[aria-expanded="false"]::before {
+  content: "▸";
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-toggle[aria-expanded="true"]::before {
+  content: "▾";
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link {
+  flex: 1 1 auto;
+  display: block;
+  padding: 3px 10px 3px 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #444;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  word-break: break-word;
+}
+
+html body[for=html-export] .sidebar-toc-tree > .toc-item > .toc-row > .toc-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="3"] > .toc-row > .toc-link {
+  padding-left: 4px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="4"] > .toc-row > .toc-link {
+  padding-left: 8px;
+  font-size: 11.5px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-item[data-level="5"] > .toc-row > .toc-link {
+  padding-left: 12px;
+  font-size: 11px;
+  color: #555;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-children {
+  padding-left: 10px;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-children.is-collapsed {
+  display: none;
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link:hover {
+  color: #0969da;
+  background: rgba(9, 105, 218, 0.06);
+}
+
+html body[for=html-export] .sidebar-toc-tree .toc-link.active {
+  color: #0969da;
+  font-weight: 600;
+  border-left-color: #0969da;
+  background: rgba(9, 105, 218, 0.08);
+}
+
+html body[for=html-export] .markdown-preview {
+  margin-left: 300px !important;
+  left: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  transform: none !important;
+  padding: 2em 2em 4em !important;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    width: 260px;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 260px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    display: none;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 0 !important;
+    padding: 1em !important;
+  }
+}
+
+@media print {
+  html body[for=html-export] .md-sidebar-toc.prd-sidebar-toc {
+    display: none !important;
+  }
+  html body[for=html-export] .markdown-preview {
+    margin-left: 0 !important;
+  }
+}
+
+
+
+      </style>
+      <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function () {
+  var preview = document.querySelector(".markdown-preview");
+  if (!preview) return;
+
+  var headings = Array.prototype.slice.call(
+    preview.querySelectorAll("h1, h2, h3, h4, h5, h6")
+  ).filter(function (el) { return el.id; });
+
+  if (!headings.length) return;
+
+  function titleText(el) {
+    return (el.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function buildTree(nodes) {
+    var root = { children: [] };
+    var stack = [{ level: 0, node: root }];
+    nodes.forEach(function (el) {
+      var level = parseInt(el.tagName.slice(1), 10);
+      var item = {
+        id: el.id,
+        title: titleText(el),
+        level: level,
+        children: []
+      };
+      while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+      stack[stack.length - 1].node.children.push(item);
+      stack.push({ level: level, node: item });
+    });
+    return root.children;
+  }
+
+  function renderList(items) {
+    var ul = document.createElement("ul");
+    ul.className = "sidebar-toc-tree";
+    items.forEach(function (item) {
+      var li = document.createElement("li");
+      li.className = "toc-item";
+      li.setAttribute("data-level", String(item.level));
+
+      var row = document.createElement("div");
+      row.className = "toc-row";
+
+      var toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "toc-toggle";
+      var hasChildren = item.children.length > 0;
+      if (!hasChildren) toggle.classList.add("is-hidden");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "展开或收起");
+
+      var link = document.createElement("a");
+      link.className = "toc-link";
+      link.href = "#" + item.id;
+      link.textContent = item.title;
+
+      row.appendChild(toggle);
+      row.appendChild(link);
+      li.appendChild(row);
+
+      var childUl = null;
+      if (hasChildren) {
+        childUl = renderList(item.children);
+        childUl.classList.add("toc-children");
+        li.appendChild(childUl);
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var expanded = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+          childUl.classList.toggle("is-collapsed", expanded);
+        });
+      }
+
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  var tree = buildTree(headings);
+
+  var sidebar = document.createElement("nav");
+  sidebar.className = "md-sidebar-toc scrollbar-style prd-sidebar-toc";
+  sidebar.setAttribute("aria-label", "文档目录");
+
+  var header = document.createElement("div");
+  header.className = "sidebar-toc-header";
+  header.innerHTML = '<span>目录</span>';
+
+  var actions = document.createElement("div");
+  actions.className = "sidebar-toc-actions";
+  var btnExpand = document.createElement("button");
+  btnExpand.type = "button";
+  btnExpand.textContent = "全部展开";
+  var btnCollapse = document.createElement("button");
+  btnCollapse.type = "button";
+  btnCollapse.textContent = "全部收起";
+  actions.appendChild(btnExpand);
+  actions.appendChild(btnCollapse);
+  header.appendChild(actions);
+
+  var scroll = document.createElement("div");
+  scroll.className = "sidebar-toc-scroll";
+  scroll.appendChild(renderList(tree));
+
+  sidebar.appendChild(header);
+  sidebar.appendChild(scroll);
+  document.body.insertBefore(sidebar, document.body.firstChild);
+  document.body.setAttribute("html-show-sidebar-toc", "");
+
+  function allToggles() {
+    return Array.prototype.slice.call(sidebar.querySelectorAll(".toc-toggle:not(.is-hidden)"));
+  }
+  function allChildLists() {
+    return Array.prototype.slice.call(sidebar.querySelectorAll(".toc-children"));
+  }
+  function setAllExpanded(expanded) {
+    allToggles().forEach(function (btn) {
+      btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+    });
+    allChildLists().forEach(function (ul) {
+      ul.classList.toggle("is-collapsed", !expanded);
+    });
+  }
+  btnExpand.addEventListener("click", function () { setAllExpanded(true); });
+  btnCollapse.addEventListener("click", function () { setAllExpanded(false); });
+
+  var links = Array.prototype.slice.call(sidebar.querySelectorAll(".toc-link"));
+  var sections = links.map(function (a) {
+    return document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+  }).filter(Boolean);
+
+  function setActive() {
+    var scrollY = window.scrollY + 100;
+    var current = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= scrollY) current = sections[i];
     }
-    .wrap {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 32px 20px 64px;
-    }
-    zero-md { display: block; }
-    zero-md::part(markdown) {
-      background: #fff;
-      border: 1px solid #d0d7de;
-      border-radius: 12px;
-      padding: 28px 32px;
-      line-height: 1.65;
-    }
-  </style>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
-</head>
-<body>
-  <div class="wrap">
-    <zero-md src="./admin-prd.md"></zero-md>
-  </div>
-</body>
-</html>
+    links.forEach(function (a) {
+      a.classList.remove("active");
+      if (current && decodeURIComponent(a.getAttribute("href").slice(1)) === current.id) {
+        a.classList.add("active");
+        try { a.scrollIntoView({ block: "nearest" }); } catch (e) {}
+      }
+    });
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = decodeURIComponent(a.getAttribute("href").slice(1));
+      var el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", "#" + id);
+      }
+    });
+  });
+
+  window.addEventListener("scroll", setActive, { passive: true });
+  setActive();
+});
+
+</script>
+    </head>
+    <body for="html-export" html-show-sidebar-toc>
+      <div class="crossnote markdown-preview  ">
+<h1 id="biya-web3-admin">Biya Web3 钱包 Admin 后台 · 网络与代币管理产品需求文档</h1>
+<h2 id="_1">文档说明</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文档版本</td>
+<td><strong>V1.2.0</strong></td>
+</tr>
+<tr>
+<td>创建日期</td>
+<td>2026-04-24</td>
+</tr>
+<tr>
+<td>最后更新</td>
+<td>2026-07-29</td>
+</tr>
+<tr>
+<td>产品经理</td>
+<td>Terry</td>
+</tr>
+<tr>
+<td>产品名称</td>
+<td>BiyaPay Web3 钱包管理后台</td>
+</tr>
+<tr>
+<td>文档定位</td>
+<td>定义网络、币种信息与链上代币的后台管理能力及其前台生效规则</td>
+</tr>
+<tr>
+<td>核心能力</td>
+<td>网络管理 → 币种信息管理 → 链上代币管理 → 前台配置生效</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">目录</h2>
+<ul>
+<li><a href="#1-本版交付摘要">1. 本版交付摘要</a></li>
+<li><a href="#11-产品目标">1.1 产品目标</a></li>
+<li><a href="#12-核心数据模型">1.2 核心数据模型</a></li>
+<li><a href="#13-本版核心变化">1.3 本版核心变化</a></li>
+<li><a href="#14-本版交付能力">1.4 本版交付能力</a></li>
+<li><a href="#2-后台框架与安全">2. 后台框架与安全</a></li>
+<li><a href="#21-模块说明">2.1 模块说明</a></li>
+<li><a href="#22-页面框架">2.2 页面框架</a></li>
+<li><a href="#23-通用交互规则">2.3 通用交互规则</a></li>
+<li><a href="#24-totp-安全验证">2.4 TOTP 安全验证</a></li>
+<li><a href="#25-全局页面状态">2.5 全局页面状态</a></li>
+<li><a href="#3-网络管理">3. 网络管理</a></li>
+<li><a href="#31-用户目标">3.1 用户目标</a></li>
+<li><a href="#32-模块说明">3.2 模块说明</a></li>
+<li><a href="#33-流程步骤">3.3 流程步骤</a></li>
+<li><a href="#34-列表与筛选">3.4 列表与筛选</a></li>
+<li><a href="#35-新增与编辑">3.5 新增与编辑</a></li>
+<li><a href="#36-页面状态矩阵">3.6 页面状态矩阵</a></li>
+<li><a href="#37-交互规则">3.7 交互规则</a></li>
+<li><a href="#38-数据管理">3.8 数据管理</a></li>
+<li><a href="#4-币种信息">4. 币种信息</a></li>
+<li><a href="#41-用户目标">4.1 用户目标</a></li>
+<li><a href="#42-模块说明">4.2 模块说明</a></li>
+<li><a href="#43-流程步骤">4.3 流程步骤</a></li>
+<li><a href="#44-列表与筛选">4.4 列表与筛选</a></li>
+<li><a href="#45-新增与编辑">4.5 新增与编辑</a></li>
+<li><a href="#46-聚合部署列表">4.6 聚合部署列表</a></li>
+<li><a href="#47-页面状态矩阵">4.7 页面状态矩阵</a></li>
+<li><a href="#48-交互规则">4.8 交互规则</a></li>
+<li><a href="#49-数据管理">4.9 数据管理</a></li>
+<li><a href="#5-链上代币">5. 链上代币</a></li>
+<li><a href="#51-用户目标">5.1 用户目标</a></li>
+<li><a href="#52-模块说明">5.2 模块说明</a></li>
+<li><a href="#53-流程步骤">5.3 流程步骤</a></li>
+<li><a href="#54-列表与筛选">5.4 列表与筛选</a></li>
+<li><a href="#55-新增与编辑">5.5 新增与编辑</a></li>
+<li><a href="#56-快速部署">5.6 快速部署</a></li>
+<li><a href="#57-页面状态矩阵">5.7 页面状态矩阵</a></li>
+<li><a href="#58-交互规则">5.8 交互规则</a></li>
+<li><a href="#59-数据管理">5.9 数据管理</a></li>
+<li><a href="#6-横切规则">6. 横切规则</a></li>
+<li><a href="#61-实体关系">6.1 实体关系</a></li>
+<li><a href="#62-状态联动">6.2 状态联动</a></li>
+<li><a href="#63-前台生效规则">6.3 前台生效规则</a></li>
+<li><a href="#64-用户自定义代币">6.4 用户自定义代币</a></li>
+<li><a href="#65-数据同步">6.5 数据同步</a></li>
+<li><a href="#66-审计规则">6.6 审计规则</a></li>
+<li><a href="#7-异常与提示">7. 异常与提示</a></li>
+<li><a href="#71-通用异常">7.1 通用异常</a></li>
+<li><a href="#72-表单与数据异常">7.2 表单与数据异常</a></li>
+<li><a href="#73-安全验证异常">7.3 安全验证异常</a></li>
+<li><a href="#74-前台生效异常">7.4 前台生效异常</a></li>
+</ul>
+<hr />
+<h2 id="1">1. 本版交付摘要</h2>
+<h3 id="11">1.1 产品目标</h3>
+<p>BiyaPay Web3 钱包 Admin 后台面向具备管理权限的内部人员，用于维护前台钱包依赖的网络、币种信息和链上代币配置。</p>
+<p>本版目标如下：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置统一</td>
+<td>通过网络、币种信息、链上代币三层模型管理多链资产</td>
+</tr>
+<tr>
+<td>前后台一致</td>
+<td>后台状态变化按统一规则影响前台网络、资产、收款和多链聚合</td>
+</tr>
+<tr>
+<td>操作可控</td>
+<td>所有写操作均经过确认、TOTP 验证和结果反馈</td>
+</tr>
+<tr>
+<td>数据可追踪</td>
+<td>写操作保留操作人、操作时间、变更对象和变更内容</td>
+</tr>
+<tr>
+<td>风险可拦截</td>
+<td>对重复数据、关联数据删除、无效合约和状态冲突进行阻断</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12">1.2 核心数据模型</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>实体</th>
+<th>唯一标识</th>
+<th>核心作用</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>网络 <code>Network</code></td>
+<td><code>networkId</code></td>
+<td>定义链类型、地址规则、节点信息及运营状态</td>
+<td>一个网络可包含多条链上代币</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>币种信息 <code>Token Spec</code></td>
+<td><code>specId</code></td>
+<td>定义跨链统一的币种身份、品牌信息和资产类型</td>
+<td>一个币种信息可关联多条链上代币</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>链上代币 <code>Contract Token</code></td>
+<td>记录 ID</td>
+<td>定义某个网络上的原生币或合约部署实例</td>
+<td>关联一个网络，可选关联一个币种信息</td>
+</tr>
+</tbody>
+</table>
+<p><strong>聚合原则</strong>：链上代币关联同一 <code>specId</code> 后，前台可将不同网络上的余额聚合为同一币种；未关联 <code>specId</code> 的记录只作为单链资产存在。</p>
+<h3 id="13">1.3 本版核心变化</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>原有状态</th>
+<th>本版要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写操作安全</td>
+<td>不同模块验证位置不一致</td>
+<td>新增、编辑、上架、下架、删除均执行 TOTP 验证</td>
+</tr>
+<tr>
+<td>删除策略</td>
+<td>关联数据处理口径不一致</td>
+<td>存在有效关联时阻断删除，由管理员先处理依赖关系</td>
+</tr>
+<tr>
+<td>前台联动</td>
+<td>仅描述部分页面影响</td>
+<td>明确网络、币种信息和链上代币的独立生效条件</td>
+</tr>
+<tr>
+<td>多链聚合</td>
+<td>以字段关联说明为主</td>
+<td>明确 <code>specId</code> 是聚合关系，链上代币状态决定实例是否计入</td>
+</tr>
+<tr>
+<td>自定义代币</td>
+<td>用户添加记录与全局目录混用</td>
+<td>区分用户个人可见性与全局上架状态，避免影响其他用户</td>
+</tr>
+<tr>
+<td>操作反馈</td>
+<td>成功与失败规则分散</td>
+<td>统一加载、空态、提交中、成功、失败和无权限状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14">1.4 本版交付能力</h3>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td>网络、币种信息、链上代币的查询、新增、编辑、上架、下架和删除</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>全部写操作的 TOTP 验证、依赖校验、操作反馈和审计记录</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>三层数据联动、前台可见性控制和多链资产聚合配置</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>合约元数据自动查询、币种快速部署、聚合部署查看</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>用户自定义代币记录的后台查询与治理</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 后台框架与安全</h2>
+<h3 id="21">2.1 模块说明</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用户</strong></td>
+<td>已登录且具备对应模块权限的后台管理员</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>管理员身份有效；后台配置服务可用</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>模块导航、列表查询、数据维护、安全验证和操作反馈</td>
+</tr>
+<tr>
+<td><strong>管理模块</strong></td>
+<td>网络管理、币种信息、链上代币</td>
+</tr>
+<tr>
+<td><strong>权限原则</strong></td>
+<td>查看与写入权限分别校验；无写入权限时不展示可执行的写操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22">2.2 页面框架</h3>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>内容</th>
+<th>交互规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顶部栏</td>
+<td>产品名称、当前管理员、退出入口</td>
+<td>管理员身份失效时返回登录页</td>
+</tr>
+<tr>
+<td>侧边导航</td>
+<td>网络管理、币种信息、链上代币</td>
+<td>切换模块后加载对应列表，其他模块筛选状态不继承</td>
+</tr>
+<tr>
+<td>页面标题区</td>
+<td>模块标题、说明、主要操作</td>
+<td>主要操作根据写入权限显示</td>
+</tr>
+<tr>
+<td>筛选区</td>
+<td>关键词和模块专属条件</td>
+<td>查询后保留当前筛选条件；重置后恢复默认值</td>
+</tr>
+<tr>
+<td>列表区</td>
+<td>数据表格、数量、分页</td>
+<td>状态列和操作列保持可见；无数据时展示空态</td>
+</tr>
+<tr>
+<td>表单层</td>
+<td>新增或编辑表单</td>
+<td>未保存关闭时执行二次确认</td>
+</tr>
+<tr>
+<td>弹窗层</td>
+<td>安全验证、删除确认、关联数据查看</td>
+<td>同一时间只处理一个目标操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23">2.3 通用交互规则</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>进入模块</td>
+<td>点击侧边导航</td>
+<td>加载第一页数据和默认筛选项</td>
+<td>展示列表或对应状态</td>
+</tr>
+<tr>
+<td>查询</td>
+<td>输入关键词或选择筛选项</td>
+<td>按当前组合条件查询，并回到第一页</td>
+<td>更新结果数量和列表</td>
+</tr>
+<tr>
+<td>重置</td>
+<td>点击“重置”</td>
+<td>清空关键词，筛选项恢复“全部”</td>
+<td>重新加载第一页</td>
+</tr>
+<tr>
+<td>新增</td>
+<td>点击页面主要操作</td>
+<td>打开空白表单</td>
+<td>可填写并提交</td>
+</tr>
+<tr>
+<td>编辑</td>
+<td>点击行内“编辑”</td>
+<td>加载最新数据并回填</td>
+<td>可修改允许编辑的字段</td>
+</tr>
+<tr>
+<td>提交</td>
+<td>表单校验通过后点击“保存”</td>
+<td>锁定提交按钮并发起 TOTP 验证</td>
+<td>验证通过后写入数据</td>
+</tr>
+<tr>
+<td>上架或下架</td>
+<td>点击对应行内操作</td>
+<td>展示目标与影响范围并发起 TOTP 验证</td>
+<td>验证通过后更新状态</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>点击行内“删除”</td>
+<td>先校验依赖，再进行删除确认和 TOTP 验证</td>
+<td>无依赖且验证通过后删除</td>
+</tr>
+<tr>
+<td>关闭未保存表单</td>
+<td>表单内容已变化时关闭</td>
+<td>弹出放弃修改确认</td>
+<td>确认后关闭；取消则继续编辑</td>
+</tr>
+<tr>
+<td>重复提交</td>
+<td>提交处理中再次点击</td>
+<td>不重复发起请求</td>
+<td>保持提交中状态</td>
+</tr>
+</tbody>
+</table>
+<p><strong>列表通用规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分页</td>
+<td>默认每页 20 条；切换分页保留筛选条件</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>默认按业务排序值升序，再按更新时间倒序</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>展示为 <code>YYYY-MM-DD HH:mm:ss</code></td>
+</tr>
+<tr>
+<td>长文本</td>
+<td>列表中缩略展示，悬停或点击后查看完整内容</td>
+</tr>
+<tr>
+<td>地址</td>
+<td>使用等宽样式缩略展示，复制时写入完整地址</td>
+</tr>
+<tr>
+<td>状态</td>
+<td>上架、下架使用明确的状态标签，不仅依赖颜色区分</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>仅展示当前状态和权限下可执行的操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-totp">2.4 TOTP 安全验证</h3>
+<p><strong>验证范围</strong></p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>新增</th>
+<th>编辑</th>
+<th>上架</th>
+<th>下架</th>
+<th>删除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络管理</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>币种信息</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>链上代币</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+<td>需要</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验证流程</strong></p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>管理员操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>发起写操作</td>
+<td>完成字段、权限、重复和依赖校验</td>
+<td>校验通过后进入安全验证</td>
+</tr>
+<tr>
+<td>2</td>
+<td>查看验证弹窗</td>
+<td>展示操作类型、目标对象和影响说明</td>
+<td>管理员确认操作对象</td>
+</tr>
+<tr>
+<td>3</td>
+<td>输入 6 位验证码</td>
+<td>仅接受 6 位数字</td>
+<td>输入完整后允许确认</td>
+</tr>
+<tr>
+<td>4</td>
+<td>点击“确认验证”</td>
+<td>校验验证码并保持目标操作上下文</td>
+<td>验证通过后执行写操作</td>
+</tr>
+<tr>
+<td>5</td>
+<td>等待处理</td>
+<td>禁用重复提交</td>
+<td>成功后关闭弹窗并刷新数据</td>
+</tr>
+<tr>
+<td>6</td>
+<td>验证失败</td>
+<td>保留弹窗和目标操作上下文</td>
+<td>展示错误，可重新输入</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验证弹窗字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>展示规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td><code>安全验证 · {操作名称}</code></td>
+</tr>
+<tr>
+<td>操作对象</td>
+<td>展示对象名称及唯一标识</td>
+</tr>
+<tr>
+<td>影响说明</td>
+<td>上架、下架、删除时展示前台影响或关联风险</td>
+</tr>
+<tr>
+<td>验证码</td>
+<td>6 位数字，输入内容不持久化</td>
+</tr>
+<tr>
+<td>取消</td>
+<td>关闭验证弹窗，不执行目标操作</td>
+</tr>
+<tr>
+<td>确认</td>
+<td>验证码完整且当前管理员仍有权限时可点击</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25">2.5 全局页面状态</h3>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>触发</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加载中</td>
+<td>首次进入或刷新列表</td>
+<td>列表加载占位</td>
+<td>可切换模块，不可操作未加载数据</td>
+</tr>
+<tr>
+<td>正常</td>
+<td>数据加载成功</td>
+<td>筛选区、列表和分页</td>
+<td>按权限执行操作</td>
+</tr>
+<tr>
+<td>空数据</td>
+<td>当前模块无任何记录</td>
+<td>空态和新增入口</td>
+<td>有写权限时可新增</td>
+</tr>
+<tr>
+<td>筛选无结果</td>
+<td>有数据但当前条件无匹配</td>
+<td>无匹配结果提示</td>
+<td>可重置或修改筛选</td>
+</tr>
+<tr>
+<td>加载失败</td>
+<td>列表请求失败</td>
+<td>错误提示和重试入口</td>
+<td>可重试或切换模块</td>
+</tr>
+<tr>
+<td>无查看权限</td>
+<td>无模块查看权限</td>
+<td>无权限提示</td>
+<td>返回其他可访问模块</td>
+</tr>
+<tr>
+<td>无写入权限</td>
+<td>可查看但不可修改</td>
+<td>隐藏或禁用写操作</td>
+<td>可查询和查看详情</td>
+</tr>
+<tr>
+<td>提交中</td>
+<td>写操作已提交</td>
+<td>按钮加载，表单与弹窗锁定</td>
+<td>不可重复提交</td>
+</tr>
+<tr>
+<td>提交成功</td>
+<td>写操作成功</td>
+<td>成功反馈</td>
+<td>关闭操作层并刷新列表</td>
+</tr>
+<tr>
+<td>提交失败</td>
+<td>写操作失败</td>
+<td>明确错误原因</td>
+<td>保留已填写内容，可修正后重试</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h2 id="3">3. 网络管理</h2>
+<h3 id="31">3.1 用户目标</h3>
+<p>管理员能够维护钱包支持的区块链网络，控制网络的技术参数、地址规则、节点信息和前台可用状态，并避免错误配置影响资产查询与收发。</p>
+<h3 id="32">3.2 模块说明</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>管理员进入“网络管理”</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>具备网络查看权限；写操作需具备网络管理权限</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>查询、新增、编辑、上架、下架、删除网络</td>
+</tr>
+<tr>
+<td><strong>网络类型</strong></td>
+<td>EVM、Solana、UTXO、Cosmos、Tron</td>
+</tr>
+<tr>
+<td><strong>关键约束</strong></td>
+<td><code>networkId</code> 全局唯一；链上技术参数创建后不可修改</td>
+</tr>
+<tr>
+<td><strong>前台影响</strong></td>
+<td>网络选择、地址校验、地址派生、收发可用性及链上数据查询</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33">3.3 流程步骤</h3>
+<pre><code class="language-mermaid">flowchart TD
+  A[进入网络管理] --&gt; B[查询网络列表]
+  B --&gt; C{选择操作}
+  C --&gt;|新增| D[填写网络配置]
+  C --&gt;|编辑| E[修改可编辑字段]
+  C --&gt;|上架或下架| F[确认状态影响]
+  C --&gt;|删除| G[校验关联链上代币]
+  D --&gt; H[表单校验]
+  E --&gt; H
+  F --&gt; I[TOTP 验证]
+  G --&gt;|无关联| I
+  G --&gt;|存在关联| J[阻断删除]
+  H --&gt;|通过| I
+  H --&gt;|不通过| K[展示字段错误]
+  I --&gt;|通过| L[执行操作并记录审计日志]
+  I --&gt;|失败| M[保留操作上下文]
+  L --&gt; N[刷新列表与前台配置]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>管理员操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入网络管理</td>
+<td>加载网络列表</td>
+<td>展示第一页数据</td>
+</tr>
+<tr>
+<td>2</td>
+<td>输入或选择筛选条件</td>
+<td>按组合条件查询</td>
+<td>列表更新</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点击“新增网络”</td>
+<td>打开新增表单</td>
+<td>展示字段默认值</td>
+</tr>
+<tr>
+<td>4</td>
+<td>填写网络配置</td>
+<td>实时执行必填、格式和唯一性校验</td>
+<td>校验结果显示在对应字段下方</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点击“保存”</td>
+<td>执行完整校验并发起 TOTP 验证</td>
+<td>验证通过后创建网络</td>
+</tr>
+<tr>
+<td>6</td>
+<td>点击“编辑”</td>
+<td>加载最新记录；锁定不可编辑字段</td>
+<td>保存并验证后更新网络</td>
+</tr>
+<tr>
+<td>7</td>
+<td>点击“上架”或“下架”</td>
+<td>展示状态变化的前台影响</td>
+<td>验证通过后更新状态</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点击“删除”</td>
+<td>检查是否存在链上代币</td>
+<td>无关联时可继续；有关系时阻断</td>
+</tr>
+<tr>
+<td>9</td>
+<td>确认删除并完成验证</td>
+<td>删除网络并记录操作</td>
+<td>关闭弹窗并刷新列表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34">3.4 列表与筛选</h3>
+<p><strong>筛选字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>控件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键词</td>
+<td>文本输入</td>
+<td>匹配网络名称、网络简称和 <code>networkId</code></td>
+</tr>
+<tr>
+<td>网络类型</td>
+<td>单选下拉</td>
+<td>全部、EVM、Solana、UTXO、Cosmos、Tron</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td>单选下拉</td>
+<td>全部、上架、下架</td>
+</tr>
+<tr>
+<td>网络环境</td>
+<td>单选下拉</td>
+<td>全部、主网、测试网</td>
+</tr>
+</tbody>
+</table>
+<p><strong>展示字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>数据来源</th>
+<th>展示规则</th>
+<th>空值或异常</th>
+<th>交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络标识</td>
+<td>网络配置</td>
+<td>展示 Logo</td>
+<td>无图时展示网络名首字符</td>
+<td>查看完整图片</td>
+</tr>
+<tr>
+<td>网络名称</td>
+<td><code>name</code></td>
+<td>展示全称</td>
+<td>不允许为空</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络简称</td>
+<td><code>short</code></td>
+<td>大写展示</td>
+<td>不允许为空</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络标识符</td>
+<td><code>networkId</code></td>
+<td>等宽展示</td>
+<td>不允许为空</td>
+<td>复制完整值</td>
+</tr>
+<tr>
+<td>网络类型</td>
+<td><code>type</code></td>
+<td>展示枚举中文含义</td>
+<td>未识别值显示“未知”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>链 ID</td>
+<td><code>chainId</code></td>
+<td>EVM 展示实际值</td>
+<td>非 EVM 显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>原生代币</td>
+<td>关联币种信息</td>
+<td>展示 Symbol</td>
+<td>未关联显示“未配置”</td>
+<td>可进入对应币种信息</td>
+</tr>
+<tr>
+<td>原生精度</td>
+<td><code>nativeDecimals</code></td>
+<td>展示整数</td>
+<td>未配置显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>网络环境</td>
+<td><code>isTestnet</code></td>
+<td>主网或测试网</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>RPC 地址</td>
+<td><code>rpcUrl</code></td>
+<td>缩略展示</td>
+<td>未配置显示“—”</td>
+<td>查看完整值</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><code>sortOrder</code></td>
+<td>数字越小越靠前</td>
+<td>空值排在有值之后</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新时间</td>
+<td>系统记录</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新人</td>
+<td>系统记录</td>
+<td>展示管理员名称</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td><code>status</code></td>
+<td>上架或下架</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>权限与状态</td>
+<td>编辑、上架或下架、删除</td>
+<td>无权限时不展示</td>
+<td>执行对应操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35">3.5 新增与编辑</h3>
+<p><strong>模块说明</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>新增模式</th>
+<th>编辑模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>新增网络</td>
+<td>编辑网络</td>
+</tr>
+<tr>
+<td>默认状态</td>
+<td>下架</td>
+<td>当前状态</td>
+</tr>
+<tr>
+<td>唯一标识</td>
+<td>根据网络名称生成，保存前校验唯一</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>链上技术参数</td>
+<td>可编辑</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>安全验证</td>
+<td>保存前执行</td>
+<td>保存前执行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表单字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>分组</th>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>默认值</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>展示与标识</td>
+<td>网络名称 <code>name</code></td>
+<td>文本</td>
+<td>是</td>
+<td>—</td>
+<td>长度 1–50；用于生成 <code>networkId</code></td>
+</tr>
+<tr>
+<td>展示与标识</td>
+<td>网络简称 <code>short</code></td>
+<td>文本</td>
+<td>是</td>
+<td>—</td>
+<td>长度 1–10；统一转为大写</td>
+</tr>
+<tr>
+<td>展示与标识</td>
+<td>网络标识符 <code>networkId</code></td>
+<td>只读文本</td>
+<td>是</td>
+<td>自动生成</td>
+<td>网络名称转为小写后移除空格和特殊字符；全局唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td>展示与标识</td>
+<td>网络 Logo</td>
+<td>图片</td>
+<td>上架时必填</td>
+<td>—</td>
+<td>支持有效图片地址或上传图片；加载失败时不可上架</td>
+</tr>
+<tr>
+<td>展示与标识</td>
+<td>展示排序 <code>sortOrder</code></td>
+<td>数字</td>
+<td>否</td>
+<td>—</td>
+<td>正整数；值越小越靠前</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>网络类型 <code>type</code></td>
+<td>单选</td>
+<td>是</td>
+<td>—</td>
+<td>EVM、Solana、UTXO、Cosmos、Tron；创建后不可修改</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>BIP44 币种索引</td>
+<td>数字</td>
+<td>是</td>
+<td>—</td>
+<td>非负整数；创建后不可修改</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>链 ID <code>chainId</code></td>
+<td>数字</td>
+<td>EVM 必填</td>
+<td>—</td>
+<td>EVM 网络内唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>HD 派生路径</td>
+<td>文本</td>
+<td>是</td>
+<td>—</td>
+<td>必须符合所选网络类型；创建后不可修改</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>支持地址类型</td>
+<td>多选</td>
+<td>是</td>
+<td>—</td>
+<td>至少选择一项；选项由网络类型限定</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>原生代币</td>
+<td>币种选择</td>
+<td>上架时必填</td>
+<td>—</td>
+<td>关联一条币种信息；创建后可调整</td>
+</tr>
+<tr>
+<td>链上参数</td>
+<td>原生代币精度</td>
+<td>数字</td>
+<td>是</td>
+<td>—</td>
+<td>0–36 的整数；创建后不可修改</td>
+</tr>
+<tr>
+<td>节点与查询</td>
+<td>RPC 地址 <code>rpcUrl</code></td>
+<td>URL</td>
+<td>是</td>
+<td>—</td>
+<td>必须为有效 HTTPS 地址</td>
+</tr>
+<tr>
+<td>节点与查询</td>
+<td>区块浏览器地址</td>
+<td>URL</td>
+<td>是</td>
+<td>—</td>
+<td>必须为有效 HTTPS 地址</td>
+</tr>
+<tr>
+<td>节点与查询</td>
+<td>区块浏览器 API</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时必须为有效 HTTPS 地址</td>
+</tr>
+<tr>
+<td>节点与查询</td>
+<td>地址校验规则 <code>addrRegex</code></td>
+<td>预设或自定义</td>
+<td>是</td>
+<td>按网络类型推荐</td>
+<td>保存前验证规则可用性</td>
+</tr>
+<tr>
+<td>业务控制</td>
+<td>需要 MEMO 或 TAG</td>
+<td>开关</td>
+<td>否</td>
+<td>关闭</td>
+<td>开启后必须填写字段名称</td>
+</tr>
+<tr>
+<td>业务控制</td>
+<td>MEMO 或 TAG 名称</td>
+<td>文本</td>
+<td>条件必填</td>
+<td>—</td>
+<td>开启对应开关时显示；长度 1–20</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td>网络环境</td>
+<td>开关</td>
+<td>是</td>
+<td>主网</td>
+<td>主网或测试网</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td>上架状态</td>
+<td>单选</td>
+<td>是</td>
+<td>下架</td>
+<td>满足全部上架条件后才可选择上架</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td>官网</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td>内部说明</td>
+<td>多行文本</td>
+<td>否</td>
+<td>—</td>
+<td>最多 500 字</td>
+</tr>
+</tbody>
+</table>
+<p><strong>地址规则联动</strong></p>
+<table>
+<thead>
+<tr>
+<th>网络类型</th>
+<th>可选地址类型</th>
+<th>地址校验要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EVM</td>
+<td>EVM</td>
+<td><code>0x</code> 开头的 40 位十六进制地址</td>
+</tr>
+<tr>
+<td>Solana</td>
+<td>Ed25519</td>
+<td>32–44 位 Base58 地址</td>
+</tr>
+<tr>
+<td>UTXO</td>
+<td>Legacy、SegWit、Taproot</td>
+<td>至少选择一种地址类型，并使用对应格式校验</td>
+</tr>
+<tr>
+<td>Cosmos</td>
+<td>Bech32</td>
+<td>使用当前网络地址前缀校验</td>
+</tr>
+<tr>
+<td>Tron</td>
+<td>Base58</td>
+<td><code>T</code> 开头的 34 位地址</td>
+</tr>
+</tbody>
+</table>
+<p><strong>上架条件</strong></p>
+<p>网络同时满足以下条件时才允许上架：</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础字段</td>
+<td>所有必填字段有效</td>
+</tr>
+<tr>
+<td>唯一标识</td>
+<td><code>networkId</code> 未被占用</td>
+</tr>
+<tr>
+<td>原生代币</td>
+<td>已关联有效币种信息</td>
+</tr>
+<tr>
+<td>节点配置</td>
+<td>RPC 地址和地址校验规则有效</td>
+</tr>
+<tr>
+<td>网络标识</td>
+<td>Logo 可正常加载</td>
+</tr>
+<tr>
+<td>测试网提示</td>
+<td>测试网必须明确标记，不得按主网展示</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36">3.6 页面状态矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认列表</td>
+<td>进入网络管理</td>
+<td>全部网络第一页</td>
+<td>查询、新增及行内操作</td>
+</tr>
+<tr>
+<td>条件筛选</td>
+<td>输入筛选条件</td>
+<td>匹配网络</td>
+<td>修改条件或执行行内操作</td>
+</tr>
+<tr>
+<td>无网络</td>
+<td>系统没有网络记录</td>
+<td>空态</td>
+<td>有权限时新增网络</td>
+</tr>
+<tr>
+<td>编辑已上架网络</td>
+<td>点击已上架网络的编辑</td>
+<td>技术参数只读，运营字段可编辑</td>
+<td>保存或取消</td>
+</tr>
+<tr>
+<td>上架条件不足</td>
+<td>尝试上架未完成配置的网络</td>
+<td>缺失项列表</td>
+<td>返回编辑补充</td>
+</tr>
+<tr>
+<td>存在关联记录</td>
+<td>删除已有链上代币的网络</td>
+<td>关联数量和阻断原因</td>
+<td>查看关联数据，不可删除</td>
+</tr>
+<tr>
+<td>状态变更中</td>
+<td>完成验证后等待结果</td>
+<td>当前行处理中</td>
+<td>不可重复操作</td>
+</tr>
+<tr>
+<td>数据被更新</td>
+<td>编辑期间记录被他人修改</td>
+<td>冲突提示</td>
+<td>重新加载最新数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37">3.7 交互规则</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>反馈</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成 <code>networkId</code></td>
+<td>输入网络名称</td>
+<td>实时生成候选值</td>
+<td>保存后锁定</td>
+</tr>
+<tr>
+<td>类型切换</td>
+<td>新增时选择网络类型</td>
+<td>更新地址类型和链 ID 必填状态</td>
+<td>已填冲突字段需重新确认</td>
+</tr>
+<tr>
+<td>保存新增</td>
+<td>表单校验通过</td>
+<td>打开安全验证</td>
+<td>验证通过后创建</td>
+</tr>
+<tr>
+<td>保存编辑</td>
+<td>可编辑字段发生变化</td>
+<td>打开安全验证并展示变更摘要</td>
+<td>验证通过后更新</td>
+</tr>
+<tr>
+<td>上架</td>
+<td>当前状态为下架</td>
+<td>展示前台影响并验证</td>
+<td>成功后状态变为上架</td>
+</tr>
+<tr>
+<td>下架</td>
+<td>当前状态为上架</td>
+<td>展示网络将从前台选网入口移除</td>
+<td>成功后状态变为下架</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>当前网络无链上代币关联</td>
+<td>二次确认并验证</td>
+<td>成功后永久删除</td>
+</tr>
+<tr>
+<td>复制标识</td>
+<td>点击 <code>networkId</code></td>
+<td>复制完整值</td>
+<td>提示“已复制”</td>
+</tr>
+</tbody>
+</table>
+<h3 id="38">3.8 数据管理</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>唯一性</td>
+<td><code>networkId</code> 全局唯一；EVM 网络的 <code>chainId</code> 在 EVM 范围内唯一</td>
+</tr>
+<tr>
+<td>不可变字段</td>
+<td><code>networkId</code>、网络类型、BIP44 索引、HD 派生路径和原生精度创建后不可修改</td>
+</tr>
+<tr>
+<td>删除策略</td>
+<td>存在任意链上代币记录时禁止删除；管理员需先处理关联记录</td>
+</tr>
+<tr>
+<td>下架策略</td>
+<td>网络下架不删除网络和链上代币记录，也不自动改变链上代币状态</td>
+</tr>
+<tr>
+<td>存量数据</td>
+<td>网络下架后保留已有余额和历史数据查询能力，停止作为新增配置和前台选网项</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按 <code>sortOrder</code> 升序；空值排在有值之后；同值按网络名称排序</td>
+</tr>
+<tr>
+<td>写入结果</td>
+<td>成功后刷新当前列表，并触发前台网络配置更新</td>
+</tr>
+<tr>
+<td>审计</td>
+<td>保存变更前后值；敏感地址只记录是否变化，不在日志中暴露密钥类信息</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4">4. 币种信息</h2>
+<h3 id="41">4.1 用户目标</h3>
+<p>管理员能够维护与具体网络无关的统一币种身份，使同一币种在不同网络上的部署实例共享 Symbol、名称、Logo 和资产类型，并支持前台按币种进行添加和多链聚合展示。</p>
+<h3 id="42">4.2 模块说明</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>管理员进入“币种信息”</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>具备币种信息查看权限；写操作需具备币种信息管理权限</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>查询、新增、编辑、上架、下架、删除币种信息；查看和新增链上部署</td>
+</tr>
+<tr>
+<td><strong>聚合关系</strong></td>
+<td>链上代币通过 <code>specId</code> 关联币种信息</td>
+</tr>
+<tr>
+<td><strong>关键约束</strong></td>
+<td><code>symbol</code> 和 <code>specId</code> 全局唯一，创建后不可修改</td>
+</tr>
+<tr>
+<td><strong>前台影响</strong></td>
+<td>币种管理可添加列表、资产类型分组、多链资产名称及品牌展示</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>specId</code></td>
+<td>币种信息唯一标识</td>
+<td>根据 Symbol 生成；全局唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td><code>symbol</code></td>
+<td>币种符号</td>
+<td>大写字母和数字组合；全局唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>币种名称</td>
+<td>用于前台和后台展示</td>
+</tr>
+<tr>
+<td><code>assetType</code></td>
+<td>资产类型</td>
+<td><code>CRYPTO</code> 或 <code>SECURITY</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>上架状态</td>
+<td>决定币种是否可被新用户添加</td>
+</tr>
+<tr>
+<td><code>contractCount</code></td>
+<td>聚合部署数</td>
+<td>关联该 <code>specId</code> 的链上代币数量，由系统计算</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43">4.3 流程步骤</h3>
+<pre><code class="language-mermaid">flowchart TD
+  A[进入币种信息] --&gt; B[查询币种列表]
+  B --&gt; C{选择操作}
+  C --&gt;|新增| D[填写币种身份与品牌信息]
+  C --&gt;|编辑| E[修改可编辑信息]
+  C --&gt;|查看部署| F[打开聚合部署列表]
+  C --&gt;|快速部署| G[打开链上代币表单]
+  C --&gt;|状态变更| H[确认前台影响]
+  C --&gt;|删除| I[校验关联部署]
+  D --&gt; J[字段与唯一性校验]
+  E --&gt; J
+  H --&gt; K[TOTP 验证]
+  I --&gt;|无关联| K
+  I --&gt;|存在关联| L[阻断删除]
+  J --&gt;|通过| K
+  K --&gt;|通过| M[执行操作并记录审计日志]
+  M --&gt; N[刷新列表与前台币种配置]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>管理员操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入币种信息</td>
+<td>加载币种信息列表</td>
+<td>展示第一页数据</td>
+</tr>
+<tr>
+<td>2</td>
+<td>输入筛选条件</td>
+<td>查询匹配的 Symbol、名称或 <code>specId</code></td>
+<td>更新结果列表</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点击“新增币种”</td>
+<td>打开新增表单</td>
+<td>默认状态为下架</td>
+</tr>
+<tr>
+<td>4</td>
+<td>填写币种信息</td>
+<td>生成 <code>specId</code> 并校验 Symbol 唯一性</td>
+<td>显示校验结果</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点击“保存”</td>
+<td>执行完整校验和 TOTP 验证</td>
+<td>验证通过后创建记录</td>
+</tr>
+<tr>
+<td>6</td>
+<td>点击“编辑”</td>
+<td>回填最新记录并锁定不可变字段</td>
+<td>验证通过后更新记录</td>
+</tr>
+<tr>
+<td>7</td>
+<td>点击聚合部署数</td>
+<td>查询关联链上代币</td>
+<td>展示部署列表</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点击“部署”</td>
+<td>打开预关联当前币种的链上代币表单</td>
+<td>保存后部署数更新</td>
+</tr>
+<tr>
+<td>9</td>
+<td>点击“上架”或“下架”</td>
+<td>展示对前台可添加范围的影响</td>
+<td>验证通过后更新状态</td>
+</tr>
+<tr>
+<td>10</td>
+<td>点击“删除”</td>
+<td>检查关联链上代币数量</td>
+<td>无关联时可继续；有关系时阻断</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44">4.4 列表与筛选</h3>
+<p><strong>筛选字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>控件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键词</td>
+<td>文本输入</td>
+<td>匹配 Symbol、币种名称和 <code>specId</code></td>
+</tr>
+<tr>
+<td>资产类型</td>
+<td>单选下拉</td>
+<td>全部、加密货币、证券型资产</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td>单选下拉</td>
+<td>全部、上架、下架</td>
+</tr>
+</tbody>
+</table>
+<p><strong>展示字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>数据来源</th>
+<th>展示规则</th>
+<th>空值或异常</th>
+<th>交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种 Logo</td>
+<td>币种信息</td>
+<td>圆形展示</td>
+<td>无图时展示 Symbol 首字符</td>
+<td>查看完整图片</td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td><code>symbol</code></td>
+<td>大写展示</td>
+<td>不允许为空</td>
+<td>复制完整值</td>
+</tr>
+<tr>
+<td>币种名称</td>
+<td><code>name</code></td>
+<td>展示正式名称</td>
+<td>不允许为空</td>
+<td>—</td>
+</tr>
+<tr>
+<td>币种标识</td>
+<td><code>specId</code></td>
+<td>等宽展示</td>
+<td>不允许为空</td>
+<td>复制完整值</td>
+</tr>
+<tr>
+<td>资产类型</td>
+<td><code>assetType</code></td>
+<td>加密货币或证券型资产</td>
+<td>未识别值显示“未知”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>币种精度</td>
+<td><code>decimals</code></td>
+<td>展示 0–36 的整数</td>
+<td>未配置显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>聚合部署数</td>
+<td>系统统计</td>
+<td>展示关联记录数量</td>
+<td>0 显示“0”</td>
+<td>点击查看部署列表</td>
+</tr>
+<tr>
+<td>社区链接</td>
+<td>品牌元数据</td>
+<td>仅显示已配置项</td>
+<td>全空显示“—”</td>
+<td>新窗口打开对应地址</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><code>sortOrder</code></td>
+<td>数字越小越靠前</td>
+<td>空值排在有值之后</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新时间</td>
+<td>系统记录</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新人</td>
+<td>系统记录</td>
+<td>展示管理员名称</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td><code>status</code></td>
+<td>上架或下架</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>权限与状态</td>
+<td>编辑、上架或下架、部署、删除</td>
+<td>无权限时不展示</td>
+<td>执行对应操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45">4.5 新增与编辑</h3>
+<p><strong>模块说明</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>新增模式</th>
+<th>编辑模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>新增币种</td>
+<td>编辑币种</td>
+</tr>
+<tr>
+<td>默认状态</td>
+<td>下架</td>
+<td>当前状态</td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>可填写</td>
+<td>只读</td>
+</tr>
+<tr>
+<td><code>specId</code></td>
+<td>自动生成</td>
+<td>只读</td>
+</tr>
+<tr>
+<td>安全验证</td>
+<td>保存前执行</td>
+<td>保存前执行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表单字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>分组</th>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>默认值</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础信息</td>
+<td>Symbol <code>symbol</code></td>
+<td>文本</td>
+<td>是</td>
+<td>—</td>
+<td>1–20 位大写字母和数字；全局唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>币种名称 <code>name</code></td>
+<td>文本</td>
+<td>是</td>
+<td>—</td>
+<td>长度 1–100</td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>币种标识 <code>specId</code></td>
+<td>只读文本</td>
+<td>是</td>
+<td>根据 Symbol 生成</td>
+<td>小写字母和数字组合；全局唯一；创建后不可修改</td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>币种精度 <code>decimals</code></td>
+<td>数字</td>
+<td>是</td>
+<td>—</td>
+<td>0–36 的整数</td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>资产类型 <code>assetType</code></td>
+<td>单选</td>
+<td>是</td>
+<td>加密货币</td>
+<td><code>CRYPTO</code> 或 <code>SECURITY</code></td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>展示排序 <code>sortOrder</code></td>
+<td>数字</td>
+<td>否</td>
+<td>—</td>
+<td>正整数；值越小越靠前</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>Logo</td>
+<td>图片</td>
+<td>上架时必填</td>
+<td>—</td>
+<td>支持有效图片地址或上传图片；加载失败时不可上架</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>官网</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时必须为有效 HTTPS 地址</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>X（Twitter）</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>Discord</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>Telegram</td>
+<td>URL</td>
+<td>否</td>
+<td>—</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>币种简介</td>
+<td>多行文本</td>
+<td>否</td>
+<td>—</td>
+<td>最多 500 字</td>
+</tr>
+<tr>
+<td>运营管理</td>
+<td>上架状态</td>
+<td>单选</td>
+<td>是</td>
+<td>下架</td>
+<td>满足上架条件后才可选择上架</td>
+</tr>
+</tbody>
+</table>
+<p><strong>上架条件</strong></p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>唯一标识</td>
+<td>Symbol 和 <code>specId</code> 均未被占用</td>
+</tr>
+<tr>
+<td>基础信息</td>
+<td>名称、精度、资产类型有效</td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>Logo 可正常加载</td>
+</tr>
+<tr>
+<td>链上部署</td>
+<td>至少存在一条可用链上代币时，币种才可在前台形成完整可添加能力</td>
+</tr>
+</tbody>
+</table>
+<h3 id="46">4.6 聚合部署列表</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触发</td>
+<td>点击列表中的聚合部署数</td>
+</tr>
+<tr>
+<td>标题</td>
+<td><code>{Symbol} · 链上部署（N）</code></td>
+</tr>
+<tr>
+<td>数据范围</td>
+<td>所有关联当前 <code>specId</code> 的链上代币，包括上架和下架记录</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>上架记录优先，再按网络排序和更新时间倒序</td>
+</tr>
+<tr>
+<td>空态</td>
+<td>无关联记录时展示“暂无链上部署”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>展示字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>规则</th>
+<th>交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所属网络</td>
+<td>展示网络名称和状态</td>
+<td>可进入对应网络记录</td>
+</tr>
+<tr>
+<td>链上符号</td>
+<td>展示链上返回的 Symbol</td>
+<td>—</td>
+</tr>
+<tr>
+<td>合约地址</td>
+<td>原生币显示 <code>NATIVE</code>；其他记录缩略展示</td>
+<td>复制完整地址</td>
+</tr>
+<tr>
+<td>来源</td>
+<td>系统预置或用户添加</td>
+<td>—</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td>上架或下架</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新时间</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="47">4.7 页面状态矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认列表</td>
+<td>进入币种信息</td>
+<td>全部币种第一页</td>
+<td>查询、新增及行内操作</td>
+</tr>
+<tr>
+<td>无币种</td>
+<td>系统没有币种信息</td>
+<td>空态</td>
+<td>有权限时新增币种</td>
+</tr>
+<tr>
+<td>Symbol 重复</td>
+<td>输入已存在的 Symbol</td>
+<td>字段错误和已有记录标识</td>
+<td>修改 Symbol 或取消</td>
+</tr>
+<tr>
+<td>上架条件不足</td>
+<td>尝试上架不完整记录</td>
+<td>缺失项列表</td>
+<td>返回编辑补充</td>
+</tr>
+<tr>
+<td>无聚合部署</td>
+<td>点击部署数 0</td>
+<td>部署空态</td>
+<td>可点击“新增部署”</td>
+</tr>
+<tr>
+<td>存在关联部署</td>
+<td>删除有关联记录的币种</td>
+<td>关联数量和阻断原因</td>
+<td>查看部署，不可删除</td>
+</tr>
+<tr>
+<td>状态变更中</td>
+<td>完成验证后等待结果</td>
+<td>当前行处理中</td>
+<td>不可重复操作</td>
+</tr>
+<tr>
+<td>数据被更新</td>
+<td>编辑期间记录被他人修改</td>
+<td>冲突提示</td>
+<td>重新加载最新数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="48">4.8 交互规则</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>反馈</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成 <code>specId</code></td>
+<td>输入 Symbol</td>
+<td>实时生成小写候选值</td>
+<td>保存后锁定</td>
+</tr>
+<tr>
+<td>切换资产类型</td>
+<td>修改 <code>assetType</code></td>
+<td>展示对应中文含义</td>
+<td>保存后影响前台资产分组</td>
+</tr>
+<tr>
+<td>保存新增</td>
+<td>表单校验通过</td>
+<td>打开安全验证</td>
+<td>验证通过后创建</td>
+</tr>
+<tr>
+<td>保存编辑</td>
+<td>可编辑字段发生变化</td>
+<td>展示变更摘要并验证</td>
+<td>验证通过后更新</td>
+</tr>
+<tr>
+<td>查看部署</td>
+<td>点击聚合部署数</td>
+<td>打开关联列表</td>
+<td>可查看和复制部署信息</td>
+</tr>
+<tr>
+<td>快速部署</td>
+<td>点击“部署”</td>
+<td>打开预关联表单</td>
+<td>保存后返回币种列表</td>
+</tr>
+<tr>
+<td>上架</td>
+<td>当前状态为下架</td>
+<td>提示币种将进入前台可添加范围</td>
+<td>验证通过后上架</td>
+</tr>
+<tr>
+<td>下架</td>
+<td>当前状态为上架</td>
+<td>提示新用户将无法添加，存量用户配置保留</td>
+<td>验证通过后下架</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>当前币种无关联部署</td>
+<td>二次确认并验证</td>
+<td>成功后永久删除</td>
+</tr>
+</tbody>
+</table>
+<h3 id="49">4.9 数据管理</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>唯一性</td>
+<td><code>symbol</code> 和 <code>specId</code> 分别全局唯一，比较时忽略字母大小写</td>
+</tr>
+<tr>
+<td>不可变字段</td>
+<td><code>symbol</code> 和 <code>specId</code> 创建后不可修改</td>
+</tr>
+<tr>
+<td>聚合部署数</td>
+<td>按关联 <code>specId</code> 的链上代币实时统计，不允许手工修改</td>
+</tr>
+<tr>
+<td>品牌继承</td>
+<td>已关联链上代币在展示时读取币种信息的最新名称、Logo 和资产类型</td>
+</tr>
+<tr>
+<td>删除策略</td>
+<td>存在任意链上代币关联时禁止删除；管理员需先解除或删除关联部署</td>
+</tr>
+<tr>
+<td>下架策略</td>
+<td>币种下架不自动下架链上代币，也不解除 <code>specId</code> 关联</td>
+</tr>
+<tr>
+<td>存量用户</td>
+<td>币种下架后，已添加该币种的用户保留资产记录；未添加用户不可再新增</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按 <code>sortOrder</code> 升序；空值排在有值之后；同值按 Symbol 排序</td>
+</tr>
+<tr>
+<td>写入结果</td>
+<td>成功后刷新币种列表，并更新前台币种目录</td>
+</tr>
+<tr>
+<td>审计</td>
+<td>记录变更前后值、操作人、时间、对象和操作类型</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5">5. 链上代币</h2>
+<h3 id="51">5.1 用户目标</h3>
+<p>管理员能够维护某个网络上的具体资产实例，校验原生币或合约币的链上信息，将有效实例关联至统一币种身份，并控制该实例是否参与前台收款与多链余额聚合。</p>
+<h3 id="52">5.2 模块说明</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>管理员进入“链上代币”，或从币种信息发起快速部署</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>具备链上代币查看权限；写操作需具备链上代币管理权限</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>查询、新增、编辑、上架、下架、删除链上代币；查询链上元数据</td>
+</tr>
+<tr>
+<td><strong>实例类型</strong></td>
+<td>原生代币、合约代币</td>
+</tr>
+<tr>
+<td><strong>来源类型</strong></td>
+<td><code>SYSTEM</code>（系统预置）、<code>USER_ADDED</code>（用户添加）</td>
+</tr>
+<tr>
+<td><strong>聚合条件</strong></td>
+<td>记录关联有效 <code>specId</code> 且链上代币状态为上架</td>
+</tr>
+<tr>
+<td><strong>前台影响</strong></td>
+<td>单链资产、收款可选网络、多链余额聚合及合约信息展示</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实例类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th><code>isNative</code></th>
+<th>合约地址</th>
+<th>元数据来源</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原生代币</td>
+<td><code>true</code></td>
+<td><code>NATIVE</code></td>
+<td>所属网络的原生代币配置</td>
+<td>ETH on Ethereum</td>
+</tr>
+<tr>
+<td>合约代币</td>
+<td><code>false</code></td>
+<td>实际合约地址</td>
+<td>链上合约查询</td>
+<td>USDT on Ethereum</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关联币种后的行为</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>名称、Logo、资产类型</th>
+<th>多链聚合</th>
+<th>前台展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已关联 <code>specId</code></td>
+<td>继承币种信息</td>
+<td>上架后参与</td>
+<td>归入对应币种</td>
+</tr>
+<tr>
+<td>未关联 <code>specId</code></td>
+<td>使用链上代币自身信息</td>
+<td>不参与</td>
+<td>仅作为单链资产</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53">5.3 流程步骤</h3>
+<pre><code class="language-mermaid">flowchart TD
+  A[进入链上代币] --&gt; B[查询实例列表]
+  B --&gt; C{选择操作}
+  C --&gt;|新增或编辑| D[选择网络和实例类型]
+  C --&gt;|快速部署| E[锁定币种信息]
+  C --&gt;|状态变更| F[校验上架条件]
+  C --&gt;|删除| G[确认影响范围]
+  D --&gt; H{是否原生代币}
+  E --&gt; H
+  H --&gt;|是| I[读取网络原生币信息]
+  H --&gt;|否| J[输入合约地址并查询元数据]
+  I --&gt; K[校验关联币种与链上信息]
+  J --&gt; K
+  K --&gt;|通过| L[TOTP 验证]
+  K --&gt;|不通过| M[展示字段或冲突错误]
+  F --&gt;|通过| L
+  G --&gt; L
+  L --&gt;|通过| N[执行操作并记录审计日志]
+  N --&gt; O[刷新列表与前台资产配置]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>管理员操作</th>
+<th>系统行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>进入链上代币</td>
+<td>加载实例列表</td>
+<td>展示第一页数据</td>
+</tr>
+<tr>
+<td>2</td>
+<td>输入筛选条件</td>
+<td>按地址、币种、网络、来源和状态查询</td>
+<td>更新结果列表</td>
+</tr>
+<tr>
+<td>3</td>
+<td>点击“新增链上代币”</td>
+<td>打开新增表单</td>
+<td>默认不关联币种、状态为下架</td>
+</tr>
+<tr>
+<td>4</td>
+<td>选择所属网络</td>
+<td>加载网络地址规则和原生币配置</td>
+<td>更新后续字段状态</td>
+</tr>
+<tr>
+<td>5</td>
+<td>选择实例类型</td>
+<td>原生币自动读取配置；合约币要求输入地址</td>
+<td>展示对应字段</td>
+</tr>
+<tr>
+<td>6</td>
+<td>输入合约地址</td>
+<td>校验格式并查询链上元数据</td>
+<td>回填 Symbol、精度和名称</td>
+</tr>
+<tr>
+<td>7</td>
+<td>选择关联币种</td>
+<td>对比链上 Symbol，并继承币种品牌信息</td>
+<td>匹配时可继续；不匹配时限制上架</td>
+</tr>
+<tr>
+<td>8</td>
+<td>点击“保存”</td>
+<td>执行唯一性、字段和状态校验</td>
+<td>验证通过后创建或更新</td>
+</tr>
+<tr>
+<td>9</td>
+<td>点击“上架”或“下架”</td>
+<td>计算前台收款与聚合影响</td>
+<td>验证通过后更新状态</td>
+</tr>
+<tr>
+<td>10</td>
+<td>点击“删除”</td>
+<td>展示前台资产影响并二次确认</td>
+<td>验证通过后删除记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="54">5.4 列表与筛选</h3>
+<p><strong>筛选字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>控件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键词</td>
+<td>文本输入</td>
+<td>匹配合约地址、链上 Symbol 和代币名称</td>
+</tr>
+<tr>
+<td>币种信息</td>
+<td>可搜索下拉</td>
+<td>按 <code>specId</code>、Symbol 或名称筛选；包含“未关联”</td>
+</tr>
+<tr>
+<td>所属网络</td>
+<td>可搜索下拉</td>
+<td>来源于全部网络记录；展示网络状态</td>
+</tr>
+<tr>
+<td>实例类型</td>
+<td>单选下拉</td>
+<td>全部、原生代币、合约代币</td>
+</tr>
+<tr>
+<td>来源</td>
+<td>单选下拉</td>
+<td>全部、系统预置、用户添加</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td>单选下拉</td>
+<td>全部、上架、下架</td>
+</tr>
+</tbody>
+</table>
+<p><strong>展示字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>界面字段</th>
+<th>数据来源</th>
+<th>展示规则</th>
+<th>空值或异常</th>
+<th>交互</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代币 Logo</td>
+<td>币种信息或实例信息</td>
+<td>已关联时优先使用币种 Logo</td>
+<td>无图时展示 Symbol 首字符</td>
+<td>查看完整图片</td>
+</tr>
+<tr>
+<td>链上 Symbol</td>
+<td>链上元数据</td>
+<td>大写展示</td>
+<td>查询失败显示“未获取”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>代币名称</td>
+<td>币种信息或链上元数据</td>
+<td>已关联时使用币种名称</td>
+<td>无名称显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>资产类型</td>
+<td>币种信息或实例信息</td>
+<td>加密货币或证券型资产</td>
+<td>未配置显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>所属网络</td>
+<td>网络配置</td>
+<td>展示名称和网络状态</td>
+<td>网络不存在显示“配置异常”</td>
+<td>进入网络记录</td>
+</tr>
+<tr>
+<td>实例类型</td>
+<td><code>isNative</code></td>
+<td>原生代币或合约代币</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>合约地址</td>
+<td><code>contractAddress</code></td>
+<td>原生币显示 <code>NATIVE</code>；其他记录缩略展示</td>
+<td>不允许为空</td>
+<td>复制完整地址</td>
+</tr>
+<tr>
+<td>精度</td>
+<td><code>decimals</code></td>
+<td>展示 0–36 的整数</td>
+<td>未获取显示“—”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>关联币种</td>
+<td><code>specId</code></td>
+<td>展示 Symbol 和 <code>specId</code></td>
+<td>未关联显示“单链资产”</td>
+<td>进入币种信息</td>
+</tr>
+<tr>
+<td>参与聚合</td>
+<td>系统计算</td>
+<td>是或否</td>
+<td>—</td>
+<td>查看未参与原因</td>
+</tr>
+<tr>
+<td>来源</td>
+<td><code>source</code></td>
+<td>系统预置或用户添加</td>
+<td>未识别值显示“未知”</td>
+<td>—</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><code>sortOrder</code></td>
+<td>数字越小越靠前</td>
+<td>空值排在有值之后</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新时间</td>
+<td>系统记录</td>
+<td><code>YYYY-MM-DD HH:mm:ss</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>更新人</td>
+<td>系统记录</td>
+<td>展示管理员名称</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>上架状态</td>
+<td><code>status</code></td>
+<td>上架或下架</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>权限与状态</td>
+<td>编辑、上架或下架、删除</td>
+<td>无权限时不展示</td>
+<td>执行对应操作</td>
+</tr>
+</tbody>
+</table>
+<h3 id="55">5.5 新增与编辑</h3>
+<p><strong>模块说明</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>新增模式</th>
+<th>编辑模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>新增链上代币</td>
+<td>编辑链上代币</td>
+</tr>
+<tr>
+<td>默认关联</td>
+<td>不关联币种</td>
+<td>当前关联</td>
+</tr>
+<tr>
+<td>默认状态</td>
+<td>下架</td>
+<td>当前状态</td>
+</tr>
+<tr>
+<td>网络与地址</td>
+<td>可填写</td>
+<td>已上架记录只读；下架记录按规则可修改</td>
+</tr>
+<tr>
+<td>安全验证</td>
+<td>保存前执行</td>
+<td>保存前执行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>基础关联字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>默认值</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种信息 <code>specId</code></td>
+<td>可搜索下拉</td>
+<td>否</td>
+<td>不关联</td>
+<td>选择后继承币种品牌信息；快速部署时锁定</td>
+</tr>
+<tr>
+<td>所属网络 <code>networkId</code></td>
+<td>可搜索下拉</td>
+<td>是</td>
+<td>—</td>
+<td>展示上架和下架网络及其状态；网络下架时实例只能保存为下架</td>
+</tr>
+<tr>
+<td>是否原生代币 <code>isNative</code></td>
+<td>开关</td>
+<td>是</td>
+<td>否</td>
+<td>开启后地址固定为 <code>NATIVE</code></td>
+</tr>
+<tr>
+<td>合约地址 <code>contractAddress</code></td>
+<td>文本</td>
+<td>合约代币必填</td>
+<td>—</td>
+<td>按网络地址规则校验；同一网络内唯一</td>
+</tr>
+<tr>
+<td>链上 Symbol</td>
+<td>只读文本</td>
+<td>是</td>
+<td>查询后回填</td>
+<td>原生币读取网络配置；合约币读取链上元数据</td>
+</tr>
+<tr>
+<td>代币精度 <code>decimals</code></td>
+<td>只读数字</td>
+<td>是</td>
+<td>查询后回填</td>
+<td>0–36；不可手工修改</td>
+</tr>
+<tr>
+<td>展示排序 <code>sortOrder</code></td>
+<td>数字</td>
+<td>否</td>
+<td>—</td>
+<td>正整数；值越小越靠前</td>
+</tr>
+</tbody>
+</table>
+<p><strong>品牌与元数据字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>关联币种时</th>
+<th>未关联币种时</th>
+<th>校验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代币名称</td>
+<td>继承币种名称，只读</td>
+<td>可编辑</td>
+<td>最多 100 字</td>
+</tr>
+<tr>
+<td>资产类型</td>
+<td>继承币种类型，只读</td>
+<td>可选择</td>
+<td><code>CRYPTO</code> 或 <code>SECURITY</code></td>
+</tr>
+<tr>
+<td>Logo</td>
+<td>继承币种 Logo，只读</td>
+<td>可配置</td>
+<td>上架时必须可正常加载</td>
+</tr>
+<tr>
+<td>官网</td>
+<td>继承币种信息，只读</td>
+<td>可配置</td>
+<td>填写时校验 HTTPS 地址</td>
+</tr>
+<tr>
+<td>X（Twitter）</td>
+<td>继承币种信息，只读</td>
+<td>可配置</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td>继承币种信息，只读</td>
+<td>可配置</td>
+<td>填写时校验 URL</td>
+</tr>
+<tr>
+<td>Telegram</td>
+<td>继承币种信息，只读</td>
+<td>可配置</td>
+<td>填写时校验 URL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>运营字段</strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>必填</th>
+<th>默认值</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>来源 <code>source</code></td>
+<td>只读</td>
+<td>是</td>
+<td>系统预置</td>
+<td>后台创建为 <code>SYSTEM</code>；用户添加记录为 <code>USER_ADDED</code></td>
+</tr>
+<tr>
+<td>上架状态 <code>status</code></td>
+<td>单选</td>
+<td>是</td>
+<td>下架</td>
+<td>满足全部上架条件后才可选择上架</td>
+</tr>
+<tr>
+<td>内部说明</td>
+<td>多行文本</td>
+<td>否</td>
+<td>—</td>
+<td>最多 500 字</td>
+</tr>
+</tbody>
+</table>
+<p><strong>原生代币联动</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>系统行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开启原生代币</td>
+<td>合约地址填入 <code>NATIVE</code> 并锁定；读取网络原生 Symbol 和精度</td>
+</tr>
+<tr>
+<td>切换所属网络</td>
+<td>重新读取目标网络原生币信息；清除原网络数据</td>
+</tr>
+<tr>
+<td>关闭原生代币</td>
+<td>清空地址、Symbol 和精度；等待输入合约地址后重新查询</td>
+</tr>
+</tbody>
+</table>
+<p><strong>合约元数据查询</strong></p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>触发</th>
+<th>系统行为</th>
+<th>表单状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>待查询</td>
+<td>网络或地址未填写完整</td>
+<td>不发起查询</td>
+<td>保存不可用</td>
+</tr>
+<tr>
+<td>格式错误</td>
+<td>地址不符合网络规则</td>
+<td>展示地址错误</td>
+<td>保存不可用</td>
+</tr>
+<tr>
+<td>查询中</td>
+<td>网络和地址均有效</td>
+<td>查询链上 Symbol、精度和名称</td>
+<td>地址不可修改，保存不可用</td>
+</tr>
+<tr>
+<td>查询成功</td>
+<td>获得有效元数据</td>
+<td>回填只读字段</td>
+<td>可继续配置</td>
+</tr>
+<tr>
+<td>查询失败</td>
+<td>超时、节点错误或无有效合约</td>
+<td>展示失败原因和重试入口</td>
+<td>保存不可用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>币种匹配规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>系统行为</th>
+<th>是否允许上架</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未关联币种</td>
+<td>使用实例自身品牌信息</td>
+<td>允许，但不参与多链聚合</td>
+</tr>
+<tr>
+<td>链上 Symbol 与币种 Symbol 一致</td>
+<td>继承币种品牌信息</td>
+<td>允许</td>
+</tr>
+<tr>
+<td>链上 Symbol 与币种 Symbol 不一致</td>
+<td>展示冲突，并保留当前表单</td>
+<td>不允许；可保存为下架记录</td>
+</tr>
+<tr>
+<td>关联币种已下架</td>
+<td>展示币种状态</td>
+<td>实例可维护，但不能形成新的前台可添加能力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>上架条件</strong></p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所属网络</td>
+<td>网络记录有效；网络为上架状态</td>
+</tr>
+<tr>
+<td>实例唯一</td>
+<td>原生币和合约地址均未重复</td>
+</tr>
+<tr>
+<td>链上元数据</td>
+<td>Symbol 和精度查询成功</td>
+</tr>
+<tr>
+<td>地址有效</td>
+<td>合约地址通过所属网络规则校验；原生币为 <code>NATIVE</code></td>
+</tr>
+<tr>
+<td>品牌信息</td>
+<td>关联币种有效，或实例自身名称、类型和 Logo 完整</td>
+</tr>
+<tr>
+<td>币种匹配</td>
+<td>已关联币种时，链上 Symbol 与币种 Symbol 一致</td>
+</tr>
+</tbody>
+</table>
+<h3 id="56">5.6 快速部署</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触发</td>
+<td>在币种信息列表点击“部署”，或在聚合部署空态点击“新增部署”</td>
+</tr>
+<tr>
+<td>标题</td>
+<td><code>部署链上代币 · {Symbol}</code></td>
+</tr>
+<tr>
+<td>币种信息</td>
+<td>自动选择入口币种并锁定，不允许在当前流程切换</td>
+</tr>
+<tr>
+<td>已有部署</td>
+<td>展示已部署网络和数量，避免重复添加</td>
+</tr>
+<tr>
+<td>管理员输入</td>
+<td>所属网络、实例类型、合约地址、排序、状态和内部说明</td>
+</tr>
+<tr>
+<td>保存结果</td>
+<td>创建链上代币后返回原币种信息列表，聚合部署数即时更新</td>
+</tr>
+</tbody>
+</table>
+<h3 id="57">5.7 页面状态矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>展示</th>
+<th>可操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认列表</td>
+<td>进入链上代币</td>
+<td>全部实例第一页</td>
+<td>查询、新增及行内操作</td>
+</tr>
+<tr>
+<td>无实例</td>
+<td>系统没有链上代币</td>
+<td>空态</td>
+<td>有权限时新增实例</td>
+</tr>
+<tr>
+<td>元数据查询中</td>
+<td>输入有效合约地址</td>
+<td>查询状态</td>
+<td>不可保存，可取消查询</td>
+</tr>
+<tr>
+<td>元数据查询失败</td>
+<td>节点错误或地址无合约</td>
+<td>失败原因</td>
+<td>修改地址或重试</td>
+</tr>
+<tr>
+<td>地址重复</td>
+<td>同一网络存在相同地址</td>
+<td>已有记录摘要</td>
+<td>进入已有记录或修改地址</td>
+</tr>
+<tr>
+<td>原生币重复</td>
+<td>网络已有原生币记录</td>
+<td>已有原生币摘要</td>
+<td>进入已有记录，不可新增</td>
+</tr>
+<tr>
+<td>Symbol 不匹配</td>
+<td>关联币种与链上 Symbol 不一致</td>
+<td>冲突警告</td>
+<td>可保存为下架，不可上架</td>
+</tr>
+<tr>
+<td>网络已下架</td>
+<td>选择下架网络</td>
+<td>网络状态提示</td>
+<td>可保存为下架，不可上架</td>
+</tr>
+<tr>
+<td>状态变更中</td>
+<td>完成验证后等待结果</td>
+<td>当前行处理中</td>
+<td>不可重复操作</td>
+</tr>
+<tr>
+<td>数据被更新</td>
+<td>编辑期间记录被他人修改</td>
+<td>冲突提示</td>
+<td>重新加载最新数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="58">5.8 交互规则</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>触发</th>
+<th>反馈</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选择网络</td>
+<td>修改所属网络</td>
+<td>加载地址规则和原生币配置</td>
+<td>清除不再适用的查询结果</td>
+</tr>
+<tr>
+<td>输入合约地址</td>
+<td>地址格式有效</td>
+<td>自动查询链上元数据</td>
+<td>成功后回填只读字段</td>
+</tr>
+<tr>
+<td>关联币种</td>
+<td>选择币种信息</td>
+<td>比对 Symbol 并继承品牌字段</td>
+<td>匹配时可继续</td>
+</tr>
+<tr>
+<td>取消关联</td>
+<td>选择“不关联币种”</td>
+<td>清空继承字段并切换为可编辑</td>
+<td>记录变为单链资产</td>
+</tr>
+<tr>
+<td>保存新增</td>
+<td>表单校验通过</td>
+<td>打开安全验证</td>
+<td>验证通过后创建</td>
+</tr>
+<tr>
+<td>保存编辑</td>
+<td>可编辑字段发生变化</td>
+<td>展示变更摘要并验证</td>
+<td>验证通过后更新</td>
+</tr>
+<tr>
+<td>上架</td>
+<td>当前状态为下架</td>
+<td>展示收款和聚合影响</td>
+<td>验证通过后上架</td>
+</tr>
+<tr>
+<td>下架</td>
+<td>当前状态为上架</td>
+<td>展示该实例将停止参与收款和聚合</td>
+<td>验证通过后下架</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>点击删除</td>
+<td>展示实例信息及用户资产影响</td>
+<td>二次确认和验证后删除</td>
+</tr>
+<tr>
+<td>复制地址</td>
+<td>点击合约地址</td>
+<td>复制完整地址</td>
+<td>提示“地址已复制”</td>
+</tr>
+</tbody>
+</table>
+<h3 id="59">5.9 数据管理</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>合约唯一性</td>
+<td>合约代币按 <code>networkId + 标准化后的 contractAddress</code> 全局唯一</td>
+</tr>
+<tr>
+<td>原生币唯一性</td>
+<td>每个网络最多存在一条 <code>contractAddress = NATIVE</code> 的原生币记录</td>
+</tr>
+<tr>
+<td>地址标准化</td>
+<td>保存和比较前按所属网络规则进行标准化；展示保留该网络推荐格式</td>
+</tr>
+<tr>
+<td>链上元数据</td>
+<td>Symbol 和精度以链上查询结果为准，不允许管理员手工修改</td>
+</tr>
+<tr>
+<td>聚合关系</td>
+<td>关联 <code>specId</code> 后参与对应币种关系；取消关联后立即退出多链聚合</td>
+</tr>
+<tr>
+<td>聚合生效</td>
+<td>只有上架的链上代币参与聚合；下架实例的余额不计入新的聚合结果</td>
+</tr>
+<tr>
+<td>品牌继承</td>
+<td>关联币种时动态读取币种信息；未关联时保存实例自身品牌字段</td>
+</tr>
+<tr>
+<td>来源字段</td>
+<td>后台创建固定为 <code>SYSTEM</code>；用户添加固定为 <code>USER_ADDED</code>，不可手工更改</td>
+</tr>
+<tr>
+<td>删除策略</td>
+<td>删除前展示前台影响；删除后该实例不可用于余额查询、收款选网和多链聚合</td>
+</tr>
+<tr>
+<td>下架策略</td>
+<td>下架不删除记录和历史数据；前台停止使用该实例进行新增收款和聚合展示</td>
+</tr>
+<tr>
+<td>排序</td>
+<td>按 <code>sortOrder</code> 升序；空值排在有值之后；同值按网络和 Symbol 排序</td>
+</tr>
+<tr>
+<td>写入结果</td>
+<td>成功后刷新实例列表，并更新相关币种部署数和前台资产配置</td>
+</tr>
+<tr>
+<td>审计</td>
+<td>记录变更前后值、操作人、时间、对象和操作类型</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6">6. 横切规则</h2>
+<h3 id="61">6.1 实体关系</h3>
+<pre><code class="language-mermaid">flowchart TD
+  N[网络 Network] --&gt;|networkId| CT[链上代币 Contract Token]
+  TS[币种信息 Token Spec] --&gt;|specId| CT
+  CT --&gt;|已关联 specId| AGG[多链资产聚合]
+  CT --&gt;|未关联 specId| SINGLE[单链资产]
+  N --&gt; NET[前台网络范围]
+  TS --&gt; CATALOG[前台币种目录]
+  CT --&gt; RECEIVE[收款可选网络]
+  CT --&gt; TOKENINFO[代币合约信息]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>关系</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络与链上代币</td>
+<td>一条网络可关联多条链上代币；每条链上代币必须关联一条网络</td>
+</tr>
+<tr>
+<td>币种信息与链上代币</td>
+<td>一条币种信息可关联多条链上代币；链上代币可不关联币种信息</td>
+</tr>
+<tr>
+<td>币种信息与聚合</td>
+<td><code>specId</code> 是跨链聚合身份，不直接保存余额</td>
+</tr>
+<tr>
+<td>链上代币与余额</td>
+<td>每条链上代币对应一个网络上的余额查询实例</td>
+</tr>
+<tr>
+<td>原生代币与网络</td>
+<td>每个网络最多存在一条原生代币记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 状态联动</h3>
+<p><strong>网络状态变化</strong></p>
+<table>
+<thead>
+<tr>
+<th>后台操作</th>
+<th>链上代币</th>
+<th>前台新增选择</th>
+<th>存量数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络上架</td>
+<td>不自动改变链上代币状态</td>
+<td>满足其他条件时可选择该网络</td>
+<td>正常查询</td>
+</tr>
+<tr>
+<td>网络下架</td>
+<td>不自动下架链上代币</td>
+<td>网络从新增选网和收款选网中移除</td>
+<td>保留余额及历史数据查询</td>
+</tr>
+<tr>
+<td>网络删除</td>
+<td>存在链上代币时阻断</td>
+<td>—</td>
+<td>无关联后方可删除</td>
+</tr>
+</tbody>
+</table>
+<p><strong>币种信息状态变化</strong></p>
+<table>
+<thead>
+<tr>
+<th>后台操作</th>
+<th>链上代币</th>
+<th>前台新增选择</th>
+<th>存量用户</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>币种上架</td>
+<td>不自动改变链上代币状态</td>
+<td>存在可用部署时进入可添加目录</td>
+<td>已添加用户正常展示</td>
+</tr>
+<tr>
+<td>币种下架</td>
+<td>不自动下架链上代币</td>
+<td>从可添加目录移除</td>
+<td>已添加用户保留资产记录</td>
+</tr>
+<tr>
+<td>币种删除</td>
+<td>存在关联部署时阻断</td>
+<td>—</td>
+<td>无关联后方可删除</td>
+</tr>
+<tr>
+<td>品牌信息更新</td>
+<td>关联实例动态读取最新信息</td>
+<td>前台刷新后展示最新内容</td>
+<td>资产关系不变</td>
+</tr>
+</tbody>
+</table>
+<p><strong>链上代币状态变化</strong></p>
+<table>
+<thead>
+<tr>
+<th>后台操作</th>
+<th>收款选网</th>
+<th>多链聚合</th>
+<th>历史数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实例上架</td>
+<td>网络同时上架时可选</td>
+<td>已关联 <code>specId</code> 时参与</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>实例下架</td>
+<td>从收款可选网络移除</td>
+<td>停止计入新的聚合结果</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>取消币种关联</td>
+<td>状态和网络满足时仍可作为单链资产</td>
+<td>立即退出对应币种聚合</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>实例删除</td>
+<td>不再可选</td>
+<td>不再计入</td>
+<td>后台记录删除操作，业务历史保留对象快照</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63">6.3 前台生效规则</h3>
+<p>后台配置在前台分别形成网络范围、可添加币种、收款网络和资产聚合四类结果，各结果独立计算。</p>
+<table>
+<thead>
+<tr>
+<th>前台能力</th>
+<th>生效条件</th>
+<th>不满足时行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络筛选项</td>
+<td>网络状态为上架，并符合当前钱包可见网络范围</td>
+<td>不展示该网络</td>
+</tr>
+<tr>
+<td>币种可添加目录</td>
+<td>币种信息上架，且至少存在一条满足前台使用条件的链上代币</td>
+<td>不允许新用户添加</td>
+</tr>
+<tr>
+<td>收款可选网络</td>
+<td>网络上架、链上代币上架、地址派生或读取能力可用</td>
+<td>不展示该网络实例</td>
+</tr>
+<tr>
+<td>多链资产聚合</td>
+<td>链上代币上架、已关联 <code>specId</code>，且当前钱包可见该网络</td>
+<td>不计入该币种聚合结果</td>
+</tr>
+<tr>
+<td>单链资产展示</td>
+<td>链上代币可用于当前用户，且未关联 <code>specId</code></td>
+<td>仅按单链实例展示</td>
+</tr>
+<tr>
+<td>代币品牌信息</td>
+<td>优先读取关联币种信息；未关联时读取实例自身信息</td>
+<td>无有效 Logo 时使用 Symbol 首字符</td>
+</tr>
+<tr>
+<td>合约信息</td>
+<td>展示当前币种在用户可见网络范围内的有效部署</td>
+<td>原生币不展示合约地址</td>
+</tr>
+</tbody>
+</table>
+<p><strong>多链聚合计算顺序</strong></p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>处理规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>按当前钱包类型过滤可见网络</td>
+</tr>
+<tr>
+<td>2</td>
+<td>过滤不可用于聚合的链上代币实例</td>
+</tr>
+<tr>
+<td>3</td>
+<td>按 <code>specId</code> 对实例分组</td>
+</tr>
+<tr>
+<td>4</td>
+<td>汇总各实例余额并保留分链明细</td>
+</tr>
+<tr>
+<td>5</td>
+<td>使用币种信息的 Symbol、名称、Logo 和资产类型展示聚合结果</td>
+</tr>
+</tbody>
+</table>
+<h3 id="64">6.4 用户自定义代币</h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>系统行为</th>
+<th>全局影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户提交网络和合约地址</td>
+<td>校验地址并查询链上元数据</td>
+<td>不改变全局币种目录</td>
+</tr>
+<tr>
+<td>用户确认添加</td>
+<td>写入该用户的资产白名单，并记录来源为 <code>USER_ADDED</code></td>
+<td>仅当前用户可见</td>
+</tr>
+<tr>
+<td>后台查看</td>
+<td>可按来源筛选用户添加记录</td>
+<td>不等于已通过全局上架审核</td>
+</tr>
+<tr>
+<td>已存在相同网络和合约实例</td>
+<td>复用实例元数据，并建立当前用户关系</td>
+<td>不创建重复全局实例</td>
+</tr>
+<tr>
+<td>后台完成币种关联和上架</td>
+<td>记录可按系统配置参与全局目录和聚合</td>
+<td>按前台生效条件执行</td>
+</tr>
+<tr>
+<td>用户移除自定义代币</td>
+<td>删除用户与资产的可见关系</td>
+<td>不删除全局实例和其他用户关系</td>
+</tr>
+</tbody>
+</table>
+<p><strong>隔离原则</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认状态</td>
+<td>用户添加不自动获得全局上架状态</td>
+</tr>
+<tr>
+<td>用户范围</td>
+<td>一名用户的添加或移除不影响其他用户</td>
+</tr>
+<tr>
+<td>聚合范围</td>
+<td>未关联 <code>specId</code> 时仅作为该用户的单链资产</td>
+</tr>
+<tr>
+<td>重复记录</td>
+<td>相同 <code>networkId + contractAddress</code> 复用同一实例元数据</td>
+</tr>
+<tr>
+<td>后台治理</td>
+<td>管理员可补充品牌信息、关联币种并决定是否上架</td>
+</tr>
+</tbody>
+</table>
+<h3 id="65">6.5 数据同步</h3>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>后台刷新范围</th>
+<th>前台刷新范围</th>
+<th>一致性要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网络新增或编辑</td>
+<td>网络列表和筛选项</td>
+<td>网络配置</td>
+<td>写入成功后触发更新</td>
+</tr>
+<tr>
+<td>网络状态变化</td>
+<td>网络列表、相关实例状态提示</td>
+<td>网络选择和收款选网</td>
+<td>前台不得继续提供已下架网络的新入口</td>
+</tr>
+<tr>
+<td>币种新增或编辑</td>
+<td>币种列表、关联实例品牌信息</td>
+<td>币种目录和资产品牌</td>
+<td>关联关系不变</td>
+</tr>
+<tr>
+<td>币种状态变化</td>
+<td>币种列表</td>
+<td>可添加目录</td>
+<td>存量用户关系保留</td>
+</tr>
+<tr>
+<td>链上代币新增或编辑</td>
+<td>实例列表、币种部署数</td>
+<td>单链实例、合约信息和聚合关系</td>
+<td>按实例最新有效状态计算</td>
+</tr>
+<tr>
+<td>链上代币状态变化</td>
+<td>实例列表、币种部署状态</td>
+<td>收款选网和聚合结果</td>
+<td>下架后停止进入新结果</td>
+</tr>
+<tr>
+<td>用户添加或移除代币</td>
+<td>用户来源记录</td>
+<td>当前用户资产白名单</td>
+<td>不影响其他用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>写入一致性</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>后台写入成功、前台更新成功</td>
+<td>提示操作成功，关闭操作层并刷新列表</td>
+</tr>
+<tr>
+<td>后台写入失败</td>
+<td>不触发前台更新，保留表单并显示失败原因</td>
+</tr>
+<tr>
+<td>后台写入成功、前台更新延迟</td>
+<td>后台记录已成功，展示“配置同步中”，系统继续同步</td>
+</tr>
+<tr>
+<td>重复同步事件</td>
+<td>按对象版本处理，同一版本不得产生重复业务结果</td>
+</tr>
+<tr>
+<td>旧版本覆盖</td>
+<td>当提交基于旧数据时阻断写入，要求管理员加载最新数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="66">6.6 审计规则</h3>
+<p>所有写操作均生成不可由普通管理员删除的审计记录。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作人</td>
+<td>管理员唯一标识和展示名称</td>
+</tr>
+<tr>
+<td>操作时间</td>
+<td>服务端时间</td>
+</tr>
+<tr>
+<td>模块</td>
+<td>网络管理、币种信息或链上代币</td>
+</tr>
+<tr>
+<td>操作类型</td>
+<td>新增、编辑、上架、下架或删除</td>
+</tr>
+<tr>
+<td>操作对象</td>
+<td>对象类型、对象 ID 和展示名称</td>
+</tr>
+<tr>
+<td>变更摘要</td>
+<td>发生变化的字段及变更前后值</td>
+</tr>
+<tr>
+<td>验证结果</td>
+<td>TOTP 验证是否通过，不记录验证码内容</td>
+</tr>
+<tr>
+<td>执行结果</td>
+<td>成功或失败及失败原因</td>
+</tr>
+<tr>
+<td>同步结果</td>
+<td>前台配置已生效、同步中或同步失败</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. 异常与提示</h2>
+<h3 id="71">7.1 通用异常</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用户反馈</th>
+<th>是否阻断</th>
+<th>系统处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>列表加载失败</td>
+<td>“数据加载失败，请重试”</td>
+<td>是</td>
+<td>保留筛选条件，提供重试入口</td>
+</tr>
+<tr>
+<td>筛选无结果</td>
+<td>“暂无匹配结果”</td>
+<td>否</td>
+<td>提供重置筛选入口</td>
+</tr>
+<tr>
+<td>无查看权限</td>
+<td>“暂无该模块访问权限”</td>
+<td>是</td>
+<td>不加载模块数据</td>
+</tr>
+<tr>
+<td>无写入权限</td>
+<td>“暂无该操作权限”</td>
+<td>是</td>
+<td>不发起写请求</td>
+</tr>
+<tr>
+<td>网络中断</td>
+<td>“网络连接异常，请检查后重试”</td>
+<td>是</td>
+<td>保留当前表单和操作上下文</td>
+</tr>
+<tr>
+<td>服务异常</td>
+<td>“系统暂时不可用，请稍后重试”</td>
+<td>是</td>
+<td>记录错误标识，不重复提交</td>
+</tr>
+<tr>
+<td>数据已被修改</td>
+<td>“数据已更新，请重新加载后操作”</td>
+<td>是</td>
+<td>阻止旧版本覆盖最新数据</td>
+</tr>
+<tr>
+<td>重复点击提交</td>
+<td>保持“处理中”状态</td>
+<td>是</td>
+<td>只保留首次有效请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72">7.2 表单与数据异常</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用户反馈</th>
+<th>是否阻断</th>
+<th>下一步操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>必填字段为空</td>
+<td>在字段下方提示“请填写{字段名}”</td>
+<td>是</td>
+<td>补充字段</td>
+</tr>
+<tr>
+<td>字段格式错误</td>
+<td>展示对应格式要求</td>
+<td>是</td>
+<td>修改字段</td>
+</tr>
+<tr>
+<td>唯一标识重复</td>
+<td>“该标识已存在”并展示已有记录</td>
+<td>是</td>
+<td>修改标识或进入已有记录</td>
+</tr>
+<tr>
+<td>合约地址重复</td>
+<td>“该网络已存在相同合约地址”</td>
+<td>是</td>
+<td>进入已有记录或修改地址</td>
+</tr>
+<tr>
+<td>原生币重复</td>
+<td>“该网络已配置原生代币”</td>
+<td>是</td>
+<td>进入已有记录</td>
+</tr>
+<tr>
+<td>Logo 加载失败</td>
+<td>“图片无法加载，请更换”</td>
+<td>上架时阻断</td>
+<td>更换图片</td>
+</tr>
+<tr>
+<td>URL 无效</td>
+<td>“请输入有效的 HTTPS 地址”</td>
+<td>是</td>
+<td>修改 URL</td>
+</tr>
+<tr>
+<td>地址规则无效</td>
+<td>“地址校验规则不可用”</td>
+<td>是</td>
+<td>重新选择或修改规则</td>
+</tr>
+<tr>
+<td>Symbol 不匹配</td>
+<td>展示链上 Symbol 与关联币种 Symbol</td>
+<td>上架时阻断</td>
+<td>修改关联币种或保持下架</td>
+</tr>
+<tr>
+<td>删除存在依赖</td>
+<td>展示关联类型、数量和处理入口</td>
+<td>是</td>
+<td>先处理关联记录</td>
+</tr>
+<tr>
+<td>上架条件不足</td>
+<td>展示缺失或错误字段清单</td>
+<td>是</td>
+<td>返回编辑补齐</td>
+</tr>
+</tbody>
+</table>
+<p><strong>链上元数据异常</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用户反馈</th>
+<th>表单行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询超时</td>
+<td>“链上信息查询超时，请重试”</td>
+<td>保留网络和地址，可重试</td>
+</tr>
+<tr>
+<td>网络节点不可用</td>
+<td>“当前网络节点不可用，请稍后重试”</td>
+<td>不回填元数据，不可保存</td>
+</tr>
+<tr>
+<td>地址不是有效合约</td>
+<td>“未查询到有效代币合约”</td>
+<td>清空查询结果，不可保存</td>
+</tr>
+<tr>
+<td>Symbol 为空</td>
+<td>“未获取到代币符号”</td>
+<td>不可保存</td>
+</tr>
+<tr>
+<td>精度异常</td>
+<td>“代币精度无效”</td>
+<td>不可保存</td>
+</tr>
+<tr>
+<td>查询结果变化</td>
+<td>展示最新结果和变更提示</td>
+<td>管理员重新确认后继续</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73">7.3 安全验证异常</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用户反馈</th>
+<th>系统行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>验证码未填满 6 位</td>
+<td>“请输入 6 位验证码”</td>
+<td>确认按钮不可用</td>
+</tr>
+<tr>
+<td>验证码错误</td>
+<td>“验证码错误，请重新输入”</td>
+<td>清空验证码，保留目标操作</td>
+</tr>
+<tr>
+<td>验证码已过期</td>
+<td>“验证码已过期，请输入最新验证码”</td>
+<td>清空验证码，允许重新输入</td>
+</tr>
+<tr>
+<td>验证次数受限</td>
+<td>“验证失败次数过多，请稍后再试”</td>
+<td>暂停当前验证操作</td>
+</tr>
+<tr>
+<td>管理员会话失效</td>
+<td>“登录状态已失效，请重新登录”</td>
+<td>取消目标操作并返回登录页</td>
+</tr>
+<tr>
+<td>权限在验证期间被收回</td>
+<td>“当前操作权限已变更”</td>
+<td>取消目标操作，不执行写入</td>
+</tr>
+<tr>
+<td>验证通过但写入失败</td>
+<td>展示具体写入失败原因</td>
+<td>不重复验证已失效的操作请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74">7.4 前台生效异常</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>后台反馈</th>
+<th>前台行为</th>
+<th>系统处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置同步延迟</td>
+<td>“保存成功，配置同步中”</td>
+<td>暂时使用上一有效版本</td>
+<td>自动继续同步</td>
+</tr>
+<tr>
+<td>配置同步失败</td>
+<td>“保存成功，但前台同步失败”</td>
+<td>保持上一有效版本</td>
+<td>记录失败并重试</td>
+</tr>
+<tr>
+<td>网络配置不完整</td>
+<td>不允许上架</td>
+<td>不接收该网络配置</td>
+<td>管理员补齐后重新上架</td>
+</tr>
+<tr>
+<td>币种无有效部署</td>
+<td>提示币种暂不可形成完整可添加能力</td>
+<td>不进入可添加目录</td>
+<td>新增或上架有效部署</td>
+</tr>
+<tr>
+<td>实例元数据失效</td>
+<td>将实例标记为配置异常</td>
+<td>停止用于新增收款和聚合</td>
+<td>管理员修复并重新确认</td>
+</tr>
+<tr>
+<td>关联数据缺失</td>
+<td>将对象标记为配置异常</td>
+<td>使用上一有效配置或隐藏异常入口</td>
+<td>阻止继续扩大异常范围</td>
+</tr>
+<tr>
+<td>聚合结果缺少实例</td>
+<td>后台展示实例未参与原因</td>
+<td>前台只聚合有效实例</td>
+<td>修复状态或关联关系后重新计算</td>
+</tr>
+</tbody>
+</table>
+      </div>
+    </body></html>
