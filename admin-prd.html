@@ -380,8 +380,8 @@ document.addEventListener("DOMContentLoaded", function () {
     </head>
     <body for="html-export" html-show-sidebar-toc>
       <div class="crossnote markdown-preview  ">
-<h1 id="biya-web3-admin">Biya Web3 钱包 Admin 后台 · 网络与代币管理产品需求文档</h1>
-<h2 id="_1">文档说明</h2>
+<h1 id="biya-web3-钱包-admin-后台-网络与代币管理产品需求文档">Biya Web3 钱包 Admin 后台 · 网络与代币管理产品需求文档</h1>
+<h2 id="文档说明">文档说明</h2>
 <table>
 <thead>
 <tr>
@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="_2">目录</h2>
+<h2 id="目录">目录</h2>
 <ul>
 <li><a href="#1-本版交付摘要">1. 本版交付摘要</a></li>
 <li><a href="#11-产品目标">1.1 产品目标</a></li>
@@ -477,8 +477,8 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><a href="#74-前台生效异常">7.4 前台生效异常</a></li>
 </ul>
 <hr />
-<h2 id="1">1. 本版交付摘要</h2>
-<h3 id="11">1.1 产品目标</h3>
+<h2 id="1-本版交付摘要">1. 本版交付摘要</h2>
+<h3 id="11-产品目标">1.1 产品目标</h3>
 <p>BiyaPay Web3 钱包 Admin 后台面向具备管理权限的内部人员，用于维护前台钱包依赖的网络、币种信息和链上代币配置。</p>
 <p>本版目标如下：</p>
 <table>
@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="12">1.2 核心数据模型</h3>
+<h3 id="12-核心数据模型">1.2 核心数据模型</h3>
 <table>
 <thead>
 <tr>
@@ -547,7 +547,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <p><strong>聚合原则</strong>：链上代币关联同一 <code>specId</code> 后，前台可将不同网络上的余额聚合为同一币种；未关联 <code>specId</code> 的记录只作为单链资产存在。</p>
-<h3 id="13">1.3 本版核心变化</h3>
+<h3 id="13-本版核心变化">1.3 本版核心变化</h3>
 <table>
 <thead>
 <tr>
@@ -589,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="14">1.4 本版交付能力</h3>
+<h3 id="14-本版交付能力">1.4 本版交付能力</h3>
 <table>
 <thead>
 <tr>
@@ -621,8 +621,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="2">2. 后台框架与安全</h2>
-<h3 id="21">2.1 模块说明</h3>
+<h2 id="2-后台框架与安全">2. 后台框架与安全</h2>
+<h3 id="21-模块说明">2.1 模块说明</h3>
 <table>
 <thead>
 <tr>
@@ -653,7 +653,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="22">2.2 页面框架</h3>
+<h3 id="22-页面框架">2.2 页面框架</h3>
 <table>
 <thead>
 <tr>
@@ -700,7 +700,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="23">2.3 通用交互规则</h3>
+<h3 id="23-通用交互规则">2.3 通用交互规则</h3>
 <table>
 <thead>
 <tr>
@@ -812,7 +812,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="24-totp">2.4 TOTP 安全验证</h3>
+<h3 id="24-totp-安全验证">2.4 TOTP 安全验证</h3>
 <p><strong>验证范围</strong></p>
 <table>
 <thead>
@@ -936,7 +936,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="25">2.5 全局页面状态</h3>
+<h3 id="25-全局页面状态">2.5 全局页面状态</h3>
 <table>
 <thead>
 <tr>
@@ -1011,10 +1011,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </table>
 <hr />
 <hr />
-<h2 id="3">3. 网络管理</h2>
-<h3 id="31">3.1 用户目标</h3>
+<h2 id="3-网络管理">3. 网络管理</h2>
+<h3 id="31-用户目标">3.1 用户目标</h3>
 <p>管理员能够维护钱包支持的区块链网络，控制网络的技术参数、地址规则、节点信息和前台可用状态，并避免错误配置影响资产查询与收发。</p>
-<h3 id="32">3.2 模块说明</h3>
+<h3 id="32-模块说明">3.2 模块说明</h3>
 <table>
 <thead>
 <tr>
@@ -1049,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="33">3.3 流程步骤</h3>
+<h3 id="33-流程步骤">3.3 流程步骤</h3>
 <pre><code class="language-mermaid">flowchart TD
   A[进入网络管理] --&gt; B[查询网络列表]
   B --&gt; C{选择操作}
@@ -1134,7 +1134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="34">3.4 列表与筛选</h3>
+<h3 id="34-列表与筛选">3.4 列表与筛选</h3>
 <p><strong>筛选字段</strong></p>
 <table>
 <thead>
@@ -1286,7 +1286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="35">3.5 新增与编辑</h3>
+<h3 id="35-新增与编辑">3.5 新增与编辑</h3>
 <p><strong>模块说明</strong></p>
 <table>
 <thead>
@@ -1588,7 +1588,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="36">3.6 页面状态矩阵</h3>
+<h3 id="36-页面状态矩阵">3.6 页面状态矩阵</h3>
 <table>
 <thead>
 <tr>
@@ -1649,7 +1649,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="37">3.7 交互规则</h3>
+<h3 id="37-交互规则">3.7 交互规则</h3>
 <table>
 <thead>
 <tr>
@@ -1710,7 +1710,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="38">3.8 数据管理</h3>
+<h3 id="38-数据管理">3.8 数据管理</h3>
 <table>
 <thead>
 <tr>
@@ -1754,10 +1754,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="4">4. 币种信息</h2>
-<h3 id="41">4.1 用户目标</h3>
+<h2 id="4-币种信息">4. 币种信息</h2>
+<h3 id="41-用户目标">4.1 用户目标</h3>
 <p>管理员能够维护与具体网络无关的统一币种身份，使同一币种在不同网络上的部署实例共享 Symbol、名称、Logo 和资产类型，并支持前台按币种进行添加和多链聚合展示。</p>
-<h3 id="42">4.2 模块说明</h3>
+<h3 id="42-模块说明">4.2 模块说明</h3>
 <table>
 <thead>
 <tr>
@@ -1834,7 +1834,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="43">4.3 流程步骤</h3>
+<h3 id="43-流程步骤">4.3 流程步骤</h3>
 <pre><code class="language-mermaid">flowchart TD
   A[进入币种信息] --&gt; B[查询币种列表]
   B --&gt; C{选择操作}
@@ -1925,7 +1925,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="44">4.4 列表与筛选</h3>
+<h3 id="44-列表与筛选">4.4 列表与筛选</h3>
 <p><strong>筛选字段</strong></p>
 <table>
 <thead>
@@ -2058,7 +2058,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="45">4.5 新增与编辑</h3>
+<h3 id="45-新增与编辑">4.5 新增与编辑</h3>
 <p><strong>模块说明</strong></p>
 <table>
 <thead>
@@ -2242,7 +2242,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="46">4.6 聚合部署列表</h3>
+<h3 id="46-聚合部署列表">4.6 聚合部署列表</h3>
 <table>
 <thead>
 <tr>
@@ -2315,7 +2315,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="47">4.7 页面状态矩阵</h3>
+<h3 id="47-页面状态矩阵">4.7 页面状态矩阵</h3>
 <table>
 <thead>
 <tr>
@@ -2376,7 +2376,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="48">4.8 交互规则</h3>
+<h3 id="48-交互规则">4.8 交互规则</h3>
 <table>
 <thead>
 <tr>
@@ -2443,7 +2443,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="49">4.9 数据管理</h3>
+<h3 id="49-数据管理">4.9 数据管理</h3>
 <table>
 <thead>
 <tr>
@@ -2495,10 +2495,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="5">5. 链上代币</h2>
-<h3 id="51">5.1 用户目标</h3>
+<h2 id="5-链上代币">5. 链上代币</h2>
+<h3 id="51-用户目标">5.1 用户目标</h3>
 <p>管理员能够维护某个网络上的具体资产实例，校验原生币或合约币的链上信息，将有效实例关联至统一币种身份，并控制该实例是否参与前台收款与多链余额聚合。</p>
-<h3 id="52">5.2 模块说明</h3>
+<h3 id="52-模块说明">5.2 模块说明</h3>
 <table>
 <thead>
 <tr>
@@ -2590,7 +2590,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="53">5.3 流程步骤</h3>
+<h3 id="53-流程步骤">5.3 流程步骤</h3>
 <pre><code class="language-mermaid">flowchart TD
   A[进入链上代币] --&gt; B[查询实例列表]
   B --&gt; C{选择操作}
@@ -2683,7 +2683,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="54">5.4 列表与筛选</h3>
+<h3 id="54-列表与筛选">5.4 列表与筛选</h3>
 <p><strong>筛选字段</strong></p>
 <table>
 <thead>
@@ -2852,7 +2852,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="55">5.5 新增与编辑</h3>
+<h3 id="55-新增与编辑">5.5 新增与编辑</h3>
 <p><strong>模块说明</strong></p>
 <table>
 <thead>
@@ -3176,7 +3176,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="56">5.6 快速部署</h3>
+<h3 id="56-快速部署">5.6 快速部署</h3>
 <table>
 <thead>
 <tr>
@@ -3211,7 +3211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="57">5.7 页面状态矩阵</h3>
+<h3 id="57-页面状态矩阵">5.7 页面状态矩阵</h3>
 <table>
 <thead>
 <tr>
@@ -3284,7 +3284,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="58">5.8 交互规则</h3>
+<h3 id="58-交互规则">5.8 交互规则</h3>
 <table>
 <thead>
 <tr>
@@ -3357,7 +3357,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="59">5.9 数据管理</h3>
+<h3 id="59-数据管理">5.9 数据管理</h3>
 <table>
 <thead>
 <tr>
@@ -3421,8 +3421,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="6">6. 横切规则</h2>
-<h3 id="61">6.1 实体关系</h3>
+<h2 id="6-横切规则">6. 横切规则</h2>
+<h3 id="61-实体关系">6.1 实体关系</h3>
 <pre><code class="language-mermaid">flowchart TD
   N[网络 Network] --&gt;|networkId| CT[链上代币 Contract Token]
   TS[币种信息 Token Spec] --&gt;|specId| CT
@@ -3463,7 +3463,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="62">6.2 状态联动</h3>
+<h3 id="62-状态联动">6.2 状态联动</h3>
 <p><strong>网络状态变化</strong></p>
 <table>
 <thead>
@@ -3569,7 +3569,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="63">6.3 前台生效规则</h3>
+<h3 id="63-前台生效规则">6.3 前台生效规则</h3>
 <p>后台配置在前台分别形成网络范围、可添加币种、收款网络和资产聚合四类结果，各结果独立计算。</p>
 <table>
 <thead>
@@ -3648,7 +3648,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="64">6.4 用户自定义代币</h3>
+<h3 id="64-用户自定义代币">6.4 用户自定义代币</h3>
 <table>
 <thead>
 <tr>
@@ -3721,7 +3721,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="65">6.5 数据同步</h3>
+<h3 id="65-数据同步">6.5 数据同步</h3>
 <table>
 <thead>
 <tr>
@@ -3807,7 +3807,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="66">6.6 审计规则</h3>
+<h3 id="66-审计规则">6.6 审计规则</h3>
 <p>所有写操作均生成不可由普通管理员删除的审计记录。</p>
 <table>
 <thead>
@@ -3856,8 +3856,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <hr />
-<h2 id="7">7. 异常与提示</h2>
-<h3 id="71">7.1 通用异常</h3>
+<h2 id="7-异常与提示">7. 异常与提示</h2>
+<h3 id="71-通用异常">7.1 通用异常</h3>
 <table>
 <thead>
 <tr>
@@ -3918,7 +3918,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="72">7.2 表单与数据异常</h3>
+<h3 id="72-表单与数据异常">7.2 表单与数据异常</h3>
 <table>
 <thead>
 <tr>
@@ -4039,7 +4039,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="73">7.3 安全验证异常</h3>
+<h3 id="73-安全验证异常">7.3 安全验证异常</h3>
 <table>
 <thead>
 <tr>
@@ -4086,7 +4086,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </tr>
 </tbody>
 </table>
-<h3 id="74">7.4 前台生效异常</h3>
+<h3 id="74-前台生效异常">7.4 前台生效异常</h3>
 <table>
 <thead>
 <tr>
