@@ -2,8 +2,24 @@
       <title>Biya Web3 钱包 Admin 后台 · PRD</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" charset="UTF-8"></script>
       <style>
       code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;tab-size:8;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000;font-weight:600}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body pre{padding:1em;overflow:auto;line-height:1.45;border-radius:3px;background:#f5f5f5}html body pre>code{padding:0;margin:0;background:0 0;border:0}html body blockquote{margin:16px 0;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body ul,html body ol{padding-left:2em;margin-bottom:16px}html body p{margin-top:0;margin-bottom:16px}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}
+
+.markdown-preview .mermaid {
+  margin: 16px 0 24px;
+  text-align: center;
+  overflow-x: auto;
+  background: #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 16px 12px;
+}
+.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* PRD_SIDEBAR_V1 */
 html body[for=html-export] #sidebar-toc-btn { display: none !important; }
 
@@ -1050,24 +1066,25 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <h3 id="33-流程步骤">3.3 流程步骤</h3>
-<pre><code class="language-mermaid">flowchart TD
-  A[进入网络管理] --&gt; B[查询网络列表]
-  B --&gt; C{选择操作}
-  C --&gt;|新增| D[填写网络配置]
-  C --&gt;|编辑| E[修改可编辑字段]
-  C --&gt;|上架或下架| F[确认状态影响]
-  C --&gt;|删除| G[校验关联链上代币]
-  D --&gt; H[表单校验]
-  E --&gt; H
-  F --&gt; I[TOTP 验证]
-  G --&gt;|无关联| I
-  G --&gt;|存在关联| J[阻断删除]
-  H --&gt;|通过| I
-  H --&gt;|不通过| K[展示字段错误]
-  I --&gt;|通过| L[执行操作并记录审计日志]
-  I --&gt;|失败| M[保留操作上下文]
-  L --&gt; N[刷新列表与前台配置]
-</code></pre>
+<div class="mermaid">
+flowchart TD
+  A[进入网络管理] --> B[查询网络列表]
+  B --> C{选择操作}
+  C -->|新增| D[填写网络配置]
+  C -->|编辑| E[修改可编辑字段]
+  C -->|上架或下架| F[确认状态影响]
+  C -->|删除| G[校验关联链上代币]
+  D --> H[表单校验]
+  E --> H
+  F --> I[TOTP 验证]
+  G -->|无关联| I
+  G -->|存在关联| J[阻断删除]
+  H -->|通过| I
+  H -->|不通过| K[展示字段错误]
+  I -->|通过| L[执行操作并记录审计日志]
+  I -->|失败| M[保留操作上下文]
+  L --> N[刷新列表与前台配置]
+</div>
 <table>
 <thead>
 <tr>
@@ -1835,24 +1852,25 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <h3 id="43-流程步骤">4.3 流程步骤</h3>
-<pre><code class="language-mermaid">flowchart TD
-  A[进入币种信息] --&gt; B[查询币种列表]
-  B --&gt; C{选择操作}
-  C --&gt;|新增| D[填写币种身份与品牌信息]
-  C --&gt;|编辑| E[修改可编辑信息]
-  C --&gt;|查看部署| F[打开聚合部署列表]
-  C --&gt;|快速部署| G[打开链上代币表单]
-  C --&gt;|状态变更| H[确认前台影响]
-  C --&gt;|删除| I[校验关联部署]
-  D --&gt; J[字段与唯一性校验]
-  E --&gt; J
-  H --&gt; K[TOTP 验证]
-  I --&gt;|无关联| K
-  I --&gt;|存在关联| L[阻断删除]
-  J --&gt;|通过| K
-  K --&gt;|通过| M[执行操作并记录审计日志]
-  M --&gt; N[刷新列表与前台币种配置]
-</code></pre>
+<div class="mermaid">
+flowchart TD
+  A[进入币种信息] --> B[查询币种列表]
+  B --> C{选择操作}
+  C -->|新增| D[填写币种身份与品牌信息]
+  C -->|编辑| E[修改可编辑信息]
+  C -->|查看部署| F[打开聚合部署列表]
+  C -->|快速部署| G[打开链上代币表单]
+  C -->|状态变更| H[确认前台影响]
+  C -->|删除| I[校验关联部署]
+  D --> J[字段与唯一性校验]
+  E --> J
+  H --> K[TOTP 验证]
+  I -->|无关联| K
+  I -->|存在关联| L[阻断删除]
+  J -->|通过| K
+  K -->|通过| M[执行操作并记录审计日志]
+  M --> N[刷新列表与前台币种配置]
+</div>
 <table>
 <thead>
 <tr>
@@ -2591,26 +2609,27 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
 <h3 id="53-流程步骤">5.3 流程步骤</h3>
-<pre><code class="language-mermaid">flowchart TD
-  A[进入链上代币] --&gt; B[查询实例列表]
-  B --&gt; C{选择操作}
-  C --&gt;|新增或编辑| D[选择网络和实例类型]
-  C --&gt;|快速部署| E[锁定币种信息]
-  C --&gt;|状态变更| F[校验上架条件]
-  C --&gt;|删除| G[确认影响范围]
-  D --&gt; H{是否原生代币}
-  E --&gt; H
-  H --&gt;|是| I[读取网络原生币信息]
-  H --&gt;|否| J[输入合约地址并查询元数据]
-  I --&gt; K[校验关联币种与链上信息]
-  J --&gt; K
-  K --&gt;|通过| L[TOTP 验证]
-  K --&gt;|不通过| M[展示字段或冲突错误]
-  F --&gt;|通过| L
-  G --&gt; L
-  L --&gt;|通过| N[执行操作并记录审计日志]
-  N --&gt; O[刷新列表与前台资产配置]
-</code></pre>
+<div class="mermaid">
+flowchart TD
+  A[进入链上代币] --> B[查询实例列表]
+  B --> C{选择操作}
+  C -->|新增或编辑| D[选择网络和实例类型]
+  C -->|快速部署| E[锁定币种信息]
+  C -->|状态变更| F[校验上架条件]
+  C -->|删除| G[确认影响范围]
+  D --> H{是否原生代币}
+  E --> H
+  H -->|是| I[读取网络原生币信息]
+  H -->|否| J[输入合约地址并查询元数据]
+  I --> K[校验关联币种与链上信息]
+  J --> K
+  K -->|通过| L[TOTP 验证]
+  K -->|不通过| M[展示字段或冲突错误]
+  F -->|通过| L
+  G --> L
+  L -->|通过| N[执行操作并记录审计日志]
+  N --> O[刷新列表与前台资产配置]
+</div>
 <table>
 <thead>
 <tr>
@@ -3423,16 +3442,17 @@ document.addEventListener("DOMContentLoaded", function () {
 <hr />
 <h2 id="6-横切规则">6. 横切规则</h2>
 <h3 id="61-实体关系">6.1 实体关系</h3>
-<pre><code class="language-mermaid">flowchart TD
-  N[网络 Network] --&gt;|networkId| CT[链上代币 Contract Token]
-  TS[币种信息 Token Spec] --&gt;|specId| CT
-  CT --&gt;|已关联 specId| AGG[多链资产聚合]
-  CT --&gt;|未关联 specId| SINGLE[单链资产]
-  N --&gt; NET[前台网络范围]
-  TS --&gt; CATALOG[前台币种目录]
-  CT --&gt; RECEIVE[收款可选网络]
-  CT --&gt; TOKENINFO[代币合约信息]
-</code></pre>
+<div class="mermaid">
+flowchart TD
+  N[网络 Network] -->|networkId| CT[链上代币 Contract Token]
+  TS[币种信息 Token Spec] -->|specId| CT
+  CT -->|已关联 specId| AGG[多链资产聚合]
+  CT -->|未关联 specId| SINGLE[单链资产]
+  N --> NET[前台网络范围]
+  TS --> CATALOG[前台币种目录]
+  CT --> RECEIVE[收款可选网络]
+  CT --> TOKENINFO[代币合约信息]
+</div>
 <table>
 <thead>
 <tr>
@@ -4142,4 +4162,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </tbody>
 </table>
       </div>
+    
+<script type="module">
+var MERMAID_CONFIG = { startOnLoad: false, theme: "default", securityLevel: "loose" };
+mermaid.initialize(MERMAID_CONFIG);
+await mermaid.run({ nodes: document.querySelectorAll("div.mermaid") });
+</script>
+
     </body></html>
