@@ -1,4 +1,4 @@
-# Biya Wallet · 公开演示（GitHub Pages）
+# Biya Wallet · 公开演示
 
 | 版本 | 资源 | 链接 |
 | --- | --- | --- |
