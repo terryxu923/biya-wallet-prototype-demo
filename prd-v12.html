@@ -467,6 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><a href="#53-异常与提示">5.3 异常与提示</a></li>
 <li><a href="#54-性能与安全">5.4 性能与安全</a></li>
 <li><a href="#55-客户端状态">5.5 客户端状态</a></li>
+<li><a href="#56-钱包操作验证密码与通行密钥">5.6 钱包操作验证（密码与通行密钥）</a></li>
 <li><a href="#6-不在本版范围">6. 不在本版范围</a></li>
 <li><a href="#7-验收与测试">7. 验收与测试</a></li>
 <li><a href="#8-附录--关联文档">8. 附录 · 关联文档</a></li>
@@ -516,7 +517,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <tr>
 <td>发送验证</td>
 <td>通行密钥</td>
-<td><strong>不变</strong>（仍不用 PIN 码发送）</td>
+<td><strong>通行密钥优先、6 位钱包密码兜底</strong>；须先设密码方可开启通行密钥授权；仍不提供独立 PIN 码发送</td>
+</tr>
+<tr>
+<td>钱包操作验证</td>
+<td>V1.1 仅通行密钥</td>
+<td><strong>新增</strong> 6 位钱包密码 + 统一验证分流（见 <a href="#56-钱包操作验证密码与通行密钥">§5.6</a>）</td>
 </tr>
 </tbody>
 </table>
@@ -531,7 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <tbody>
 <tr>
 <td><strong>P0</strong></td>
-<td>多链资产聚合、代币行情、多链代币详情、发送/接收选网络</td>
+<td>多链资产聚合、代币行情、多链代币详情、发送/接收选网络、<strong>钱包操作验证（密码 + 通行密钥）</strong></td>
 </tr>
 <tr>
 <td><strong>P1</strong></td>
@@ -3073,9 +3079,9 @@ V1.1 未交付。</p>
 <hr />
 <a id="34-发送--确认与结果" aria-hidden="true"></a><h2 id="34-发送-确认与结果">3.4 发送 · 确认与结果 </h2>
 <p><strong>用户目标</strong><br />
-确认金额与 Gas，通过通行密钥完成签名发送。</p>
+确认金额与 Gas，通过钱包操作验证完成签名发送。</p>
 <p><strong>相对 V1.1</strong><br />
-<strong>无变化</strong>；仍使用通行密钥，<strong>不使用 PIN 码发送</strong>。</p>
+验证链升级为 <a href="#56-钱包操作验证密码与通行密钥">§5.6</a> 统一入口：<strong>通行密钥优先、6 位钱包密码兜底</strong>。<strong>仍不提供独立 PIN 码发送</strong>；本版「钱包密码」为操作验证兜底，非发送专用 PIN。</p>
 <h3 id="模块说明">模块说明 </h3>
 <table>
 <thead>
@@ -3094,13 +3100,17 @@ V1.1 未交付。</p>
 <td>V1.1 金额、Gas、确认、结果全链路</td>
 </tr>
 <tr>
+<td><strong>验证</strong></td>
+<td>社交会话失效时仍先 OTP/OAuth；随后按 §5.6 分流</td>
+</tr>
+<tr>
 <td><strong>不在范围</strong></td>
-<td>PIN 码发送</td>
+<td>独立 PIN 码发送</td>
 </tr>
 </tbody>
 </table>
 <h3 id="流程步骤">流程步骤 </h3>
-<p>继承 V1.1：<strong>金额页</strong> → <strong>确认页</strong> → <strong>通行密钥验证</strong> → <strong>结果页</strong>。</p>
+<p>继承 V1.1：<strong>金额页</strong> → <strong>确认页</strong> → <strong>钱包操作验证</strong> → <strong>结果页</strong>。</p>
 <table>
 <thead>
 <tr>
@@ -3125,8 +3135,8 @@ V1.1 未交付。</p>
 </tr>
 <tr>
 <td>3</td>
-<td>通行密钥验证</td>
-<td>唤起系统通行密钥</td>
+<td>钱包操作验证</td>
+<td>按 §5.6：已授权通行密钥 → 设备确认；未授权或不可用 → 钱包密码；锁定态 → 密码锁定页</td>
 <td>成功广播；取消则停留确认页</td>
 </tr>
 <tr>
@@ -3149,6 +3159,18 @@ V1.1 未交付。</p>
 <tr>
 <td>通行密钥取消</td>
 <td>停留确认页</td>
+</tr>
+<tr>
+<td>通行密钥连续 3 次失败</td>
+<td>展示失败弹窗，可切换密码验证</td>
+</tr>
+<tr>
+<td>密码锁定</td>
+<td>展示倒计时锁定态；可经「忘记密码？」进入重置流程</td>
+</tr>
+<tr>
+<td>未设密码</td>
+<td>引导设置钱包密码，阻断签名</td>
 </tr>
 <tr>
 <td>链上失败</td>
@@ -4083,6 +4105,31 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 <td>「暂无交易记录」</td>
 <td>否</td>
 </tr>
+<tr>
+<td>密码第 1–4 次验证失败</td>
+<td>「密码错误，请重新输入（还可以输入 N 次）」</td>
+<td>否</td>
+</tr>
+<tr>
+<td>密码第 5 次验证失败</td>
+<td>锁定态 + 分秒倒计时</td>
+<td>是</td>
+</tr>
+<tr>
+<td>通行密钥第 1–2 次失败</td>
+<td>Toast 提示剩余重试次数</td>
+<td>否</td>
+</tr>
+<tr>
+<td>通行密钥第 3 次失败</td>
+<td>通行密钥失败弹窗；可切换密码验证</td>
+<td>是（直至切换或取消）</td>
+</tr>
+<tr>
+<td>未设密码尝试开启通行密钥</td>
+<td>「请先设置钱包密码」</td>
+<td>是</td>
+</tr>
 </tbody>
 </table>
 <p><strong>Toast 增补（本版）</strong></p>
@@ -4227,6 +4274,42 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 <td>表单会话内</td>
 <td>确认后分支</td>
 </tr>
+<tr>
+<td>钱包密码状态（<code>walletPasswordStatus</code>）</td>
+<td>未设置 / 已设置 / 锁定</td>
+<td>是</td>
+<td>设密、锁定、到期解锁</td>
+</tr>
+<tr>
+<td>钱包密码验证数据（哈希+盐+算法标识）</td>
+<td>校验用，非明文</td>
+<td>平台安全存储</td>
+<td>设密、重置</td>
+</tr>
+<tr>
+<td>钱包密码失败次数（<code>walletPasswordFailCount</code>）</td>
+<td>0–5</td>
+<td>是</td>
+<td>验证成功或锁定到期清零</td>
+</tr>
+<tr>
+<td>钱包密码锁定截止（<code>walletPasswordLockedUntil</code>）</td>
+<td>锁定结束时间戳</td>
+<td>是</td>
+<td>第 5 次失败写入</td>
+</tr>
+<tr>
+<td>通行密钥已授权（<code>walletPasskeyPermissionGranted</code>）</td>
+<td>是否已允许生物识别</td>
+<td>是</td>
+<td>首次授权成功</td>
+</tr>
+<tr>
+<td>通行密钥失败次数（<code>walletPasskeyFailCount</code>）</td>
+<td>0–3</td>
+<td>是</td>
+<td>验证成功清零</td>
+</tr>
 </tbody>
 </table>
 <p><strong>同步规则</strong></p>
@@ -4253,6 +4336,631 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 </tbody>
 </table>
 <hr />
+<h2 id="56-钱包操作验证密码与通行密钥">5.6 钱包操作验证（密码与通行密钥） </h2>
+<p><strong>用户目标</strong><br />
+在创建钱包、发送、查看敏感信息等操作时，以 <strong>通行密钥优先、6 位钱包密码兜底</strong> 的方式确认当前操作人身份，且与账号登录验证、助记词备份验证、风险确认各司其职。</p>
+<p><strong>相对 V1.1</strong><br />
+V1.1 钱包操作验证以通行密钥为主；V1.2 <strong>新增</strong> 设备级 6 位钱包密码、统一验证分流、密码锁定与忘记密码恢复流程，并在 v12 原型落地。账号 OTP/OAuth、助记词词位验证、删除/导出风险确认 <strong>规则不变</strong>。</p>
+<h3 id="模块说明">模块说明 </h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>触发</strong></td>
+<td>首次创建/导入钱包；发送签名；备份/查看助记词；查看私钥；导出助记词；删除/退出钱包等敏感操作</td>
+</tr>
+<tr>
+<td><strong>前置</strong></td>
+<td>社交路径会话失效时，仍须先完成对应账号身份验证</td>
+</tr>
+<tr>
+<td><strong>核心能力</strong></td>
+<td>6 位钱包密码设置与验证；通行密钥首次授权与日常设备确认；失败次数与 60 分钟锁定；忘记密码与重置钱包</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td>V1.1 全部需通行密钥的业务触点（见下方触点矩阵）</td>
+</tr>
+<tr>
+<td><strong>不在范围</strong></td>
+<td>密码不能替代邮箱 OTP、Google/Apple 登录、Privy 账号匹配、助记词随机词位校验、删除/导出前的风险确认</td>
+</tr>
+</tbody>
+</table>
+<h3 id="验证层级">验证层级 </h3>
+<table>
+<thead>
+<tr>
+<th>验证层级</th>
+<th>方式</th>
+<th>验证对象</th>
+<th>典型用途</th>
+<th>钱包密码能否替代</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>账号身份验证</td>
+<td>邮箱 OTP、Google/Apple 登录</td>
+<td>社交账号归属</td>
+<td>创建/切换社交钱包、会话失效后重登</td>
+<td>否</td>
+</tr>
+<tr>
+<td>钱包操作验证</td>
+<td>通行密钥（优先）+ 6 位钱包密码（兜底）</td>
+<td>当前设备上的钱包操作人</td>
+<td>创建、导入、发送、查看敏感信息、退出/删除</td>
+<td>—</td>
+</tr>
+<tr>
+<td>备份正确性验证</td>
+<td>助记词随机词位</td>
+<td>用户是否抄写正确</td>
+<td>完成助记词备份</td>
+<td>否</td>
+</tr>
+<tr>
+<td>风险确认</td>
+<td>删除/导出确认、导出倒计时</td>
+<td>用户是否理解后果</td>
+<td>删除钱包、导出助记词</td>
+<td>否；确认后仍须钱包操作验证</td>
+</tr>
+<tr>
+<td>会话一致性</td>
+<td>当前登录账号与目标钱包匹配</td>
+<td>Privy 会话归属</td>
+<td>切换/发送/社交私钥导出</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h3 id="统一验证入口日常敏感操作">统一验证入口（日常敏感操作） </h3>
+<p>以下流程适用于 <strong>非首次授权</strong> 的日常敏感操作（发送、导入、查看私钥等）：</p>
+<div class="mermaid">flowchart TD
+  entry[敏感操作触发]
+  entry --&gt; pwdUnset{已设钱包密码}
+  pwdUnset --&gt;|否| setup[设置钱包密码页与确认页]
+  pwdUnset --&gt;|是| pwdLock{密码处于锁定}
+  pwdLock --&gt;|是| lockUI[钱包密码验证弹窗锁定态]
+  pwdLock --&gt;|否| pkReady{通行密钥已授权且可用}
+  pkReady --&gt;|是且失败未满3次| pkModal[通行密钥设备确认弹窗]
+  pkReady --&gt;|否| pwdModal[钱包密码验证弹窗]
+  setup --&gt; afterSet[设密成功]
+  afterSet --&gt; pkGrant[生物识别授权说明弹窗仅首次]</div>
+<table>
+<thead>
+<tr>
+<th>判断顺序</th>
+<th>条件</th>
+<th>系统行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>未设置钱包密码</td>
+<td>依次打开设置钱包密码页 → 确认钱包密码页；敏感操作未完成前阻断</td>
+</tr>
+<tr>
+<td>2</td>
+<td>密码处于锁定（第 5 次失败或锁定期内）</td>
+<td>打开钱包密码验证弹窗 · 锁定态</td>
+</tr>
+<tr>
+<td>3</td>
+<td>设备不支持通行密钥</td>
+<td>打开钱包密码验证弹窗</td>
+</tr>
+<tr>
+<td>4</td>
+<td>通行密钥已连续失败 3 次</td>
+<td>展示通行密钥失败弹窗，可切换密码</td>
+</tr>
+<tr>
+<td>5</td>
+<td>通行密钥已授权且可用</td>
+<td><strong>直接</strong>调起通行密钥设备确认弹窗，<strong>不再</strong>弹出生物识别授权说明弹窗</td>
+</tr>
+<tr>
+<td>6</td>
+<td>其余情况</td>
+<td>打开钱包密码验证弹窗，<strong>不反复</strong>弹出授权说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="首次创建钱包流程">首次创建钱包流程 </h3>
+<p>账号前置验证（OTP/OAuth，如有）完成后，按下列顺序执行：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>条件</th>
+<th>系统行为</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>查询密码状态</td>
+<td>未设置 → 进入设置钱包密码页与确认钱包密码页；已设置 → 跳过设密</td>
+<td>步骤 2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>密码已锁定</td>
+<td>不重复设密；后续若走密码验证则进入钱包密码验证弹窗 · 锁定态</td>
+<td>步骤 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>通行密钥未授权</td>
+<td><strong>仅此时</strong>展示生物识别授权说明弹窗</td>
+<td>用户同意 → 通行密钥设备确认弹窗；拒绝 → 钱包密码验证弹窗</td>
+</tr>
+<tr>
+<td>4</td>
+<td>通行密钥已授权</td>
+<td>直接调起设备确认</td>
+<td>成功 → 继续创建；失败按通行密钥规则</td>
+</tr>
+<tr>
+<td>5</td>
+<td>验证成功</td>
+<td>继续原创建/导入逻辑</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>设密与授权关系</strong>：用户 <strong>必须先完成 6 位钱包密码设置</strong>，方可开启通行密钥授权；未设密时点击「使用」授权、写入授权状态或从导入入口开启通行密钥，均 <strong>引导设密</strong>，不得写入授权成功状态。</p>
+<h3 id="开启通行密钥前置条件">开启通行密钥前置条件 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首次授权说明弹窗 · 点击「使用」</td>
+<td>须已设密码；否则关闭说明并进入设密</td>
+</tr>
+<tr>
+<td>设备确认成功且意图为「首次授权」</td>
+<td>写入授权状态前再次校验已设密码</td>
+</tr>
+<tr>
+<td>导入/创建入口</td>
+<td>未设密时先走设密，再进入验证或授权</td>
+</tr>
+<tr>
+<td>日常敏感操作</td>
+<td>未授权通行密钥时 <strong>直接密码验证</strong>，不弹出授权说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面清单">页面清单 </h3>
+<table>
+<thead>
+<tr>
+<th>页面或弹窗</th>
+<th>触发</th>
+<th>核心行为</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设置钱包密码页</td>
+<td>首次创建且未设密码</td>
+<td>输入 6 位数字；输满自动进入确认钱包密码页</td>
+<td>暂存首次输入</td>
+</tr>
+<tr>
+<td>确认钱包密码页</td>
+<td>设置钱包密码页完成</td>
+<td>再次输入 6 位并比较</td>
+<td>一致则安全保存；不一致清空确认格并重试</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗</td>
+<td>拒绝授权、切换密码、日常兜底</td>
+<td>6 位输入；输满自动校验</td>
+<td>成功继续原业务；失败按次数规则</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗 · 错误态</td>
+<td>第 1–4 次验证失败（同上弹窗）</td>
+<td>清空输入格；展示剩余次数与「忘记密码？」</td>
+<td>可立即重输</td>
+</tr>
+<tr>
+<td>忘记密码说明弹层</td>
+<td>点击「忘记密码？」</td>
+<td>说明重置后果与恢复方式</td>
+<td>「重置钱包」→ 重置钱包确认弹层；「取消」返回</td>
+</tr>
+<tr>
+<td>通行密钥失败弹窗</td>
+<td>通行密钥累计失败 3 次</td>
+<td>说明失败原因</td>
+<td>「切换为密码验证」→ 钱包密码验证弹窗</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗 · 锁定态</td>
+<td>第 5 次失败或锁定期内进入（同上弹窗）</td>
+<td>禁用数字键盘；文案「密码多次输入错误，请等待后再试（MM:SS）」；<strong>隐藏</strong>底部「重置钱包/稍后再试」；<strong>保留</strong>「忘记密码？」</td>
+<td>等待解锁或经忘记密码说明弹层进入重置</td>
+</tr>
+<tr>
+<td>重置钱包确认弹层</td>
+<td>忘记密码说明弹层或锁定态经「忘记密码？」进入</td>
+<td>二次说明本地数据清除风险</td>
+<td>确认后执行重置；取消返回来源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-位钱包密码规则">6 位钱包密码规则 </h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>场景</th>
+<th>产品规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PW-01</td>
+<td>形态</td>
+<td>仅数字 0–9，固定 6 位</td>
+</tr>
+<tr>
+<td>PW-02</td>
+<td>展示</td>
+<td>掩码显示；6 格等宽，错误文案不得引起布局位移</td>
+</tr>
+<tr>
+<td>PW-03</td>
+<td>设置</td>
+<td>设置钱包密码页输满后进入确认钱包密码页；首次输入仅存于当前流程内存</td>
+</tr>
+<tr>
+<td>PW-04</td>
+<td>确认</td>
+<td>确认钱包密码页输满后立即比较；一致才写入安全存储</td>
+</tr>
+<tr>
+<td>PW-05</td>
+<td>确认不一致</td>
+<td>清空确认钱包密码页输入格；<strong>不计入</strong>验证失败次数</td>
+</tr>
+<tr>
+<td>PW-06</td>
+<td>验证提交</td>
+<td>钱包密码验证弹窗输满后自动校验；校验中禁止重复输入</td>
+</tr>
+<tr>
+<td>PW-07</td>
+<td>验证失败</td>
+<td>清空全部输入格，首格恢复激活</td>
+</tr>
+<tr>
+<td>PW-08</td>
+<td>最大次数</td>
+<td>连续验证失败 <strong>5 次</strong>；成功一次清零</td>
+</tr>
+<tr>
+<td>PW-09</td>
+<td>锁定</td>
+<td>第 <strong>5</strong> 次失败立即锁定 <strong>60 分钟</strong>；无第 6 次输入机会</td>
+</tr>
+<tr>
+<td>PW-10</td>
+<td>锁定恢复</td>
+<td>到期自动解锁并清零失败次数；App 重启不绕过</td>
+</tr>
+<tr>
+<td>PW-11</td>
+<td>作用域</td>
+<td>当前设备 App 钱包域 <strong>统一密码</strong>；新增第二钱包不重复设密</td>
+</tr>
+<tr>
+<td>PW-12</td>
+<td>安全存储</td>
+<td>不存明文；仅存哈希、独立盐与必要状态</td>
+</tr>
+<tr>
+<td>PW-13</td>
+<td>与资产恢复</td>
+<td>密码 <strong>不是</strong> 资产恢复凭证；重置后仍须社交账号/助记词/私钥</td>
+</tr>
+<tr>
+<td>PW-14</td>
+<td>日志与埋点</td>
+<td>不上报密码、哈希或可推断密码的信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="通行密钥规则">通行密钥规则 </h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>场景</th>
+<th>产品规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PK-01</td>
+<td>权限未获取（仅首次创建/设密后）</td>
+<td>展示生物识别授权说明弹窗</td>
+</tr>
+<tr>
+<td>PK-02</td>
+<td>用户同意授权</td>
+<td>关闭说明并调起设备确认</td>
+</tr>
+<tr>
+<td>PK-03</td>
+<td>用户拒绝或取消授权</td>
+<td>不终止创建；切换至钱包密码验证弹窗</td>
+</tr>
+<tr>
+<td>PK-04</td>
+<td>权限已获取（日常操作）</td>
+<td><strong>跳过</strong>授权说明，直接设备确认</td>
+</tr>
+<tr>
+<td>PK-05</td>
+<td>验证成功</td>
+<td>清零通行密钥失败次数；继续原业务</td>
+</tr>
+<tr>
+<td>PK-06</td>
+<td>第 1–2 次失败</td>
+<td>累计次数；Toast 提示剩余次数；允许重试</td>
+</tr>
+<tr>
+<td>PK-07</td>
+<td>第 3 次失败</td>
+<td>展示通行密钥失败弹窗；停止自动重试</td>
+</tr>
+<tr>
+<td>PK-08</td>
+<td>切换密码</td>
+<td>关闭通行密钥失败弹窗并打开钱包密码验证弹窗；保留当前业务上下文</td>
+</tr>
+<tr>
+<td>PK-09</td>
+<td>用户主动取消系统验证</td>
+<td>发送场景停留确认页；创建场景可改密码或退出</td>
+</tr>
+<tr>
+<td>PK-10</td>
+<td>设备不支持</td>
+<td>跳过通行密钥，直接进入钱包密码验证弹窗</td>
+</tr>
+<tr>
+<td>PK-11</td>
+<td>术语</td>
+<td>UI 统一「通行密钥验证」；禁止「通信密钥」</td>
+</tr>
+</tbody>
+</table>
+<h3 id="业务触点矩阵">业务触点矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>业务场景</th>
+<th>账号身份验证</th>
+<th>钱包操作验证</th>
+<th>风险确认或其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首次创建邮箱/Google/Apple 社交钱包</td>
+<td>OTP 或 OAuth</td>
+<td>设密（如需）→ 通行密钥优先、密码兜底</td>
+<td>—</td>
+</tr>
+<tr>
+<td>首次创建/导入助记词或私钥钱包</td>
+<td>无</td>
+<td>同上</td>
+<td>格式校验</td>
+</tr>
+<tr>
+<td>新增第二个及后续钱包</td>
+<td>社交路径按需</td>
+<td>不重复设密；通行密钥优先、密码兜底</td>
+<td>—</td>
+</tr>
+<tr>
+<td>发送交易</td>
+<td>会话失效时 OTP/OAuth</td>
+<td>统一验证入口</td>
+<td>签名预览</td>
+</tr>
+<tr>
+<td>备份助记词</td>
+<td>无</td>
+<td>统一验证入口</td>
+<td>安全引导 + 词位验证（不可替代）</td>
+</tr>
+<tr>
+<td>查看助记词/自托管私钥</td>
+<td>无</td>
+<td>统一验证入口</td>
+<td>安全引导 + 截屏提示</td>
+</tr>
+<tr>
+<td>查看社交钱包私钥</td>
+<td>会话失效时 OTP/OAuth + 账号匹配</td>
+<td>统一验证入口</td>
+<td>Privy 导出流程</td>
+</tr>
+<tr>
+<td>导出助记词</td>
+<td>按需</td>
+<td>统一验证入口</td>
+<td>倒计时 + 备份确认</td>
+</tr>
+<tr>
+<td>删除自托管钱包</td>
+<td>无</td>
+<td>统一验证入口</td>
+<td>删除确认</td>
+</tr>
+<tr>
+<td>退出社交钱包</td>
+<td>无</td>
+<td>统一验证入口</td>
+<td>退出确认</td>
+</tr>
+</tbody>
+</table>
+<h3 id="页面状态矩阵">页面状态矩阵 </h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>反馈</th>
+<th>是否阻断业务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>确认密码不一致</td>
+<td>「两次输入不一致，请重新输入」</td>
+<td>否（可重输确认）</td>
+</tr>
+<tr>
+<td>密码第 1–4 次错误</td>
+<td>「密码错误，请重新输入（还可以输入 N 次）」</td>
+<td>否</td>
+</tr>
+<tr>
+<td>密码第 5 次错误</td>
+<td>钱包密码验证弹窗 · 锁定态 + 倒计时</td>
+<td>是</td>
+</tr>
+<tr>
+<td>通行密钥第 1–2 次失败</td>
+<td>Toast 剩余次数</td>
+<td>否</td>
+</tr>
+<tr>
+<td>通行密钥第 3 次失败</td>
+<td>通行密钥失败弹窗</td>
+<td>是（直至切换或取消）</td>
+</tr>
+<tr>
+<td>拒绝首次授权</td>
+<td>切换钱包密码验证弹窗，创建上下文保留</td>
+<td>否</td>
+</tr>
+<tr>
+<td>发送签名验证取消</td>
+<td>停留确认页</td>
+<td>是（未完成发送）</td>
+</tr>
+<tr>
+<td>验证成功</td>
+<td>继续原流程一步</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h3 id="交互规则">交互规则 </h3>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上下文保留</td>
+<td>在通行密钥与密码弹窗切换期间，须保留创建方式、返回页与成功回调</td>
+</tr>
+<tr>
+<td>提交中</td>
+<td>密码校验中禁止重复点击数字键或重复提交</td>
+</tr>
+<tr>
+<td>锁定不可绕过</td>
+<td>锁定期内重启 App 仍展示剩余时间；到期自动恢复</td>
+</tr>
+<tr>
+<td>重置须二次确认</td>
+<td>重置钱包确认弹层确认后才清除本地钱包与密码状态</td>
+</tr>
+<tr>
+<td>会话内上下文</td>
+<td>当前待验证业务上下文、最近成功验证方式（通行密钥/密码）仅会话内使用，不记录敏感内容</td>
+</tr>
+</tbody>
+</table>
+<h3 id="关键文案">关键文案 </h3>
+<table>
+<thead>
+<tr>
+<th>页面或状态</th>
+<th>文案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设置钱包密码页 · 标题</td>
+<td>设置钱包密码</td>
+</tr>
+<tr>
+<td>设置钱包密码页 · 说明</td>
+<td>设置 6 位钱包密码，用于保护钱包安全</td>
+</tr>
+<tr>
+<td>确认钱包密码页 · 不一致</td>
+<td>两次输入不一致，请重新输入</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗 · 标题</td>
+<td>请输入钱包密码</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗 · 错误态</td>
+<td>密码错误，请重新输入（还可以输入 N 次）</td>
+</tr>
+<tr>
+<td>钱包密码验证弹窗 · 锁定态</td>
+<td>密码多次输入错误，请等待后再试（MM:SS）</td>
+</tr>
+<tr>
+<td>忘记密码说明弹层 · 标题</td>
+<td>忘记密码？</td>
+</tr>
+<tr>
+<td>通行密钥失败弹窗 · 标题</td>
+<td>通行密钥验证未通过</td>
+</tr>
+<tr>
+<td>通行密钥失败弹窗 · 主操作</td>
+<td>切换为密码验证</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="6-不在本版范围">6. 不在本版范围 </h2>
 <table>
 <thead>
@@ -4272,7 +4980,11 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 </tr>
 <tr>
 <td>PIN 码发送</td>
-<td>仍 通行密钥</td>
+<td>仍不提供独立 PIN 发送；<strong>6 位钱包密码</strong> 仅作操作验证兜底</td>
+</tr>
+<tr>
+<td>账号身份验证</td>
+<td>OTP/OAuth 规则继承 V1.1，本版不变</td>
 </tr>
 <tr>
 <td>独立钱包设置页</td>
@@ -4295,19 +5007,20 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 </blockquote>
 <h3 id="完成标准">完成标准 </h3>
 <ul>
-<li><strong>V1.1 回归</strong>：HD 创建/导入/备份、十链单链收发、通行密钥发送、钱包信息敏感操作在 V1.2 原型上全部通过  </li>
-<li><strong>P0 增量</strong>：首页聚合与行情、多链/单链详情、收发选网按下方要点验收  </li>
+<li><strong>V1.1 回归</strong>：HD 创建/导入/备份、十链单链收发、发送验证、钱包信息敏感操作在 V1.2 原型上全部通过（发送与敏感操作须按 <a href="#56-钱包操作验证密码与通行密钥">§5.6</a> 复测）  </li>
+<li><strong>P0 增量</strong>：首页聚合与行情、多链/单链详情、收发选网、<strong>钱包操作验证</strong> 按下方要点验收  </li>
 <li><strong>P1 增量</strong>：币种管理、代币信息、交易历史/详情按下方要点验收  </li>
-<li><strong>横切一致</strong>：异常 Toast、空态、客户端状态同步与 <a href="#53-异常与提示">异常与提示</a>、<a href="#55-客户端状态">客户端状态</a> 两章一致  </li>
+<li><strong>横切一致</strong>：异常 Toast、空态、客户端状态同步与 <a href="#53-异常与提示">异常与提示</a>、<a href="#55-客户端状态">客户端状态</a>、<a href="#56-钱包操作验证密码与通行密钥">钱包操作验证</a> 一致  </li>
 <li><strong>追溯完整</strong>：126 条 AC 均在测试清单中有编号与预期，Feature 对照见《需求追溯矩阵》；第三方数据验收见清单 <a href="./V1.2_验收与测试清单.md#第三方数据源验收口径f3-p1">第三方数据源验收口径</a></li>
 </ul>
 <h3 id="v1-1-回归范围">V1.1 回归范围 </h3>
-<p>V1.2 未改 HD 与 通行密钥代码路径；以下能力 <strong>必须</strong> 在 v12 原型上复测后再签 V1.2：</p>
+<p>V1.2 在 v12 原型升级 <strong>钱包操作验证链</strong>（密码 + 通行密钥分流）；以下能力 <strong>必须</strong> 在 v12 原型上复测后再签 V1.2：</p>
 <ul>
 <li>HD 钱包创建、导入、助记词备份  </li>
 <li>十链单链发送与接收（非多链选网路径）  </li>
-<li>通行密钥发送确认  </li>
+<li>发送确认时的钱包操作验证（通行密钥优先、密码兜底）  </li>
 <li>钱包信息页敏感操作  </li>
+<li>密码锁定 60 分钟、忘记密码与重置流程  </li>
 </ul>
 <h3 id="验收顺序建议">验收顺序建议 </h3>
 <ol>
@@ -4350,6 +5063,11 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 <tr>
 <td>接收选网</td>
 <td>多链 USDT 先选网；移除币种后接收列表同步</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>钱包操作验证</td>
+<td>设密/首次授权；双开优先通行密钥；未授权直接密码；锁定倒计时与忘记密码</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -4408,6 +5126,14 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 <td>交易历史 / 交易详情</td>
 <td>历史与详情</td>
 </tr>
+<tr>
+<td>密码锁定 60 分钟</td>
+<td>钱包操作验证 · 密码锁定态</td>
+</tr>
+<tr>
+<td>通行密钥授权与失败切换</td>
+<td>钱包操作验证 · 生物识别授权说明 / 通行密钥失败弹窗</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -4463,6 +5189,10 @@ V1.1 已定义的 通行密钥取消、OTP 错误、助记词验证、发送链�
 <tr>
 <td>Feature 映射</td>
 <td><a href="./V1.2_feature_inventory.json">V1.2_feature_inventory.json</a></td>
+</tr>
+<tr>
+<td>身份验证与钱包密码方案梳理</td>
+<td><a href="../03-交互原型/BiyaWallet_身份验证与钱包密码方案梳理.md">BiyaWallet_身份验证与钱包密码方案梳理.md</a></td>
 </tr>
 </tbody>
 </table>
