@@ -8,6 +8,7 @@
 | V1.1 | PRD 文档 | https://terryxu923.github.io/biya-wallet-prototype-demo/prd-v11.html |
 | **V1.2** | **交互原型** | **https://terryxu923.github.io/biya-wallet-prototype-demo/prototype-v12.html** |
 | **V1.2** | **PRD 文档** | **https://terryxu923.github.io/biya-wallet-prototype-demo/prd-v12.html** |
+| **V1.3** | **交互原型（兑换 & 跨链）** | **https://terryxu923.github.io/biya-wallet-prototype-demo/biya-wallet-v13-1.html** |
 | Admin | 交互原型 | https://terryxu923.github.io/biya-wallet-prototype-demo/admin-prototype.html |
 | Admin | 后台 PRD | https://terryxu923.github.io/biya-wallet-prototype-demo/admin-prd.html |
 

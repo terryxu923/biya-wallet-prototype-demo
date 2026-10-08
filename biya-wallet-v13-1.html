@@ -1150,8 +1150,6 @@
   .mc-tx-amt.muted { color: var(--text-tertiary); font-weight: 400; }
   .mc-tx-amt.approve  { color: #fff; font-weight: 400; }
   .mc-tx-usd { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
-  .mc-tx-contract-group + .mc-tx-contract-group { margin-top: 6px; }
-  .mc-tx-more-amt { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; font-weight: 400; }
   .mc-tx-date-group { font-size: 12px; color: var(--text-tertiary); padding: 10px 20px 4px; }
   /* ======== Transaction History Screen ======== */
   .tx-history-screen {
@@ -1271,6 +1269,31 @@
   }
   .td-explorer-btn svg { width: 18px; height: 18px; fill: var(--text-tertiary); display: block; }
   .td-dashed-label { border-bottom: 1px dashed var(--text-tertiary); }
+  /* ── V1.3 Swap 状态兼容列表/详情 ── */
+  .swap-pair-logos { width: 52px; height: 34px; position: relative; flex-shrink: 0; display: block; }
+  .swap-pair-logo { position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--bg-primary); display: flex; align-items: center; justify-content: center; overflow: visible; font-size: 13px; color: #fff; }
+  .swap-pair-logos .swap-pair-logo + .swap-pair-logo { left: 18px; z-index: 1; }
+  .swap-pair-logo--fallback { position: static; width: 34px; height: 34px; background: #444; }
+  .mc-tx-amt.muted { color: var(--text-secondary); }
+  .mc-tx-amt.secondary { font-size: 11px; margin-top: 2px; color: var(--text-tertiary); }
+  .status-text.danger { color: #ff6668; display: block; }
+  .tx-detail-status--danger { color: #ff6668; background: rgba(255,80,80,.12); }
+  .tx-detail-status--neutral { color: #999; background: rgba(255,255,255,.06); }
+  .asset-leg { padding: 0 0 13px; width: 100%; }
+  .asset-leg + .asset-leg { padding-top: 12px; border-top: 1px solid var(--divider); }
+  .asset-main { display: flex; align-items: center; gap: 10px; }
+  .asset-values { min-width: 0; }
+  .asset-amount { font-size: 20px; font-weight: 700; color: #fff; }
+  .asset-amount.positive { color: var(--accent); }
+  .asset-amount .symbol { font-size: 18px; font-weight: 600; color: var(--text-tertiary); margin-left: 4px; }
+  .asset-network { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+  .asset-usd { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .secondary-note { display: block; font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+  .fee-amount { display: block; }
+  .fee-amount + .fee-amount { margin-top: 6px; }
+  .credential { align-items: center; }
+  .hash-text { word-break: break-all; }
+  #txDetail .tx-detail-amt-card.swap-compat-card { display: block; }
 
   /* ======== Single-chain Detail Screen ======== */
   .sc-detail {
@@ -4696,6 +4719,7 @@
     line-height: 1.5;
     margin-bottom: 8px;
   }
+  .demo-kw-sub { font-size: 11px; color: #64748b; margin: 12px 0 6px; font-weight: 600; letter-spacing: 0.02em; }
   .demo-kw-list {
     display: flex;
     flex-wrap: wrap;
@@ -5160,6 +5184,7 @@
     border-radius: 12px; padding: 14px 6px; text-align: center; cursor: pointer; color: #fff;
   }
   .swap-slip-fee.active { border-color: #fff; background: transparent; }
+  .swap-slip-fee.locked { cursor: default; pointer-events: none; }
   .swap-slip-fee .name { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
   .swap-slip-fee.active .name { color: #fff; }
   .swap-slip-fee .usd { font-size: 13px; color: var(--text-tertiary); margin-top: 4px; }
@@ -7940,6 +7965,7 @@
         <button type="button" class="demo-kw" data-demo="swap-slip-last">回显上次设置</button>
         <button type="button" class="demo-kw" data-demo="swap-slip-bad">滑点超范围</button>
         <button type="button" class="demo-kw" data-demo="swap-slip-warn">低滑点提醒</button>
+        <button type="button" class="demo-kw" data-demo="swap-slip-too-high">滑点 &gt;50% · 不可提交</button>
         <button type="button" class="demo-kw" data-demo="swap-slip-sol">Solana 优先费用</button>
         <button type="button" class="demo-kw" data-demo="swap-slip-tron">TRON 资源与费用上限</button>
         <button type="button" class="demo-kw" data-demo="swap-slip-fee-fail">费用获取失败</button>
@@ -7996,9 +8022,38 @@
     </section>
 
     <section class="demo-cat">
-      <div class="demo-cat-head cat-hd"><span class="demo-cat-icon">10</span>币种详情 · 交易历史</div>
+      <div class="demo-cat-head cat-hd"><span class="demo-cat-icon">10</span>交易记录 · 状态兼容</div>
       <div class="demo-kw-list">
-        <button type="button" class="demo-kw" data-demo="token-detail-open">USDT · Ethereum 详情</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-history">全局交易历史</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-token-usdc">USDC · Arbitrum 币种详情</button>
+      </div>
+      <div class="demo-kw-sub">同链标准态</div>
+      <div class="demo-kw-list">
+        <button type="button" class="demo-kw" data-demo="swap-tx-same-ok">成功</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-same-confirming">确认中</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-same-submitted">已提交</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-same-failed">失败</button>
+      </div>
+      <div class="demo-kw-sub">跨链标准态</div>
+      <div class="demo-kw-list">
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-ok">成功</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-processing">跨链处理中</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-confirming">源链确认中</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-submitted">已提交</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-partial">部分完成</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-failed">失败</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-refunding">退款处理中</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-cross-refunded">已退款</button>
+      </div>
+      <div class="demo-kw-sub">字段分支</div>
+      <div class="demo-kw-list">
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-confirm-unknown">确认中 · 提交未知</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-fee-free">同链成功 · 服务费免费</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-fee-paid">同链成功 · 服务费非零</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-fee-unknown">同链成功 · 费用待补</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-partial-multi">跨链部分完成 · 多币种</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-refund-partial">跨链退款中 · 部分退回</button>
+        <button type="button" class="demo-kw" data-demo="swap-tx-v-fail-nobroadcast">同链失败 · 未广播</button>
       </div>
     </section>
   </div>
@@ -13655,140 +13710,13 @@ function renderMcContent(chains, chainId) {
 let _tdFocusSymbol = '';
 let _thNetwork  = 'all'; // current network filter for transaction history screen
 
-const CONTRACT_TX_ICON = 'M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z';
-const MOCK_CONTRACT_ADDR = '0x1234567890123456789012345678901234561234';
-const MOCK_CONTRACT_SHORT = '0x1234...1234';
 const TX_ICON_SWAP = 'M9.01 14H2v2h7.01v3L13 15l-3.99-4v3zm5.98-1v-3H22V8h-7.01V5L11 9l3.99 4z';
 /** 币种详情 · 跨链交易列表图标（与同链 swap 区分） */
 const TX_ICON_CROSS_SWAP = 'M6 8L2 12l4 4v-3h2V8H6zm12 8l4-4-4-4v3h-2v2h2zm-7.5-2h3';
 const TX_ICON_RECEIVE = 'M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z';
 const TX_ICON_SEND = 'M2.01 21L23 12 2.01 3 2 10l15 2-15 2z';
 
-function contractTransferLineHtml(t, focusSymbol) {
-  const isFocus = focusSymbol && t.sym === focusSymbol;
-  if (isFocus) {
-    if (t.positive) {
-      return '<div class="mc-tx-amt positive">' + t.amt + ' ' + t.sym + '</div>';
-    }
-    return '<div class="mc-tx-amt negative">' + t.amt + ' ' + t.sym + '</div>';
-  }
-  if (focusSymbol) {
-    return '<div class="mc-tx-amt muted">' + t.amt + ' ' + t.sym + '</div>';
-  }
-  if (t.positive) {
-    return '<div class="mc-tx-amt positive">' + t.amt + ' ' + t.sym + '</div>';
-  }
-  return '<div class="mc-tx-amt" style="color:var(--text-tertiary);">' + t.amt + ' ' + t.sym + '</div>';
-}
-
-function prioritizeFocusTransfers(items, focusSymbol) {
-  if (!focusSymbol || !items || !items.length) return items;
-  const focus = items.filter(function (t) { return t.sym === focusSymbol; });
-  const rest = items.filter(function (t) { return t.sym !== focusSymbol; });
-  return focus.concat(rest);
-}
-
-function buildContractListRightHtml(tx, maxVisible, focusSymbol) {
-  maxVisible = maxVisible || 2;
-  if (tx.transferGroups && tx.transferGroups.length) {
-    return tx.transferGroups.map(function (group) {
-      const ordered = prioritizeFocusTransfers(group.items, focusSymbol);
-      const shown = ordered.slice(0, maxVisible);
-      let html = shown.map(function (item) { return contractTransferLineHtml(item, focusSymbol); }).join('');
-      if (group.items.length > maxVisible || group.hasMore) {
-        html += '<div class="mc-tx-more-amt">...更多</div>';
-      }
-      return '<div class="mc-tx-contract-group">' + html + '</div>';
-    }).join('');
-  }
-  if (!tx.transfers || !tx.transfers.length) return '';
-  const ordered = prioritizeFocusTransfers(tx.transfers, focusSymbol);
-  const shown = ordered.slice(0, maxVisible);
-  let html = shown.map(function (item) { return contractTransferLineHtml(item, focusSymbol); }).join('');
-  if (tx.transfers.length > maxVisible || tx.hasMore) {
-    html += '<div class="mc-tx-more-amt">...更多</div>';
-  }
-  return html;
-}
-
-function getContractAllTransfers(tx) {
-  if (tx.transferGroups && tx.transferGroups.length) {
-    return tx.transferGroups.reduce(function (acc, group) {
-      return acc.concat(group.items || []);
-    }, []);
-  }
-  return tx.transfers || [];
-}
-
-function buildContractDetailTokenRow(transfer, network, focusSymbol) {
-  const entry = TOKEN_DATA.find(function (d) { return d.symbol === transfer.sym && d.network === network; })
-    || TOKEN_DATA.find(function (d) { return d.symbol === transfer.sym; });
-  const net = NETWORKS.find(function (n) { return n.id === network; });
-  const color = entry ? (entry.color || '#444') : '#444';
-  const badgeBg = net ? net.color : '#444';
-  const isFocus = focusSymbol && transfer.sym === focusSymbol;
-  let amtClass = 'tx-detail-amt-num';
-  let amtStyle = '';
-  if (isFocus) {
-    amtClass += transfer.positive ? ' positive' : '';
-    if (!transfer.positive) amtStyle = ' style="color:#fff;"';
-  } else if (focusSymbol) {
-    amtClass += ' muted';
-  } else {
-    amtClass += transfer.positive ? ' positive' : '';
-    if (!transfer.positive) amtStyle = ' style="color:#fff;"';
-  }
-  return '<div class="td-approve-token-row">' +
-    '<div class="tx-detail-token-logo" style="background:' + color + ';">' +
-      tokenLogoInner(transfer.sym, entry ? entry.logoUrl : null, 13) +
-      '<div class="td-net-badge" style="background:' + badgeBg + ';">' + netLogoInner(net, 7) + '</div>' +
-    '</div>' +
-    '<span class="' + amtClass + '"' + amtStyle + '>' + transfer.amt + '</span>' +
-    '<span class="tx-detail-amt-sym">' + transfer.sym + '</span>' +
-  '</div>';
-}
-
-function buildContractDetailAmtCardHtml(tx, focusSymbol) {
-  const all = getContractAllTransfers(tx);
-  const pays = all.filter(function (t) { return !t.positive; });
-  const recvs = all.filter(function (t) { return t.positive; });
-  if (!pays.length && !recvs.length) {
-    return '<div style="width:100%;font-size:14px;color:var(--text-tertiary);">无资产变动</div>';
-  }
-  let html = '<div style="width:100%;">';
-  if (pays.length) {
-    html += '<div class="td-approve-label">支付</div>';
-    pays.forEach(function (t) { html += buildContractDetailTokenRow(t, tx.network, focusSymbol); });
-  }
-  if (pays.length && recvs.length) html += '<div class="td-approve-divider"></div>';
-  if (recvs.length) {
-    html += '<div class="td-approve-label">收到</div>';
-    recvs.forEach(function (t) { html += buildContractDetailTokenRow(t, tx.network, focusSymbol); });
-  }
-  html += '</div>';
-  return html;
-}
-
-function contractTxSubText(tx) {
-  if (tx.contractShort) return tx.contractShort;
-  const addr = tx.contractAddr || tx.toAddr || '';
-  return addr ? addr.slice(0, 6) + '...' + addr.slice(-4) : '';
-}
-
-function contractTxIconHtml() {
-  return '<div class="mc-tx-icon"><svg viewBox="0 0 24 24"><path d="' + CONTRACT_TX_ICON + '"/></svg></div>';
-}
-
-function buildContractTxItemHtml(tx, onClickExpr, focusSymbol) {
-  const sub = contractTxSubText(tx);
-  return '<div class="mc-tx-item" onclick="' + onClickExpr + '">' +
-    contractTxIconHtml() +
-    '<div class="mc-tx-info"><div class="mc-tx-type">' + tx.type + '</div>' +
-    (sub ? '<div class="mc-tx-sub">' + sub + '</div>' : '') +
-    '</div><div class="mc-tx-right">' + buildContractListRightHtml(tx, 2, focusSymbol) + '</div></div>';
-}
-
-/** V1.3 交易历史暂不展示授权 / 取消授权 */
+/** V1.3 交易历史暂不展示授权 / 取消授权 / 合约交互 */
 function isTxHistoryApproveRevokeHidden() {
   return !!PROTOTYPE_V13;
 }
@@ -13799,21 +13727,27 @@ function isTxHistoryApproveRevokeTx(tx) {
     || tx.type === '授权' || tx.type === '取消授权';
 }
 
+function isTxHistoryContractTx(tx) {
+  if (!tx) return false;
+  return tx.iconType === 'contract' || tx.type === '合约交互';
+}
+
 function filterTxHistoryForDisplay(list) {
   if (!Array.isArray(list)) return [];
-  if (!isTxHistoryApproveRevokeHidden()) return list;
-  return list.filter(function (tx) { return !isTxHistoryApproveRevokeTx(tx); });
+  return list.filter(function (tx) {
+    if (isTxHistoryContractTx(tx)) return false;
+    if (isTxHistoryApproveRevokeHidden() && isTxHistoryApproveRevokeTx(tx)) return false;
+    return true;
+  });
 }
 
 function txRelatesToTokenDetail(tx, symbol, networkId) {
   if (!tx || !symbol || !networkId) return false;
+  if (SwapTxCompat.isCompatTx(tx)) return SwapTxCompat.relatesToTokenDetail(tx, symbol, networkId);
   if (tx.network === networkId && tx.sym === symbol) return true;
   if (tx.iconType === 'swap') {
     if (tx.paySym === symbol && (tx.payNetwork || tx.network) === networkId) return true;
     if (tx.recvSym === symbol && (tx.recvNetwork || tx.network) === networkId) return true;
-  }
-  if (tx.iconType === 'contract' && tx.network === networkId) {
-    return getContractAllTransfers(tx).some(function (t) { return t.sym === symbol; });
   }
   return false;
 }
@@ -13824,20 +13758,707 @@ function getTokenDetailTxHistory(symbol, networkId) {
   }));
 }
 
+// ====== V1.3 Swap 交易记录 · 状态兼容展示（源自交易记录-状态兼容演示）======
+const SWAP_HISTORY_CASES = [{"case_id":"same-succeeded","label":"SUCCEEDED","order":{"order_id":"same-succeeded","origin":"APP","trade_type":"SAME_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUCCEEDED","execution_outcome":"SUCCEEDED","asset_disposition":"DELIVERED_EXPECTED","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:42161","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"same-succeeded-quote","parent_order_id":null,"idempotency_key":"sample-07-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":false,"resolution_closed_at":"2026-10-07T04:06:00Z","requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"same-succeeded-quote","order_id":"same-succeeded","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"same-succeeded-tx-0","order_id":"same-succeeded","quote_id":"same-succeeded-quote","role":"SAME_SWAP","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000006","hash_kind":"CHAIN_TX","local_submission_ref":"same-succeeded-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[{"flow_id":"same-succeeded-flow-0","order_id":"same-succeeded","chain_tx_id":"same-succeeded-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"same-succeeded-obs-0","observed_at":"2026-10-07T04:06:00Z"},{"flow_id":"same-succeeded-flow-1","order_id":"same-succeeded","chain_tx_id":"same-succeeded-tx-0","direction":"IN","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"chain_ref":"eip155:42161","wallet_address":"0x2222222222222222222222222222222222222222","amount_raw":"29500000000000000","knowledge_state":"KNOWN","amount_scope":"USER_CREDIT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"same-succeeded-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[{"fee_id":"same-succeeded-fee-0","order_id":"same-succeeded","chain_tx_id":"same-succeeded-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"2100000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"same-succeeded-obs-0"}],"observations":[{"observation_id":"same-succeeded-obs-0","order_id":"same-succeeded","source":"PROVIDER_API","provider_code":"lifi","provider_status":"DONE","provider_substatus":"COMPLETED","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"same-source_confirming","label":"SOURCE_CONFIRMING","order":{"order_id":"same-source_confirming","origin":"APP","trade_type":"SAME_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SOURCE_CONFIRMING","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:42161","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"same-source_confirming-quote","parent_order_id":null,"idempotency_key":"sample-05-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"same-source_confirming-quote","order_id":"same-source_confirming","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"same-source_confirming-tx-0","order_id":"same-source_confirming","quote_id":"same-source_confirming-quote","role":"SAME_SWAP","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000004","hash_kind":"CHAIN_TX","local_submission_ref":"same-source_confirming-submission-0","broadcast_state":"ACCEPTED","chain_status":"CONFIRMING","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[{"fee_id":"same-source_confirming-fee-0","order_id":"same-source_confirming","chain_tx_id":"same-source_confirming-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"2100000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"same-source_confirming-obs-0"}],"observations":[{"observation_id":"same-source_confirming-obs-0","order_id":"same-source_confirming","source":"PROVIDER_API","provider_code":"lifi","provider_status":"PENDING","provider_substatus":"WAIT_SOURCE_CONFIRMATIONS","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"same-submitted","label":"SUBMITTED","order":{"order_id":"same-submitted","origin":"APP","trade_type":"SAME_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUBMITTED","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"WAITING_INDEX","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:42161","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"same-submitted-quote","parent_order_id":null,"idempotency_key":"sample-04-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"same-submitted-quote","order_id":"same-submitted","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"same-submitted-tx-0","order_id":"same-submitted","quote_id":"same-submitted-quote","role":"SAME_SWAP","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000003","hash_kind":"CHAIN_TX","local_submission_ref":"same-submitted-submission-0","broadcast_state":"ACCEPTED","chain_status":"PENDING","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[],"observations":[{"observation_id":"same-submitted-obs-0","order_id":"same-submitted","source":"PROVIDER_API","provider_code":"lifi","provider_status":"NOT_FOUND","provider_substatus":null,"http_status":404,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false,"provider_error_code":1003}]},{"case_id":"same-failed","label":"FAILED","order":{"order_id":"same-failed","origin":"APP","trade_type":"SAME_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"FAILED","execution_outcome":"FAILED","asset_disposition":"UNCHANGED","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:42161","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"same-failed-quote","parent_order_id":null,"idempotency_key":"sample-10-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":"SOURCE","failure_code":"OUT_OF_GAS","needs_reconciliation":false,"resolution_closed_at":"2026-10-07T04:06:00Z","requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"same-failed-quote","order_id":"same-failed","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"same-failed-tx-0","order_id":"same-failed","quote_id":"same-failed-quote","role":"SAME_SWAP","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000009","hash_kind":"CHAIN_TX","local_submission_ref":"same-failed-submission-0","broadcast_state":"ACCEPTED","chain_status":"REVERTED","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[{"fee_id":"same-failed-fee-0","order_id":"same-failed","chain_tx_id":"same-failed-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"10000000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"same-failed-obs-0"}],"observations":[{"observation_id":"same-failed-obs-0","order_id":"same-failed","source":"PROVIDER_API","provider_code":"lifi","provider_status":"FAILED","provider_substatus":"OUT_OF_GAS","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-succeeded","label":"SUCCEEDED","order":{"order_id":"cross-succeeded","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUCCEEDED","execution_outcome":"SUCCEEDED","asset_disposition":"DELIVERED_EXPECTED","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-succeeded-quote","parent_order_id":null,"idempotency_key":"sample-08-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":false,"resolution_closed_at":"2026-10-07T04:06:00Z","requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-succeeded-quote","order_id":"cross-succeeded","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-succeeded-tx-0","order_id":"cross-succeeded","quote_id":"cross-succeeded-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000007","hash_kind":"CHAIN_TX","local_submission_ref":"cross-succeeded-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"},{"chain_tx_id":"cross-succeeded-tx-1","order_id":"cross-succeeded","quote_id":"cross-succeeded-quote","role":"DESTINATION","chain_ref":"eip155:1","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000008","hash_kind":"CHAIN_TX","local_submission_ref":"cross-succeeded-submission-1","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z"}],"asset_flows":[{"flow_id":"cross-succeeded-flow-0","order_id":"cross-succeeded","chain_tx_id":"cross-succeeded-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-succeeded-obs-0","observed_at":"2026-10-07T04:06:00Z"},{"flow_id":"cross-succeeded-flow-1","order_id":"cross-succeeded","chain_tx_id":"cross-succeeded-tx-1","direction":"IN","asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"chain_ref":"eip155:1","wallet_address":"0x2222222222222222222222222222222222222222","amount_raw":"29500000000000000","knowledge_state":"KNOWN","amount_scope":"USER_CREDIT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-succeeded-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[{"fee_id":"cross-succeeded-fee-0","order_id":"cross-succeeded","chain_tx_id":"cross-succeeded-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"2100000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"cross-succeeded-obs-0"},{"fee_id":"cross-succeeded-fee-1","order_id":"cross-succeeded","chain_tx_id":"cross-succeeded-tx-1","quote_id":null,"phase":"REPORTED","category":"NETWORK","chain_ref":"eip155:1","asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"18000000000000","knowledge_state":"KNOWN","payer_scope":"PROTOCOL","amount_usd":null,"evidence_id":"cross-succeeded-obs-0"}],"observations":[{"observation_id":"cross-succeeded-obs-0","order_id":"cross-succeeded","source":"PROVIDER_API","provider_code":"lifi","provider_status":"DONE","provider_substatus":"COMPLETED","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-destination_processing","label":"DESTINATION_PROCESSING","order":{"order_id":"cross-destination_processing","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"DESTINATION_PROCESSING","execution_outcome":"UNKNOWN","asset_disposition":"IN_TRANSIT","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-destination_processing-quote","parent_order_id":null,"idempotency_key":"sample-06-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-destination_processing-quote","order_id":"cross-destination_processing","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-destination_processing-tx-0","order_id":"cross-destination_processing","quote_id":"cross-destination_processing-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000005","hash_kind":"CHAIN_TX","local_submission_ref":"cross-destination_processing-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[{"flow_id":"cross-destination_processing-flow-0","order_id":"cross-destination_processing","chain_tx_id":"cross-destination_processing-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-destination_processing-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[{"fee_id":"cross-destination_processing-fee-0","order_id":"cross-destination_processing","chain_tx_id":"cross-destination_processing-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"2100000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"cross-destination_processing-obs-0"},{"fee_id":"cross-destination_processing-fee-1","order_id":"cross-destination_processing","chain_tx_id":null,"quote_id":null,"phase":"REPORTED","category":"BRIDGE","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":null,"knowledge_state":"UNKNOWN","payer_scope":"UNKNOWN","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"cross-destination_processing-obs-0"}],"observations":[{"observation_id":"cross-destination_processing-obs-0","order_id":"cross-destination_processing","source":"PROVIDER_API","provider_code":"lifi","provider_status":"PENDING","provider_substatus":"WAIT_DESTINATION_TRANSACTION","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-source_confirming","label":"SOURCE_CONFIRMING","order":{"order_id":"cross-source_confirming","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SOURCE_CONFIRMING","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-source_confirming-quote","parent_order_id":null,"idempotency_key":"sample-05-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-source_confirming-quote","order_id":"cross-source_confirming","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-source_confirming-tx-0","order_id":"cross-source_confirming","quote_id":"cross-source_confirming-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000004","hash_kind":"CHAIN_TX","local_submission_ref":"cross-source_confirming-submission-0","broadcast_state":"ACCEPTED","chain_status":"CONFIRMING","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[{"fee_id":"cross-source_confirming-fee-0","order_id":"cross-source_confirming","chain_tx_id":"cross-source_confirming-tx-0","quote_id":null,"phase":"ACTUAL","category":"NETWORK","chain_ref":"eip155:42161","asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"amount_raw":"2100000000000","knowledge_state":"KNOWN","payer_scope":"USER","included_in_quote":null,"charge_treatment":"SEPARATE_PAYMENT","amount_usd":null,"evidence_id":"cross-source_confirming-obs-0"}],"observations":[{"observation_id":"cross-source_confirming-obs-0","order_id":"cross-source_confirming","source":"PROVIDER_API","provider_code":"lifi","provider_status":"PENDING","provider_substatus":"WAIT_SOURCE_CONFIRMATIONS","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-submitted","label":"SUBMITTED","order":{"order_id":"cross-submitted","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUBMITTED","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"WAITING_INDEX","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-submitted-quote","parent_order_id":null,"idempotency_key":"sample-04-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-submitted-quote","order_id":"cross-submitted","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-submitted-tx-0","order_id":"cross-submitted","quote_id":"cross-submitted-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000003","hash_kind":"CHAIN_TX","local_submission_ref":"cross-submitted-submission-0","broadcast_state":"ACCEPTED","chain_status":"PENDING","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[],"observations":[{"observation_id":"cross-submitted-obs-0","order_id":"cross-submitted","source":"PROVIDER_API","provider_code":"lifi","provider_status":"NOT_FOUND","provider_substatus":null,"http_status":404,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false,"provider_error_code":1003}]},{"case_id":"cross-partial","label":"PARTIAL","order":{"order_id":"cross-partial","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"PARTIAL","execution_outcome":"PARTIAL","asset_disposition":"DELIVERED_OTHER","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-partial-quote","parent_order_id":null,"idempotency_key":"sample-12-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":false,"resolution_closed_at":"2026-10-07T04:06:00Z","requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-partial-quote","order_id":"cross-partial","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-partial-tx-0","order_id":"cross-partial","quote_id":"cross-partial-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x000000000000000000000000000000000000000000000000000000000000000b","hash_kind":"CHAIN_TX","local_submission_ref":"cross-partial-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[{"flow_id":"cross-partial-flow-0","order_id":"cross-partial","chain_tx_id":"cross-partial-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-partial-obs-0","observed_at":"2026-10-07T04:06:00Z"},{"flow_id":"cross-partial-flow-1","order_id":"cross-partial","chain_tx_id":null,"direction":"IN","asset":{"chain_ref":"eip155:1","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"},"chain_ref":"eip155:1","wallet_address":"0x2222222222222222222222222222222222222222","amount_raw":"99000000","knowledge_state":"KNOWN","amount_scope":"USER_CREDIT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-partial-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[],"observations":[{"observation_id":"cross-partial-obs-0","order_id":"cross-partial","source":"PROVIDER_API","provider_code":"lifi","provider_status":"DONE","provider_substatus":"PARTIAL","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-failed","label":"FAILED","order":{"order_id":"cross-failed","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"FAILED","execution_outcome":"FAILED","asset_disposition":"UNRESOLVED","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-failed-quote","parent_order_id":null,"idempotency_key":"sample-11-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":"DESTINATION","failure_code":"NOT_PROCESSABLE_REFUND_NEEDED","needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-failed-quote","order_id":"cross-failed","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-failed-tx-0","order_id":"cross-failed","quote_id":"cross-failed-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x000000000000000000000000000000000000000000000000000000000000000a","hash_kind":"CHAIN_TX","local_submission_ref":"cross-failed-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[{"flow_id":"cross-failed-flow-0","order_id":"cross-failed","chain_tx_id":"cross-failed-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-failed-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[],"observations":[{"observation_id":"cross-failed-obs-0","order_id":"cross-failed","source":"PROVIDER_API","provider_code":"lifi","provider_status":"FAILED","provider_substatus":"NOT_PROCESSABLE_REFUND_NEEDED","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-refunding","label":"REFUNDING","order":{"order_id":"cross-refunding","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"REFUNDING","execution_outcome":"FAILED","asset_disposition":"REFUND_PENDING","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-refunding-quote","parent_order_id":null,"idempotency_key":"sample-13-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":"DESTINATION","failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-refunding-quote","order_id":"cross-refunding","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-refunding-tx-0","order_id":"cross-refunding","quote_id":"cross-refunding-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x000000000000000000000000000000000000000000000000000000000000000c","hash_kind":"CHAIN_TX","local_submission_ref":"cross-refunding-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[{"flow_id":"cross-refunding-flow-0","order_id":"cross-refunding","chain_tx_id":"cross-refunding-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-refunding-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[],"observations":[{"observation_id":"cross-refunding-obs-0","order_id":"cross-refunding","source":"PROVIDER_API","provider_code":"lifi","provider_status":"PENDING","provider_substatus":"REFUND_IN_PROGRESS","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]},{"case_id":"cross-refunded","label":"REFUNDED","order":{"order_id":"cross-refunded","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"REFUNDED","execution_outcome":"FAILED","asset_disposition":"REFUNDED","observation_status":"FRESH","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-refunded-quote","parent_order_id":null,"idempotency_key":"sample-14-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":"DESTINATION","failure_code":null,"needs_reconciliation":false,"resolution_closed_at":"2026-10-07T04:06:00Z","requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-refunded-quote","order_id":"cross-refunded","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-refunded-tx-0","order_id":"cross-refunded","quote_id":"cross-refunded-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x000000000000000000000000000000000000000000000000000000000000000d","hash_kind":"CHAIN_TX","local_submission_ref":"cross-refunded-submission-0","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z","sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"},{"chain_tx_id":"cross-refunded-tx-1","order_id":"cross-refunded","quote_id":"cross-refunded-quote","role":"REFUND","chain_ref":"eip155:42161","tx_hash":"0x000000000000000000000000000000000000000000000000000000000000000e","hash_kind":"CHAIN_TX","local_submission_ref":"cross-refunded-submission-1","broadcast_state":"ACCEPTED","chain_status":"SUCCESS","confirmed_at":"2026-10-07T04:05:00Z"}],"asset_flows":[{"flow_id":"cross-refunded-flow-0","order_id":"cross-refunded","chain_tx_id":"cross-refunded-tx-0","direction":"OUT","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"100000000","knowledge_state":"KNOWN","amount_scope":"TRANSFER_INPUT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-refunded-obs-0","observed_at":"2026-10-07T04:06:00Z"},{"flow_id":"cross-refunded-flow-1","order_id":"cross-refunded","chain_tx_id":"cross-refunded-tx-1","direction":"REFUND_IN","asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"chain_ref":"eip155:42161","wallet_address":"0x1111111111111111111111111111111111111111","amount_raw":"98000000","knowledge_state":"KNOWN","amount_scope":"REFUND_CREDIT","amount_basis":"PROVIDER_REPORTED","verification_state":"VERIFIED","amount_usd":null,"valuation_at":null,"evidence_id":"cross-refunded-obs-0","observed_at":"2026-10-07T04:06:00Z"}],"fees":[],"observations":[{"observation_id":"cross-refunded-obs-0","order_id":"cross-refunded","source":"PROVIDER_API","provider_code":"lifi","provider_status":"DONE","provider_substatus":"REFUNDED","http_status":200,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"APPLICABLE","quote_present":false}]}];
+
+const SWAP_BRANCH_CASES = [{"case_id":"same-submission_unknown","label":"SUBMISSION_UNKNOWN","order":{"order_id":"same-submission_unknown","origin":"APP","trade_type":"SAME_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUBMISSION_UNKNOWN","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"UNAVAILABLE","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:42161","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:42161","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"same-submission_unknown-quote","parent_order_id":null,"idempotency_key":"sample-03-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"same-submission_unknown-quote","order_id":"same-submission_unknown","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"same-submission_unknown-tx-0","order_id":"same-submission_unknown","quote_id":"same-submission_unknown-quote","role":"SAME_SWAP","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000002","hash_kind":"CHAIN_TX","local_submission_ref":"same-submission_unknown-submission-0","broadcast_state":"UNKNOWN","chain_status":"UNKNOWN","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[],"observations":[{"observation_id":"same-submission_unknown-obs-0","order_id":"same-submission_unknown","source":"PROVIDER_API","provider_code":"lifi","provider_status":null,"provider_substatus":null,"http_status":503,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"UNBOUND","quote_present":false}]},{"case_id":"cross-submission_unknown","label":"SUBMISSION_UNKNOWN","order":{"order_id":"cross-submission_unknown","origin":"APP","trade_type":"CROSS_CHAIN","provider_code":"lifi","provider_transaction_id":null,"business_status":"SUBMISSION_UNKNOWN","execution_outcome":"UNKNOWN","asset_disposition":"UNKNOWN","observation_status":"UNAVAILABLE","source_chain_ref":"eip155:42161","target_chain_ref":"eip155:1","requested_pay_asset":{"chain_ref":"eip155:42161","asset_kind":"TOKEN","symbol":"USDC","decimals":6,"address":"0xaf88d065e77c8cC2239327C5EDb3A432268e5831"},"requested_recv_asset":{"chain_ref":"eip155:1","asset_kind":"NATIVE","symbol":"ETH","decimals":18,"address":null},"requested_amount_raw":"100000000","sender_address":"0x1111111111111111111111111111111111111111","recipient_address":"0x2222222222222222222222222222222222222222","accepted_quote_id":"cross-submission_unknown-quote","parent_order_id":null,"idempotency_key":"sample-03-intent","created_at":"2026-10-07T04:00:00Z","state_version":1,"failure_phase":null,"failure_code":null,"needs_reconciliation":true,"resolution_closed_at":null,"requested_intent_knowledge":"KNOWN"},"quotes":[{"quote_id":"cross-submission_unknown-quote","order_id":"cross-submission_unknown","expected_recv_amount_raw":"30000000000000000","min_recv_amount_raw":"27000000000000000","slippage_ratio":"0.1","accepted_at":"2026-10-07T04:00:00Z","valid_until":null}],"chain_transactions":[{"chain_tx_id":"cross-submission_unknown-tx-0","order_id":"cross-submission_unknown","quote_id":"cross-submission_unknown-quote","role":"SOURCE","chain_ref":"eip155:42161","tx_hash":"0x0000000000000000000000000000000000000000000000000000000000000002","hash_kind":"CHAIN_TX","local_submission_ref":"cross-submission_unknown-submission-0","broadcast_state":"UNKNOWN","chain_status":"UNKNOWN","confirmed_at":null,"sender_address":"0x1111111111111111111111111111111111111111","to_address":"0x3333333333333333333333333333333333333333"}],"asset_flows":[],"fees":[],"observations":[{"observation_id":"cross-submission_unknown-obs-0","order_id":"cross-submission_unknown","source":"PROVIDER_API","provider_code":"lifi","provider_status":null,"provider_substatus":null,"http_status":503,"observed_at":"2026-10-07T04:06:00Z","identity_verified":true,"eligibility":"UNBOUND","quote_present":false}]}];
+
+const SWAP_VISIBLE_STATES = {
+  SAME_CHAIN: ['SUCCEEDED', 'SOURCE_CONFIRMING', 'SUBMITTED', 'FAILED'],
+  CROSS_CHAIN: ['SUCCEEDED', 'DESTINATION_PROCESSING', 'SOURCE_CONFIRMING', 'SUBMITTED', 'PARTIAL', 'FAILED', 'REFUNDING', 'REFUNDED']
+};
+
+const SWAP_CHAIN_REF_BY_NET = { arbitrum: 'eip155:42161', ethereum: 'eip155:1' };
+const SWAP_NET_BY_CHAIN_REF = { 'eip155:42161': 'arbitrum', 'eip155:1': 'ethereum' };
+
+const SwapTxCompat = (function () {
+  const STATE_LABELS = {
+    CREATED: '待签名', SUBMITTING: '提交中', SUBMISSION_UNKNOWN: '确认中',
+    SUBMITTED: '已提交', SOURCE_CONFIRMING: '确认中', DESTINATION_PROCESSING: '跨链处理中',
+    SUCCEEDED: '成功', FAILED: '失败', PARTIAL: '部分完成',
+    REFUNDING: '退款处理中', REFUNDED: '已退款', CANCELLED: '已取消'
+  };
+
+  function esc(value) {
+    return String(value ?? '').replace(/[&<>"']/g, function (ch) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+    });
+  }
+
+  function clone(value) { return JSON.parse(JSON.stringify(value)); }
+
+  function chainRefToNetId(ref) { return SWAP_NET_BY_CHAIN_REF[ref] || ref; }
+
+  function netIdToChainRef(netId) { return SWAP_CHAIN_REF_BY_NET[netId] || netId; }
+
+  function netName(ref) {
+    const netId = chainRefToNetId(ref);
+    const net = NETWORKS.find(function (n) { return n.id === netId; });
+    return net ? net.name : (ref || '--');
+  }
+
+  function assetKey(asset) {
+    if (!asset) return '';
+    return asset.chain_ref + '|' + asset.asset_kind + '|' + String(asset.address || 'native').toLowerCase();
+  }
+
+  function assetKeyFromSymbolNetwork(symbol, networkId) {
+    const chainRef = netIdToChainRef(networkId);
+    const entry = TOKEN_DATA.find(function (d) { return d.symbol === symbol && d.network === networkId; });
+    const kind = (symbol === 'ETH' || symbol === 'BNB' || symbol === 'SOL') ? 'NATIVE' : 'TOKEN';
+    return chainRef + '|' + kind + '|' + String((entry && entry.contract) || 'native').toLowerCase();
+  }
+
+  function isCross(c) { return c.order.trade_type === 'CROSS_CHAIN'; }
+
+  function isKnown(f) { return f.knowledge_state === 'KNOWN' && f.amount_raw !== null && f.verification_state === 'VERIFIED'; }
+
+  function flows(c, direction) { return c.asset_flows.filter(function (f) { return f.direction === direction && isKnown(f); }); }
+
+  function incoming(c) { return flows(c, 'IN'); }
+
+  function refunds(c) { return flows(c, 'REFUND_IN'); }
+
+  function outgoing(c) { return flows(c, 'OUT'); }
+
+  function isEarly(code) {
+    return ['CREATED', 'SUBMITTING', 'SUBMISSION_UNKNOWN', 'SUBMITTED', 'SOURCE_CONFIRMING', 'DESTINATION_PROCESSING'].indexOf(code) >= 0;
+  }
+
+  function isUnsubmitted(code) { return ['CREATED', 'SUBMITTING', 'CANCELLED'].indexOf(code) >= 0; }
+
+  function formatRaw(raw, decimals, limit) {
+    limit = limit === undefined ? 8 : limit;
+    if (raw === null || raw === undefined) return '--';
+    const text = BigInt(raw).toString().padStart(decimals + 1, '0');
+    const integer = decimals ? text.slice(0, -decimals) : text;
+    let fraction = decimals ? text.slice(-decimals).slice(0, limit).replace(/0+$/, '') : '';
+    if (BigInt(raw) > 0n && integer === '0' && !fraction) fraction = text.slice(-decimals).replace(/0+$/, '');
+    return integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (fraction ? '.' + fraction : '');
+  }
+
+  function amount(raw, asset) {
+    return formatRaw(raw, asset && asset.decimals ? asset.decimals : 0) + (asset ? ' ' + asset.symbol : '');
+  }
+
+  function ratio(pay, recv) {
+    if (!pay || !recv || !pay.amount_raw || !recv.amount_raw || BigInt(pay.amount_raw) === 0n) return null;
+    const scaled = BigInt(recv.amount_raw) * 10n ** BigInt(pay.asset.decimals) * 100000000n /
+      (BigInt(pay.amount_raw) * 10n ** BigInt(recv.asset.decimals));
+    return '1 ' + pay.asset.symbol + ' ≈ ' + formatRaw(scaled.toString(), 8) + ' ' + recv.asset.symbol;
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '--';
+    return new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    }).format(new Date(iso));
+  }
+
+  function formatDisplayDate(iso) {
+    if (!iso) return '';
+    const parts = formatDate(iso).split(' ');
+    return parts[0] ? parts[0].replace(/-/g, '/') : '';
+  }
+
+  function tokenEntry(asset) {
+    if (!asset) return null;
+    const netId = chainRefToNetId(asset.chain_ref);
+    return TOKEN_DATA.find(function (d) { return d.symbol === asset.symbol && d.network === netId; })
+      || TOKEN_DATA.find(function (d) { return d.symbol === asset.symbol; });
+  }
+
+  function assetLogoHtml(asset, badge) {
+    badge = badge !== false;
+    if (!asset) return '<span class="swap-pair-logo swap-pair-logo--fallback">?</span>';
+    const entry = tokenEntry(asset);
+    const color = entry ? (entry.color || '#444') : '#444';
+    const netId = chainRefToNetId(asset.chain_ref);
+    const net = NETWORKS.find(function (n) { return n.id === netId; });
+    const badgeHtml = badge && net
+      ? '<span class="td-net-badge" style="background:' + net.color + ';">' + netLogoInner(net, 7) + '</span>'
+      : '';
+    return '<span class="swap-pair-logo" style="background:' + color + ';">' +
+      tokenLogoInner(asset.symbol, entry ? entry.logoUrl : null, 13) + badgeHtml + '</span>';
+  }
+
+  function pairLogoHtml(payAsset, recvAsset) {
+    return '<span class="swap-pair-logos">' + assetLogoHtml(payAsset, false) + assetLogoHtml(recvAsset, false) + '</span>';
+  }
+
+  function typeIconHtml(c) {
+    const iconPath = isCross(c) ? TX_ICON_CROSS_SWAP : TX_ICON_SWAP;
+    return '<div class="mc-tx-icon"><svg viewBox="0 0 24 24"><path d="' + iconPath + '"/></svg></div>';
+  }
+
+  function txRole(role) {
+    return ({ SAME_SWAP: '交易哈希', SOURCE: '源链交易', DESTINATION: '目标链交易', REFUND: '退款交易', APPROVAL: '授权交易', REVOKE: '撤销授权交易' })[role] || '交易凭证';
+  }
+
+  function explorerBase(ref) {
+    const netId = chainRefToNetId(ref);
+    return TX_BLOCK_EXPLORERS[netId] || '';
+  }
+
+  function aggregateFlow(items) {
+    const groups = new Map();
+    items.forEach(function (item) {
+      const key = assetKey(item.asset);
+      const group = groups.get(key);
+      if (group) group.amount_raw = (BigInt(group.amount_raw) + BigInt(item.amount_raw)).toString();
+      else groups.set(key, clone(item));
+    });
+    return Array.from(groups.values());
+  }
+
+
+  let _demoVariant = 'standard';
+
+  function setDemoVariant(variant) { _demoVariant = variant || 'standard'; }
+  function clearDemoVariant() { _demoVariant = 'standard'; }
+  function getDemoVariant() { return _demoVariant; }
+
+  function allCaseRecords() { return SWAP_HISTORY_CASES.concat(SWAP_BRANCH_CASES); }
+
+  function findCaseRecord(caseId) {
+    return SWAP_HISTORY_CASES.find(function (c) { return c.case_id === caseId; })
+      || SWAP_BRANCH_CASES.find(function (c) { return c.case_id === caseId; })
+      || null;
+  }
+
+  function findCaseByTypeStatus(tradeType, status) {
+    return allCaseRecords().find(function (c) {
+      return c.order.trade_type === tradeType && c.order.business_status === status;
+    }) || null;
+  }
+
+  function variantsFor(c) {
+    const code = c.order.business_status;
+    const options = [['standard', '标准样例']];
+    if (['SUCCEEDED', 'PARTIAL', 'REFUNDED'].indexOf(code) >= 0) options.push(['missing', '报价 / 凭证可选字段缺失']);
+    if (['SUCCEEDED', 'PARTIAL', 'REFUNDED'].indexOf(code) >= 0) {
+      options.push(['multi', !isCross(c) ? '多笔网络费用' : code === 'REFUNDED' ? '多笔退款 / 多币种费用' : '多币种结果 / 费用']);
+    }
+    if (code === 'SUCCEEDED') {
+      options.push(['zero', '服务费已核实为零'], ['service_paid', '服务费非零'], ['unknown_fee', '实际费用待补']);
+    }
+    if (code === 'SOURCE_CONFIRMING') options.push(['unknown_confirmation', '接受结果未确认 · 确认中']);
+    if (code === 'PARTIAL') options.push(['imported', '导入记录原意图未知']);
+    if (code === 'REFUNDING') options.push(['refund_partial', '已部分退回，退款未完成']);
+    if (code === 'FAILED') options.push(['not_broadcast', '已明确未广播']);
+    return options;
+  }
+
+  function specimen(base, variant, selectedCaseId) {
+    let c = clone(base);
+    variant = variant || 'standard';
+    if (!base || variant === 'standard') return c;
+    if (base.case_id !== selectedCaseId && variant !== 'unknown_confirmation') return c;
+    if (variant === 'unknown_confirmation') {
+      const original = findCaseByTypeStatus(base.order.trade_type, 'SUBMISSION_UNKNOWN');
+      if (!original) return c;
+      c = clone(original);
+      c.case_id = base.case_id;
+      return c;
+    }
+    const code = c.order.business_status;
+    if (variant === 'missing') {
+      c.order.origin = 'IMPORTED';
+      c.order.accepted_quote_id = null;
+      c.quotes = [];
+      c.chain_transactions = c.chain_transactions.filter(function (t) { return ['DESTINATION', 'REFUND'].indexOf(t.role) < 0; });
+      c.chain_transactions.forEach(function (t) { t.quote_id = null; });
+      const remainingTxIds = new Set(c.chain_transactions.map(function (t) { return t.chain_tx_id; }));
+      c.asset_flows.forEach(function (f) { if (f.direction !== 'OUT') f.chain_tx_id = null; });
+      c.fees.forEach(function (f) {
+        if (f.chain_tx_id && !remainingTxIds.has(f.chain_tx_id)) f.chain_tx_id = null;
+        f.amount_usd = null; f.valuation_at = null;
+      });
+    }
+    if (variant === 'unknown_fee') {
+      c.fees.forEach(function (f) { f.amount_raw = null; f.knowledge_state = 'UNKNOWN'; f.amount_usd = null; });
+    }
+    if (variant === 'multi' && !isCross(c)) {
+      const originalTx = c.chain_transactions.find(function (t) { return t.role === 'SAME_SWAP'; });
+      if (originalTx) {
+        const txId = c.case_id + '-approval-extra';
+        const extra = clone(originalTx);
+        extra.chain_tx_id = txId; extra.role = 'APPROVAL'; extra.tx_hash = '0x' + 'a'.repeat(64);
+        c.chain_transactions.push(extra);
+        const gas = c.fees.find(function (f) { return f.category === 'NETWORK'; });
+        if (gas) {
+          const gasExtra = clone(gas);
+          gasExtra.fee_id = c.case_id + '-approval-gas'; gasExtra.chain_tx_id = txId; gasExtra.amount_raw = '1200000000000'; gasExtra.knowledge_state = 'KNOWN';
+          c.fees.push(gasExtra);
+        }
+      }
+    }
+    if (variant === 'zero' || variant === 'service_paid' || (variant === 'multi' && isCross(c))) {
+      const asset = c.order.requested_pay_asset;
+      c.fees.push({
+        fee_id: c.case_id + '-platform', phase: 'ACTUAL', category: 'BIYA_PLATFORM', asset: asset, chain_ref: asset.chain_ref,
+        amount_raw: variant === 'zero' ? '0' : '100000', knowledge_state: 'KNOWN', payer_scope: 'USER',
+        charge_treatment: 'DEDUCTED_FROM_INPUT', included_in_quote: true, amount_usd: null
+      });
+    }
+    if (variant === 'multi' && code === 'PARTIAL') {
+      const actual = incoming(c)[0];
+      if (actual) {
+        actual.amount_raw = '98000000';
+        const extra = clone(actual);
+        extra.flow_id = c.case_id + '-extra-receipt';
+        extra.asset = Object.assign({}, actual.asset, { symbol: 'USDT', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' });
+        extra.amount_raw = '1000000';
+        c.asset_flows.push(extra);
+      }
+    }
+    if (variant === 'multi' && code === 'REFUNDED') {
+      const first = refunds(c)[0];
+      const refundTx = c.chain_transactions.find(function (t) { return t.role === 'REFUND'; });
+      if (first && refundTx) {
+        first.amount_raw = '50000000';
+        const tx2 = clone(refundTx);
+        tx2.chain_tx_id = c.case_id + '-refund-2'; tx2.tx_hash = '0x' + 'f'.repeat(64);
+        c.chain_transactions.push(tx2);
+        const flow2 = clone(first);
+        flow2.flow_id = c.case_id + '-refund-flow-2'; flow2.chain_tx_id = c.case_id + '-refund-2'; flow2.amount_raw = '48000000';
+        c.asset_flows.push(flow2);
+      }
+    }
+    if (variant === 'imported') {
+      c.order.origin = 'IMPORTED';
+      c.order.requested_amount_raw = null;
+      c.order.requested_recv_asset = null;
+      c.order.requested_intent_knowledge = 'UNKNOWN';
+      c.order.accepted_quote_id = null;
+      c.quotes = [];
+    }
+    if (variant === 'refund_partial') {
+      c.asset_flows.push({
+        flow_id: c.case_id + '-partial-refund', direction: 'REFUND_IN', asset: clone(c.order.requested_pay_asset),
+        chain_ref: c.order.source_chain_ref, wallet_address: c.order.sender_address, amount_raw: '30000000',
+        knowledge_state: 'KNOWN', verification_state: 'VERIFIED', amount_basis: 'PROVIDER_REPORTED', chain_tx_id: null, amount_usd: null
+      });
+    }
+    if (variant === 'not_broadcast') {
+      c.order.failure_phase = 'PRE_SUBMIT';
+      c.order.failure_code = 'DEFINITELY_NOT_BROADCAST';
+      c.order.asset_disposition = 'UNCHANGED';
+      c.chain_transactions = [];
+      c.asset_flows = [];
+      c.fees = [];
+    }
+    return c;
+  }
+
+  function resolveCaseForDetail(tx) {
+    const base = getCase(tx);
+    if (!base) return null;
+    return specimen(base, _demoVariant, tx._swapCaseId);
+  }
+
+  function findTxByCaseId(caseId) {
+    return _allTxHistory.find(function (tx) { return tx._swapCaseId === caseId; }) || null;
+  }
+
+  function getCase(tx) {
+    if (!tx || !tx._swapCompat) return null;
+    if (tx._swapCase) return tx._swapCase;
+    if (tx._swapCaseId) {
+      return SWAP_HISTORY_CASES.find(function (c) { return c.case_id === tx._swapCaseId; }) || null;
+    }
+    return null;
+  }
+
+  function isCompatTx(tx) { return !!(tx && tx._swapCompat); }
+
+  function stateLabel(c) {
+    if (c.order.business_status === 'SOURCE_CONFIRMING' && isCross(c)) return '源链确认中';
+    return STATE_LABELS[c.order.business_status] || c.order.business_status;
+  }
+
+  function tone(c) {
+    const code = c.order.business_status;
+    if (['SUCCEEDED', 'REFUNDED'].indexOf(code) >= 0) return 'success';
+    if (code === 'FAILED') return 'danger';
+    if (['CREATED', 'CANCELLED'].indexOf(code) >= 0) return 'neutral';
+    return 'pending';
+  }
+
+  function typeName(c) { return isCross(c) ? '跨链交易' : '交易'; }
+
+  function aggregateListAmounts(c, context) {
+    const o = c.order, code = o.business_status, quote = c.quotes[0];
+    const inFlow = aggregateFlow(incoming(c)), outFlow = aggregateFlow(outgoing(c)), refunded = aggregateFlow(refunds(c));
+    const intendedPayment = '-' + amount(o.requested_amount_raw, o.requested_pay_asset);
+    if (code === 'FAILED') return { first: intendedPayment, second: '交易未执行' };
+    const actual = ['REFUNDING', 'REFUNDED'].indexOf(code) >= 0 ? refunded : inFlow;
+    if (context === 'pay') {
+      const returned = refunded.find(function (f) { return assetKey(f.asset) === assetKey(o.requested_pay_asset); });
+      if (returned) return { first: '+' + amount(returned.amount_raw, returned.asset), second: intendedPayment, positive: true };
+      const pay = outFlow.find(function (f) { return assetKey(f.asset) === assetKey(o.requested_pay_asset); });
+      if (pay) {
+        return {
+          first: '-' + amount(pay.amount_raw, pay.asset),
+          second: actual[0] ? '+' + amount(actual[0].amount_raw, actual[0].asset) : (quote ? '+' + amount(quote.expected_recv_amount_raw, o.requested_recv_asset) : '- - ' + (o.requested_recv_asset && o.requested_recv_asset.symbol || '')),
+          muted: !actual.length
+        };
+      }
+    }
+    if (actual.length) {
+      return {
+        first: '+' + amount(actual[0].amount_raw, actual[0].asset),
+        second: actual.length > 1 ? '另有 ' + (actual.length - 1) + ' 项资产' : (outFlow[0] ? '-' + amount(outFlow[0].amount_raw, outFlow[0].asset) : intendedPayment),
+        positive: true
+      };
+    }
+    if (code === 'REFUNDING') return { first: '- - ' + o.requested_pay_asset.symbol, second: intendedPayment, muted: true };
+    return {
+      first: quote ? '+' + amount(quote.expected_recv_amount_raw, o.requested_recv_asset) : '- - ' + (o.requested_recv_asset && o.requested_recv_asset.symbol || ''),
+      second: outFlow[0] ? '-' + amount(outFlow[0].amount_raw, outFlow[0].asset) : intendedPayment,
+      muted: true
+    };
+  }
+
+  function tokenDetailContext(symbol, networkId, c) {
+    const payKey = assetKey(c.order.requested_pay_asset);
+    const recvKey = assetKey(c.order.requested_recv_asset);
+    const wanted = assetKeyFromSymbolNetwork(symbol, networkId);
+    if (wanted === payKey) return 'pay';
+    if (wanted === recvKey) return 'recv';
+    const flowMatch = c.asset_flows.some(function (f) {
+      return assetKey(f.asset) === wanted || (f.asset.symbol === symbol && chainRefToNetId(f.asset.chain_ref) === networkId);
+    });
+    return flowMatch ? 'pay' : null;
+  }
+
+  function listAmounts(tx, symbol, networkId) {
+    const c = getCase(tx);
+    if (!c) return null;
+    const context = symbol && networkId ? tokenDetailContext(symbol, networkId, c) : null;
+    return aggregateListAmounts(c, context);
+  }
+
+  function buildListItemHtml(tx, clickExpr, symbol, networkId, opts) {
+    opts = opts || {};
+    const c = getCase(tx);
+    if (!c) return '';
+    const summary = listAmounts(tx, symbol, networkId);
+    const label = typeName(c);
+    const failBadge = c.order.business_status === 'FAILED'
+      ? '<div class="mc-tx-sub"><span class="status-text danger">失败</span></div>' : '';
+    const amtClass = summary.positive ? ' positive' : (summary.muted ? ' muted' : '');
+    const iconHtml = opts.iconMode === 'type'
+      ? typeIconHtml(c)
+      : pairLogoHtml(c.order.requested_pay_asset, c.order.requested_recv_asset);
+    return '<div class="mc-tx-item" style="align-items:center;" onclick="' + clickExpr + '">' +
+      iconHtml +
+      '<div class="mc-tx-info"><div class="mc-tx-type">' + esc(label) + '</div>' + failBadge + '</div>' +
+      '<div class="mc-tx-right"><div class="mc-tx-amt' + amtClass + '">' + esc(summary.first) + '</div>' +
+      '<div class="mc-tx-amt secondary">' + esc(summary.second) + '</div></div></div>';
+  }
+
+  function inlineRow(label, value, note) {
+    return '<div class="tx-detail-inline-row"><span class="td-inline-label">' + esc(label) + '</span><span class="td-inline-val">' + esc(value == null ? '--' : value) +
+      (note ? '<span class="secondary-note">' + esc(note) + '</span>' : '') + '</span></div>';
+  }
+
+  function addressRow(label, value) {
+    const copyIcon = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+    return '<div class="tx-detail-addr-row"><div class="tx-detail-row-label">' + esc(label) + '</div><div class="tx-detail-addr-val"><span class="td-full-addr">' +
+      esc(value || '--') + '</span>' + (value ? '<button type="button" class="td-copy-btn" onclick="showToast(\'地址已复制\',1500)">' + copyIcon + '</button>' : '') + '</div></div>';
+  }
+
+  const EXPLORER_ICON = '<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>';
+
+  function chainLegExplorer(c, role) {
+    if (!isCross(c)) return null;
+    const chainTx = c.chain_transactions.find(function (t) { return t.role === role; });
+    if (!chainTx || !chainTx.tx_hash) return null;
+    return { networkId: chainRefToNetId(chainTx.chain_ref), txHash: chainTx.tx_hash };
+  }
+
+  function leg(label, asset, raw, positive, sign, usd, note, crossExplorer) {
+    const entry = tokenEntry(asset);
+    const color = entry ? (entry.color || '#444') : '#444';
+    const netId = asset ? chainRefToNetId(asset.chain_ref) : '';
+    const net = NETWORKS.find(function (n) { return n.id === netId; });
+    const badgeHtml = net ? '<div class="td-net-badge" style="background:' + net.color + ';">' + netLogoInner(net, 7) + '</div>' : '';
+    const amtText = raw === null || raw === undefined ? '- -' : (sign || '') + formatRaw(raw, asset && asset.decimals ? asset.decimals : 0);
+    const sym = asset && asset.symbol || '原目标未取得';
+    const usdHtml = usd !== null && usd !== undefined ? '<div class="td-cross-amt-fiat">≈ ' + '$' + esc(usd) + '</div>' : '';
+    if (crossExplorer !== undefined) {
+      const explorerBtn = crossExplorer
+        ? '<button type="button" class="td-explorer-btn" onclick="openTxBlockExplorer(\'' + crossExplorer.networkId + '\',\'' + crossExplorer.txHash + '\')" title="在浏览器中查看">' + EXPLORER_ICON + '</button>'
+        : '';
+      return '<div class="td-cross-row">' +
+        '<div class="td-cross-main">' +
+          '<div class="td-approve-label">' + esc(label) + '</div>' +
+          '<div class="td-cross-token-wrap">' +
+            '<div class="tx-detail-token-logo" style="background:' + color + ';">' +
+              tokenLogoInner(asset && asset.symbol, entry ? entry.logoUrl : null, 13) + badgeHtml +
+            '</div>' +
+            '<div class="td-cross-amt-col">' +
+              '<div><span class="tx-detail-amt-num" style="color:' + (positive ? 'var(--accent)' : '#fff') + ';font-size:20px;">' + esc(amtText) + '</span> ' +
+              '<span class="tx-detail-amt-sym">' + esc(sym) + '</span></div>' +
+              (note ? '<div class="td-cross-amt-fiat">' + esc(note) + '</div>' : '') +
+              usdHtml +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        explorerBtn +
+      '</div>';
+    }
+    const assetUsdHtml = usd !== null && usd !== undefined ? '<div class="asset-usd">≈ ' + '$' + esc(usd) + '</div>' : '';
+    return '<div class="asset-leg"><div class="td-approve-label">' + esc(label) + '</div><div class="asset-main">' +
+      '<div class="tx-detail-token-logo" style="background:' + color + ';">' + tokenLogoInner(asset && asset.symbol, entry ? entry.logoUrl : null, 13) + badgeHtml + '</div>' +
+      '<div class="asset-values"><div class="asset-amount' + (positive ? ' positive' : '') + '">' + esc(amtText) +
+      '<span class="symbol">' + esc(sym) + '</span></div>' +
+      '<div class="asset-network">' + esc(note || netName(asset && asset.chain_ref)) + '</div>' + assetUsdHtml + '</div></div></div>';
+  }
+
+  function feeValue(f) {
+    return f.knowledge_state === 'KNOWN' && f.amount_raw !== null ? amount(f.amount_raw, f.asset) : '--';
+  }
+
+  function feeRows(c) {
+    const networkActual = c.fees.filter(function (f) { return f.category === 'NETWORK' && f.phase === 'ACTUAL' && f.payer_scope === 'USER'; });
+    const networkQuoted = c.fees.filter(function (f) { return f.category === 'NETWORK' && f.phase === 'QUOTED'; });
+    const network = networkActual.length ? networkActual : (isEarly(c.order.business_status) ? networkQuoted : []);
+    let html = '';
+    if (c.order.failure_phase !== 'PRE_SUBMIT') {
+      if (network.length <= 1) html += inlineRow('网络费用', network.length ? feeValue(network[0]) : '--', network.length && !networkActual.length ? '预估' : null);
+      else html += '<div class="tx-detail-inline-row"><span class="td-inline-label">网络费用</span><span class="td-inline-val">' +
+        network.map(function (f) {
+          const t = c.chain_transactions.find(function (tx) { return tx.chain_tx_id === f.chain_tx_id; });
+          return '<span class="fee-amount">' + esc(feeValue(f)) + '<span class="secondary-note">' +
+            esc((t && t.role === 'APPROVAL' ? '授权 · ' : '') + netName(f.chain_ref)) + '</span></span>';
+        }).join('') + '</span></div>';
+    }
+    const service = c.fees.filter(function (f) { return f.category !== 'NETWORK' && f.payer_scope === 'USER'; });
+    const serviceValue = function (f) {
+      return f.knowledge_state === 'KNOWN' && f.amount_raw !== null && BigInt(f.amount_raw) === 0n ? '免费' : feeValue(f);
+    };
+    if (service.length <= 1) html += inlineRow('服务费', service.length ? serviceValue(service[0]) : '--');
+    else html += '<div class="tx-detail-inline-row"><span class="td-inline-label">服务费</span><span class="td-inline-val">' +
+      service.map(function (f) { return '<span class="fee-amount">' + esc(serviceValue(f)) + '</span>'; }).join('') + '</span></div>';
+    return html;
+  }
+
+  function credentialRows(c) {
+    const copyIcon = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+    const externalIcon = '<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>';
+    const main = c.chain_transactions.filter(function (t) { return ['APPROVAL', 'REVOKE'].indexOf(t.role) < 0; });
+    const before = c.chain_transactions.filter(function (t) { return ['APPROVAL', 'REVOKE'].indexOf(t.role) >= 0; });
+    let rows = main.concat(before).map(function (t) {
+      const base = explorerBase(t.chain_ref);
+      const link = t.tx_hash && t.broadcast_state === 'ACCEPTED' && base
+        ? '<button type="button" class="td-copy-btn" onclick="openTxBlockExplorer(\'' + chainRefToNetId(t.chain_ref) + '\',\'' + esc(t.tx_hash) + '\')" title="在浏览器中查看">' + externalIcon + '</button>' : '';
+      return '<div class="tx-detail-addr-row"><div class="tx-detail-row-label">' + esc(isCross(c) ? txRole(t.role) + ' · ' + netName(t.chain_ref) : txRole(t.role)) +
+        '</div><div class="tx-detail-addr-val credential"><span class="td-full-addr hash-text">' + esc(t.tx_hash || '--') + '</span>' +
+        (t.tx_hash ? '<button type="button" class="td-copy-btn" onclick="showToast(\'哈希已复制\',1500)">' + copyIcon + '</button>' : '') + link + '</div></div>';
+    }).join('');
+    let missing = '';
+    if (!isUnsubmitted(c.order.business_status) && c.order.failure_phase !== 'PRE_SUBMIT') {
+      if (!main.some(function (t) { return ['SOURCE', 'SAME_SWAP'].indexOf(t.role) >= 0; })) missing += inlineRow(isCross(c) ? '源链交易' : '交易哈希', '--');
+      if (isCross(c) && !main.some(function (t) { return t.role === 'DESTINATION'; })) missing += inlineRow('目标链交易', '--');
+      if (['REFUNDING', 'REFUNDED'].indexOf(c.order.business_status) >= 0 && !main.some(function (t) { return t.role === 'REFUND'; })) missing += inlineRow('退款交易', '--');
+    }
+    return rows + missing;
+  }
+
+  function buildDetailHtml(c) {
+    const o = c.order, code = o.business_status, quote = c.quotes[0];
+    const payments = aggregateFlow(outgoing(c)), receipts = aggregateFlow(incoming(c)), returned = refunds(c);
+    const title = typeName(c);
+    const cross = isCross(c);
+    const payExplorer = cross ? chainLegExplorer(c, 'SOURCE') : undefined;
+    const recvExplorer = cross ? chainLegExplorer(c, 'DESTINATION') : undefined;
+    const payLeg = function (asset, raw, usd) {
+      return leg('支付', asset, raw, false, '-', usd, null, cross ? payExplorer : undefined);
+    };
+    const recvLeg = function (label, asset, raw, positive, sign, usd) {
+      return leg(label, asset, raw, positive, sign, usd, null, cross ? recvExplorer : undefined);
+    };
+    const crossDivider = cross ? '<div class="td-approve-divider"></div>' : '';
+    let card = payments.length
+      ? payments.map(function (f) { return payLeg(f.asset, f.amount_raw, f.amount_usd); }).join('')
+      : payLeg(o.requested_pay_asset, o.requested_amount_raw, null);
+    if (code === 'FAILED') card += crossDivider + recvLeg('接收', o.requested_recv_asset, null, false, '', null);
+    else if (code === 'SUCCEEDED') card += crossDivider + receipts.map(function (f) { return recvLeg('接收', f.asset, f.amount_raw, true, '+', f.amount_usd); }).join('');
+    else if (code === 'PARTIAL' || ['REFUNDING', 'REFUNDED', 'CANCELLED'].indexOf(code) >= 0) {
+      card += crossDivider + recvLeg('预计接收', o.requested_recv_asset, quote && quote.expected_recv_amount_raw != null ? quote.expected_recv_amount_raw : null, false, '', null);
+      card += receipts.map(function (f) { return leg('实际收到', f.asset, f.amount_raw, true, '+', f.amount_usd); }).join('');
+    } else card += crossDivider + recvLeg('预计接收', o.requested_recv_asset, quote && quote.expected_recv_amount_raw != null ? quote.expected_recv_amount_raw : null, false, '+', null);
+    card += returned.map(function (f, index) {
+      return leg(returned.length > 1 ? '已退回 · 第' + (index + 1) + '笔' : '已退回', f.asset, f.amount_raw, true, '+', f.amount_usd);
+    }).join('');
+    let rows = '';
+    const matchingReceipt = receipts.find(function (f) { return assetKey(f.asset) === assetKey(o.requested_recv_asset); });
+    const actualRate = code === 'SUCCEEDED' ? ratio(payments[0], matchingReceipt) : null;
+    const expectedRate = quote ? ratio({ amount_raw: o.requested_amount_raw, asset: o.requested_pay_asset },
+      { amount_raw: quote.expected_recv_amount_raw, asset: o.requested_recv_asset }) : null;
+    if (isCross(c)) rows += inlineRow(actualRate ? '实际汇率' : '参考汇率', actualRate || expectedRate || '--');
+    rows += inlineRow('网络', isCross(c) ? netName(o.source_chain_ref) + ' → ' + netName(o.target_chain_ref) : netName(o.source_chain_ref));
+    rows += feeRows(c);
+    rows += addressRow(isCross(c) ? '支付地址' : '发送地址', o.sender_address);
+    if (isCross(c)) rows += addressRow('接收地址', o.recipient_address);
+    if (!isCross(c)) {
+      const swapTx = c.chain_transactions.find(function (t) { return t.role === 'SAME_SWAP'; });
+      if (swapTx && swapTx.to_address) rows += addressRow('交互地址', swapTx.to_address);
+    }
+    rows += credentialRows(c);
+    const confirmed = c.chain_transactions.find(function (t) { return ['SOURCE', 'SAME_SWAP'].indexOf(t.role) >= 0 && t.confirmed_at; });
+    if (confirmed) rows += inlineRow(isCross(c) ? '源链确认时间' : '链上确认时间', formatDate(confirmed.confirmed_at));
+    const targetConfirmed = isCross(c) && c.chain_transactions
+      .filter(function (t) { return t.role === 'DESTINATION' && t.chain_ref === o.target_chain_ref && t.confirmed_at; })
+      .sort(function (a, b) { return Date.parse(b.confirmed_at) - Date.parse(a.confirmed_at); })[0];
+    if (targetConfirmed) rows += inlineRow('目标链确认时间', formatDate(targetConfirmed.confirmed_at));
+    if (code === 'SUCCEEDED' && o.target_delivered_at) rows += inlineRow('到账时间', formatDate(o.target_delivered_at));
+    if (code === 'REFUNDED' && o.refunded_at) rows += inlineRow('退款时间', formatDate(o.refunded_at));
+    const iconPath = isCross(c) ? TX_ICON_CROSS_SWAP : TX_ICON_SWAP;
+    const statusClass = tone(c);
+    const statusPending = statusClass === 'pending' ? ' tx-detail-status--pending' : '';
+    const statusDanger = statusClass === 'danger' ? ' tx-detail-status--danger' : '';
+    const statusNeutral = statusClass === 'neutral' ? ' tx-detail-status--neutral' : '';
+    const sameTx = !isCross(c) && c.chain_transactions.find(function (t) { return t.role === 'SAME_SWAP' && t.tx_hash && t.broadcast_state === 'ACCEPTED'; });
+    const footerHtml = sameTx
+      ? '<div class="tx-detail-footer"><button type="button" class="tx-detail-browser-btn" onclick="openTxBlockExplorer(\'' + chainRefToNetId(sameTx.chain_ref) + '\',\'' + sameTx.tx_hash + '\')">在浏览器中查看</button></div>'
+      : '';
+    return {
+      title: title,
+      iconPath: iconPath,
+      datetime: formatDate(o.created_at),
+      statusLabel: stateLabel(c),
+      statusClass: statusClass,
+      statusExtraClass: statusPending + statusDanger + statusNeutral,
+      amtCard: card,
+      rows: rows,
+      footerVisible: !!sameTx,
+      footerHtml: footerHtml
+    };
+  }
+
+  function renderDetail(tx) {
+    const c = resolveCaseForDetail(tx);
+    if (!c) return false;
+    const detail = buildDetailHtml(c);
+    const navTitle = document.getElementById('tdNavTitle');
+    if (navTitle) navTitle.textContent = '';
+    document.getElementById('tdTypeIcon').innerHTML = '<svg viewBox="0 0 24 24"><path d="' + detail.iconPath + '"/></svg>';
+    document.getElementById('tdTypeName').textContent = detail.title;
+    document.getElementById('tdDatetime').textContent = detail.datetime;
+    const statusEl = document.getElementById('tdStatus');
+    if (statusEl) {
+      statusEl.textContent = detail.statusLabel;
+      statusEl.className = 'tx-detail-status ' + detail.statusClass + detail.statusExtraClass;
+    }
+    document.getElementById('tdAmtCard').innerHTML = detail.amtCard;
+    document.getElementById('tdAmtCard').classList.add('swap-compat-card');
+    document.getElementById('tdRows').innerHTML = detail.rows;
+    const footerEl = document.querySelector('#txDetail .tx-detail-footer');
+    if (footerEl) {
+      if (detail.footerVisible) {
+        footerEl.style.display = '';
+        footerEl.innerHTML = detail.footerHtml;
+      } else {
+        footerEl.style.display = 'none';
+      }
+    }
+    document.getElementById('txDetail').classList.add('visible');
+    return true;
+  }
+
+  function caseToHistoryEntry(c) {
+    const o = c.order;
+    const created = o.created_at;
+    const payNet = chainRefToNetId(o.source_chain_ref);
+    const recvNet = chainRefToNetId(o.target_chain_ref);
+    const summary = aggregateListAmounts(c, null);
+    return {
+      type: typeName(c),
+      iconType: 'swap',
+      _swapCompat: true,
+      _swapCaseId: c.case_id,
+      _swapCase: c,
+      _swapCross: isCross(c),
+      business_status: o.business_status,
+      date: formatDisplayDate(created),
+      datetime: formatDate(created),
+      network: payNet,
+      networkName: netName(o.source_chain_ref),
+      paySym: o.requested_pay_asset.symbol,
+      recvSym: o.requested_recv_asset.symbol,
+      payNetwork: payNet,
+      recvNetwork: recvNet,
+      payNetworkName: netName(o.source_chain_ref),
+      recvNetworkName: netName(o.target_chain_ref),
+      fromAddr: o.sender_address,
+      toAddr: o.recipient_address,
+      positive: !!summary.positive,
+      sym: o.requested_recv_asset.symbol,
+      amt: summary.first,
+      payAmt: summary.second.indexOf('-') === 0 ? summary.second : '-' + amount(o.requested_amount_raw, o.requested_pay_asset),
+      recvAmt: summary.first
+    };
+  }
+
+  function buildHistoryEntries() {
+    return SWAP_HISTORY_CASES
+      .filter(function (c) { return SWAP_VISIBLE_STATES[c.order.trade_type] && SWAP_VISIBLE_STATES[c.order.trade_type].indexOf(c.order.business_status) >= 0; })
+      .map(caseToHistoryEntry);
+  }
+
+  function matchesNetwork(tx, netId) {
+    if (netId === 'all') return true;
+    const c = getCase(tx);
+    if (!c) return tx.network === netId;
+    const refs = [c.order.source_chain_ref, c.order.target_chain_ref]
+      .concat(c.asset_flows.map(function (f) { return f.chain_ref; }));
+    return refs.some(function (ref) { return chainRefToNetId(ref) === netId; });
+  }
+
+  function relatesToTokenDetail(tx, symbol, networkId) {
+    const c = getCase(tx);
+    if (!c) return false;
+    const o = c.order;
+    if (o.requested_pay_asset.symbol === symbol && chainRefToNetId(o.requested_pay_asset.chain_ref) === networkId) return true;
+    if (o.requested_recv_asset && o.requested_recv_asset.symbol === symbol && chainRefToNetId(o.requested_recv_asset.chain_ref) === networkId) return true;
+    return c.asset_flows.some(function (f) {
+      return f.asset.symbol === symbol && chainRefToNetId(f.asset.chain_ref) === networkId;
+    });
+  }
+
+  return {
+    isCompatTx: isCompatTx,
+    getCase: getCase,
+    stateLabel: stateLabel,
+    tone: tone,
+    listAmounts: listAmounts,
+    buildListItemHtml: buildListItemHtml,
+    renderDetail: renderDetail,
+    buildHistoryEntries: buildHistoryEntries,
+    matchesNetwork: matchesNetwork,
+    relatesToTokenDetail: relatesToTokenDetail,
+    formatDate: formatDate,
+    setDemoVariant: setDemoVariant,
+    clearDemoVariant: clearDemoVariant,
+    getDemoVariant: getDemoVariant,
+    specimen: specimen,
+    variantsFor: variantsFor,
+    resolveCaseForDetail: resolveCaseForDetail,
+    findCaseRecord: findCaseRecord,
+    findTxByCaseId: findTxByCaseId
+  };
+})();
+
+function buildSwapHistoryEntries() {
+  return SwapTxCompat.buildHistoryEntries();
+}
+
 // Global 2-week all-asset transaction history (mock)
-const _allTxHistory = [
-  // 2026/08/31 — 跨链确认中
-  { type:'交易', iconType:'swap', positive:true, date:'2026/08/31', datetime:'2026-08-31 14:53:32',
-    sym:'USDC', amt:'+7.2703',
-    payAmt:'-7.2747', paySym:'USDC', payNetwork:'arbitrum',
-    recvAmt:'+7.2703', recvSym:'USDC', recvNetwork:'bsc',
-    payFiatVal:'$7.2724', recvFiatVal:'$7.2814',
-    network:'arbitrum', networkName:'Arbitrum One',
-    payNetworkName:'Arbitrum One', recvNetworkName:'BNB Smart Chain',
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    payTxHash:'0x3c5f8e2b1c9d4e5f6789012345678901234567890abcdef1234567890cd',
-    txHash:'0x3c5f8e2b1c9d4e5f6789012345678901234567890abcdef1234567890cd',
-    _swapCross:true, _crossStatus:'pending' },
+const _legacyTxHistory = [
   // 2025/01/13
   { type:'接收', iconType:'receive', positive:true,  date:'2025/01/13', datetime:'2025-01-13 20:14:33',
     amt:'+200',   sym:'USDT', network:'ethereum', networkName:'Ethereum',
@@ -13863,39 +14484,7 @@ const _allTxHistory = [
     spenderAddr:'0xccc82168b2b2a01f6e9d1a9e2a0bfe92abe15be', spenderName:'未知项目',
     approveAmt:null,
     gasAmt:'0.01842',      gasSym:'POL',  gasUsd:'$0.001735', txHash:'0x5af1...df19' },
-  { type:'交易', iconType:'swap', positive:true, date:'2025/01/13', datetime:'2025-01-13 15:34:50',
-    sym:'ETH', amt:'+0.5',
-    payAmt:'-100', paySym:'USDT', payNetwork:'ethereum',
-    recvAmt:'+0.5', recvSym:'ETH', recvNetwork:'ethereum',
-    network:'ethereum', networkName:'Ethereum',
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr:  '0x7cf6b330b437e9fb432b1400de17b03357cf049a',
-    gasAmt:'0.00001223', gasSym:'ETH', gasUsd:'$0.0277', txHash:'0xc05a...1f99' },
-  { type:'交易', iconType:'swap', positive:true, date:'2025/01/13', datetime:'2025-01-13 14:53:32',
-    sym:'USDT', amt:'+99.9523',
-    payAmt:'-100', paySym:'USDT', payNetwork:'arbitrum',
-    recvAmt:'+99.9523', recvSym:'USDT', recvNetwork:'bsc',
-    payFiatVal:'$99.9700', recvFiatVal:'$99.9523',
-    exchangeRate:'1 USDT ≈ 0.9995 USDT',
-    network:'arbitrum', networkName:'Arbitrum One',
-    payNetworkName:'Arbitrum One', recvNetworkName:'BNB Smart Chain',
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    gasAmt:'0.000001414', gasSym:'ETH', gasUsd:'$0.0034439',
-    serviceFee:'0', serviceFeeSym:'USDT', serviceFeeUsd:'$0',
-    payTxHash:'0x7a3f8e2b1c9d4e5f6789012345678901234567890abcdef1234567890ab',
-    recvTxHash:'0x9b2e4d1c8f7a6e5d4c3b2a109876543210fedcba9876543210fedcba987654',
-    txHash:'0x7a3f8e2b1c9d4e5f6789012345678901234567890abcdef1234567890ab',
-    _swapCross:true },
   // 2025/01/11
-  { type:'交易', iconType:'swap', positive:true, date:'2025/01/11', datetime:'2025-01-11 12:34:56',
-    sym:'USDC', amt:'+200',
-    payAmt:'-1', paySym:'ETH', payNetwork:'ethereum',
-    recvAmt:'+200', recvSym:'USDC', recvNetwork:'ethereum',
-    network:'ethereum', networkName:'Ethereum',
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr:  '0x7cf6b330b437e9fb432b1400de17b03357cf049a',
-    gasAmt:'0.00002123', gasSym:'ETH', gasUsd:'$0.0457', txHash:'0xswap...abcd' },
   { type:'接收', iconType:'receive', positive:true,  date:'2025/01/11', datetime:'2025-01-11 16:05:41',
     amt:'+1',     sym:'BNB',  network:'bsc',      networkName:'BNB Chain',
     fromAddr:'0xac401c3efcb43ee241c3e50c8f54b804238f1234',
@@ -13906,69 +14495,6 @@ const _allTxHistory = [
     fromAddr:'0xba12345efcb43ee241c3e50c8f54b804238bf167',
     toAddr:  '0xfc220c987fbc20868fccc43bbfac72d079f55a49',
     gasAmt:'0.0000002501', gasSym:'BNB',  gasUsd:'$0.0001',  txHash:'0xd7e8...ff04' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 18:10:22',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transfers:[
-      { amt:'+450.01', sym:'USDT', positive:true },
-      { amt:'+450.01', sym:'USDC', positive:true },
-      { amt:'+120.00', sym:'DAI', positive:true }
-    ],
-    hasMore:true,
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00002100', gasSym:'ETH', gasUsd:'$0.0478', txHash:'0xci01...a001' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 17:45:08',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transferGroups:[
-      { items:[
-        { amt:'+450.01', sym:'USDT', positive:true },
-        { amt:'+450.01', sym:'USDC', positive:true },
-        { amt:'+88.00', sym:'DAI', positive:true }
-      ], hasMore:true },
-      { items:[
-        { amt:'-0.01', sym:'ETH', positive:false },
-        { amt:'-50.01', sym:'SHIB', positive:false },
-        { amt:'-12.00', sym:'PEPE', positive:false }
-      ], hasMore:true }
-    ],
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00002850', gasSym:'ETH', gasUsd:'$0.0649', txHash:'0xci02...a002' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 15:22:41',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transfers:[
-      { amt:'-450.01', sym:'USDT', positive:false },
-      { amt:'-450.01', sym:'USDC', positive:false },
-      { amt:'-20.00', sym:'DAI', positive:false }
-    ],
-    hasMore:true,
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00001980', gasSym:'ETH', gasUsd:'$0.0451', txHash:'0xci03...a003' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 14:08:15',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transfers:[{ amt:'-450.01', sym:'USDT', positive:false }],
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00001720', gasSym:'ETH', gasUsd:'$0.0392', txHash:'0xci04...a004' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 13:01:33',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transfers:[{ amt:'+450.01', sym:'USDT', positive:true }],
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00001680', gasSym:'ETH', gasUsd:'$0.0383', txHash:'0xci05...a005' },
-  { type:'合约交互', iconType:'contract', date:'2025/01/11', datetime:'2025-01-11 11:55:07',
-    network:'ethereum', networkName:'Ethereum',
-    contractAddr: MOCK_CONTRACT_ADDR, contractShort: MOCK_CONTRACT_SHORT,
-    transfers:[],
-    fromAddr:'0xed36453efcb43ee241c3e50c8f54b804238bf167',
-    toAddr: MOCK_CONTRACT_ADDR,
-    gasAmt:'0.00001560', gasSym:'ETH', gasUsd:'$0.0356', txHash:'0xci06...a006' },
   // 2025/01/08
   { type:'接收', iconType:'receive', positive:true,  date:'2025/01/08', datetime:'2025-01-08 14:55:27',
     amt:'+1.5',   sym:'SOL',  network:'solana',   networkName:'Solana',
@@ -14005,6 +14531,7 @@ const _allTxHistory = [
     toAddr:  '0xfc220c987fbc20868fccc43bbfac72d079f55a49',
     gasAmt:'0.0000004501', gasSym:'ETH',  gasUsd:'$0.001019', txHash:'0x34b0...d259' },
 ];
+const _allTxHistory = buildSwapHistoryEntries().concat(_legacyTxHistory);
 
 // ── Shared: renders action-buttons + receive-address + tx-history ──
 function buildSingleChainBodyHTML(t, symbol, receiveSource) {
@@ -14116,7 +14643,6 @@ function txHistoryTypeLabel(tx) {
 }
 
 function tokenDetailTxIconHtml(tx) {
-  if (tx.iconType === 'contract') return contractTxIconHtml();
   if (tx.iconType === 'swap' && isCrossChainSwapTx(tx)) {
     return '<div class="mc-tx-icon"><svg viewBox="0 0 24 24"><path d="' + TX_ICON_CROSS_SWAP + '"/></svg></div>';
   }
@@ -14147,8 +14673,8 @@ function buildTokenDetailSwapRightHtml(tx, symbol, networkId) {
 
 function buildTokenDetailTxItemHtml(tx, symbol, networkId, globalIdx) {
   if (globalIdx < 0) return '';
-  if (tx.iconType === 'contract') {
-    return buildContractTxItemHtml(tx, 'openTxDetail(_allTxHistory[' + globalIdx + '])', symbol);
+  if (SwapTxCompat.isCompatTx(tx)) {
+    return SwapTxCompat.buildListItemHtml(tx, 'openTxDetail(_allTxHistory[' + globalIdx + '])', symbol, networkId, { iconMode: 'type' });
   }
   const isSwap = tx.iconType === 'swap';
   const listAmtClass = tx.positive ? 'positive' : 'negative';
@@ -14183,7 +14709,6 @@ function buildCrossChainDetailAmtCardHtml(tx) {
   const explorerIcon = '<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>';
   const payHash = tx.payTxHash || tx.txHash || '';
   const recvHash = tx.recvTxHash || tx.txHash || '';
-  const isPending = tx._crossStatus === 'pending';
   function leg(label, sym, amt, fiatVal, color, entry, net, badgeBg, networkId, txHash, showExplorer) {
     const explorerBtn = showExplorer
       ? '<button type="button" class="td-explorer-btn" onclick="openTxBlockExplorer(\'' + networkId + '\',\'' + txHash + '\')">' + explorerIcon + '</button>'
@@ -14206,16 +14731,22 @@ function buildCrossChainDetailAmtCardHtml(tx) {
       explorerBtn +
     '</div>';
   }
-  const showExplorer = !isPending;
   return '<div style="width:100%;">' +
-    leg('支付', tx.paySym, tx.payAmt, tx.payFiatVal, payColor, payEntry, payNet, payBadgeBg, tx.payNetwork, payHash, showExplorer) +
+    leg('支付', tx.paySym, tx.payAmt, tx.payFiatVal, payColor, payEntry, payNet, payBadgeBg, tx.payNetwork, payHash, !!payHash) +
     '<div class="td-approve-divider"></div>' +
-    leg('接收', tx.recvSym, tx.recvAmt, tx.recvFiatVal, recvColor, recvEntry, recvNet, recvBadgeBg, tx.recvNetwork, recvHash, showExplorer) +
+    leg('接收', tx.recvSym, tx.recvAmt, tx.recvFiatVal, recvColor, recvEntry, recvNet, recvBadgeBg, tx.recvNetwork, recvHash, !!recvHash) +
   '</div>';
 }
 
-function openTxDetail(tx) {
+function openTxDetail(tx, opts) {
   if (!tx) return;
+  opts = opts || {};
+  const amtCardEl = document.getElementById('tdAmtCard');
+  if (amtCardEl) amtCardEl.classList.remove('swap-compat-card');
+  if (SwapTxCompat.isCompatTx(tx)) {
+    if (!opts.keepDemoVariant) SwapTxCompat.clearDemoVariant();
+    if (SwapTxCompat.renderDetail(tx)) return;
+  }
   const receivePath = 'M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z';
   const sendPath    = 'M2.01 21L23 12 2.01 3 2 10l15 2-15 2z';
   const approvePath = 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z';
@@ -14230,8 +14761,7 @@ function openTxDetail(tx) {
   }
   const footerEl = document.querySelector('#txDetail .tx-detail-footer');
   if (footerEl) footerEl.style.display = '';
-  const iconPath = tx.iconType === 'contract' ? CONTRACT_TX_ICON
-    : tx.iconType === 'receive' ? TX_ICON_RECEIVE
+  const iconPath = tx.iconType === 'receive' ? TX_ICON_RECEIVE
     : tx.iconType === 'approve' ? approvePath
     : tx.iconType === 'revoke' ? revokePath
     : (tx.iconType === 'swap' && isCrossChainSwapTx(tx)) ? TX_ICON_CROSS_SWAP
@@ -14304,43 +14834,7 @@ function openTxDetail(tx) {
   const tokenColor = tokenEntry ? (tokenEntry.color || '#444') : '#444';
   const tokenLogoUrl = tokenEntry ? tokenEntry.logoUrl : null;
 
-  if (tx.iconType === 'contract') {
-    const contractAddr = tx.contractAddr || tx.toAddr || '';
-    document.getElementById('tdAmtCard').innerHTML = buildContractDetailAmtCardHtml(tx);
-    document.getElementById('tdRows').innerHTML = `
-      <div class="tx-detail-addr-row">
-        <div class="tx-detail-row-label">发送地址</div>
-        <div class="tx-detail-addr-val">
-          <span class="td-full-addr">${tx.fromAddr}</span>
-          <button class="td-copy-btn" onclick="showToast('地址已复制',1500)">${copyIcon}</button>
-        </div>
-      </div>
-      <div class="tx-detail-addr-row">
-        <div class="tx-detail-row-label">交互地址</div>
-        <div class="tx-detail-addr-val">
-          <span class="td-full-addr">${contractAddr}</span>
-          <button class="td-copy-btn" onclick="showToast('地址已复制',1500)">${copyIcon}</button>
-        </div>
-      </div>
-      <div class="tx-detail-inline-row">
-        <span class="td-inline-label">网络</span>
-        <span class="td-inline-val">
-          <span class="td-net-icon-sm" style="background:${badgeBg};">${netLogoInner(net, 11)}</span>
-          ${tx.networkName}
-        </span>
-      </div>
-      <div class="tx-detail-inline-row">
-        <span class="td-inline-label">网络费用</span>
-        <span class="td-inline-val">${tx.gasAmt} ${tx.gasSym}(${tx.gasUsd})</span>
-      </div>
-      <div class="tx-detail-inline-row">
-        <span class="td-inline-label">交易哈希</span>
-        <span class="td-inline-val">
-          ${tx.txHash}
-          <button class="td-copy-btn" onclick="showToast('哈希已复制',1500)">${copyIcon}</button>
-        </span>
-      </div>`;
-  } else if (tx.iconType === 'approve' || tx.iconType === 'revoke') {
+  if (tx.iconType === 'approve' || tx.iconType === 'revoke') {
     const isRevoke       = tx.iconType === 'revoke';
     const approveDisplay = isRevoke ? null : (tx.approveAmt === null ? '无限' : tx.approveAmt);
     const amtNumHtml     = approveDisplay !== null ? `<span class="tx-detail-amt-num" style="color:#fff;">${approveDisplay}</span>` : '';
@@ -14548,27 +15042,17 @@ function _renderThList() {
   const filtered = filterTxHistoryForDisplay(
     _thNetwork === 'all'
       ? _allTxHistory
-      : _allTxHistory.filter(tx => tx.network === _thNetwork)
+      : _allTxHistory.filter(tx => SwapTxCompat.isCompatTx(tx) ? SwapTxCompat.matchesNetwork(tx, _thNetwork) : tx.network === _thNetwork)
   );
-  const regularTxs = filtered.filter(tx => tx.iconType !== 'contract');
-  const contractTxs = filtered.filter(tx => tx.iconType === 'contract');
-  const groupedSections = [
-    _groupTxByDate(regularTxs),
-    _groupTxByDate(contractTxs)
-  ].filter(g => g.groups.length);
+  const { groups, dateMap } = _groupTxByDate(filtered);
   let html = '';
   if (!filtered.length) {
     html = '<div style="padding:40px 20px;text-align:center;color:var(--text-tertiary);font-size:14px;">暂无交易记录</div>';
   } else {
-    groupedSections.forEach(({ groups, dateMap }) => {
     groups.forEach(date => {
       html += `<div class="mc-tx-date-group" style="padding:12px 16px 6px;">${date}</div>`;
       dateMap[date].forEach(tx => {
         const idx = _allTxHistory.indexOf(tx);
-        if (tx.iconType === 'contract') {
-          html += buildContractTxItemHtml(tx, 'openTxDetail(_allTxHistory[' + idx + '])');
-          return;
-        }
         const tData = TOKEN_DATA.find(d => d.symbol === tx.sym && d.network === tx.network)
                    || TOKEN_DATA.find(d => d.symbol === tx.sym);
         const color = tData ? (tData.color || '#555') : '#555';
@@ -14577,6 +15061,10 @@ function _renderThList() {
         const logoInner = tokenLogoInner(tx.sym, tData ? tData.logoUrl : null, 13);
         const netInner = netLogoInner(net, 7);
         const _isApproveType = tx.iconType === 'approve' || tx.iconType === 'revoke';
+        if (SwapTxCompat.isCompatTx(tx)) {
+          html += SwapTxCompat.buildListItemHtml(tx, 'openTxDetail(_allTxHistory[' + idx + '])');
+          return;
+        }
         const isSwap = tx.iconType === 'swap';
         const addrLabel = tx.iconType === 'receive' ? '从' : _isApproveType ? '合约' : '到';
         const addrShort = tx.iconType === 'receive'
@@ -14620,7 +15108,6 @@ function _renderThList() {
             </div>
           </div>`;
       });
-    });
     });
   }
   document.getElementById('thList').innerHTML = html;
@@ -17256,6 +17743,7 @@ const DEMO_SCENE_RUNNERS = {
   'swap-slip-last'() { demoSwapSlipLast(); },
   'swap-slip-bad'() { demoSwapSlipBad(); },
   'swap-slip-warn'() { demoSwapSlipWarn(); },
+  'swap-slip-too-high'() { demoSwapSlipTooHigh(); },
   'swap-slip-sol'() { demoSwapSlipSol(); },
   'swap-slip-tron'() { demoSwapSlipTron(); },
   'swap-slip-fee-fail'() { demoSwapSlipFeeFail(); },
@@ -17284,16 +17772,96 @@ const DEMO_SCENE_RUNNERS = {
   'swap-cross-success'() { demoSwapResult(true,false); },
   'swap-fail'() { demoSwapFailToast(false); },
   'swap-cross-fail'() { demoSwapFailToast(true); },
-  'token-detail-open'() { demoTokenDetailOpen(); },
+
+  'swap-tx-history'() { demoSwapTxHistoryOpen(); },
+  'swap-tx-token-usdc'() { demoSwapTokenDetailUsdc(); },
+  'swap-tx-same-ok'() { demoSwapTxScene('swap-tx-same-ok'); },
+  'swap-tx-same-confirming'() { demoSwapTxScene('swap-tx-same-confirming'); },
+  'swap-tx-same-submitted'() { demoSwapTxScene('swap-tx-same-submitted'); },
+  'swap-tx-same-failed'() { demoSwapTxScene('swap-tx-same-failed'); },
+  'swap-tx-cross-ok'() { demoSwapTxScene('swap-tx-cross-ok'); },
+  'swap-tx-cross-processing'() { demoSwapTxScene('swap-tx-cross-processing'); },
+  'swap-tx-cross-confirming'() { demoSwapTxScene('swap-tx-cross-confirming'); },
+  'swap-tx-cross-submitted'() { demoSwapTxScene('swap-tx-cross-submitted'); },
+  'swap-tx-cross-partial'() { demoSwapTxScene('swap-tx-cross-partial'); },
+  'swap-tx-cross-failed'() { demoSwapTxScene('swap-tx-cross-failed'); },
+  'swap-tx-cross-refunding'() { demoSwapTxScene('swap-tx-cross-refunding'); },
+  'swap-tx-cross-refunded'() { demoSwapTxScene('swap-tx-cross-refunded'); },
+  'swap-tx-v-confirm-unknown'() { demoSwapTxScene('swap-tx-v-confirm-unknown'); },
+  'swap-tx-v-fee-free'() { demoSwapTxScene('swap-tx-v-fee-free'); },
+  'swap-tx-v-fee-paid'() { demoSwapTxScene('swap-tx-v-fee-paid'); },
+  'swap-tx-v-fee-unknown'() { demoSwapTxScene('swap-tx-v-fee-unknown'); },
+  'swap-tx-v-partial-multi'() { demoSwapTxScene('swap-tx-v-partial-multi'); },
+  'swap-tx-v-refund-partial'() { demoSwapTxScene('swap-tx-v-refund-partial'); },
+  'swap-tx-v-fail-nobroadcast'() { demoSwapTxScene('swap-tx-v-fail-nobroadcast'); },
 };
 
-function demoTokenDetailOpen() {
+
+const SWAP_TX_DEMO_CASES = {
+  'swap-tx-same-ok': ['same-succeeded', 'standard'],
+  'swap-tx-same-confirming': ['same-source_confirming', 'standard'],
+  'swap-tx-same-submitted': ['same-submitted', 'standard'],
+  'swap-tx-same-failed': ['same-failed', 'standard'],
+  'swap-tx-cross-ok': ['cross-succeeded', 'standard'],
+  'swap-tx-cross-processing': ['cross-destination_processing', 'standard'],
+  'swap-tx-cross-confirming': ['cross-source_confirming', 'standard'],
+  'swap-tx-cross-submitted': ['cross-submitted', 'standard'],
+  'swap-tx-cross-partial': ['cross-partial', 'standard'],
+  'swap-tx-cross-failed': ['cross-failed', 'standard'],
+  'swap-tx-cross-refunding': ['cross-refunding', 'standard'],
+  'swap-tx-cross-refunded': ['cross-refunded', 'standard'],
+  'swap-tx-v-confirm-unknown': ['same-source_confirming', 'unknown_confirmation'],
+  'swap-tx-v-fee-free': ['same-succeeded', 'zero'],
+  'swap-tx-v-fee-paid': ['same-succeeded', 'service_paid'],
+  'swap-tx-v-fee-unknown': ['same-succeeded', 'unknown_fee'],
+  'swap-tx-v-partial-multi': ['cross-partial', 'multi'],
+  'swap-tx-v-refund-partial': ['cross-refunding', 'refund_partial'],
+  'swap-tx-v-fail-nobroadcast': ['same-failed', 'not_broadcast']
+};
+
+function demoSwapTxHistoryOpen() {
   prepareSwapDemo();
   hideSwapFailToast();
+  closeTokenDetailOverlays();
+  closeTxDetail();
   switchScreen('screen-web3home');
-  openSingleChainDetail('USDT', 'ethereum');
+  openTxHistoryScreen();
+}
+
+function demoSwapTokenDetailUsdc() {
+  prepareSwapDemo();
+  hideSwapFailToast();
+  closeTxDetail();
+  closeTxHistoryScreen();
+  switchScreen('screen-web3home');
+  openSingleChainDetail('USDC', 'arbitrum');
   const section = document.querySelector('#scDetail .mc-tx-section');
   if (section) section.scrollIntoView({ block: 'start' });
+}
+
+function demoSwapTxDetail(caseId, variant) {
+  SwapTxCompat.setDemoVariant(variant || 'standard');
+  prepareSwapDemo();
+  hideSwapFailToast();
+  closeTokenDetailOverlays();
+  closeTxDetail();
+  closeTxHistoryScreen();
+  switchScreen('screen-web3home');
+  const tx = SwapTxCompat.findTxByCaseId(caseId);
+  if (!tx) {
+    showToast('未找到样例：' + caseId, 2000);
+    return;
+  }
+  openTxDetail(tx, { keepDemoVariant: true });
+}
+
+function demoSwapTxScene(sceneId) {
+  const cfg = SWAP_TX_DEMO_CASES[sceneId];
+  if (!cfg) {
+    showToast('未知交易记录演示：' + sceneId, 2000);
+    return;
+  }
+  demoSwapTxDetail(cfg[0], cfg[1]);
 }
 
 let demoSceneToken = 0;
@@ -19103,13 +19671,38 @@ function swapFeeFamily(network) {
   return 'evm';
 }
 
-function classifySwapSlip(raw) {
+function parseSwapSlipValue(raw) {
   const text = String(raw == null ? '' : raw).trim();
-  if (!text || text === '.') return 'bad';
+  if (!text || text === '.') return { valid: false, n: NaN };
   const n = parseFloat(text);
-  if (isNaN(n) || n < 0.01 || n > 90) return 'bad';
-  if (n < 1) return 'warn';
-  return 'ok';
+  if (isNaN(n)) return { valid: false, n: NaN };
+  return { valid: true, n: n };
+}
+
+/** ok=正常(0.5～20)；warn_low/warn_high=预警可提交；warn_too_high/bad=不可提交(>50 或 <0.1 或无效) */
+function classifySwapSlip(raw) {
+  const parsed = parseSwapSlipValue(raw);
+  if (!parsed.valid || parsed.n < 0.1) return 'bad';
+  if (parsed.n < 0.5) return 'warn_low';
+  if (parsed.n <= 20) return 'ok';
+  if (parsed.n <= 50) return 'warn_high';
+  return 'warn_too_high';
+}
+
+function swapSlipIsWarn(kind) {
+  return kind === 'warn_low' || kind === 'warn_high' || kind === 'warn_too_high';
+}
+
+function swapSlipMessage(kind) {
+  if (kind === 'warn_low') return '滑点低于0.5%,交易失败率较高';
+  if (kind === 'warn_high') return '执行交易后可能存在较大的资金损失，建议设置范围1%～5%';
+  if (kind === 'warn_too_high') return '滑点设置太高，建议设置区间为1～5%';
+  if (kind === 'bad') return '滑点数值需不低于0.1%';
+  return '';
+}
+
+function swapSlipCanSubmit(kind) {
+  return kind !== 'bad' && kind !== 'warn_too_high';
 }
 
 function swapNativePrice(symbol, network) {
@@ -19180,46 +19773,38 @@ function renderSwapSlippageSheet() {
   if (!pay || !input || !box) return;
   if (input.value !== SWAP_SLIP_DRAFT.value) input.value = SWAP_SLIP_DRAFT.value;
   const kind = classifySwapSlip(SWAP_SLIP_DRAFT.value);
-  const n = parseFloat(SWAP_SLIP_DRAFT.value);
+  const parsed = parseSwapSlipValue(SWAP_SLIP_DRAFT.value);
+  const n = parsed.n;
   document.querySelectorAll('.swap-slip-preset').forEach((btn) => {
-    btn.classList.toggle('active', kind !== 'bad' && Math.abs(parseFloat(btn.getAttribute('data-slip')) - n) < 0.0001);
+    btn.classList.toggle('active', swapSlipCanSubmit(kind) && Math.abs(parseFloat(btn.getAttribute('data-slip')) - n) < 0.0001);
   });
   if (msg) {
-    msg.className = 'swap-slip-msg' + (kind === 'bad' ? ' bad' : kind === 'warn' ? ' warn' : '');
-    msg.textContent = kind === 'bad' ? '滑点数值范围0.01%～90%' : (kind === 'warn' ? '滑点低于1%,交易失败率较高' : '');
+    msg.className = 'swap-slip-msg' + (kind === 'bad' ? ' bad' : swapSlipIsWarn(kind) ? ' warn' : '');
+    msg.textContent = swapSlipMessage(kind);
   }
-  const feeBroken = kind === 'bad' || SWAP_SLIP_DRAFT.feeFail;
+  const slipBad = !swapSlipCanSubmit(kind);
+  const feeFail = !!SWAP_SLIP_DRAFT.feeFail;
   const family = swapFeeFamily(pay.network);
   const options = swapSlipFeeOptions(pay);
   const cols = options.length >= 3 ? 'cols-3' : (options.length === 2 ? 'cols-2' : '');
-  if (family === 'tron' && !feeBroken) {
-    const ctx = swapTronResource(pay, SWAP_SLIP_DRAFT.tronLimit);
-    const trxPrice = swapNativePrice('TRX', 'tron');
-    let html = '<div class="gas-tier-item" style="cursor:default;">' +
-      '<div class="gas-tier-left"><div class="gas-tier-name">网络资源预估</div>' +
-      '<div class="gas-tier-sub">Bandwidth ' + ctx.bandwidthNeed + ' ｜ Energy ' + ctx.energyNeed.toLocaleString() + '</div></div>' +
-      '<div class="gas-tier-right"><div class="gas-tier-eta">燃烧 TRX</div>' +
-      '<div class="gas-tier-cost">≈' + ctx.burnTrx + ' TRX ($' + (ctx.burnTrx * trxPrice).toFixed(4) + ')</div></div></div>';
-    if (ctx.standard === 'TRC20') {
-      html += '<div class="swap-slip-fees cols-3" style="margin-top:10px;">' +
-        [15, 30, 50].map((limit) => {
-          const active = SWAP_SLIP_DRAFT.tronLimit === limit;
-          return '<button type="button" class="swap-slip-fee' + (active ? ' active' : '') + '" onclick="selectSwapTronLimit(' + limit + ')">' +
-            '<div class="name">' + limit + ' TRX</div><div class="usd">fee_limit</div></button>';
-        }).join('') + '</div>';
-    }
-    box.innerHTML = html;
+  if (family === 'tron' && !feeFail) {
+    SWAP_SLIP_DRAFT.tronLimit = 30;
+    box.innerHTML = '<div class="swap-slip-fees">' +
+      '<div class="swap-slip-fee active locked" role="presentation" aria-disabled="true">' +
+      '<div class="name">默认</div>' +
+      '<div class="usd">30TRX ｜ $0.0420</div>' +
+      '</div></div>';
   } else {
     box.innerHTML = '<div class="swap-slip-fees ' + cols + '">' + options.map((opt) => {
       const active = family !== 'tron' && SWAP_SLIP_DRAFT.tier === opt.id;
-      const usd = feeBroken ? '--' : ('$' + swapTierFeeUsd(pay, family, opt.id, SWAP_SLIP_DRAFT.tronLimit).toFixed(4));
-      const click = family === 'tron' || feeBroken ? '' : ' onclick="selectSwapFeeTier(\'' + opt.id + '\')"';
+      const usd = feeFail ? '--' : ('$' + swapTierFeeUsd(pay, family, opt.id, SWAP_SLIP_DRAFT.tronLimit).toFixed(4));
+      const click = family === 'tron' || feeFail ? '' : ' onclick="selectSwapFeeTier(\'' + opt.id + '\')"';
       return '<button type="button" class="swap-slip-fee' + (active ? ' active' : '') + '"' + click + '>' +
         '<div class="name">' + opt.name + '</div><div class="usd">' + usd + '</div></button>';
     }).join('') + '</div>';
   }
-  if (err) err.hidden = !feeBroken;
-  if (submit) submit.disabled = feeBroken;
+  if (err) err.hidden = !feeFail;
+  if (submit) submit.disabled = slipBad || feeFail;
 }
 
 const SWAP_INFO_COPY = {
@@ -19320,22 +19905,17 @@ function selectSwapFeeTier(id) {
 }
 
 function selectSwapTronLimit(limit) {
-  SWAP_SLIP_DRAFT.tronLimit = limit;
+  SWAP_SLIP_DRAFT.tronLimit = 30;
   renderSwapSlippageSheet();
 }
 
 function refreshSwapSlipFee() {
-  if (classifySwapSlip(SWAP_SLIP_DRAFT.value) === 'bad') {
-    SWAP_SLIP_DRAFT.feeFail = true;
-    renderSwapSlippageSheet();
-    return;
-  }
   SWAP_SLIP_DRAFT.feeFail = false;
   renderSwapSlippageSheet();
 }
 
 function submitSwapSlippage() {
-  if (classifySwapSlip(SWAP_SLIP_DRAFT.value) === 'bad' || SWAP_SLIP_DRAFT.feeFail) return;
+  if (!swapSlipCanSubmit(classifySwapSlip(SWAP_SLIP_DRAFT.value)) || SWAP_SLIP_DRAFT.feeFail) return;
   const pay = getSwapToken(SWAP_STATE.payKey);
   if (!pay) return;
   SWAP_STATE.slippage = parseFloat(SWAP_SLIP_DRAFT.value);
@@ -19364,13 +19944,19 @@ function demoSwapSlipLast() {
 function demoSwapSlipBad() {
   prepareSwapDemo();
   openSwapTrade({ amount: '1', focus: false });
-  openSwapSlippageSheet({ value: '10000' });
+  openSwapSlippageSheet({ value: '0.05' });
 }
 
 function demoSwapSlipWarn() {
   prepareSwapDemo();
   openSwapTrade({ amount: '1', focus: false });
-  openSwapSlippageSheet({ value: '0.01' });
+  openSwapSlippageSheet({ value: '0.3' });
+}
+
+function demoSwapSlipTooHigh() {
+  prepareSwapDemo();
+  openSwapTrade({ amount: '1', focus: false });
+  openSwapSlippageSheet({ value: '51' });
 }
 
 function demoSwapSlipSol() {
